@@ -11,6 +11,8 @@ namespace KassaSystemet
     {
         //static Product newProduct = new Product();
         public static Dictionary<int, Product> productDictionary = new Dictionary<int, Product>();
+        static int receiptCounter = 0;
+        
         public static void MainMenu()
         {
 
@@ -59,6 +61,8 @@ namespace KassaSystemet
                 {
                     case "PAY":
                         Console.WriteLine("Create receipt and exit back to main menu");
+                        int receiptID = ++receiptCounter;
+                        Receipt.CreateReceipt(receiptID);
                         MainMenu();
                         break;
 

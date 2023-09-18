@@ -15,7 +15,7 @@ namespace KassaSystemet
         */
         public Product()
         {
-
+            //Might not be needed
         }
         public Product(string productName, int productID, decimal unitPrice)
         {
@@ -59,8 +59,8 @@ namespace KassaSystemet
         }
 
         static string date = DateTime.Now.ToShortDateString();
-        string filePath = $"../../../Files{date}.txt";
-        public static void SaveToFile(Dictionary<int, Product> dictionary, string filePath)
+        static string filePath = $"../../../Files{date}.txt";
+        public static void SaveToFile(Dictionary<int, Product> dictionary)//, string filePath)
         {
             using (StreamWriter streamWriter = new StreamWriter(filePath, append: false))
             {
@@ -72,5 +72,7 @@ namespace KassaSystemet
                 }
             }
         }
+
+        
     }
 }
