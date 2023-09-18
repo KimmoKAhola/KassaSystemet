@@ -60,7 +60,7 @@ namespace KassaSystemet
         }
 
         static readonly string date = DateTime.Now.ToShortDateString();
-        static readonly string filePath = $"../../../Files{date}.txt"; // TODO Check if this can be made nicer
+        static readonly string filePath = $"../../../Files/{date}.txt"; // TODO Check if this can be made nicer
         public static void SaveToFile(Dictionary<int, Product> dictionary)
         {
             using (StreamWriter streamWriter = new(filePath, append: true))
