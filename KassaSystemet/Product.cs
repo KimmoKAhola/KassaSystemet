@@ -64,7 +64,7 @@ namespace KassaSystemet
         {
             using (StreamWriter streamWriter = new StreamWriter(filePath, append: false))
             {
-                streamWriter.WriteLine("\n\nProduct ID\tProduct Name\tUnit price");
+                streamWriter.Write("Product ID\tProduct Name\tUnit price\n");
                 foreach (var item in dictionary)
                 {
                     streamWriter.Write($"{item.Key}\t{item.Value.ProductName}\t{item.Value.UnitPrice}\n");
