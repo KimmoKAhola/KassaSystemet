@@ -11,11 +11,11 @@ namespace KassaSystemet
     {
         /*  Dictionary for products
             Create methods for adding products, removing product, changing price etc
-            Admin method should call on this class.
+            Admin method in menu class should call on this class.
         */
         public Product()
         {
-
+            //Might not be needed
         }
         public Product(string productName, int productID, decimal unitPrice)
         {
@@ -39,6 +39,7 @@ namespace KassaSystemet
         public static Product FindProduct(Dictionary<int, Product> dictionary, int productID)
         {
             // Sök mha produkt ID. Anta att produkt finns för tillfället
+            // Denna metod ska användas för att hitta produktID baserat på sträng. Användare ska söka efter "Bananer" etc.
             // TODO lägg till felhantering
             return dictionary[productID];
         }
@@ -57,5 +58,21 @@ namespace KassaSystemet
                 Console.Write($"{item.Key}\t{item.Value.ProductName}\t{item.Value.UnitPrice}\n");
             }
         }
+
+        static readonly string date = DateTime.Now.ToShortDateString();
+        static readonly string filePath = $"../../../Files{date}.txt"; // TODO Check if this can be made nicer
+        public static void SaveToFile(Dictionary<int, Product> dictionary)
+        {
+            using (StreamWriter streamWriter = new(filePath, append: true))
+            {
+                streamWriter.Write("Product ID\tProduct Name\tUnit price\n"); // TODO Fix formatting in the future
+                foreach (var item in dictionary)
+                {
+                    streamWriter.Write($"{item.Key}\t{item.Value.ProductName}\t{item.Value.UnitPrice}\n");
+                }
+            }
+        }
+
+        
     }
 }

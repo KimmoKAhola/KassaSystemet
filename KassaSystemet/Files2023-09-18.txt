@@ -1,0 +1,3 @@
+receipt number is: 1
+receipt number is: 1
+receipt number is: 2
