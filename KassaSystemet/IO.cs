@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet
 {
-    internal class Class1
+    internal class IO
     {
-
-        
-        
+        //Method for handling file I/O. Saving and reading text files. Creating the receipt?
     }
 }
