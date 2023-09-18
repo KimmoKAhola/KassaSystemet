@@ -1,2 +1,0 @@
-receipt number is: 1
-Products are: bananas with product ID [1] and unit price: [19,50]
