@@ -77,6 +77,7 @@ namespace KassaSystemet
             Console.Clear();
             Console.WriteLine("Admin menu");
             Console.WriteLine("1. Add\n2. Display products\n3. Change price on a product\n0. Exit");
+            Console.WriteLine("4. Print file TEST TEST TEST");
             Console.Write("Enter command: ");
             string userInput = Console.ReadLine().ToUpper();
             do
@@ -112,6 +113,13 @@ namespace KassaSystemet
                         price = Convert.ToDecimal(Console.ReadLine());
                         Product.ChangeProductPrice(productDictionary, id, price);
                         Console.Write("Enter a new command: ");
+                        userInput = Console.ReadLine();
+                        break;
+
+                    case "4":
+                        string date = DateTime.Now.ToShortDateString();
+                        string filePath = $"../../../Files/ProductList-{date}.txt";
+                        Product.SaveToFile(productDictionary, filePath);
                         userInput = Console.ReadLine();
                         break;
 

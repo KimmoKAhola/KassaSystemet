@@ -57,5 +57,20 @@ namespace KassaSystemet
                 Console.Write($"{item.Key}\t{item.Value.ProductName}\t{item.Value.UnitPrice}\n");
             }
         }
+
+        static string date = DateTime.Now.ToShortDateString();
+        string filePath = $"../../../Files{date}.txt";
+        public static void SaveToFile(Dictionary<int, Product> dictionary, string filePath)
+        {
+            using (StreamWriter streamWriter = new StreamWriter(filePath, append: false))
+            {
+                streamWriter.WriteLine("\n\nProduct ID\tProduct Name\tUnit price");
+                foreach (var item in dictionary)
+                {
+                    streamWriter.Write($"{item.Key}\t{item.Value.ProductName}\t{item.Value.UnitPrice}\n");
+                    //Console.Write($"{item.Key}\t{item.Value.ProductName}\t{item.Value.UnitPrice}\n");
+                }
+            }
+        }
     }
 }
