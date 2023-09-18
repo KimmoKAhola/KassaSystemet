@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet
 {
-    internal class Class1
+    internal class Temporary
     {
 
-        
+        //Might not be needed
         
     }
 }
