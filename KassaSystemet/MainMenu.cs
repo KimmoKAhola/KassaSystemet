@@ -10,12 +10,12 @@ namespace KassaSystemet
     static internal class Menu
     {
         //static Product newProduct = new Product();
-        public static Dictionary<int, Product> productDictionary = new Dictionary<int, Product>();
+        public static Dictionary<int, Product> productDictionary = new();
+        public static List<Product> productList = new();
         static int receiptCounter = 0;
         
         public static void MainMenu()
         {
-
             int menuOption = 0;
 
             do
@@ -48,13 +48,20 @@ namespace KassaSystemet
 
         public static void CustomerMenu()
         {
+            /*
+             * kund ska ange produktens ID samt antal/mängd
+             * programmet ska fortsätta tills kund anger kommandot "PAY"
+             * kvitto ska skrivas ut och sparas
+             * 
+             */
+
             Console.Clear();
             Console.WriteLine("Customer menu");
             Console.WriteLine("Commands:\n");
             Console.WriteLine("<Product ID> <Amount>");
             Console.WriteLine("PAY (exit and print receipt)");
             Console.Write("Enter command: ");
-            string userInput = Console.ReadLine();
+            string userInput = Console.ReadLine().ToUpper();
             do
             {
                 switch (userInput)
@@ -62,18 +69,14 @@ namespace KassaSystemet
                     case "PAY":
                         Console.WriteLine("Create receipt and exit back to main menu");
                         int receiptID = ++receiptCounter;
-                        Receipt.CreateReceipt(receiptID);
+                        productList.Add(new Product("bananas", 1, 19.50m));
+                        Receipt.CreateReceipt(productList, receiptID);
                         MainMenu();
                         break;
 
                 }
             } while (userInput != "PAY");
 
-            /*
-             * kund ska ange produktens ID samt antal/mängd
-             * programmet ska fortsätta tills kund anger kommandot "PAY"
-             * kvitto ska skrivas ut och sparas
-             * */
         }
 
         public static void AdminMenu()
@@ -122,15 +125,12 @@ namespace KassaSystemet
 
                     case "4":
                         string date = DateTime.Now.ToShortDateString();
-                        string filePath = $"../../../Files/ProductList-{date}.txt";
-                        Product.SaveToFile(productDictionary, filePath);
-                        userInput = Console.ReadLine();
+                        Product.SaveToFile(productDictionary);
                         break;
 
                     case "0":
                         MainMenu();
                         break;
-
                 }
             } while (userInput != "0");
             MainMenu();
