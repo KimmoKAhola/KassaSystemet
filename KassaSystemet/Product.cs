@@ -39,7 +39,7 @@ namespace KassaSystemet
             // TODO lägg till felhantering
             foreach (var product in dictionary)
             {
-                Console.WriteLine("key: " +product.Key + "Name: " + product.Value.ProductName+ "ID: " + product.Value.ProductID);
+                Console.WriteLine("dictionary key: " +product.Key + " product name: " + product.Value.ProductName+ " product ID: " + product.Value.ProductID);
                 return product.Value.UnitPrice; // The unit price for a given product
             }
             return 0;

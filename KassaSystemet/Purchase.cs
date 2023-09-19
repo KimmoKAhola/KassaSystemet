@@ -22,16 +22,21 @@ namespace KassaSystemet
             // This is the pay method. It should display the shopping cart
             // with its wares, amount and price as well as save the receipt to a file
             // it should then clear the shopping cart for the next customer/purchase
-
+            Menu.receiptID = ++Menu.receiptCounter; // Does not work with 0 and 1 currenty. Fix later
+            Receipt.CreateReceiptIDFile(Menu.receiptID);
             Receipt.CreateReceiptForCart(Menu.testCart, Receipt.GetReceiptID());
         }
 
         public static void DisplayShoppingCart(List<Purchase> shoppingCart)
         {
-            Console.WriteLine("Your cart has the items: ");
+            Console.WriteLine("Your current shopping cart contains the following items: ");
+            //Product.FindProductPrice(testDictionary, 300);
+            decimal price = Product.FindProductPrice(Menu.testDictionary, 301);
+            
             foreach (var item in shoppingCart)
             {
-                Console.Write($"Product{item.ProductName}, amount: {item.Amount}\n");
+                Console.Write($"\nProduct: {item.ProductName}, amount: {item.Amount}" +
+                    $", sum: {price * item.Amount}\n");
             }
         }
 

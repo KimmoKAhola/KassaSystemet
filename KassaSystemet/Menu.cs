@@ -14,9 +14,12 @@ namespace KassaSystemet
         public static Dictionary<int, Product> productDictionary = new();
         public static List<Purchase> shoppingCart = new(); // Lägg in varor här. Vid köp, spara till kvitto och rensa sedan
         public static List<Product> productList = new(); // Lista med alla tillgängliga produkter
-        static int receiptCounter = Receipt.GetReceiptID(); // Load receipt ID from file
-        public static Dictionary<int, Product> testDictionary = new Dictionary<int, Product> { { 1, new Product("Bananer", 300, 19.50m) } };
-        public static List<Purchase> testCart = new List<Purchase>() { { new Purchase("Bananer", 10)} };
+        public static int receiptCounter = Receipt.GetReceiptID(); // Load receipt ID from file
+        public static int receiptID = 0;
+        public static Dictionary<int, Product> testDictionary = new Dictionary<int, Product> { { 1, new Product("Bananer", 300, 19.50m) },
+            {2, new Product("Äpplen", 301, 25.99m) } };
+        public static List<Purchase> testCart = new List<Purchase>() { { new Purchase("Bananer", 10)},
+            {new Purchase("Äpplen", 7) } };
         public static void MainMenu()
         {
             //Product.FindProductPrice(testDictionary, 300);
@@ -66,7 +69,8 @@ namespace KassaSystemet
 
             Console.Clear();
             Console.WriteLine("Customer menu");
-            Console.WriteLine("Commands: p\n");
+            Console.WriteLine("Commands: \n");
+            Console.WriteLine("p. Enter products to purchase");
             Console.WriteLine("1. Display test cart");
             Console.WriteLine("00. Test the Pay() command");
             Console.WriteLine("<Product ID> <Amount>");
@@ -88,7 +92,6 @@ namespace KassaSystemet
                         break;
                     case "P":
                         Console.WriteLine("Enter wares to your purchase, then print the receipt");
-                        int receiptID = ++receiptCounter;
                         Console.Write("Enter <product ID> <Amount>: ");
                         string customerEntry = Console.ReadLine();
                         string[] entries = customerEntry.Split(' ');
@@ -101,6 +104,7 @@ namespace KassaSystemet
                         Purchase.Pay(); // pay command in purchase class
                         break;
                     case "00":
+                        Receipt.CreateReceiptIDFile(receiptID);
                         Purchase.Pay();
                         Console.WriteLine("Pause");
                         Console.ReadKey();

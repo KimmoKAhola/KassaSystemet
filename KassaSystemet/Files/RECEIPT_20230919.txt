@@ -1,3 +1,16 @@
 ********Receipt ID[0]*******************
 Products are: Bananer with product ID [10]
+Products are: Äpplen with product ID [7]
+--------------------------------
+********Receipt ID[2]*******************
+Products are: Bananer with product ID [10]
+Products are: Äpplen with product ID [7]
+--------------------------------
+********Receipt ID[3]*******************
+Products are: Bananer with product ID [10]
+Products are: Äpplen with product ID [7]
+--------------------------------
+********Receipt ID[4]*******************
+Products are: Bananer with product ID [10]
+Products are: Äpplen with product ID [7]
 --------------------------------
