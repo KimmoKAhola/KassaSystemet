@@ -12,7 +12,7 @@ namespace KassaSystemet
         /* A class which creates a formatted receipt
          */
         public static int receiptCounter = FileManager.GetReceiptID(); // Load receipt ID from file
-        public static int receiptID = receiptCounter++;
+        public static int receiptID = receiptCounter++; // These work as long as the receipt files are not deleted
         public static string CreateReceipt(List<Purchase> list, int receiptID)
         {
             string formattedReceipt = "";
