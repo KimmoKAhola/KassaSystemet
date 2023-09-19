@@ -84,8 +84,10 @@ namespace KassaSystemet
                 switch (userInput)
                 {
                     case "1":
-
+                        Console.WriteLine("***DisplayShoppingCart()***\n");
                         Purchase.DisplayShoppingCart(testCart);
+                        Console.WriteLine("***GetProductID()***\n");
+                        Product.GetProductID(testDictionary);
                         Console.WriteLine("Press any key to continue");
                         Console.ReadKey();
                         Console.Write("Enter a new command: ");

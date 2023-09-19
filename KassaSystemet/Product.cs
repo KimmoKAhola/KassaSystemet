@@ -14,14 +14,16 @@ namespace KassaSystemet
             Admin method in menu class should call on this class.
         */
 
-        public Product(string productName, decimal unitPrice)
+        public Product(string productName, decimal unitPrice) // add price type (per kg or per piece later)
         {
             ProductName = productName;
             UnitPrice = unitPrice;
+            //PriceType = priceType;
         }
 
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
+        public string PriceType { get; set; }
 
         public static void AddNewProduct(Dictionary<int, Product> dictionary, Product product)
         {
@@ -30,18 +32,23 @@ namespace KassaSystemet
             //dictionary.Add(, product);
             Console.WriteLine("Product added!");
         }
-
-        public static decimal FindProductPrice(Dictionary<int, Product> dictionary, int productID)
+        public static int GetProductID(Dictionary<int, Product> productDictionary)
+        {
+            //Want to type in "Bananas" and find its dictionary key. 300 for now.
+            foreach (var item in productDictionary)
+            {
+                Console.WriteLine("Key: " + item.Key);
+            }
+            return 0;
+        }
+        public static decimal FindProductPrice(Dictionary<int, Product> dictionary)
         {
             // Use this to find a certain unit price given a product ID.
             // TODO lägg till felhantering
             foreach (var product in dictionary)
             {
-                if (product.Key == productID)
-                {
                     Console.WriteLine("dictionary key: " + product.Key);
                     return product.Value.UnitPrice; // The unit price for a given product
-                }
             }
             return -1;
         }
