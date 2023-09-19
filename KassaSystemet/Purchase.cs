@@ -36,9 +36,12 @@ namespace KassaSystemet
             //int id = Product.GetProductID(Menu.testDictionary, "Äpplen");
 
 
+            //The price should be amount * price tied to productID
+            decimal price = 100m;
+
             foreach (var item in shoppingCart)
             {
-                Console.Write($"\nProduct: {item.ProductName}, amount: {item.Amount}, " +
+                Console.Write($"\nProduct: {item.ProductName}, amount: {item.Amount}, price: {price}, " +
                     $"product id: {Product.GetProductID(Menu.testDictionary, item.ProductName)}\n");
                 
             }

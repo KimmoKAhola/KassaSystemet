@@ -42,7 +42,7 @@ namespace KassaSystemet
                     return item.Key;
                 }
             }
-            return -50;
+            return -50; // If it does not exist return -50. Error handling should be implemented later.
         }
         public static decimal FindProductPrice(Dictionary<int, Product> dictionary)
         {
