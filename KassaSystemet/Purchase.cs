@@ -29,14 +29,13 @@ namespace KassaSystemet
 
         public static void DisplayShoppingCart(List<Purchase> shoppingCart)
         {
-            Console.WriteLine("Your current shopping cart contains the following items: ");
-            //Product.FindProductPrice(testDictionary, 300);
-            decimal price = Product.FindProductPrice(Menu.testDictionary, 301);
-            
+            //Console.WriteLine("Your current shopping cart contains the following items: ");
+            //Product.FindProductPrice(Menu.testDictionary, 1);
+            //decimal price = Product.FindProductPrice(Menu.testDictionary, 301);
+            //Console.WriteLine("Price: " + price);
             foreach (var item in shoppingCart)
             {
-                Console.Write($"\nProduct: {item.ProductName}, amount: {item.Amount}" +
-                    $", sum: {price * item.Amount}\n");
+                Console.Write($"\nProduct: {item.ProductName}, amount: {item.Amount}");
             }
         }
 

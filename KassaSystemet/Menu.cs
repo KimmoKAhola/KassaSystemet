@@ -16,8 +16,8 @@ namespace KassaSystemet
         public static List<Product> productList = new(); // Lista med alla tillgängliga produkter
         public static int receiptCounter = Receipt.GetReceiptID(); // Load receipt ID from file
         public static int receiptID = 0;
-        public static Dictionary<int, Product> testDictionary = new Dictionary<int, Product> { { 1, new Product("Bananer", 300, 19.50m) },
-            {2, new Product("Äpplen", 301, 25.99m) } };
+        public static Dictionary<int, Product> testDictionary = new Dictionary<int, Product> { { 1, new Product("Bananer", 19.50m) },
+            {2, new Product("Äpplen", 25.99m) } };
         public static List<Purchase> testCart = new List<Purchase>() { { new Purchase("Bananer", 10)},
             {new Purchase("Äpplen", 7) } };
         public static void MainMenu()
@@ -96,7 +96,7 @@ namespace KassaSystemet
                         string customerEntry = Console.ReadLine();
                         string[] entries = customerEntry.Split(' ');
                         int amount = Convert.ToInt32(entries[1]);
-                        shoppingCart.Add(new Purchase(entries[0], amount));
+                        testCart.Add(new Purchase(entries[0], amount));
                         Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
                         Receipt.CreateReceiptForCart(shoppingCart, receiptID);
                         Console.Write("Enter a new command: ");
@@ -142,7 +142,7 @@ namespace KassaSystemet
                         int id = Convert.ToInt32(Console.ReadLine());
                         Console.Write("Enter price per unit: ");
                         decimal price = Convert.ToDecimal(Console.ReadLine());
-                        Product newProduct = new Product(name, id, price);
+                        Product newProduct = new Product(name, price);
                         Product.AddNewProduct(productDictionary, newProduct);
                         Console.WriteLine($"The product {name} with product ID {id} and unit price {price} has been added.\n" +
                             $"Press any key to continue.");

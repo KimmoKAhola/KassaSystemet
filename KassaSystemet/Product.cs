@@ -9,27 +9,25 @@ namespace KassaSystemet
 {
     public class Product
     {
-        /*  Dictionary for products
+        /*  Class for products
             Create methods for adding products, removing product, changing price etc
             Admin method in menu class should call on this class.
         */
 
-        public Product(string productName, int productID, decimal unitPrice)
+        public Product(string productName, decimal unitPrice)
         {
             ProductName = productName;
-            ProductID = productID;
             UnitPrice = unitPrice;
         }
 
         public string ProductName { get; set; }
-        public int ProductID { get; set; }
         public decimal UnitPrice { get; set; }
 
         public static void AddNewProduct(Dictionary<int, Product> dictionary, Product product)
         {
             // if (dictionary.ContainsKey(product.ProductID)) Kolla så att produkten samt ID ej finns i systemet.   
             // TODO Lägg till felhantering
-            dictionary.Add(product.ProductID, product);
+            //dictionary.Add(, product);
             Console.WriteLine("Product added!");
         }
 
@@ -39,10 +37,13 @@ namespace KassaSystemet
             // TODO lägg till felhantering
             foreach (var product in dictionary)
             {
-                Console.WriteLine("dictionary key: " +product.Key + " product name: " + product.Value.ProductName+ " product ID: " + product.Value.ProductID);
-                return product.Value.UnitPrice; // The unit price for a given product
+                if (product.Key == productID)
+                {
+                    Console.WriteLine("dictionary key: " + product.Key);
+                    return product.Value.UnitPrice; // The unit price for a given product
+                }
             }
-            return 0;
+            return -1;
         }
         public static void ChangeProductPrice(Dictionary<int, Product> dictionary, int productID, decimal newPrice)
         {
