@@ -60,7 +60,7 @@ namespace KassaSystemet
             } while (menuOption != 0);
         }
 
-        public static void CustomerMenu()
+        private static void CustomerMenu()
         {
             /*
              * kund ska ange produktens ID samt antal/mängd
@@ -88,9 +88,8 @@ namespace KassaSystemet
                         Console.ReadKey();
                         break;
                     case "2":
-                        AddProducts();
-                        
-                        Console.WriteLine("Add another product? (press 2)");
+                        CustomerCase2();
+                        Console.WriteLine("Add another product? (press 2) does not work atm");
                         userInput = Console.ReadLine();
                         break;
                     case "PAY":
@@ -111,7 +110,7 @@ namespace KassaSystemet
             MainMenu();
         }
 
-        public static void AdminMenu()
+        private static void AdminMenu()
         {
             string userInput;
             do
@@ -160,7 +159,7 @@ namespace KassaSystemet
             MainMenu();
         }
 
-        static (string name, decimal price) EnterNamePrice()
+        private static (string name, decimal price) EnterNamePrice()
         {
             Console.Write("Enter a name and a price: ");
             string entry = Console.ReadLine();
@@ -168,7 +167,7 @@ namespace KassaSystemet
             
             return (entries[0], Convert.ToDecimal(entries[1]));
         }
-        public static void AddProducts()
+        private static void CustomerCase2()
         {
             Console.WriteLine("Enter wares to your purchase, then print the receipt");
             Console.Write("Enter <product ID> <Amount>: ");
@@ -179,7 +178,7 @@ namespace KassaSystemet
             Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
         }
 
-        public static void AddNewProduct()
+        private static void AddNewProduct()
         {
             Console.Write("Adding a new product. Enter id, name and price: ");
             string adminEntry = Console.ReadLine();
@@ -191,7 +190,7 @@ namespace KassaSystemet
 
             Product.AddNewProduct(seedDictionary, id, name, price);
         }
-        public static void Case4()
+        private static void Case4()
         {
             Console.Write("Enter the name of the product you want to change: ");
             string oldName = Console.ReadLine();
@@ -199,7 +198,7 @@ namespace KassaSystemet
             string newName = Console.ReadLine();
             Product.ChangeProductName(seedDictionary, oldName, newName);
         }
-        public static void Case3()
+        private static void Case3()
         {
             Console.Write("Enter a product ID: ");
             int id = Convert.ToInt32(Console.ReadLine());
