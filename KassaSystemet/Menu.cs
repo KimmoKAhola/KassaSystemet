@@ -13,12 +13,11 @@ namespace KassaSystemet
 {
     public static class Menu
     {
-        public static Dictionary<int, Product> productDictionary = new(); // This should be seeded. Admin can add new products later.
-        public static List<Purchase> shoppingCart = new(); // Lägg in varor här. Vid köp, spara till kvitto och rensa sedan
-        public static List<Product> productList = new(); // Lista med alla tillgängliga produkter
-        public static int receiptCounter = Receipt.GetReceiptID(); // Load receipt ID from file
-        public static int receiptID = 0; // Connecte to receiptCounter. Add by one each purchase.
-        // Dictionary key is the product id. 300 for bananas currently.
+        //public static Dictionary<int, Product> productDictionary = new(); // This should be seeded. Admin can add new products later.
+        //public static List<Purchase> shoppingCart = new(); // Lägg in varor här. Vid köp, spara till kvitto och rensa sedan
+        //public static List<Product> productList = new(); // Lista med alla tillgängliga produkter
+        public static int receiptCounter = FileManager.GetReceiptID(); // Load receipt ID from file
+        public static int receiptID = 0; // Connected to receiptCounter. Add by one each purchase.
         public static Dictionary<int, Product> seedDictionary = Seed.seedDictionary;
 
         public static List<Purchase> seedCart = Seed.seedProductList;
@@ -50,7 +49,7 @@ namespace KassaSystemet
                         menuOption = 0;
                         break;
                     case 3:
-                        Receipt.GetReceiptID();
+                        FileManager.GetReceiptID();
                         Console.ReadKey();
                         break;
                     case 0:
@@ -93,7 +92,7 @@ namespace KassaSystemet
                         userInput = Console.ReadLine();
                         break;
                     case "PAY":
-                        Receipt.CreateReceiptIDFile(receiptID);
+                        FileManager.CreateReceiptIDFile(receiptID);
                         Console.WriteLine("Purchase the wares in your shopping cart. This saves the receipt to a file.");
                         Purchase.Pay(); // pay command in purchase class
                         userInput = "0";

@@ -1,4 +1,4 @@
-********Receipt ID[5]*******************
+********Receipt ID[3]*******************
 
 Product: Bananer  	amount: 10  	price per unit: 19,50  	sum: 195,00 SEK   	product id: 300
 
@@ -22,5 +22,4 @@ Product: Saffran  	amount: 25  	price per unit: 5,50  	sum: 137,50 SEK   	produc
 
 Product: Vatten  	amount: 3  	price per unit: 100,00  	sum: 300,00 SEK   	product id: 310
 
-Product: Nutella  	amount: 15  	price per unit: 21,00  	sum: 315,00 SEK   	product id: 307
 --------------------------------

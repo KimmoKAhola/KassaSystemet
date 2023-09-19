@@ -23,8 +23,8 @@ namespace KassaSystemet
             // with its wares, amount and price as well as save the receipt to a file
             // it should then clear the shopping cart for the next customer/purchase
             Menu.receiptID = ++Menu.receiptCounter; // Does not work with 0 and 1 currenty. Fix later
-            Receipt.CreateReceiptIDFile(Menu.receiptID);
-            Receipt.CreateReceiptForCart(Menu.seedCart, Receipt.GetReceiptID());
+            FileManager.CreateReceiptIDFile(Menu.receiptID);
+            FileManager.SaveReceipt(Menu.seedCart, FileManager.GetReceiptID());
         }
 
         public static void DisplayShoppingCart(List<Purchase> shoppingCart) // Fix this so it can be used in receipt creator

@@ -9,77 +9,23 @@ namespace KassaSystemet
 {
     public static class Receipt
     {
-        /*Class which creates the receipt after the user uses the PAY command
+        /* A class which creates a formatted receipt
          */
 
-        public static string GetReceiptFilePath()
+        public static string CreateReceipt(List<Purchase> list, int receiptID)
         {
-            return $"../../../Files/RECEIPT_{GetCurrentDate()}.txt";
-        }
-
-        public static string GetReceiptIDFilePath()
-        {
-            return $"../../../Files/RECEIPT_ID_{GetCurrentDate()}.txt";
-        }
-
-        public static string GetCurrentDate()
-        {
-            return DateTime.Now.ToString("yyyyMMdd");
-        }
-
-        public static int GetReceiptID()
-        {
-            if (File.Exists(GetReceiptIDFilePath()) && File.Exists(GetReceiptFilePath())){
-                return Convert.ToInt32(File.ReadLines(GetReceiptIDFilePath()).First());
-            }
-            else
+            string formattedReceipt = "";
+            formattedReceipt += ($"********Receipt ID[{receiptID}]*******************\n");
+            foreach (var item in list)
             {
-                return 0;
+                formattedReceipt += ($"\nProduct: {item.ProductName}" +
+                    $"  \tamount: {item.Amount}" +
+                    $"  \tprice per unit: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName)}" +
+                    $"  \tsum: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName) * item.Amount} SEK " +
+                    $"  \tproduct id: {Product.GetProductID(Menu.seedDictionary, item.ProductName)}\n");
             }
-        }
-        //public static void CreateReceipt(List<Product> productList, int receiptID) // Den här ska ändras till List<Purchase> senare
-        //{
-        //    using (StreamWriter receiptWriter = new($"{GetReceiptFilePath()}", append: true))
-        //    {
-        //        receiptWriter.Write($"********Receipt ID[{receiptID}]*******************\n");
-        //        foreach (var product in productList)
-        //        {
-        //            receiptWriter.Write($"Products are: {product.ProductName} with product ID " +
-        //                $"[{product.ProductID}] and unit price: " +
-        //                $"[{product.UnitPrice}]\n"); // Loopar igenom alla köp i produktlistan
-        //        }
-        //        receiptWriter.WriteLine("--------------------------------"); // Separation between different purchases
-        //    }
-        //}
-
-        public static void CreateReceiptForCart(List<Purchase> list, int receiptID)
-        {
-            using (StreamWriter receiptWriter = new($"{GetReceiptFilePath()}", append: false))
-            {
-                receiptWriter.Write($"********Receipt ID[{receiptID}]*******************\n");
-                foreach (var item in list)
-                {
-                    receiptWriter.Write($"\nProduct: {item.ProductName}" +
-                        $"  \tamount: {item.Amount}" +
-                        $"  \tprice per unit: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName)}" +
-                        $"  \tsum: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName) * item.Amount} SEK " +
-                        $"  \tproduct id: {Product.GetProductID(Menu.seedDictionary, item.ProductName)}\n");
-                }
-                //foreach (var purchase in list)
-                //{
-                //    receiptWriter.Write($"Products are: {purchase.ProductName} with product ID " +
-                //        $"[{purchase.Amount}]\n"); // Loops through all wares in the shopping cart
-                //}
-                receiptWriter.WriteLine("--------------------------------"); // Separation between different purchases
-            }
-        }
-
-        public static void CreateReceiptIDFile(int receiptID)
-        {
-            using (StreamWriter idWriter = new StreamWriter($"{GetReceiptIDFilePath()}", append: false))
-            {
-                idWriter.Write(receiptID);
-            }
-        }
+            formattedReceipt += "\n--------------------------------";
+            return formattedReceipt;
+        }  
     }
 }
