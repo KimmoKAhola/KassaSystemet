@@ -73,10 +73,15 @@ namespace KassaSystemet
             {
                 switch (userInput)
                 {
-                    case "PAY":
-                        Console.WriteLine("Create receipt and exit back to main menu");
+                    case "P":
+                        Console.WriteLine("Enter wares to your purchase, then print the receipt");
                         int receiptID = ++receiptCounter;
-                        productList.Add(new Product("bananas", 1, 19.50m));
+                        Console.Write("Enter product name: ");
+                        string productName = Console.ReadLine().ToLower();
+                        Console.Write("Enter how many of the product: ");
+                        int amount = Convert.ToInt32(Console.ReadLine());
+                        listOfCurrentWares.Add(new Purchase(productName, amount));
+                        productList.Add(new Product("bananas", 1, 19.50m)); // Hårdkodat för demo
                         Receipt.CreateReceipt(productList, receiptID);
                         Receipt.CreateReceiptIDFile(receiptID);
                         CustomerMenu();
