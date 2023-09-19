@@ -57,11 +57,19 @@ namespace KassaSystemet
             using (StreamWriter receiptWriter = new($"{GetReceiptFilePath()}", append: false))
             {
                 receiptWriter.Write($"********Receipt ID[{receiptID}]*******************\n");
-                foreach (var purchase in list)
+                foreach (var item in list)
                 {
-                    receiptWriter.Write($"Products are: {purchase.ProductName} with product ID " +
-                        $"[{purchase.Amount}]\n"); // Loops through all wares in the shopping cart
+                    receiptWriter.Write($"\nProduct: {item.ProductName}" +
+                        $"  \tamount: {item.Amount}" +
+                        $"  \tprice per unit: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName)}" +
+                        $"  \tsum: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName) * item.Amount} SEK " +
+                        $"  \tproduct id: {Product.GetProductID(Menu.seedDictionary, item.ProductName)}\n");
                 }
+                //foreach (var purchase in list)
+                //{
+                //    receiptWriter.Write($"Products are: {purchase.ProductName} with product ID " +
+                //        $"[{purchase.Amount}]\n"); // Loops through all wares in the shopping cart
+                //}
                 receiptWriter.WriteLine("--------------------------------"); // Separation between different purchases
             }
         }

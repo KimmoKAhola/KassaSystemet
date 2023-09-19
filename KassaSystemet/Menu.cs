@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -93,17 +94,18 @@ namespace KassaSystemet
                         userInput = Console.ReadLine();
                         break;
                     case "P":
-                        Console.WriteLine("Enter wares to your purchase, then print the receipt");
-                        Console.Write("Enter <product ID> <Amount>: ");
-                        string customerEntry = Console.ReadLine();
-                        string[] entries = customerEntry.Split(' ');
-                        int amount = Convert.ToInt32(entries[1]);
-                        seedCart.Add(new Purchase(entries[0], amount));
-                        Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
+                        Console.WriteLine("Purchase the wares in your shopping cart. This saves the receipt to a file.");
+                        //Console.WriteLine("Enter wares to your purchase, then print the receipt");
+                        //Console.Write("Enter <product ID> <Amount>: ");
+                        //string customerEntry = Console.ReadLine();
+                        //string[] entries = customerEntry.Split(' ');
+                        //int amount = Convert.ToInt32(entries[1]);
+                        //seedCart.Add(new Purchase(entries[0], amount));
+                        //Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
                         //Receipt.CreateReceiptForCart(shoppingCart, receiptID);
+                        Purchase.Pay(); // pay command in purchase class
                         Console.Write("Enter a new command: ");
                         userInput = Console.ReadLine();
-                        //Purchase.Pay(); // pay command in purchase class
                         break;
                     case "00":
                         Receipt.CreateReceiptIDFile(receiptID);

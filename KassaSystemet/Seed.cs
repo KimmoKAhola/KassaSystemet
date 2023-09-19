@@ -20,7 +20,7 @@ namespace KassaSystemet
             { 307, new Product("Nutella", 21.00m) },
             { 308, new Product("Toapapper", 7.00m) },
             { 309, new Product("Saffran", 5.50m) },
-            { 310, new Product("Kolsyrat vatten", 100.00m) }};
+            { 310, new Product("Vatten", 100.00m) }};
 
         public static List<Purchase> seedProductList = new(){ 
             { new Purchase("Bananer", 10)},
@@ -33,6 +33,6 @@ namespace KassaSystemet
             { new Purchase("Nutella", 2) },
             { new Purchase("Toapapper", 10) },
             { new Purchase("Saffran", 25) },
-            { new Purchase("Kolsyrat vatten", 3) } };
+            { new Purchase("Vatten", 3) } };
     }
 }

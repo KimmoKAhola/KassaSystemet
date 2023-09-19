@@ -11,7 +11,7 @@ namespace KassaSystemet
 
         //Class which handles the purchase list
 
-        public Purchase(string productName, int amount) 
+        public Purchase(string productName, int amount)
         {
             ProductName = productName;
             Amount = amount;
@@ -29,21 +29,15 @@ namespace KassaSystemet
 
         public static void DisplayShoppingCart(List<Purchase> shoppingCart)
         {
-            //Console.WriteLine("Your current shopping cart contains the following items: ");
-            //Product.FindProductPrice(Menu.testDictionary, 1);
-            //decimal price = Product.FindProductPrice(Menu.testDictionary, 301);
-            //Console.WriteLine("Price: " + price);
-            //int id = Product.GetProductID(Menu.testDictionary, "Äpplen");
-
-            Product.FindProductPrice(Menu.seedDictionary, )
-            //The price should be amount * price tied to productID
-            decimal price = 100m;
-
+            Console.WriteLine("Your current shopping cart contains the following items: ");
             foreach (var item in shoppingCart)
             {
-                Console.Write($"\nProduct: {item.ProductName}, \tamount: {item.Amount}, \tprice: {price}, " +
-                    $"\tproduct id: {Product.GetProductID(Menu.seedDictionary, item.ProductName)}\n");
-                
+                Console.Write($"\nProduct: {item.ProductName}" +
+                    $"  \tamount: {item.Amount}" +
+                    $"  \tprice per unit: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName)}" +
+                    $"  \tsum: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName) * item.Amount} SEK " +
+                    $"  \tproduct id: {Product.GetProductID(Menu.seedDictionary, item.ProductName)}\n");
+
             }
         }
 
