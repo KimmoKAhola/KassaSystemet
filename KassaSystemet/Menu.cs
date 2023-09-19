@@ -68,49 +68,38 @@ namespace KassaSystemet
              * 
              */
 
-            Console.Clear();
-            Console.WriteLine("Customer menu");
-            Console.WriteLine("Commands: \n");
-            Console.WriteLine("p. Enter products to purchase");
-            Console.WriteLine("1. Display test cart");
-            Console.WriteLine("00. Test the Pay() command");
-            Console.WriteLine("<Product ID> <Amount>");
-            Console.WriteLine("PAY (exit and print receipt)");
             string userInput;
             do
             {
-            Console.Write("Enter command: ");
-            userInput = Console.ReadLine().ToUpper();
+                Console.Clear();
+                Console.WriteLine("****Welcome to the customer menu****");
+                Console.WriteLine("1. Display your current cart");
+                Console.WriteLine("2. Enter products to purchase");
+                Console.WriteLine("00. Empty");
+                Console.WriteLine("PAY: purchase wares in your cart and exit.");
+                Console.Write("Enter command: ");
+                userInput = Console.ReadLine().ToUpper();
                 switch (userInput)
                 {
                     case "1":
-                        Console.WriteLine("***DisplayShoppingCart()***\n");
                         Purchase.DisplayShoppingCart(seedCart);
-                        //Console.WriteLine("***GetProductID()***\n");
-                        //Product.GetProductID(testDictionary, "");
                         Console.WriteLine("Press any key to continue");
                         Console.ReadKey();
-                        Console.Write("Enter a new command: ");
+                        break;
+                    case "2":
+                        AddProducts();
+                        Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
+                        Console.WriteLine("Add another product? (press 2)");
                         userInput = Console.ReadLine();
                         break;
-                    case "P":
+                    case "PAY":
+                        Receipt.CreateReceiptIDFile(receiptID);
                         Console.WriteLine("Purchase the wares in your shopping cart. This saves the receipt to a file.");
-                        //Console.WriteLine("Enter wares to your purchase, then print the receipt");
-                        //Console.Write("Enter <product ID> <Amount>: ");
-                        //string customerEntry = Console.ReadLine();
-                        //string[] entries = customerEntry.Split(' ');
-                        //int amount = Convert.ToInt32(entries[1]);
-                        //seedCart.Add(new Purchase(entries[0], amount));
-                        //Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
-                        //Receipt.CreateReceiptForCart(shoppingCart, receiptID);
                         Purchase.Pay(); // pay command in purchase class
-                        Console.Write("Enter a new command: ");
-                        userInput = Console.ReadLine();
+                        userInput = "0";
                         break;
                     case "00":
-                        Receipt.CreateReceiptIDFile(receiptID);
-                        Purchase.Pay();
-                        Console.WriteLine("Pause");
+                        Console.WriteLine("Nothing here");
                         Console.ReadKey();
                         break;
                     case "0":
@@ -118,7 +107,7 @@ namespace KassaSystemet
                         break;
                 }
             } while (userInput != "0");
-            //MainMenu();
+            MainMenu();
         }
 
         public static void AdminMenu()
@@ -183,6 +172,15 @@ namespace KassaSystemet
                 }
             } while (userInput != "0");
             MainMenu();
+        }
+        public static void AddProducts()
+        {
+            Console.WriteLine("Enter wares to your purchase, then print the receipt");
+            Console.Write("Enter <product ID> <Amount>: ");
+            string customerEntry = Console.ReadLine();
+            string[] entries = customerEntry.Split(' ');
+            int amount = Convert.ToInt32(entries[1]);
+            seedCart.Add(new Purchase(entries[0], amount));
         }
     }
 }

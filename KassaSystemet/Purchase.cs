@@ -27,9 +27,9 @@ namespace KassaSystemet
             Receipt.CreateReceiptForCart(Menu.seedCart, Receipt.GetReceiptID());
         }
 
-        public static void DisplayShoppingCart(List<Purchase> shoppingCart)
+        public static void DisplayShoppingCart(List<Purchase> shoppingCart) // Fix this so it can be used in receipt creator
         {
-            Console.WriteLine("Your current shopping cart contains the following items: ");
+            Console.WriteLine("*******Your current shopping cart contains the following items*******");
             foreach (var item in shoppingCart)
             {
                 Console.Write($"\nProduct: {item.ProductName}" +
