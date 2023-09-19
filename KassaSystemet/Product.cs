@@ -44,16 +44,19 @@ namespace KassaSystemet
             }
             return -50; // If it does not exist return -50. Error handling should be implemented later.
         }
-        public static decimal FindProductPrice(Dictionary<int, Product> dictionary)
+        public static decimal FindProductPrice(Dictionary<int, Product> productDictionary, string productName)
         {
-            // Use this to find a certain unit price given a product ID.
+            // Use this to find a certain unit price given a product name.
             // TODO lägg till felhantering
-            foreach (var product in dictionary)
+
+            foreach (var item in productDictionary)
             {
-                    Console.WriteLine("dictionary key: " + product.Key);
-                    return product.Value.UnitPrice; // The unit price for a given product
+                if (item.Value.ProductName == productName)
+                {
+                    return item.Value.UnitPrice; // The unit price for a given product name
+                }
             }
-            return -1;
+            return -50;
         }
         public static void ChangeProductPrice(Dictionary<int, Product> dictionary, int productID, decimal newPrice)
         {
@@ -93,6 +96,6 @@ namespace KassaSystemet
             }
         }
 
-        
+
     }
 }

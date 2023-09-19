@@ -35,14 +35,14 @@ namespace KassaSystemet
             //Console.WriteLine("Price: " + price);
             //int id = Product.GetProductID(Menu.testDictionary, "Äpplen");
 
-
+            Product.FindProductPrice(Menu.seedDictionary, )
             //The price should be amount * price tied to productID
             decimal price = 100m;
 
             foreach (var item in shoppingCart)
             {
-                Console.Write($"\nProduct: {item.ProductName}, amount: {item.Amount}, price: {price}, " +
-                    $"product id: {Product.GetProductID(Menu.testDictionary, item.ProductName)}\n");
+                Console.Write($"\nProduct: {item.ProductName}, \tamount: {item.Amount}, \tprice: {price}, " +
+                    $"\tproduct id: {Product.GetProductID(Menu.seedDictionary, item.ProductName)}\n");
                 
             }
         }
