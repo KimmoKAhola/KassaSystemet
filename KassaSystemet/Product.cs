@@ -25,12 +25,19 @@ namespace KassaSystemet
         public decimal UnitPrice { get; set; }
         public string PriceType { get; set; }
 
-        public static void AddNewProduct(Dictionary<int, Product> dictionary, Product product)
+        public static void AddNewProduct(Dictionary<int, Product> dictionary, int productID, string productName, decimal unitPrice)
         {
             // if (dictionary.ContainsKey(product.ProductID)) Kolla så att produkten samt ID ej finns i systemet.   
             // TODO Lägg till felhantering
-            //dictionary.Add(, product);
-            Console.WriteLine("Product added!");
+            if (!dictionary.ContainsKey(productID))
+            {
+                dictionary.Add(productID, new Product(productName, unitPrice));
+                Console.WriteLine($"Added the product {productName} with id [{productID}] and price {unitPrice} to the system.");
+            }
+            else
+            {
+                Console.WriteLine($"The product id {productID} already exists in the system.");
+            }
         }
         public static int GetProductID(Dictionary<int, Product> productDictionary, string productName)
         {
@@ -49,14 +56,8 @@ namespace KassaSystemet
             // Use this to find a certain unit price given a product name.
             // TODO lägg till felhantering
 
-            foreach (var item in productDictionary)
-            {
-                if (item.Value.ProductName == productName)
-                {
-                    return item.Value.UnitPrice; // The unit price for a given product name
-                }
-            }
-            return -50;
+            int productID = GetProductID(productDictionary, productName);
+            return Seed.seedDictionary[productID].UnitPrice;
         }
 
         public static decimal FindProductPrice(Dictionary<int, Product> productDictionary, int productID)
@@ -70,6 +71,20 @@ namespace KassaSystemet
             Seed.seedDictionary[productID].UnitPrice = newPrice;
         }
 
+        public static void ChangeProductName(Dictionary<int, Product> dictionary, string oldName, string newName)
+        {
+            if (dictionary.ContainsKey(GetProductID(dictionary, oldName)))
+            {
+                int productID = GetProductID(dictionary, oldName);
+                Seed.seedDictionary[productID].ProductName = newName;
+                Console.WriteLine($"The product with old name [{oldName}] has been changed into [{newName}]");
+            }
+            else
+            {
+                Console.WriteLine($"The product {oldName} does not exist in the system");
+            }
+        }
+
         public static void DisplayProducts(Dictionary<int, Product> dictionary)
         {
             Console.WriteLine("\n\nProduct ID\tProduct Name\tUnit price");
@@ -78,29 +93,6 @@ namespace KassaSystemet
                 Console.Write($"{item.Key}\t{item.Value.ProductName}\t{item.Value.UnitPrice}\n");
             }
         }
-
-        public static string GetCurrentDate()
-        {
-            return DateTime.Now.ToString("yyyyMMdd");
-        }
-
-        public static string GetProductFilePath()
-        {
-            return $"../../../Files/PRODUCTLIST_{GetCurrentDate()}.txt"; // TODO Check if this can be made nicer
-        }
-
-        public static void SaveToFile(Dictionary<int, Product> dictionary)
-        {
-            using (StreamWriter streamWriter = new(GetProductFilePath(), append: true))
-            {
-                streamWriter.Write("Product ID\tProduct Name\tUnit price\n"); // TODO Fix formatting in the future
-                foreach (var item in dictionary)
-                {
-                    streamWriter.Write($"{item.Key}\t{item.Value.ProductName}\t{item.Value.UnitPrice}\n");
-                }
-            }
-        }
-
 
     }
 }

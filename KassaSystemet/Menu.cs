@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace KassaSystemet
@@ -117,10 +118,10 @@ namespace KassaSystemet
             {
                 Console.Clear();
                 Console.WriteLine("Admin menu");
-                Console.WriteLine("1. Add a new product\n" +
-                    "2. Display available products\n" +
+                Console.WriteLine("1. Add a new product to the system\n" +
+                    "2. Display available products in the system\n" +
                     "3. Change price on a product\n" +
-                    "4. Save your current product list to a file\n" +
+                    "4. Change name on a product\n" +
                     "0. Exit admin menu");
 
                 Console.Write("Enter a command: ");
@@ -128,41 +129,25 @@ namespace KassaSystemet
                 switch (userInput)
                 {
                     case "1":
-                        Console.WriteLine("Add a new product");
-                        Console.Write("Enter product name: ");
-                        string name = Console.ReadLine();
-                        Console.Write("Enter product ID: ");
-                        int id = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Enter price per unit: ");
-                        decimal price = Convert.ToDecimal(Console.ReadLine());
-                        Product newProduct = new Product(name, price);
-                        Product.AddNewProduct(productDictionary, newProduct);
-                        Console.WriteLine($"The product {name} with product ID {id} and unit price {price} has been added.\n" +
-                            $"Press any key to continue.");
+                        AddNewProduct();
                         Console.ReadKey();
                         break;
 
                     case "2":
-                        Console.Write("The dictionary contains these products: ");
+                        Console.Write("These are the available products in the system: ");
                         Product.DisplayProducts(seedDictionary);
                         Console.Write("Press any key to continue. ");
                         Console.ReadKey();
                         break;
 
                     case "3":
-                        Console.Write("Enter a product ID: ");
-                        id = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine($"The current price for your product with id [{id}] is: {Product.FindProductPrice(seedDictionary, id)}");
-                        Console.Write("Enter a new price: ");
-                        price = Convert.ToDecimal(Console.ReadLine());
-                        Product.ChangeProductPrice(seedDictionary, id, price);
+                        Case3();
                         Console.Write("Press any key to continue. ");
                         Console.ReadKey();
                         break;
 
                     case "4":
-                        Product.SaveToFile(productDictionary);
-                        Console.WriteLine("The list of products has been saved to a file. ");
+                        Case4();
                         Console.Write("Press any key to continue. ");
                         Console.ReadKey();
                         break;
@@ -174,6 +159,15 @@ namespace KassaSystemet
             } while (userInput != "0");
             MainMenu();
         }
+
+        static (string name, decimal price) EnterNamePrice()
+        {
+            Console.Write("Enter a name and a price: ");
+            string entry = Console.ReadLine();
+            string[] entries = entry.Split(' ');
+            
+            return (entries[0], Convert.ToDecimal(entries[1]));
+        }
         public static void AddProducts()
         {
             Console.WriteLine("Enter wares to your purchase, then print the receipt");
@@ -181,8 +175,38 @@ namespace KassaSystemet
             string customerEntry = Console.ReadLine();
             string[] entries = customerEntry.Split(' ');
             int amount = Convert.ToInt32(entries[1]);
-            seedCart.Add(new Purchase(entries[0], amount));
+            seedCart.Add(new Purchase(entries[0], amount)); // check this!
             Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
+        }
+
+        public static void AddNewProduct()
+        {
+            Console.Write("Adding a new product. Enter id, name and price: ");
+            string adminEntry = Console.ReadLine();
+            string[] adminEntries = adminEntry.Split(' ');
+
+            int id = Convert.ToInt32(adminEntries[0]);
+            string name = adminEntries[1];
+            decimal price = Convert.ToDecimal(adminEntries[2]);
+
+            Product.AddNewProduct(seedDictionary, id, name, price);
+        }
+        public static void Case4()
+        {
+            Console.Write("Enter the name of the product you want to change: ");
+            string oldName = Console.ReadLine();
+            Console.Write("Enter the new name: ");
+            string newName = Console.ReadLine();
+            Product.ChangeProductName(seedDictionary, oldName, newName);
+        }
+        public static void Case3()
+        {
+            Console.Write("Enter a product ID: ");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine($"The current price for your product with id [{id}] is: {Product.FindProductPrice(seedDictionary, id)}");
+            Console.Write("Enter a new price: ");
+            decimal price = Convert.ToDecimal(Console.ReadLine());
+            Product.ChangeProductPrice(seedDictionary, id, price);
         }
     }
 }
