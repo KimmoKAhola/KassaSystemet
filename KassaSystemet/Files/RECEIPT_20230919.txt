@@ -1,0 +1,33 @@
+********Receipt ID[1]*******************
+
+Product: Bananer  	amount: 10  	price per unit: 19,50  	sum: 195,00 SEK   	product id: 300
+
+Product: Äpplen  	amount: 7  	price per unit: 25,99  	sum: 181,93 SEK   	product id: 301
+
+Product: Chokladglass  	amount: 1  	price per unit: 13,37  	sum: 13,37 SEK   	product id: 302
+
+Product: Pepsi  	amount: 3  	price per unit: 30,50  	sum: 91,50 SEK   	product id: 303
+
+Product: Kexchoklad  	amount: 2  	price per unit: 18,99  	sum: 37,98 SEK   	product id: 304
+
+Product: Sallad  	amount: 1  	price per unit: 27,50  	sum: 27,50 SEK   	product id: 305
+
+Product: Jordgubbar  	amount: 3  	price per unit: 5,00  	sum: 15,00 SEK   	product id: 306
+
+Product: Nutella  	amount: 2  	price per unit: 21,00  	sum: 42,00 SEK   	product id: 307
+
+Product: Toapapper  	amount: 10  	price per unit: 7,00  	sum: 70,00 SEK   	product id: 308
+
+Product: Saffran  	amount: 25  	price per unit: 5,50  	sum: 137,50 SEK   	product id: 309
+
+Product: Vatten  	amount: 3  	price per unit: 100,00  	sum: 300,00 SEK   	product id: 310
+
+--------------------------------********Receipt ID[2]*******************
+
+Product: Bananer  	amount: 10  	price per unit: 19,50  	sum: 195,00 SEK   	product id: 300
+
+Product: Saffran  	amount: 2  	price per unit: 5,50  	sum: 11,00 SEK   	product id: 309
+
+Product: Nutella  	amount: 3  	price per unit: 21,00  	sum: 63,00 SEK   	product id: 307
+
+--------------------------------

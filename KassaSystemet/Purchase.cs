@@ -19,12 +19,11 @@ namespace KassaSystemet
 
         public static void Pay()
         {
-            // This is the pay method. It should display the shopping cart
-            // with its wares, amount and price as well as save the receipt to a file
-            // it should then clear the shopping cart for the next customer/purchase
-            //FileManager.CreateReceiptIDFile();
+            //This method creates the receipt for the customer and saves it to the hard drive
+            //After the customer has "paid" the cart is cleared
             FileManager.IncrementReceiptCounter();
             FileManager.SaveReceipt(Menu.seedCart, FileManager.GetReceiptID());
+            Menu.seedCart.Clear();
         }
 
         public static void DisplayShoppingCart(List<Purchase> shoppingCart) // Fix this so it can be used in receipt creator
@@ -37,7 +36,6 @@ namespace KassaSystemet
                     $"  \tprice per unit: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName)}" +
                     $"  \tsum: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName) * item.Amount} SEK " +
                     $"  \tproduct id: {Product.GetProductID(Menu.seedDictionary, item.ProductName)}\n");
-
             }
         }
 
