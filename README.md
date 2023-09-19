@@ -1,41 +1,18 @@
 # KassaSystemet
-Kassasystem – Objektorienterad kod
-
-Allmänt
 
 Programmera ett kassasystem – (som man har i kassan i en matbutik)
-
-
-Fusk
-
-Uppgiften ska lösas individuellt. Vid redovisningen får du frågor och måste beskriva hur ditt program fungerar så du måste kunna förklara hur all din egen kod fungerar.
-
-Det är inte tillåtet att plagiera (skriva av) någon annans kod. Även om du byter namn på klasser, metoder och variabler är det enkelt att se om två olika applikationer har samma struktur.
-
-
-Betyg
-
-Det går att få G, VG eller IG på uppgiften. Den är obligatorisk tillsammans med andra uppgifter, examinerande laborationer och tentamen för att få G på̊̊ hela kursen. För att få G på inlämningsuppgiften ska alla krav märkta med G vara uppfyllda. För att få VG på inlämningsuppgiften ska alla krav märkta med G och VG vara uppfyllda. 
-
-Redovisning
-
-Skapa en privat github och bjud in mig som admin/collaborator (RichardChalk) så jag kan se din kod i repo(s). Det är där jag kopplar repo till person och betygsätter. Skriv in länk till ert repo i inlämningsuppgift på skolans portal - det är där jag kopplat repo till person och betygsätter. Jag ska kunna ladda ner er kod och trycka F5 så ska allt funka!
- 
-Exempel
-
 Produkter i kassasystemet lagras i en fil. Följande data ska lagras på Produkt:
-    o	produktid (snabbkommando i kassan, ex ”300” för bananer nedan)
-    o	produktnamn
-    o	pris
-    o	pris typ – är det per kilo eller per styck
+        
+        *produktid (snabbkommando i kassan, ex ”300” för bananer nedan)
+        *produktnamn
+        *pris
+        *pris typ – är det per kilo eller per styck
 
-När man kör kassan ska det se ut ungefär som nedan:
+Exempel på två kommandon i kassan:
+        
+        <produktid> <antal> ex 300 1, betyder lägg till en av produktid
 
-Här finns två kommandon:
-
-<produktid> <antal> ex 300 1, betyder lägg till en av produktid
-
-PAY = vi ”fejkar” att det betalas och kvittot sparas ned (se nedan) och vi kommer tillbaka till menyn
+        PAY = vi ”fejkar” att det betalas och kvittot sparas ned (se nedan) och vi kommer tillbaka till menyn
 
 # Krav för godkänt
 
