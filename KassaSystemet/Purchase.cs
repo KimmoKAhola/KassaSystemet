@@ -35,7 +35,7 @@ namespace KassaSystemet
             //Console.WriteLine("Price: " + price);
             foreach (var item in shoppingCart)
             {
-                Console.Write($"\nProduct: {item.ProductName}, amount: {item.Amount}");
+                Console.Write($"\nProduct: {item.ProductName}, amount: {item.Amount}\n");
             }
         }
 

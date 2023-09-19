@@ -16,8 +16,9 @@ namespace KassaSystemet
         public static List<Product> productList = new(); // Lista med alla tillgängliga produkter
         public static int receiptCounter = Receipt.GetReceiptID(); // Load receipt ID from file
         public static int receiptID = 0;
-        public static Dictionary<int, Product> testDictionary = new Dictionary<int, Product> { { 1, new Product("Bananer", 19.50m) },
-            {2, new Product("Äpplen", 25.99m) } };
+        // Dictionary key is the product id. 300 for bananas currently.
+        public static Dictionary<int, Product> testDictionary = new (){ { 300, new Product("Bananer", 19.50m) },
+            {301, new Product("Äpplen", 25.99m) } };
         public static List<Purchase> testCart = new List<Purchase>() { { new Purchase("Bananer", 10)},
             {new Purchase("Äpplen", 7) } };
         public static void MainMenu()
