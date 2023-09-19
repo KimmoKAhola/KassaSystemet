@@ -31,21 +31,27 @@ namespace KassaSystemet
             }
         }
 
+        public static int IncrementReceiptCounter()
+        {
+            int currentReceiptID = GetReceiptID();
+            int newReceiptID = currentReceiptID + 1;
+            CreateReceiptIDFile(newReceiptID); // Update the receipt ID file
+            return newReceiptID;
+        }
         public static int GetReceiptID()
         {
-            if (File.Exists(GetReceiptIDFilePath()) && File.Exists(GetReceiptFilePath()))
+            if (!File.Exists(GetReceiptIDFilePath()))
             {
-                return Convert.ToInt32(File.ReadLines(GetReceiptIDFilePath()).First());
+                CreateReceiptIDFile(Receipt.receiptID);
             }
-            else
-            {
-                return 0;
-            }
+            return Convert.ToInt32(File.ReadLines(GetReceiptIDFilePath()).First());
         }
         public static void SaveReceipt(List<Purchase> list, int receiptID)
         {
+            
             string receipt = Receipt.CreateReceipt(list, receiptID);
-            using (StreamWriter receiptWriter = new($"{GetReceiptFilePath()}", append: false))
+            receiptID++;
+            using (StreamWriter receiptWriter = new($"{GetReceiptFilePath()}", append: true))
             {
                 receiptWriter.Write(receipt);
             }

@@ -22,8 +22,8 @@ namespace KassaSystemet
             // This is the pay method. It should display the shopping cart
             // with its wares, amount and price as well as save the receipt to a file
             // it should then clear the shopping cart for the next customer/purchase
-            Menu.receiptID = ++Menu.receiptCounter; // Does not work with 0 and 1 currenty. Fix later
-            FileManager.CreateReceiptIDFile(Menu.receiptID);
+            //FileManager.CreateReceiptIDFile();
+            FileManager.IncrementReceiptCounter();
             FileManager.SaveReceipt(Menu.seedCart, FileManager.GetReceiptID());
         }
 
