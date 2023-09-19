@@ -12,15 +12,55 @@ namespace KassaSystemet
         /*Class which creates the receipt after the user uses the PAY command
          */
 
-        static readonly string date = DateTime.Now.ToShortDateString();
-        static readonly string filePath = $"../../../Files/RECEIPT_{date}.txt";
-        public static Dictionary<int, Product> productDictionary = new();
-        public static void CreateReceipt(List<Product> productList, int receiptID)
+        public static string GetReceiptFilePath()
         {
-            using (StreamWriter receiptWriter = new($"{filePath}", append: true))
+            return $"../../../Files/RECEIPT_{GetCurrentDate()}.txt";
+        }
+
+        public static string GetReceiptIDFilePath()
+        {
+            return $"../../../Files/RECEIPT_ID_{GetCurrentDate()}.txt";
+        }
+
+        public static string GetCurrentDate()
+        {
+            return DateTime.Now.ToString("yyyyMMdd");
+        }
+
+        public static int GetReceiptID()
+        {
+            if (File.Exists(GetReceiptIDFilePath()) && File.Exists(GetReceiptFilePath())){
+                Console.WriteLine(Convert.ToInt32(File.ReadLines(GetReceiptIDFilePath()).First()));
+                return Convert.ToInt32(File.ReadLines(GetReceiptIDFilePath()).First());
+            }
+            else
             {
-                receiptWriter.Write($"receipt number is: {receiptID}\n" +
-                    $"Products are: {productList[0].ProductName} with product ID [{productList[0].ProductID}] and unit price: [{productList[0].UnitPrice}]\n"); // Måste loopa igenom. Hårdkodar med första värdet nu.
+                return 0;
+            }
+        }
+        //static readonly string date = DateTime.Now.ToShortDateString();
+        //static readonly string filePath = $"../../../Files/RECEIPT_{date}.txt";
+        public static Dictionary<int, Product> productDictionary = new();
+        public static void CreateReceipt(List<Product> productList, int receiptID) // Den här ska ändras till List<Purchase> senare
+        {
+            using (StreamWriter receiptWriter = new($"{GetReceiptFilePath()}", append: true))
+            {
+                receiptWriter.Write($"********Receipt ID[{receiptID}]*******************\n");
+                foreach (var product in productList)
+                {
+                    receiptWriter.Write($"Products are: {product.ProductName} with product ID " +
+                        $"[{product.ProductID}] and unit price: " +
+                        $"[{product.UnitPrice}]\n"); // Loopar igenom alla köp i produktlistan
+                }
+                receiptWriter.WriteLine("--------------------------------"); // Separation between different purchases
+            }
+        }
+
+        public static void CreateReceiptIDFile(int receiptID)
+        {
+            using (StreamWriter idWriter = new StreamWriter($"{GetReceiptIDFilePath()}", append: false))
+            {
+                idWriter.Write(receiptID);
             }
         }
     }

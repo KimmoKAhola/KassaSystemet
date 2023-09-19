@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace KassaSystemet
 {
     static internal class Menu
     {
-        //static Product newProduct = new Product();
         public static Dictionary<int, Product> productDictionary = new();
+        public static List<Purchase> listOfCurrentWares = new(); // Lägg in varor här. Vid köp, spara till kvitto och rensa sedan
         public static List<Product> productList = new();
-        static int receiptCounter = 0;
-        
+        static int receiptCounter = Receipt.GetReceiptID();
+
         public static void MainMenu()
         {
             int menuOption = 0;
@@ -25,6 +27,7 @@ namespace KassaSystemet
                 Console.WriteLine("Choose an option below.");
                 Console.WriteLine("1. Ny Kund");
                 Console.WriteLine("2. Admin");
+                Console.WriteLine("3. Load receipt ID file ** TEST ONLY DELETE LATER**");
                 Console.WriteLine("0. Avsluta");
                 Console.Write("Enter your command: ");
                 menuOption = Convert.ToInt32(Console.ReadLine());
@@ -39,8 +42,12 @@ namespace KassaSystemet
                         AdminMenu();
                         menuOption = 0;
                         break;
+                    case 3:
+                        Receipt.GetReceiptID();
+                        Console.ReadKey();
+                        break;
                     case 0:
-                        menuOption = 0;
+                        Environment.Exit(0);
                         break;
                 }
             } while (menuOption != 0);
@@ -71,24 +78,32 @@ namespace KassaSystemet
                         int receiptID = ++receiptCounter;
                         productList.Add(new Product("bananas", 1, 19.50m));
                         Receipt.CreateReceipt(productList, receiptID);
+                        Receipt.CreateReceiptIDFile(receiptID);
+                        CustomerMenu();
+                        break;
+                    case "0":
                         MainMenu();
                         break;
-
                 }
-            } while (userInput != "PAY");
-
+            } while (userInput != "0");
+            MainMenu();
         }
 
         public static void AdminMenu()
         {
-            Console.Clear();
-            Console.WriteLine("Admin menu");
-            Console.WriteLine("1. Add\n2. Display products\n3. Change price on a product\n0. Exit");
-            Console.WriteLine("4. Print file TEST TEST TEST");
-            Console.Write("Enter command: ");
-            string userInput = Console.ReadLine().ToUpper();
+            string userInput;
             do
             {
+                Console.Clear();
+                Console.WriteLine("Admin menu");
+                Console.WriteLine("1. Add a new product\n" +
+                    "2. Display available products\n" +
+                    "3. Change price on a product\n" +
+                    "4. Save your current product list to a file\n" +
+                    "0. Exit admin menu");
+
+                Console.Write("Enter a command: ");
+                userInput = Console.ReadLine().ToUpper();
                 switch (userInput)
                 {
                     case "1":
@@ -101,16 +116,16 @@ namespace KassaSystemet
                         decimal price = Convert.ToDecimal(Console.ReadLine());
                         Product newProduct = new Product(name, id, price);
                         Product.AddNewProduct(productDictionary, newProduct);
-                        Console.WriteLine($"The product {name} with product ID {id} and unit price {price} has been added.");
-                        Console.Write("Enter a new command: ");
-                        userInput = Console.ReadLine();
+                        Console.WriteLine($"The product {name} with product ID {id} and unit price {price} has been added.\n" +
+                            $"Press any key to continue.");
+                        Console.ReadKey();
                         break;
 
                     case "2":
-                        Console.WriteLine("The dictionary contains these products: ");
+                        Console.Write("The dictionary contains these products: ");
                         Product.DisplayProducts(productDictionary);
-                        Console.Write("Enter a new command: ");
-                        userInput = Console.ReadLine();
+                        Console.Write("Press any key to continue. ");
+                        Console.ReadKey();
                         break;
 
                     case "3":
@@ -119,13 +134,15 @@ namespace KassaSystemet
                         Console.Write("Enter a new price: ");
                         price = Convert.ToDecimal(Console.ReadLine());
                         Product.ChangeProductPrice(productDictionary, id, price);
-                        Console.Write("Enter a new command: ");
-                        userInput = Console.ReadLine();
+                        Console.Write("Press any key to continue. ");
+                        Console.ReadKey();
                         break;
 
                     case "4":
-                        string date = DateTime.Now.ToShortDateString();
                         Product.SaveToFile(productDictionary);
+                        Console.WriteLine("The list of products has been saved to a file. ");
+                        Console.Write("Press any key to continue. ");
+                        Console.ReadKey();
                         break;
 
                     case "0":
