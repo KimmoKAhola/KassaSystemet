@@ -58,11 +58,16 @@ namespace KassaSystemet
             }
             return -50;
         }
+
+        public static decimal FindProductPrice(Dictionary<int, Product> productDictionary, int productID)
+        {
+            return Seed.seedDictionary[productID].UnitPrice;
+        }
         public static void ChangeProductPrice(Dictionary<int, Product> dictionary, int productID, decimal newPrice)
         {
-            // Ändra pris på varan. Använd FindProduct med produkt id och ändra priset.
+            // Ändra pris på varan.
             //TODO lägg till felhantering
-            dictionary[productID].UnitPrice = newPrice;
+            Seed.seedDictionary[productID].UnitPrice = newPrice;
         }
 
         public static void DisplayProducts(Dictionary<int, Product> dictionary)

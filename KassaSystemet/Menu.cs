@@ -88,7 +88,7 @@ namespace KassaSystemet
                         break;
                     case "2":
                         AddProducts();
-                        Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
+                        
                         Console.WriteLine("Add another product? (press 2)");
                         userInput = Console.ReadLine();
                         break;
@@ -144,7 +144,7 @@ namespace KassaSystemet
 
                     case "2":
                         Console.Write("The dictionary contains these products: ");
-                        Product.DisplayProducts(productDictionary);
+                        Product.DisplayProducts(seedDictionary);
                         Console.Write("Press any key to continue. ");
                         Console.ReadKey();
                         break;
@@ -152,9 +152,10 @@ namespace KassaSystemet
                     case "3":
                         Console.Write("Enter a product ID: ");
                         id = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine($"The current price for your product with id [{id}] is: {Product.FindProductPrice(seedDictionary, id)}");
                         Console.Write("Enter a new price: ");
                         price = Convert.ToDecimal(Console.ReadLine());
-                        Product.ChangeProductPrice(productDictionary, id, price);
+                        Product.ChangeProductPrice(seedDictionary, id, price);
                         Console.Write("Press any key to continue. ");
                         Console.ReadKey();
                         break;
@@ -181,6 +182,7 @@ namespace KassaSystemet
             string[] entries = customerEntry.Split(' ');
             int amount = Convert.ToInt32(entries[1]);
             seedCart.Add(new Purchase(entries[0], amount));
+            Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
         }
     }
 }
