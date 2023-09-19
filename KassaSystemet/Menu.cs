@@ -16,10 +16,9 @@ namespace KassaSystemet
         public static Dictionary<int, Product> seedDictionary = Seed.seedDictionary;
 
         public static List<Purchase> seedCart = Seed.seedProductList;
-        public static List<Purchase> shoppingCart = new List<Purchase>(); //Empty shopping cart
+        public static List<Purchase> shoppingCart = new List<Purchase>(); //Empty shopping cart. Not used right now.
         public static void MainMenu()
         {
-            //Product.FindProductPrice(testDictionary, 300);
             int menuOption = 0;
 
             do
@@ -27,9 +26,10 @@ namespace KassaSystemet
                 Console.Clear();
                 Console.WriteLine("***Menu for the cash register***");
                 Console.WriteLine("Choose an option below.");
-                Console.WriteLine("1. Ny Kund");
-                Console.WriteLine("2. Admin");
+                Console.WriteLine("1. New customer");
+                Console.WriteLine("2. Admin tools");
                 Console.WriteLine("3. Load receipt ID file ** TEST ONLY DELETE LATER**");
+                Console.WriteLine("4. Press 4 for a demonstration with hardcoded values");
                 Console.WriteLine("0. Avsluta");
                 Console.Write("Enter your command: ");
                 menuOption = Convert.ToInt32(Console.ReadLine());
@@ -45,7 +45,7 @@ namespace KassaSystemet
                         menuOption = 0;
                         break;
                     case 3:
-                        FileManager.GetReceiptID();
+                        Console.WriteLine("receipt id value from file: " + FileManager.GetReceiptID());
                         Console.ReadKey();
                         break;
                     case 0:
@@ -61,9 +61,7 @@ namespace KassaSystemet
              * kund ska ange produktens ID samt antal/mängd
              * programmet ska fortsätta tills kund anger kommandot "PAY"
              * kvitto ska skrivas ut och sparas
-             * 
              */
-
             string userInput;
             do
             {

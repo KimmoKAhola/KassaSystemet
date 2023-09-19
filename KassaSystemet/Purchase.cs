@@ -9,7 +9,12 @@ namespace KassaSystemet
     public class Purchase
     {
 
-        //Class which handles the purchase list
+        /*  
+         *  Class which handles the "shopping cart".
+         *  Currently contains a method to Pay and display current shopping cart
+         *  This class is also responsible for calculating the total cost when purchasing
+         *  different products
+         */
 
         public Purchase(string productName, int amount)
         {

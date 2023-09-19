@@ -8,29 +8,30 @@ namespace KassaSystemet
 {
     public class FileManager
     {
-        public static string GetReceiptFilePath()
+        /* This class creates the text file which is saved to the hard drive
+         * The methods here are used to create the filepath
+         * and are also responsible to keep track of the receipt id
+         */
+        
+        private static string GetReceiptFilePath()
         {
             return $"../../../Files/RECEIPT_{GetCurrentDate()}.txt";
         }
-
-        public static string GetReceiptIDFilePath()
+        private static string GetReceiptIDFilePath()
         {
             return $"../../../Files/RECEIPT_ID_{GetCurrentDate()}.txt";
         }
-
-        public static string GetCurrentDate()
+        private static string GetCurrentDate()
         {
             return DateTime.Now.ToString("yyyyMMdd");
         }
-
-        public static void CreateReceiptIDFile(int receiptID)
+        private static void CreateReceiptIDFile(int receiptID)
         {
             using (StreamWriter idWriter = new StreamWriter($"{GetReceiptIDFilePath()}", append: false))
             {
                 idWriter.Write(receiptID);
             }
         }
-
         public static int IncrementReceiptCounter()
         {
             int currentReceiptID = GetReceiptID();
@@ -48,9 +49,8 @@ namespace KassaSystemet
         }
         public static void SaveReceipt(List<Purchase> list, int receiptID)
         {
-            
             string receipt = Receipt.CreateReceipt(list, receiptID);
-            receiptID++;
+            //receiptID++; ???
             using (StreamWriter receiptWriter = new($"{GetReceiptFilePath()}", append: true))
             {
                 receiptWriter.Write(receipt);

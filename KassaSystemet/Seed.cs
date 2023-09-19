@@ -9,6 +9,7 @@ namespace KassaSystemet
     public static class Seed
     {
         //This class is used for seeding later. For now it just contains a dictionary with random products.
+        //Currently only used for testing the different functions without having to type in anything manually.
         public static Dictionary<int, Product> seedDictionary = new(){ 
             { 300, new Product("Bananer", 19.50m) },
             { 301, new Product("Äpplen", 25.99m) },
