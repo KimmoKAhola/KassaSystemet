@@ -32,14 +32,17 @@ namespace KassaSystemet
             //dictionary.Add(, product);
             Console.WriteLine("Product added!");
         }
-        public static int GetProductID(Dictionary<int, Product> productDictionary)
+        public static int GetProductID(Dictionary<int, Product> productDictionary, string productName)
         {
-            //Want to type in "Bananas" and find its dictionary key. 300 for now.
+            //Want to type in "Bananas" and find its dictionary key.
             foreach (var item in productDictionary)
             {
-                Console.WriteLine("Key: " + item.Key);
+                if (item.Value.ProductName == productName)
+                {
+                    return item.Key;
+                }
             }
-            return 0;
+            return -50;
         }
         public static decimal FindProductPrice(Dictionary<int, Product> dictionary)
         {
