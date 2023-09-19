@@ -1,22 +1,3 @@
-********Receipt ID[1]*******************
-Products are: Bananer with product ID [300]
---------------------------------
-********Receipt ID[1]*******************
-Products are: Bananer with product ID [300]
---------------------------------
-********Receipt ID[1]*******************
-Products are: Bananer with product ID [300]
---------------------------------
-********Receipt ID[1]*******************
-Products are: Bananer with product ID [300]
---------------------------------
-********Receipt ID[1]*******************
-Products are: Bananer with product ID [300]
---------------------------------
-********Receipt ID[1]*******************
-Products are: Bananer with product ID [300]
---------------------------------
-********Receipt ID[2]*******************
-Products are: Bananer with product ID [300]
-Products are: Bananer with product ID [400]
+********Receipt ID[0]*******************
+Products are: Bananer with product ID [10]
 --------------------------------

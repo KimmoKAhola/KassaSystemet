@@ -9,16 +9,17 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace KassaSystemet
 {
-    static internal class Menu
+    public static class Menu
     {
         public static Dictionary<int, Product> productDictionary = new();
         public static List<Purchase> shoppingCart = new(); // Lägg in varor här. Vid köp, spara till kvitto och rensa sedan
         public static List<Product> productList = new(); // Lista med alla tillgängliga produkter
         static int receiptCounter = Receipt.GetReceiptID(); // Load receipt ID from file
         public static Dictionary<int, Product> testDictionary = new Dictionary<int, Product> { { 1, new Product("Bananer", 300, 19.50m) } };
+        public static List<Purchase> testCart = new List<Purchase>() { { new Purchase("Bananer", 10)} };
         public static void MainMenu()
         {
-            Product.FindProductPrice(testDictionary, 300);
+            //Product.FindProductPrice(testDictionary, 300);
             int menuOption = 0;
 
             do
@@ -66,7 +67,8 @@ namespace KassaSystemet
             Console.Clear();
             Console.WriteLine("Customer menu");
             Console.WriteLine("Commands: p\n");
-            Console.WriteLine("1. Display shopping cart");
+            Console.WriteLine("1. Display test cart");
+            Console.WriteLine("00. Test the Pay() command");
             Console.WriteLine("<Product ID> <Amount>");
             Console.WriteLine("PAY (exit and print receipt)");
             string userInput;
@@ -78,7 +80,7 @@ namespace KassaSystemet
                 {
                     case "1":
 
-                        Purchase.DisplayShoppingCart(shoppingCart);
+                        Purchase.DisplayShoppingCart(testCart);
                         Console.WriteLine("Press any key to continue");
                         Console.ReadKey();
                         Console.Write("Enter a new command: ");
@@ -97,6 +99,11 @@ namespace KassaSystemet
                         Console.Write("Enter a new command: ");
                         userInput = Console.ReadLine();
                         Purchase.Pay(); // pay command in purchase class
+                        break;
+                    case "00":
+                        Purchase.Pay();
+                        Console.WriteLine("Pause");
+                        Console.ReadKey();
                         break;
                     case "0":
                         MainMenu();

@@ -23,7 +23,7 @@ namespace KassaSystemet
             // with its wares, amount and price as well as save the receipt to a file
             // it should then clear the shopping cart for the next customer/purchase
 
-
+            Receipt.CreateReceiptForCart(Menu.testCart, Receipt.GetReceiptID());
         }
 
         public static void DisplayShoppingCart(List<Purchase> shoppingCart)
