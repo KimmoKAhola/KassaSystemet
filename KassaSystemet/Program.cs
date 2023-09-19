@@ -1,4 +1,6 @@
-﻿namespace KassaSystemet
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace KassaSystemet
 {
     internal class Program
     {

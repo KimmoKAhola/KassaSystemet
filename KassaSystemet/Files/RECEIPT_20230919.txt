@@ -1,7 +1,22 @@
 ********Receipt ID[1]*******************
-Products are: bananas with product ID [1] and unit price: [19,50]
+Products are: Bananer with product ID [300]
+--------------------------------
+********Receipt ID[1]*******************
+Products are: Bananer with product ID [300]
+--------------------------------
+********Receipt ID[1]*******************
+Products are: Bananer with product ID [300]
+--------------------------------
+********Receipt ID[1]*******************
+Products are: Bananer with product ID [300]
+--------------------------------
+********Receipt ID[1]*******************
+Products are: Bananer with product ID [300]
+--------------------------------
+********Receipt ID[1]*******************
+Products are: Bananer with product ID [300]
 --------------------------------
 ********Receipt ID[2]*******************
-Products are: bananas with product ID [1] and unit price: [19,50]
-Products are: bananas with product ID [1] and unit price: [19,50]
+Products are: Bananer with product ID [300]
+Products are: Bananer with product ID [400]
 --------------------------------

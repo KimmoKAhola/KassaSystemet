@@ -12,12 +12,13 @@ namespace KassaSystemet
     static internal class Menu
     {
         public static Dictionary<int, Product> productDictionary = new();
-        public static List<Purchase> listOfCurrentWares = new(); // Lägg in varor här. Vid köp, spara till kvitto och rensa sedan
-        public static List<Product> productList = new();
-        static int receiptCounter = Receipt.GetReceiptID();
-
+        public static List<Purchase> shoppingCart = new(); // Lägg in varor här. Vid köp, spara till kvitto och rensa sedan
+        public static List<Product> productList = new(); // Lista med alla tillgängliga produkter
+        static int receiptCounter = Receipt.GetReceiptID(); // Load receipt ID from file
+        public static Dictionary<int, Product> testDictionary = new Dictionary<int, Product> { { 1, new Product("Bananer", 300, 19.50m) } };
         public static void MainMenu()
         {
+            Product.FindProductPrice(testDictionary, 300);
             int menuOption = 0;
 
             do
@@ -64,34 +65,45 @@ namespace KassaSystemet
 
             Console.Clear();
             Console.WriteLine("Customer menu");
-            Console.WriteLine("Commands:\n");
+            Console.WriteLine("Commands: p\n");
+            Console.WriteLine("1. Display shopping cart");
             Console.WriteLine("<Product ID> <Amount>");
             Console.WriteLine("PAY (exit and print receipt)");
-            Console.Write("Enter command: ");
-            string userInput = Console.ReadLine().ToUpper();
+            string userInput;
             do
             {
+            Console.Write("Enter command: ");
+            userInput = Console.ReadLine().ToUpper();
                 switch (userInput)
                 {
+                    case "1":
+
+                        Purchase.DisplayShoppingCart(shoppingCart);
+                        Console.WriteLine("Press any key to continue");
+                        Console.ReadKey();
+                        Console.Write("Enter a new command: ");
+                        userInput = Console.ReadLine();
+                        break;
                     case "P":
                         Console.WriteLine("Enter wares to your purchase, then print the receipt");
                         int receiptID = ++receiptCounter;
-                        Console.Write("Enter product name: ");
-                        string productName = Console.ReadLine().ToLower();
-                        Console.Write("Enter how many of the product: ");
-                        int amount = Convert.ToInt32(Console.ReadLine());
-                        listOfCurrentWares.Add(new Purchase(productName, amount));
-                        productList.Add(new Product("bananas", 1, 19.50m)); // Hårdkodat för demo
-                        Receipt.CreateReceipt(productList, receiptID);
-                        Receipt.CreateReceiptIDFile(receiptID);
-                        CustomerMenu();
+                        Console.Write("Enter <product ID> <Amount>: ");
+                        string customerEntry = Console.ReadLine();
+                        string[] entries = customerEntry.Split(' ');
+                        int amount = Convert.ToInt32(entries[1]);
+                        shoppingCart.Add(new Purchase(entries[0], amount));
+                        Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
+                        Receipt.CreateReceiptForCart(shoppingCart, receiptID);
+                        Console.Write("Enter a new command: ");
+                        userInput = Console.ReadLine();
+                        Purchase.Pay(); // pay command in purchase class
                         break;
                     case "0":
                         MainMenu();
                         break;
                 }
             } while (userInput != "0");
-            MainMenu();
+            //MainMenu();
         }
 
         public static void AdminMenu()

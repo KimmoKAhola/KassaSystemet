@@ -30,7 +30,6 @@ namespace KassaSystemet
         public static int GetReceiptID()
         {
             if (File.Exists(GetReceiptIDFilePath()) && File.Exists(GetReceiptFilePath())){
-                Console.WriteLine(Convert.ToInt32(File.ReadLines(GetReceiptIDFilePath()).First()));
                 return Convert.ToInt32(File.ReadLines(GetReceiptIDFilePath()).First());
             }
             else
@@ -38,9 +37,6 @@ namespace KassaSystemet
                 return 0;
             }
         }
-        //static readonly string date = DateTime.Now.ToShortDateString();
-        //static readonly string filePath = $"../../../Files/RECEIPT_{date}.txt";
-        public static Dictionary<int, Product> productDictionary = new();
         public static void CreateReceipt(List<Product> productList, int receiptID) // Den här ska ändras till List<Purchase> senare
         {
             using (StreamWriter receiptWriter = new($"{GetReceiptFilePath()}", append: true))
@@ -51,6 +47,20 @@ namespace KassaSystemet
                     receiptWriter.Write($"Products are: {product.ProductName} with product ID " +
                         $"[{product.ProductID}] and unit price: " +
                         $"[{product.UnitPrice}]\n"); // Loopar igenom alla köp i produktlistan
+                }
+                receiptWriter.WriteLine("--------------------------------"); // Separation between different purchases
+            }
+        }
+
+        public static void CreateReceiptForCart(List<Purchase> list, int receiptID)
+        {
+            using (StreamWriter receiptWriter = new($"{GetReceiptFilePath()}", append: true))
+            {
+                receiptWriter.Write($"********Receipt ID[{receiptID}]*******************\n");
+                foreach (var purchase in list)
+                {
+                    receiptWriter.Write($"Products are: {purchase.ProductName} with product ID " +
+                        $"[{purchase.Amount}]\n"); // Loops through all wares in the shopping cart
                 }
                 receiptWriter.WriteLine("--------------------------------"); // Separation between different purchases
             }

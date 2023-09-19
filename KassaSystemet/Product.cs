@@ -13,10 +13,7 @@ namespace KassaSystemet
             Create methods for adding products, removing product, changing price etc
             Admin method in menu class should call on this class.
         */
-        public Product()
-        {
-            //Might not be needed
-        }
+
         public Product(string productName, int productID, decimal unitPrice)
         {
             ProductName = productName;
@@ -36,12 +33,16 @@ namespace KassaSystemet
             Console.WriteLine("Product added!");
         }
 
-        public static Product FindProduct(Dictionary<int, Product> dictionary, int productID)
+        public static decimal FindProductPrice(Dictionary<int, Product> dictionary, int productID)
         {
-            // Sök mha produkt ID. Anta att produkt finns för tillfället
-            // Denna metod ska användas för att hitta produktID baserat på sträng. Användare ska söka efter "Bananer" etc.
+            // Use this to find a certain unit price given a product ID.
             // TODO lägg till felhantering
-            return dictionary[productID];
+            foreach (var product in dictionary)
+            {
+                Console.WriteLine("key: " +product.Key + "Name: " + product.Value.ProductName+ "ID: " + product.Value.ProductID);
+                return product.Value.UnitPrice; // The unit price for a given product
+            }
+            return 0;
         }
         public static void ChangeProductPrice(Dictionary<int, Product> dictionary, int productID, decimal newPrice)
         {
