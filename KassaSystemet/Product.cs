@@ -43,6 +43,7 @@ namespace KassaSystemet
                 Console.WriteLine($"The product id {productID} already exists in the system.");
             }
         }
+        
         public static int GetProductID(Dictionary<int, Product> productDictionary, string productName)
         {
             //Want to type in "Bananas" and find its dictionary key.
@@ -104,10 +105,11 @@ namespace KassaSystemet
 
         public static void CheckForSalesPrice()
         {
+            
             DateTime today = DateTime.Now;
             DateTime start = new DateTime(2023, 9, 19);
             DateTime end = new DateTime(2023, 9, 25);
-            DateTime.Compare(start, today); // returns -1 = is true
+            DateTime.Compare(start, today); // returns -1 = is false
             DateTime.Compare(end, today); // returns 1 = is true
             //TODO Implement a function which checks if a product is on sale. Should check if current date is between sales date, then check products?
         }
