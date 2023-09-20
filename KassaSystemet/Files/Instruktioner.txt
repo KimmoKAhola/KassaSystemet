@@ -1,0 +1,24 @@
+// Assuming you have already initialized your discountDictionary
+Dictionary<string, List<Discount>> discountDictionary = new Dictionary<string, List<Discount>>();
+
+// Create a Discount object
+Discount discount = new Discount("2022-07-01", "2022-07-10", 0.20m); // Example values
+
+// Define a key (e.g., product name) for the dictionary
+string productName = "YourProduct";
+
+// Check if the key already exists in the dictionary
+if (!discountDictionary.ContainsKey(productName))
+{
+    // If the key doesn't exist, create a new list and add the Discount object to it
+    List<Discount> discounts = new List<Discount>();
+    discounts.Add(discount);
+
+    // Add the list to the dictionary with the product name as the key
+    discountDictionary.Add(productName, discounts);
+}
+else
+{
+    // If the key already exists, simply add the Discount object to the existing list
+    discountDictionary[productName].Add(discount);
+}

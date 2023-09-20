@@ -24,8 +24,9 @@ namespace KassaSystemet
             { 310, new Product("Vatten", 100.00m, -1m, "per unit") }};
         public static Dictionary<string, Discount> discountDictionary = new()
         {
-           // {"Bananer", new Discount("2023/09/20", "2023/09/25", 5.00m)},
-           // {"Äpplen", new Discount("2023/09/20", "2023/09/22", 12.0m) }
+            //{ }
+            //{"Bananer", new Discount("2023/09/20", "2023/09/25", 5.00m)},
+            //{"Äpplen", new Discount("2023/09/20", "2023/09/22", 12.0m) }
         }; // Key should be product name.
         public static List<Purchase> seedProductList = new(){
             { new Purchase("Bananer", 10)},
@@ -39,5 +40,8 @@ namespace KassaSystemet
             { new Purchase("Toapapp", 10) },
             { new Purchase("Saffran", 25) },
             { new Purchase("Vatten", 3) } };
+
+        public static Dictionary<string, List<Discount>> dictionary = new();
+
     }
 }
