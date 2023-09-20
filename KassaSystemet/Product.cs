@@ -16,26 +16,27 @@ namespace KassaSystemet
 
         //public static Dictionary<int, Product> seedDictionary = Seed.seedDictionary;
 
-        public Product(string productName, decimal unitPrice) // add price type (per kg or per piece later)
+        public Product(string productName, decimal unitPrice, decimal discountPrice, string priceType) // add price type (per kg or per piece later)
         {
             ProductName = productName;
             UnitPrice = unitPrice;
-            //PriceType = priceType;
-            //DiscountPrice = discountprice;
+            DiscountPrice = discountPrice;
+            PriceType = priceType;
         }
 
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
         public string PriceType { get; set; }
-
-        public static void AddNewProduct(Dictionary<int, Product> dictionary, int productID, string productName, decimal unitPrice)
+        public decimal DiscountPrice { get; set; }
+        public static void AddNewProduct(Dictionary<int, Product> dictionary, int productID, string productName, decimal unitPrice, decimal discountPrice, string priceType)
         {
             // if (dictionary.ContainsKey(product.ProductID)) Kolla så att produkten samt ID ej finns i systemet.
             // TODO Lägg till felhantering
             if (!dictionary.ContainsKey(productID))
             {
-                dictionary.Add(productID, new Product(productName, unitPrice));
-                Console.WriteLine($"Added the product {productName} with id [{productID}] and price {unitPrice} to the system.");
+                dictionary.Add(productID, new Product(productName, unitPrice, discountPrice, priceType));
+                Console.WriteLine($"Added the product {productName} with id [{productID}] and price {unitPrice} and price type {priceType} to the system." +
+                    $"\nDiscount price is: {discountPrice}");
             }
             else
             {
@@ -104,7 +105,7 @@ namespace KassaSystemet
             DateTime end = new DateTime(2023, 9, 25);
             DateTime.Compare(start, today); // returns -1 = is true
             DateTime.Compare(end, today); // returns 1 = is true
-            //TODO Implement a function which checks if a product is on sale. Should checks if current date is between sales date, then check products?
+            //TODO Implement a function which checks if a product is on sale. Should check if current date is between sales date, then check products?
         }
     }
 }

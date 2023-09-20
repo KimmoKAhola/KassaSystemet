@@ -20,7 +20,7 @@ namespace KassaSystemet
         public static List<Purchase> shoppingCart = new List<Purchase>(); //Empty shopping cart. Not used right now.
         public static void MainMenu()
         {
-            int menuOption = 0;
+            int menuOption;
 
             do
             {
@@ -181,8 +181,10 @@ namespace KassaSystemet
             int id = Convert.ToInt32(adminEntries[0]);
             string name = adminEntries[1];
             decimal price = Convert.ToDecimal(adminEntries[2]);
+            decimal discountPrice = -1; // Hard coded. Will only be changed when necessary
+            string priceType = "per unit"; // Change later. Hard coded for now
 
-            Product.AddNewProduct(seedDictionary, id, name, price);
+            Product.AddNewProduct(seedDictionary, id, name, price, discountPrice, priceType);
         }
         private static void Case4()
         {
