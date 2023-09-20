@@ -34,5 +34,22 @@ namespace KassaSystemet
             formattedReceipt += "\n--------------------------------";
             return formattedReceipt;
         }
+        public static void Test(List<Purchase> purchaseList, Dictionary<string, Discount> discountDictionary)
+        {
+            string formattedReceipt = "";
+            formattedReceipt += "TEST";
+            decimal price = 0m;
+            string productName = purchaseList[0].ProductName;
+            if (discountDictionary.ContainsKey(productName))
+            {
+                price = Seed.discountDictionary[productName].DiscountPrice;
+            }
+            // Jag har en list med köp
+            // En lista med eventuella rabatter
+            // om listan med köp innehåller en produkt med rabatt ska priset hämtas från rabattlistan
+            // jfr
+
+
+        }
     }
 }

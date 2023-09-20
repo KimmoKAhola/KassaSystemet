@@ -13,7 +13,6 @@ namespace KassaSystemet
             Create methods for adding products, removing product, changing price etc
             Admin method in menu class should call on this class.
         */
-
         //public static Dictionary<int, Product> seedDictionary = Seed.seedDictionary;
 
         public Product(string productName, decimal unitPrice, decimal discountPrice, string priceType) // add price type (per kg or per piece later)
@@ -43,7 +42,6 @@ namespace KassaSystemet
                 Console.WriteLine($"The product id {productID} already exists in the system.");
             }
         }
-        
         public static int GetProductID(Dictionary<int, Product> productDictionary, string productName)
         {
             //Want to type in "Bananas" and find its dictionary key.
@@ -105,7 +103,7 @@ namespace KassaSystemet
 
         public static void CheckForSalesPrice()
         {
-            
+
             DateTime today = DateTime.Now;
             DateTime start = new DateTime(2023, 9, 19);
             DateTime end = new DateTime(2023, 9, 25);

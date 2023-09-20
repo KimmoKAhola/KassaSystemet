@@ -16,6 +16,8 @@ namespace KassaSystemet
         public static Dictionary<int, Product> seedDictionary = Seed.seedDictionary; //TODO this should probably be in the Product class
 
         //TODO these should probably be in the seed class as well. No logic behind having lists in the menu class.
+        // !Underlined comment
+        // ?RED COMMENT
         public static List<Purchase> seedCart = Seed.seedProductList;
         public static List<Purchase> shoppingCart = new List<Purchase>(); //Empty shopping cart. Not used right now.
         public static void MainMenu()
@@ -103,7 +105,6 @@ namespace KassaSystemet
             } while (userInput != "0");
             MainMenu();
         }
-
         private static void AdminMenu()
         {
             string userInput;
@@ -144,6 +145,11 @@ namespace KassaSystemet
                         Case4();
                         Console.Write("Press any key to continue. ");
                         Console.ReadKey();
+                        break;
+
+                    case "5":
+                        Case5();
+                        Console.Write("Press any key to continue");
                         break;
 
                     case "0":
@@ -187,14 +193,6 @@ namespace KassaSystemet
 
             Product.AddNewProduct(seedDictionary, id, name, price, discountPrice, priceType);
         }
-        private static void Case4()
-        {
-            Console.Write("Enter the name of the product you want to change: ");
-            string oldName = Console.ReadLine();
-            Console.Write("Enter the new name: ");
-            string newName = Console.ReadLine();
-            Product.ChangeProductName(seedDictionary, oldName, newName);
-        }
         private static void Case3()
         {
             Console.Write("Enter a product ID: ");
@@ -203,6 +201,19 @@ namespace KassaSystemet
             Console.Write("Enter a new price: ");
             decimal price = Convert.ToDecimal(Console.ReadLine());
             Product.ChangeProductPrice(seedDictionary, id, price);
+        }
+        private static void Case4()
+        {
+            Console.Write("Enter the name of the product you want to change: ");
+            string oldName = Console.ReadLine();
+            Console.Write("Enter the new name: ");
+            string newName = Console.ReadLine();
+            Product.ChangeProductName(seedDictionary, oldName, newName);
+        }
+
+        public static void Case5()
+        {
+
         }
     }
 }

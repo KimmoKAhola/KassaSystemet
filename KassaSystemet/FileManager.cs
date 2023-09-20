@@ -12,7 +12,7 @@ namespace KassaSystemet
          * The methods here are used to create the filepath
          * and are also responsible to keep track of the receipt id
          */
-        
+
         private static string GetReceiptFilePath()
         {
             return $"../../../Files/RECEIPT_{GetCurrentDate()}.txt";
@@ -50,7 +50,6 @@ namespace KassaSystemet
         public static void SaveReceipt(List<Purchase> list, int receiptID)
         {
             string receipt = Receipt.CreateReceipt(list, receiptID);
-            //receiptID++; ???
             using (StreamWriter receiptWriter = new($"{GetReceiptFilePath()}", append: true))
             {
                 receiptWriter.Write(receipt);

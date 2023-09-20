@@ -22,7 +22,10 @@ namespace KassaSystemet
             { 308, new Product("Toapapp", 7.00m, -1m, "per unit") },
             { 309, new Product("Saffran", 5.50m, -1m, "per unit") },
             { 310, new Product("Vatten", 100.00m, -1m, "per unit") }};
-        public static Dictionary<string, Discount> discountDictionary = new() { }; // Key should be product name.
+        public static Dictionary<string, Discount> discountDictionary = new()
+        {
+            {"Bananer", new Discount("2023/09/20", "2023/09/25", 5.00m)}
+        }; // Key should be product name.
         public static List<Purchase> seedProductList = new(){
             { new Purchase("Bananer", 10)},
             { new Purchase("Äpplen", 7) },
