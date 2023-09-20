@@ -47,9 +47,9 @@ namespace KassaSystemet
             }
             return Convert.ToInt32(File.ReadLines(GetReceiptIDFilePath()).First());
         }
-        public static void SaveReceipt(List<Purchase> list, int receiptID)
+        public static void SaveReceipt(List<Purchase> shoppingCart, int receiptID)
         {
-            string receipt = Receipt.CreateReceipt(list, receiptID);
+            string receipt = Receipt.CreateReceipt(shoppingCart, receiptID);
             using (StreamWriter receiptWriter = new($"{GetReceiptFilePath()}", append: true))
             {
                 receiptWriter.Write(receipt);

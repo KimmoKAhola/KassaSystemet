@@ -46,10 +46,6 @@ namespace KassaSystemet
             }
             return -100m; //TODO Error handling
         }
-        public static void AddNewDiscount()
-        {
-            Console.WriteLine("Not implemented yet!");
-        }
         public static void RemoveDiscount()
         {
             Console.WriteLine("Not implemented yet!");
@@ -74,7 +70,7 @@ namespace KassaSystemet
         public static void AddNewDiscount(string productName, string startDate, string endDate, decimal discountPercentage)
         {
             //TODO Needs error handling to check if startDate and endDate already exists.
-            Discount newDiscount = new Discount(startDate, endDate, discountPercentage/100m);
+            Discount newDiscount = new Discount(startDate, endDate, discountPercentage);
             if (!allDiscounts.ContainsKey(productName))
             {
                 List<Discount> discountsPerItem = new List<Discount>();

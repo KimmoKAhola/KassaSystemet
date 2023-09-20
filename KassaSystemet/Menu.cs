@@ -215,7 +215,7 @@ namespace KassaSystemet
             Console.Write("Enter a start date (YYYY/MM/DD): ");
             string endDate = Console.ReadLine();
             Console.Write("Enter a discount percentage (ex. 70 %): ");
-            decimal discountPercentage = Convert.ToDecimal(Console.ReadLine())/100m;
+            decimal discountPercentage = Convert.ToDecimal(Console.ReadLine());
             Discount.AddNewDiscount(input, startDate, endDate, discountPercentage);
         }
     }

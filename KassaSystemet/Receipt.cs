@@ -19,37 +19,33 @@ namespace KassaSystemet
         // TODO Se info om strängformatering här https://learn.microsoft.com/en-us/dotnet/api/system.string.format?view=net-7.0
         // TODO It is not necessary to see the product ID on the receipt. This should be removed later since
         // TODO the product ID is only for internal use.
-        public static string CreateReceipt(List<Purchase> list, int receiptID)
+        public static string CreateReceipt(List<Purchase> shoppingCart, int receiptID)
         {
+            //Dictionary<string, List<Discount>> allDiscounts;
             string formattedReceipt = "";
             formattedReceipt += ($"********Receipt ID[{receiptID}]*******************\n");
-            foreach (var item in list)
+            foreach (var item in shoppingCart)
             {
+                string productName = item.ProductName;
+                decimal price = Product.FindProductPrice(Product.productDictionary, productName);
+
+                if (Discount.allDiscounts.ContainsKey(productName) && Discount.IsProductOnSale(productName))
+                {
+                    price *= (1 - Discount.GetCurrentDiscountPercentage(productName));
+                }
+                else
+                {
+                    price = Product.FindProductPrice(Product.productDictionary, productName);
+                }
+
                 formattedReceipt += ($"\nProduct: {item.ProductName}" +
                     $"  \tamount: {item.Amount}" +
-                    $"  \tprice {Product.FindProductPriceType(Product.productDictionary, item.ProductName)}: {Product.FindProductPrice(Product.productDictionary, item.ProductName)}" +
-                    $"  \tsum: {Product.FindProductPrice(Product.productDictionary, item.ProductName) * item.Amount} SEK " +
+                    $"  \tprice {Product.FindProductPriceType(Product.productDictionary, item.ProductName)}: {price}" +
+                    $"  \tsum: {price * item.Amount} SEK " +
                     $"  \tproduct id: {Product.GetProductID(Product.productDictionary, item.ProductName)}\n");
             }
             formattedReceipt += "\n--------------------------------";
             return formattedReceipt;
-        }
-        public static void Test(List<Purchase> purchaseList, Dictionary<string, List<Discount>> allDiscounts)
-        {
-            foreach (var item in purchaseList)
-            {
-                string productName = item.ProductName;
-                //This finds the price when it is not discounted
-                decimal price = Product.FindProductPrice(Product.productDictionary, productName);
-
-                if (allDiscounts.ContainsKey(productName) && Discount.IsProductOnSale(productName))
-                {
-                    //If discount exists we will remove the percentage. 20 % discountPercentage
-                    //gives price * (1-0.2)
-                    price *= (1 - Discount.GetCurrentDiscountPercentage(productName));
-                }
-                Console.WriteLine("Price is:" + price);
-            }
         }
     }
 }
