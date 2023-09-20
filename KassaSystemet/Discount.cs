@@ -21,7 +21,7 @@ namespace KassaSystemet
         public DateTime EndDate { get; set; }
         public string ProductName { get; set; }
         public decimal DiscountPrice { get; set; }
-        public DateTime CurrentDate()
+        public static DateTime CurrentDate()
         {
             return DateTime.Now;
         }
@@ -31,14 +31,20 @@ namespace KassaSystemet
             //Is this needed?
             return 0m;
         }
-        public bool IsProductOnSale() // Send out true if currentDate is between startDate and endDate
+        public static bool IsProductOnSale(string productName) // Send out true if currentDate is between startDate and endDate
         {
-            if (DateTime.Compare(EndDate, CurrentDate())==1)
+            if (Seed.discountDictionary.ContainsKey(productName))
             {
-                return true;
+                DateTime date = Seed.discountDictionary[productName].EndDate;
+
+                if (DateTime.Compare(date, CurrentDate()) == 1)
+                {
+                    return true;
+                }
+                else
+                    return false;
             }
-            else
-                return false;
+            return false;
         }
         public static void AddNewDiscount(string key, Discount discount)
         {
@@ -48,7 +54,7 @@ namespace KassaSystemet
         public static void PrintDiscount(Dictionary<string, Discount> dictionary) // This prints out products which have had discounts with their dates.
         {
             Console.WriteLine("\nProduct Name(KEY)\tDiscount price\tDiscount is valid between");
-            foreach (var item in Seed.discountDictionary)
+            foreach (var item in dictionary)
             {
                 Console.Write($"{item.Key}\t\t\t{item.Value.DiscountPrice}\t\t[{item.Value.StartDate.ToShortDateString()}]-[{item.Value.EndDate.ToShortDateString()}]\n");
             }

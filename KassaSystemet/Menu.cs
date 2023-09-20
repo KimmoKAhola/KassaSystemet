@@ -213,7 +213,13 @@ namespace KassaSystemet
 
         public static void Case5()
         {
-
+            Console.Write("Enter a product NAME (Bananer): ");
+            string input = Console.ReadLine();
+            Console.Write("Enter a start date: (YYYY/MM/DD): ");
+            string startDate = Console.ReadLine();
+            Console.Write("Enter a start date (YYYY/MM/DD): ");
+            string endDate = Console.ReadLine();
+            Discount.AddNewDiscount(input, new Discount(startDate, endDate, 5.0m));
         }
     }
 }

@@ -39,17 +39,22 @@ namespace KassaSystemet
             string formattedReceipt = "";
             formattedReceipt += "TEST";
             decimal price = 0m;
-            string productName = purchaseList[0].ProductName;
-            if (discountDictionary.ContainsKey(productName))
+
+            foreach (var item in purchaseList)
             {
-                price = Seed.discountDictionary[productName].DiscountPrice;
+                string productName = item.ProductName;
+                decimal price2 = Product.FindProductPrice(Seed.seedDictionary, productName);
+
+                if (discountDictionary.ContainsKey(productName) && Discount.IsProductOnSale(productName))
+                {
+                    price = Seed.discountDictionary[productName].DiscountPrice;
+                }
+                else
+                {
+                    price = price2;
+                }
+                Console.WriteLine("Price is:" + price);
             }
-            // Jag har en list med köp
-            // En lista med eventuella rabatter
-            // om listan med köp innehåller en produkt med rabatt ska priset hämtas från rabattlistan
-            // jfr
-
-
         }
     }
 }
