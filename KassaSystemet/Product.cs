@@ -27,7 +27,7 @@ namespace KassaSystemet
 
         public static void AddNewProduct(Dictionary<int, Product> dictionary, int productID, string productName, decimal unitPrice)
         {
-            // if (dictionary.ContainsKey(product.ProductID)) Kolla så att produkten samt ID ej finns i systemet.   
+            // if (dictionary.ContainsKey(product.ProductID)) Kolla så att produkten samt ID ej finns i systemet.
             // TODO Lägg till felhantering
             if (!dictionary.ContainsKey(productID))
             {
@@ -49,7 +49,7 @@ namespace KassaSystemet
                     return item.Key;
                 }
             }
-            return -50; // If it does not exist return -50. Error handling should be implemented later.
+            return -50; //TODO If it does not exist return -50. Error handling should be implemented later.
         }
         public static decimal FindProductPrice(Dictionary<int, Product> productDictionary, string productName)
         {
@@ -94,5 +94,10 @@ namespace KassaSystemet
             }
         }
 
+        public static void CheckForSalesPrice()
+        {
+
+            //TODO Implement a function which checks if a product is on sale. Should checks if current date is between sales date, then check products?
+        }
     }
 }

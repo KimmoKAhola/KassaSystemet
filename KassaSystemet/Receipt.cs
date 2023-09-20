@@ -13,9 +13,10 @@ namespace KassaSystemet
          */
         public static int receiptCounter = FileManager.GetReceiptID(); // Load receipt ID from file
         public static int receiptID = receiptCounter++; // These work as long as the receipt files are not deleted
-        
-        //Creates a formatted string. This string is then used in FileManager when it is saved to
-        //a text file
+
+        //! Creates a formatted string. This string is then used in FileManager when it is saved to
+        //? a text file
+        // TODO Se info om strängformatering här https://learn.microsoft.com/en-us/dotnet/api/system.string.format?view=net-7.0
         public static string CreateReceipt(List<Purchase> list, int receiptID)
         {
             string formattedReceipt = "";
