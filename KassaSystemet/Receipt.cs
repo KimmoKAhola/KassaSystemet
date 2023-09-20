@@ -34,24 +34,19 @@ namespace KassaSystemet
             formattedReceipt += "\n--------------------------------";
             return formattedReceipt;
         }
-        public static void Test(List<Purchase> purchaseList, Dictionary<string, Discount> discountDictionary)
+        public static void Test(List<Purchase> purchaseList, Dictionary<string, List<Discount>> allDiscounts)
         {
-            string formattedReceipt = "";
-            formattedReceipt += "TEST";
-            decimal price = 0m;
-
             foreach (var item in purchaseList)
             {
                 string productName = item.ProductName;
-                decimal price2 = Product.FindProductPrice(Product.productDictionary, productName);
+                //This finds the price when it is not discounted
+                decimal price = Product.FindProductPrice(Product.productDictionary, productName);
 
-                if (discountDictionary.ContainsKey(productName) && Discount.IsProductOnSale(productName))
+                if (allDiscounts.ContainsKey(productName) && Discount.IsProductOnSale(productName))
                 {
-                    price = Discount.discountDictionary[productName].DiscountPrice;
-                }
-                else
-                {
-                    price = price2;
+                    //If discount exists we will remove the percentage. 20 % discountPercentage
+                    //gives price * (1-0.2)
+                    price *= (1 - Discount.GetCurrentDiscountPercentage(productName));
                 }
                 Console.WriteLine("Price is:" + price);
             }

@@ -16,36 +16,34 @@ namespace KassaSystemet
         //public static Dictionary<int, Product> productDictionary = Seed.seedDictionary;
         //TODO this is only used for seeding purposes
         public static Dictionary<int, Product> productDictionary = new(){ //TODO names are shortened because of formatting. Change later
-            { 300, new Product("Bananer", 19.50m, -1m, "per kg") },
-            { 301, new Product("Äpplen", 25.99m, -1m, "per kg") },
-            { 302, new Product("Choklad", 13.37m, -1m, "per unit") },
-            { 303, new Product("Pepsi", 30.50m, -1m, "per unit") },
-            { 304, new Product("Kexchok", 18.99m, -1m, "per unit") },
-            { 305, new Product("Sallad", 27.50m, -1m, "per kg") },
-            { 306, new Product("Jordgub", 5.00m, -1m, "per kg") },
-            { 307, new Product("Nutella", 21.00m, -1m, "per unit") },
-            { 308, new Product("Toapapp", 7.00m, -1m, "per unit") },
-            { 309, new Product("Saffran", 5.50m, -1m, "per unit") },
-            { 310, new Product("Vatten", 100.00m, -1m, "per unit") }};
-        public Product(string productName, decimal unitPrice, decimal discountPrice, string priceType) // add price type (per kg or per piece later)
+            { 300, new Product("Bananer", 19.50m, "per kg") },
+            { 301, new Product("Äpplen", 25.99m, "per kg") },
+            { 302, new Product("Choklad", 13.37m, "per unit") },
+            { 303, new Product("Pepsi", 30.50m, "per unit") },
+            { 304, new Product("Kexchok", 18.99m, "per unit") },
+            { 305, new Product("Sallad", 27.50m, "per kg") },
+            { 306, new Product("Jordgub", 5.00m, "per kg") },
+            { 307, new Product("Nutella", 21.00m, "per unit") },
+            { 308, new Product("Toapapp", 7.00m, "per unit") },
+            { 309, new Product("Saffran", 5.50m, "per unit") },
+            { 310, new Product("Vatten", 100.00m, "per unit") }};
+        public Product(string productName, decimal unitPrice, string priceType) // add price type (per kg or per piece later)
         {
             ProductName = productName;
             UnitPrice = unitPrice;
-            DiscountPrice = discountPrice;
             PriceType = priceType;
         }
 
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
         public string PriceType { get; set; }
-        public decimal DiscountPrice { get; set; }
         public static void AddNewProduct(Dictionary<int, Product> dictionary, int productID, string productName, decimal unitPrice, decimal discountPrice, string priceType)
         {
             // if (dictionary.ContainsKey(product.ProductID)) Kolla så att produkten samt ID ej finns i systemet.
             // TODO Lägg till felhantering
             if (!dictionary.ContainsKey(productID))
             {
-                dictionary.Add(productID, new Product(productName, unitPrice, discountPrice, priceType));
+                dictionary.Add(productID, new Product(productName, unitPrice, priceType));
                 Console.WriteLine($"Added the product {productName} with id [{productID}] and price {unitPrice} and price type {priceType} to the system." +
                     $"\nDiscount price is: {discountPrice}");
             }
@@ -109,7 +107,8 @@ namespace KassaSystemet
             Console.WriteLine("\n\nID\tProduct Name\t\tUnit price\tDiscount price\tPrice type");
             foreach (var item in dictionary)
             {
-                Console.Write($"{item.Key}\t{item.Value.ProductName}\t\t\t{item.Value.UnitPrice}\t\t{item.Value.DiscountPrice}\t\t{item.Value.PriceType}\n");
+                Console.WriteLine("Remember to add the discount price from Discount.AllDiscounts!!!");
+                Console.Write($"{item.Key}\t{item.Value.ProductName}\t\t\t{item.Value.UnitPrice}\t\t\t\t{item.Value.PriceType}\n");
             }
         }
 
