@@ -8,6 +8,19 @@ namespace KassaSystemet
 {
     public class Purchase
     {
+        //TODO This is only used for seeding purposes
+        public static List<Purchase> shoppingCart = new(){
+            { new Purchase("Bananer", 10)},
+            { new Purchase("Äpplen", 7) },
+            { new Purchase("Choklad", 1) },
+            { new Purchase("Pepsi", 3) },
+            { new Purchase("Kexchok", 2) },
+            { new Purchase("Sallad", 1) },
+            { new Purchase("Jordgub", 3) },
+            { new Purchase("Nutella", 2) },
+            { new Purchase("Toapapp", 10) },
+            { new Purchase("Saffran", 25) },
+            { new Purchase("Vatten", 3) } };
 
         /*
          *  Class which handles the "shopping cart".
@@ -27,8 +40,8 @@ namespace KassaSystemet
             //This method creates the receipt for the customer and saves it to the hard drive
             //After the customer has "paid" the cart is cleared
             FileManager.IncrementReceiptCounter();
-            FileManager.SaveReceipt(Menu.seedCart, FileManager.GetReceiptID());
-            Menu.seedCart.Clear();
+            FileManager.SaveReceipt(shoppingCart, FileManager.GetReceiptID());
+            shoppingCart.Clear();
         }
 
         public static void DisplayShoppingCart(List<Purchase> shoppingCart) // Fix this so it can be used in receipt creator
@@ -38,9 +51,9 @@ namespace KassaSystemet
             {
                 Console.Write($"\nProduct: {item.ProductName}" +
                     $"  \tamount: {item.Amount}" +
-                    $"  \tprice {Product.FindProductPriceType(Menu.seedDictionary, item.ProductName)}: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName)} SEK" +
-                    $"  \ttotal sum: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName) * item.Amount} SEK " +
-                    $"  \tproduct id: {Product.GetProductID(Menu.seedDictionary, item.ProductName)}\n");
+                    $"  \tprice {Product.FindProductPriceType(Product.productDictionary, item.ProductName)}: {Product.FindProductPrice(Product.productDictionary, item.ProductName)} SEK" +
+                    $"  \ttotal sum: {Product.FindProductPrice(Product.productDictionary, item.ProductName) * item.Amount} SEK " +
+                    $"  \tproduct id: {Product.GetProductID(Product.productDictionary, item.ProductName)}\n");
             }
         }
 

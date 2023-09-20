@@ -27,9 +27,9 @@ namespace KassaSystemet
             {
                 formattedReceipt += ($"\nProduct: {item.ProductName}" +
                     $"  \tamount: {item.Amount}" +
-                    $"  \tprice {Product.FindProductPriceType(Menu.seedDictionary, item.ProductName)}: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName)}" +
-                    $"  \tsum: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName) * item.Amount} SEK " +
-                    $"  \tproduct id: {Product.GetProductID(Menu.seedDictionary, item.ProductName)}\n");
+                    $"  \tprice {Product.FindProductPriceType(Product.productDictionary, item.ProductName)}: {Product.FindProductPrice(Product.productDictionary, item.ProductName)}" +
+                    $"  \tsum: {Product.FindProductPrice(Product.productDictionary, item.ProductName) * item.Amount} SEK " +
+                    $"  \tproduct id: {Product.GetProductID(Product.productDictionary, item.ProductName)}\n");
             }
             formattedReceipt += "\n--------------------------------";
             return formattedReceipt;
@@ -43,11 +43,11 @@ namespace KassaSystemet
             foreach (var item in purchaseList)
             {
                 string productName = item.ProductName;
-                decimal price2 = Product.FindProductPrice(Seed.seedDictionary, productName);
+                decimal price2 = Product.FindProductPrice(Product.productDictionary, productName);
 
                 if (discountDictionary.ContainsKey(productName) && Discount.IsProductOnSale(productName))
                 {
-                    price = Seed.discountDictionary[productName].DiscountPrice;
+                    price = Discount.discountDictionary[productName].DiscountPrice;
                 }
                 else
                 {

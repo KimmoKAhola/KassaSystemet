@@ -13,13 +13,8 @@ namespace KassaSystemet
 {
     public static class Menu
     {
-        public static Dictionary<int, Product> seedDictionary = Seed.seedDictionary; //TODO this should probably be in the Product class
-
-        //TODO these should probably be in the seed class as well. No logic behind having lists in the menu class.
         // !Underlined comment
         // ?RED COMMENT
-        public static List<Purchase> seedCart = Seed.seedProductList;
-        public static List<Purchase> shoppingCart = new List<Purchase>(); //Empty shopping cart. Not used right now.
         public static void MainMenu()
         {
             int menuOption;
@@ -79,7 +74,7 @@ namespace KassaSystemet
                 switch (userInput)
                 {
                     case "1":
-                        Purchase.DisplayShoppingCart(seedCart);
+                        Purchase.DisplayShoppingCart(Purchase.shoppingCart);
                         Console.WriteLine("Press any key to continue");
                         Console.ReadKey();
                         break;
@@ -130,7 +125,7 @@ namespace KassaSystemet
 
                     case "2":
                         Console.Write("These are the available products in the system: ");
-                        Product.DisplayProducts(seedDictionary);
+                        Product.DisplayProducts(Product.productDictionary);
                         Console.Write("Press any key to continue. ");
                         Console.ReadKey();
                         break;
@@ -175,7 +170,7 @@ namespace KassaSystemet
             string customerEntry = Console.ReadLine();
             string[] entries = customerEntry.Split(' ');
             int amount = Convert.ToInt32(entries[1]);
-            seedCart.Add(new Purchase(entries[0], amount)); // check this!
+            Purchase.shoppingCart.Add(new Purchase(entries[0], amount)); // check this!
             Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
         }
 
@@ -191,16 +186,16 @@ namespace KassaSystemet
             decimal discountPrice = -1; // Hard coded. Will only be changed when necessary
             string priceType = "per unit"; // Change later. Hard coded for now
 
-            Product.AddNewProduct(seedDictionary, id, name, price, discountPrice, priceType);
+            Product.AddNewProduct(Product.productDictionary, id, name, price, discountPrice, priceType);
         }
         private static void Case3()
         {
             Console.Write("Enter a product ID: ");
             int id = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine($"The current price for your product with id [{id}] is: {Product.FindProductPrice(seedDictionary, id)}");
+            Console.WriteLine($"The current price for your product with id [{id}] is: {Product.FindProductPrice(Product.productDictionary, id)}");
             Console.Write("Enter a new price: ");
             decimal price = Convert.ToDecimal(Console.ReadLine());
-            Product.ChangeProductPrice(seedDictionary, id, price);
+            Product.ChangeProductPrice(Product.productDictionary, id, price);
         }
         private static void Case4()
         {
@@ -208,7 +203,7 @@ namespace KassaSystemet
             string oldName = Console.ReadLine();
             Console.Write("Enter the new name: ");
             string newName = Console.ReadLine();
-            Product.ChangeProductName(seedDictionary, oldName, newName);
+            Product.ChangeProductName(Product.productDictionary, oldName, newName);
         }
 
         public static void Case5()
@@ -219,7 +214,9 @@ namespace KassaSystemet
             string startDate = Console.ReadLine();
             Console.Write("Enter a start date (YYYY/MM/DD): ");
             string endDate = Console.ReadLine();
-            Discount.AddNewDiscount(input, new Discount(startDate, endDate, 5.0m));
+            Console.Write("Enter a discount percentage (ex. 70 %): ");
+            decimal discountPercentage = Convert.ToDecimal(Console.ReadLine())/100m;
+            Discount.AddNewDiscount(input, startDate, endDate, discountPercentage);
         }
     }
 }
