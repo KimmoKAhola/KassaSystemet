@@ -6,9 +6,10 @@ namespace KassaSystemet
     {
         static void Main(string[] args)
         {
-            Discount discount = new Discount(new DateTime(2023, 9, 20), new DateTime(2023, 9, 21), 5.00m);
+            Discount discount = new Discount("2023/09/20", "2023/09/25", 5.00m);
             Discount.discountDictionary.Add("Bananer", discount);
             Discount.PrintDiscount(Discount.discountDictionary);
+            discount.IsProductOnSale();
             //Menu.MainMenu();
         }
     }
