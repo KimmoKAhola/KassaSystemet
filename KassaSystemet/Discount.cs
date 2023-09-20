@@ -11,8 +11,8 @@ namespace KassaSystemet
     public class Discount
     {
         //?This dictionary is ONLY used in the Discount class
-        public static Dictionary<string, List<Discount>> discountsPerItem = new Dictionary<string, List<Discount>>(); // This contains different discount dates
-        public static Dictionary<string, Discount> discountDictionary = new(); //TODO is this needed?
+        public static Dictionary<string, List<Discount>> allDiscounts = new Dictionary<string, List<Discount>>(); // This contains different discount dates
+        //public static Dictionary<string, Discount> discountDictionary = new(); //TODO is this needed?
         //TODO This is only used for seeding purposes
         //public static Dictionary<string, Discount> discountDictionary = new()
         //{
@@ -45,9 +45,9 @@ namespace KassaSystemet
         }
         public static bool IsProductOnSale(string productName) // Send out true if currentDate is between startDate and endDate
         {
-            if (Discount.discountDictionary.ContainsKey(productName))
+            if (allDiscounts.ContainsKey(productName))
             {
-                DateTime date = Discount.discountDictionary[productName].EndDate;
+                DateTime date = allDiscounts[productName].EndDate;
 
                 if (DateTime.Compare(date, CurrentDate()) == 1)
                 {
@@ -62,15 +62,15 @@ namespace KassaSystemet
         {
             //TODO Needs error handling to check if the key already exists or not.
             Discount newDiscount = new Discount(startDate, endDate, discountPercentage/100m);
-            if (!discountsPerItem.ContainsKey(productName))
+            if (!allDiscounts.ContainsKey(productName))
             {
                 List<Discount> discountsPerItem = new List<Discount>();
                 discountsPerItem.Add(newDiscount); // Key is product name
-                discountDictionary.Add(productName, newDiscount);
+                allDiscounts.Add(productName, discountsPerItem);
             }
             else
             {
-                discountsPerItem[productName].Add(newDiscount);//if productname already exists, then do not create a new addition to the discountDictionary
+                allDiscounts[productName].Add(newDiscount);//if productname already exists, then do not create a new addition to the discountDictionary
             }
         }
         public static void PrintDiscount(Dictionary<string, Discount> dictionary) // This prints out products which have had discounts with their dates.
