@@ -63,7 +63,11 @@ namespace KassaSystemet
             int productID = GetProductID(productDictionary, productName);
             return Seed.seedDictionary[productID].UnitPrice;
         }
-
+        public static string FindProductPriceType(Dictionary<int, Product> productDictionary, string productName)
+        {
+            int productID = GetProductID(productDictionary, productName);
+            return Seed.seedDictionary[productID].PriceType;
+        }
         public static decimal FindProductPrice(Dictionary<int, Product> productDictionary, int productID)
         {
             return Seed.seedDictionary[productID].UnitPrice;

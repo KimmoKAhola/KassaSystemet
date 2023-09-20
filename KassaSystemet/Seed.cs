@@ -26,13 +26,13 @@ namespace KassaSystemet
         public static List<Purchase> seedProductList = new(){
             { new Purchase("Bananer", 10)},
             { new Purchase("Äpplen", 7) },
-            { new Purchase("Chokladglass", 1) },
+            { new Purchase("Choklad", 1) },
             { new Purchase("Pepsi", 3) },
-            { new Purchase("Kexchoklad", 2) },
+            { new Purchase("Kexchok", 2) },
             { new Purchase("Sallad", 1) },
-            { new Purchase("Jordgubbar", 3) },
+            { new Purchase("Jordgub", 3) },
             { new Purchase("Nutella", 2) },
-            { new Purchase("Toapapper", 10) },
+            { new Purchase("Toapapp", 10) },
             { new Purchase("Saffran", 25) },
             { new Purchase("Vatten", 3) } };
     }

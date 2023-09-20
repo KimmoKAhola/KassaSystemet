@@ -17,6 +17,8 @@ namespace KassaSystemet
         //! Creates a formatted string. This string is then used in FileManager when it is saved to
         //? a text file
         // TODO Se info om strängformatering här https://learn.microsoft.com/en-us/dotnet/api/system.string.format?view=net-7.0
+        // TODO It is not necessary to see the product ID on the receipt. This should be removed later since
+        // TODO the product ID is only for internal use.
         public static string CreateReceipt(List<Purchase> list, int receiptID)
         {
             string formattedReceipt = "";
@@ -25,12 +27,12 @@ namespace KassaSystemet
             {
                 formattedReceipt += ($"\nProduct: {item.ProductName}" +
                     $"  \tamount: {item.Amount}" +
-                    $"  \tprice per unit: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName)}" +
+                    $"  \tprice {Product.FindProductPriceType(Menu.seedDictionary, item.ProductName)}: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName)}" +
                     $"  \tsum: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName) * item.Amount} SEK " +
                     $"  \tproduct id: {Product.GetProductID(Menu.seedDictionary, item.ProductName)}\n");
             }
             formattedReceipt += "\n--------------------------------";
             return formattedReceipt;
-        }  
+        }
     }
 }

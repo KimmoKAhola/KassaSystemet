@@ -21,7 +21,7 @@ namespace KassaSystemet
             ProductName = productName;
             Amount = amount;
         }
-        
+
         public static void Pay()
         {
             //This method creates the receipt for the customer and saves it to the hard drive
@@ -38,8 +38,8 @@ namespace KassaSystemet
             {
                 Console.Write($"\nProduct: {item.ProductName}" +
                     $"  \tamount: {item.Amount}" +
-                    $"  \tprice per unit: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName)}" +
-                    $"  \tsum: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName) * item.Amount} SEK " +
+                    $"  \tprice {Product.FindProductPriceType(Menu.seedDictionary, item.ProductName)}: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName)} SEK" +
+                    $"  \ttotal sum: {Product.FindProductPrice(Menu.seedDictionary, item.ProductName) * item.Amount} SEK " +
                     $"  \tproduct id: {Product.GetProductID(Menu.seedDictionary, item.ProductName)}\n");
             }
         }
