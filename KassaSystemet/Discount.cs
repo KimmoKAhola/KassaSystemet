@@ -12,7 +12,6 @@ namespace KassaSystemet
     {
         //?This dictionary is ONLY used in the Discount class
         public static Dictionary<string, List<Discount>> allDiscounts = new Dictionary<string, List<Discount>>(); // This contains different discount dates
-        //public static Dictionary<string, Discount> discountDictionary = new(); //TODO is this needed?
         //TODO This is only used for seeding purposes
         //public static Dictionary<string, Discount> discountDictionary = new()
         //{
@@ -45,22 +44,23 @@ namespace KassaSystemet
         }
         public static bool IsProductOnSale(string productName) // Send out true if currentDate is between startDate and endDate
         {
-            if (allDiscounts.ContainsKey(productName))
+            if (!allDiscounts.ContainsKey(productName))
             {
-                DateTime date = allDiscounts[productName].EndDate;
-
-                if (DateTime.Compare(date, CurrentDate()) == 1)
+                return false; //If the dictionary does not contain the key, it is not on sale
+            }
+            DateTime currentDate = CurrentDate();
+            foreach (var discount in allDiscounts[productName])
+            {
+                if(discount.StartDate <= currentDate && currentDate <= discount.EndDate)
                 {
-                    return true;
+                    return true; // The product key exists. Now check if the date is correct.
                 }
-                else
-                    return false;
             }
             return false;
         }
         public static void AddNewDiscount(string productName, string startDate, string endDate, decimal discountPercentage)
         {
-            //TODO Needs error handling to check if the key already exists or not.
+            //TODO Needs error handling to check if startDate and endDate already exists.
             Discount newDiscount = new Discount(startDate, endDate, discountPercentage/100m);
             if (!allDiscounts.ContainsKey(productName))
             {
