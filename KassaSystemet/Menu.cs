@@ -115,6 +115,7 @@ namespace KassaSystemet
                     "2. Display available products in the system\n" +
                     "3. Change price on a product\n" +
                     "4. Change name on a product\n" +
+                    "5. Add a discount for a product\n" +
                     "0. Exit admin menu");
 
                 Console.Write("Enter a command: ");
