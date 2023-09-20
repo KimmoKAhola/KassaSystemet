@@ -14,11 +14,14 @@ namespace KassaSystemet
             Admin method in menu class should call on this class.
         */
 
+        //public static Dictionary<int, Product> seedDictionary = Seed.seedDictionary;
+
         public Product(string productName, decimal unitPrice) // add price type (per kg or per piece later)
         {
             ProductName = productName;
             UnitPrice = unitPrice;
             //PriceType = priceType;
+            //DiscountPrice = discountprice;
         }
 
         public string ProductName { get; set; }
@@ -96,7 +99,11 @@ namespace KassaSystemet
 
         public static void CheckForSalesPrice()
         {
-
+            DateTime today = DateTime.Now;
+            DateTime start = new DateTime(2023, 9, 19);
+            DateTime end = new DateTime(2023, 9, 25);
+            DateTime.Compare(start, today); // returns -1 = is true
+            DateTime.Compare(end, today); // returns 1 = is true
             //TODO Implement a function which checks if a product is on sale. Should checks if current date is between sales date, then check products?
         }
     }

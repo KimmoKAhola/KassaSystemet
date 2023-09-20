@@ -13,8 +13,9 @@ namespace KassaSystemet
 {
     public static class Menu
     {
-        public static Dictionary<int, Product> seedDictionary = Seed.seedDictionary;
+        public static Dictionary<int, Product> seedDictionary = Seed.seedDictionary; //TODO this should probably be in the Product class
 
+        //TODO these should probably be in the seed class as well. No logic behind having lists in the menu class.
         public static List<Purchase> seedCart = Seed.seedProductList;
         public static List<Purchase> shoppingCart = new List<Purchase>(); //Empty shopping cart. Not used right now.
         public static void MainMenu()
@@ -157,7 +158,7 @@ namespace KassaSystemet
             Console.Write("Enter a name and a price: ");
             string entry = Console.ReadLine();
             string[] entries = entry.Split(' ');
-            
+
             return (entries[0], Convert.ToDecimal(entries[1]));
         }
         private static void CustomerCase2()
