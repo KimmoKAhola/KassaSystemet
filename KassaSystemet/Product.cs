@@ -91,10 +91,10 @@ namespace KassaSystemet
 
         public static void DisplayProducts(Dictionary<int, Product> dictionary)
         {
-            Console.WriteLine("\n\nProduct ID\tProduct Name\tUnit price");
+            Console.WriteLine("\n\nID\tProduct Name\t\tUnit price\tDiscount price\tPrice type");
             foreach (var item in dictionary)
             {
-                Console.Write($"{item.Key}\t{item.Value.ProductName}\t{item.Value.UnitPrice}\n");
+                Console.Write($"{item.Key}\t{item.Value.ProductName}\t\t\t{item.Value.UnitPrice}\t\t{item.Value.DiscountPrice}\t\t{item.Value.PriceType}\n");
             }
         }
 
