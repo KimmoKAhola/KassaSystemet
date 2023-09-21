@@ -19,6 +19,7 @@ namespace KassaSystemet
             Discount.AddNewDiscount(input2, startDate2, endDate2, discountPercentage2);
 
             Menu.MainMenu();
+            //
         }
     }
 }
