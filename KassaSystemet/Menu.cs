@@ -28,7 +28,7 @@ namespace KassaSystemet
                 Console.WriteLine("2. Admin tools");
                 Console.WriteLine("3. Load receipt ID file ** TEST ONLY DELETE LATER**");
                 Console.WriteLine("4. Press 4 for a demonstration with hardcoded values");
-                Console.WriteLine("0. Avsluta");
+                Console.WriteLine("0. Avsluta. This saves all dictionaries to files");
                 Console.Write("Enter your command: ");
                 menuOption = Convert.ToInt32(Console.ReadLine());
 
@@ -47,6 +47,7 @@ namespace KassaSystemet
                         Console.ReadKey();
                         break;
                     case 0:
+                        FileManager.SaveProductList(Product.productDictionary);
                         Environment.Exit(0);
                         break;
                 }

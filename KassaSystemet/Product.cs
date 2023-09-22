@@ -122,5 +122,15 @@ namespace KassaSystemet
             DateTime.Compare(end, today); // returns 1 = is true
             //TODO Implement a function which checks if a product is on sale. Should check if current date is between sales date, then check products?
         }
+
+        public static string CreateProductString(Dictionary<int, Product> productDictionary)
+        {
+            string formattedProductListString = "";
+            foreach (var item in productDictionary)
+            {
+                formattedProductListString += item.Key + "," + item.Value.ProductName + "," + item.Value.UnitPrice + "," + item.Value.PriceType+",";
+            }
+            return formattedProductListString.Remove(formattedProductListString.Length-1);
+        }
     }
 }
