@@ -48,6 +48,7 @@ namespace KassaSystemet
                         break;
                     case 0:
                         FileManager.SaveProductList(Product.productDictionary);
+                        FileManager.SaveDiscountList(Discount.allDiscounts);
                         Environment.Exit(0);
                         break;
                 }

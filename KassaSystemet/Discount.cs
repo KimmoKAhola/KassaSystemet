@@ -12,6 +12,7 @@ namespace KassaSystemet
     {
         //?This dictionary is ONLY used in the Discount class
         public static Dictionary<string, List<Discount>> allDiscounts = new Dictionary<string, List<Discount>>(); // This contains different discount dates
+        //allDiscounts.Add("Bananer", new Discount("2023/09/20", "2023/09/25", 0.5m));
         public Discount(string startDate, string endDate, decimal discountPercentage) // Write discountPercentage as eg 70 %
         {
             //EndDate = endDate; DateTime.Parse(“07/10/2022”);
@@ -90,6 +91,32 @@ namespace KassaSystemet
             {
                 Console.Write($"{item.Key}\t\t\t{item.Value.DiscountPercentage}\t\t[{item.Value.StartDate.ToShortDateString()}]-[{item.Value.EndDate.ToShortDateString()}]\n");
             }
+        }
+        public static string CreateDiscountString(Dictionary<string, List<Discount>> allDiscounts)
+        {
+            string formattedDiscountListString = "";
+            foreach (var item in allDiscounts)
+            {
+                formattedDiscountListString += item.Key+"!";
+                foreach (var discount in item.Value)
+                {
+                    formattedDiscountListString += discount.StartDate.ToShortDateString() + "!" + discount.EndDate.ToShortDateString() + "!" + discount.DiscountPercentage+"!";
+                }
+                formattedDiscountListString += "\n";
+            }
+            return formattedDiscountListString.Remove(formattedDiscountListString.Length - 1)+"\n";
+        }
+        public static void DisplayAllDiscounts(Dictionary<string, List<Discount>> allDiscounts)
+        {
+            foreach (var item in allDiscounts)
+            {
+                Console.Write($"Product ID: [{item.Key}]");
+                foreach (var discount in item.Value)
+                {
+                        Console.Write($"start and end dates [{discount.StartDate.ToShortDateString()}]-[{discount.EndDate.ToShortDateString()}] with discount percentage {discount.DiscountPercentage*100} %");
+                }
+            }
+
         }
     }
 }

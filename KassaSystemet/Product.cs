@@ -16,7 +16,7 @@ namespace KassaSystemet
         //public static Dictionary<int, Product> productDictionary = Seed.seedDictionary;
         //TODO this is only used for seeding purposes
         public static Dictionary<int, Product> productDictionary = new(){ //TODO names are shortened because of formatting. Change later
-            { 300, new Product("Bananer", 19.50m, "per kg") }, 
+            { 300, new Product("Bananer", 19.50m, "per kg") },
             { 301, new Product("Äpplen", 25.99m, "per kg") },
             { 302, new Product("Choklad", 13.37m, "per unit") },
             { 303, new Product("Pepsi", 30.50m, "per unit") },
@@ -27,7 +27,7 @@ namespace KassaSystemet
             { 308, new Product("Toapapp", 7.00m, "per unit") },
             { 309, new Product("Saffran", 5.50m, "per unit") },
             { 310, new Product("Vatten", 100.00m, "per unit") }};
-public Product(string productName, decimal unitPrice, string priceType) // add price type (per kg or per piece later)
+        public Product(string productName, decimal unitPrice, string priceType) // add price type (per kg or per piece later)
         {
             ProductName = productName;
             UnitPrice = unitPrice;
@@ -69,7 +69,7 @@ public Product(string productName, decimal unitPrice, string priceType) // add p
         {
             foreach (var item in productDictionary)
             {
-                if(item.Value.ProductName == productName)
+                if (item.Value.ProductName == productName)
                 {
                     return item.Key;
                 }
@@ -137,9 +137,9 @@ public Product(string productName, decimal unitPrice, string priceType) // add p
             string formattedProductListString = "";
             foreach (var item in productDictionary)
             {
-                formattedProductListString += item.Key + "!" + item.Value.ProductName + "!" + item.Value.UnitPrice + "!" + item.Value.PriceType+"!";
+                formattedProductListString += item.Key + "!" + item.Value.ProductName + "!" + item.Value.UnitPrice + "!" + item.Value.PriceType + "!";
             }
-            return formattedProductListString.Remove(formattedProductListString.Length-1);
+            return formattedProductListString.Remove(formattedProductListString.Length - 1);
         }
     }
 }

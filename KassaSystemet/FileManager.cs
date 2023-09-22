@@ -21,10 +21,13 @@ namespace KassaSystemet
         {
             return $"../../../Files/RECEIPT_ID_{GetCurrentDate()}.txt";
         }
-
+        private static string CreateDiscountListFilePath()
+        {
+            return "../../../Files/DISCOUNT_LIST_ADMIN.txt";
+        }
         private static string CreateProductListFilePath()
         {
-            return "../../../Files/PRODUCT_LIST_ADMIN.csv";
+            return "../../../Files/PRODUCT_LIST_ADMIN.txt";
         }
         private static string GetCurrentDate()
         {
@@ -71,9 +74,13 @@ namespace KassaSystemet
             }
         }
 
-        public static void SaveDiscountList()
+        public static void SaveDiscountList(Dictionary<string, List<Discount>> allDiscounts)
         {
-
+            string discountListString = Discount.CreateDiscountString(allDiscounts);
+            using(StreamWriter writer = new($"{CreateDiscountListFilePath()}", append: false))
+            {
+                writer.Write(discountListString);
+            }
         }
 
         public static Dictionary<int, Product> LoadProductList()
@@ -92,6 +99,19 @@ namespace KassaSystemet
                 }
             }
             return Product.productDictionary;
+        }
+        public static Dictionary<string, List<Discount>> LoadDiscountList()
+        {
+            if (File.Exists(CreateDiscountListFilePath()))
+            {
+                var discountListInfo = File.ReadLines(CreateDiscountListFilePath());
+                //Discount.allDiscounts.Clear();
+                foreach (var item in discountListInfo)
+                {
+                    string[] columns = item.Split(!);
+
+                }
+            }
         }
     }
 }

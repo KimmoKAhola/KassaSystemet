@@ -21,6 +21,8 @@ namespace KassaSystemet
 
             Dictionary<int, Product> products = FileManager.LoadProductList();
             Product.DisplayProducts(products);
+            Dictionary<string, List<Discount>> test = FileManager.LoadDiscountList();
+            Discount.DisplayAllDiscounts(test);
             Console.ReadKey();
             Menu.MainMenu();
         }
