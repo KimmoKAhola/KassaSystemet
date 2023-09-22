@@ -18,16 +18,16 @@ namespace KassaSystemet
         public static Dictionary<int, Product> productDictionary = new(){ //TODO names are shortened because of formatting. Change later
             { 300, new Product("Bananer", 19.50m, "per kg") }, 
             { 301, new Product("Äpplen", 25.99m, "per kg") },
-            { 302, new Product("Choklad", 13.37m, "per unit") } };
-            //{ 303, new Product("Pepsi", 30.50m, "per unit") },
-            //{ 304, new Product("Kexchok", 18.99m, "per unit") },
-            //{ 305, new Product("Sallad", 27.50m, "per kg") },
-            //{ 306, new Product("Jordgub", 5.00m, "per kg") },
-            //{ 307, new Product("Nutella", 21.00m, "per unit") },
-            //{ 308, new Product("Toapapp", 7.00m, "per unit") },
-            //{ 309, new Product("Saffran", 5.50m, "per unit") },
-            //{ 310, new Product("Vatten", 100.00m, "per unit") }};
-        public Product(string productName, decimal unitPrice, string priceType) // add price type (per kg or per piece later)
+            { 302, new Product("Choklad", 13.37m, "per unit") },
+            { 303, new Product("Pepsi", 30.50m, "per unit") },
+            { 304, new Product("Kexchok", 18.99m, "per unit") },
+            { 305, new Product("Sallad", 27.50m, "per kg") },
+            { 306, new Product("Jordgub", 5.00m, "per kg") },
+            { 307, new Product("Nutella", 21.00m, "per unit") },
+            { 308, new Product("Toapapp", 7.00m, "per unit") },
+            { 309, new Product("Saffran", 5.50m, "per unit") },
+            { 310, new Product("Vatten", 100.00m, "per unit") }};
+public Product(string productName, decimal unitPrice, string priceType) // add price type (per kg or per piece later)
         {
             ProductName = productName;
             UnitPrice = unitPrice;
@@ -78,27 +78,14 @@ namespace KassaSystemet
         }
         public static decimal FindProductPrice(Dictionary<int, Product> productDictionary, int productID)
         {
-            // Use this to find a certain unit price given a product name.
-            // TODO lägg till felhantering
-
-            //int productID = GetProductID(productDictionary, productName);
             return productDictionary[productID].UnitPrice;
         }
-        //public static decimal FindProductPrice(Dictionary<int, Product> productDictionary, string productName)
-        //{
-        //    int productID = GetProductID(productDictionary, productName);
-        //    return productDictionary[productID].UnitPrice;
-        //}
+
         public static string FindProductPriceType(Dictionary<int, Product> productDictionary, int productID)
         {
-            //int productID = GetProductID(productDictionary, produtID);
             return productDictionary[productID].PriceType;
         }
-        //public static string FindProductPriceType(Dictionary<int, Product> productDictionary, string productName)
-        //{
-        //    int productID = GetProductID(productDictionary, productName);
-        //    return productDictionary[productID].PriceType;
-        //}
+
         public static string GetProductName(Dictionary<int, Product> productDictionary, int productID)
         {
             return productDictionary[productID].ProductName;

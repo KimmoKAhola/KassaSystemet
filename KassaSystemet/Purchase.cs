@@ -31,41 +31,62 @@ namespace KassaSystemet
          *  different products
          */
 
+        /// <summary>
+        /// Constructor for my shopping cart. Fills a with purchases based on product ID
+        /// and amount. This is then connected to my product Dictionary when making a
+        /// purchase using Pay().
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="amount"></param>
         public Purchase(int productID, int amount)
         {
             ProductID = productID;
             Amount = amount;
         }
 
+        /// <summary>
+        /// This method performs the payment.
+        /// Saves the receipt and clears the shopping cart afterwards.
+        /// </summary>
         public static void Pay()
         {
             //This method creates the receipt for the customer and saves it to the hard drive
             //After the customer has "paid" the cart is cleared
-            FileManager.IncrementReceiptCounter();
-            FileManager.SaveReceipt(shoppingCart, FileManager.GetReceiptID());
-            //Receipt.Test(shoppingCart, Discount.allDiscounts); //TODO remove this
-            shoppingCart.Clear();
+            if (shoppingCart.Count == 0)
+            {
+                Console.WriteLine("Your shopping cart is empty. No purchase has been made");
+            }
+            else
+            {
+                FileManager.SaveReceipt(shoppingCart, FileManager.GetReceiptID());
+                shoppingCart.Clear();
+            }
         }
 
         public static void DisplayShoppingCart(List<Purchase> shoppingCart) // Fix this so it can be used in receipt creator
         {
-            Console.WriteLine("*******Your current shopping cart contains the following items*******");
-            foreach (var item in shoppingCart)
+            if (shoppingCart.Count == 0)
             {
-                string currentProductName = Product.GetProductName(Product.productDictionary, item.ProductID);
-                string currentProductType = Product.FindProductPriceType(Product.productDictionary, item.ProductID);
-                decimal currentPrice = Product.FindProductPrice(Product.productDictionary, item.ProductID);
+                Console.WriteLine("Your shopping cart is empty.");
+            }
+            else
+            {
+                Console.WriteLine("*******Your current shopping cart contains the following items*******");
+                foreach (var item in shoppingCart)
+                {
+                    string currentProductName = Product.GetProductName(Product.productDictionary, item.ProductID);
+                    string currentProductType = Product.FindProductPriceType(Product.productDictionary, item.ProductID);
+                    decimal currentPrice = Product.FindProductPrice(Product.productDictionary, item.ProductID);
 
-                Console.Write($"\nProduct: {currentProductName}" +
-                    $"  \tamount: {item.Amount}" +
-                    $"  \tprice {currentProductType}: {currentPrice} SEK" +
-                    $"  \ttotal sum: {currentPrice * item.Amount} SEK " +
-                    $"  \tproduct id: {item.ProductID}\n");
+                    Console.Write($"\nProduct: {currentProductName}" +
+                        $"  \tamount: {item.Amount}" +
+                        $"  \tprice {currentProductType}: {currentPrice} SEK" +
+                        $"  \ttotal sum: {currentPrice * item.Amount} SEK " +
+                        $"  \tproduct id: {item.ProductID}\n");
+                }
             }
         }
-
-        //public string ProductName { get; set; }
-        public int ProductID {  get; set; }
-        public int Amount { get; set; }
+        public int ProductID { get; }
+        public int Amount { get; }
     }
 }

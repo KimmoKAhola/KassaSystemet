@@ -54,6 +54,7 @@ namespace KassaSystemet
         }
         public static void SaveReceipt(List<Purchase> shoppingCart, int receiptID)
         {
+            IncrementReceiptCounter();
             string receipt = Receipt.CreateReceipt(shoppingCart, receiptID);
             using (StreamWriter receiptWriter = new($"{CreateReceiptFilePath()}", append: true))
             {
