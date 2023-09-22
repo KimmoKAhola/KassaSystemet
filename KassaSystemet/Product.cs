@@ -37,15 +37,14 @@ namespace KassaSystemet
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
         public string PriceType { get; set; }
-        public static void AddNewProduct(Dictionary<int, Product> dictionary, int productID, string productName, decimal unitPrice, decimal discountPrice, string priceType)
+        public static void AddNewProduct(Dictionary<int, Product> dictionary, int productID, string productName, decimal unitPrice, string priceType)
         {
             // if (dictionary.ContainsKey(product.ProductID)) Kolla så att produkten samt ID ej finns i systemet.
             // TODO Lägg till felhantering
             if (!dictionary.ContainsKey(productID))
             {
                 dictionary.Add(productID, new Product(productName, unitPrice, priceType));
-                Console.WriteLine($"Added the product {productName} with id [{productID}] and price {unitPrice} and price type {priceType} to the system." +
-                    $"\nDiscount price is: {discountPrice}");
+                Console.WriteLine($"Added the product {productName} with id [{productID}] and price {unitPrice} and price type {priceType} to the system.");
             }
             else
             {

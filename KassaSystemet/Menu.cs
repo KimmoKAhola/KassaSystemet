@@ -184,10 +184,9 @@ namespace KassaSystemet
             int id = Convert.ToInt32(adminEntries[0]);
             string name = adminEntries[1];
             decimal price = Convert.ToDecimal(adminEntries[2]);
-            decimal discountPrice = -1; // Hard coded. Will only be changed when necessary
             string priceType = "per unit"; // Change later. Hard coded for now
 
-            Product.AddNewProduct(Product.productDictionary, id, name, price, discountPrice, priceType);
+            Product.AddNewProduct(Product.productDictionary, id, name, price, priceType);
         }
         private static void Case3()
         {
