@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,7 +78,7 @@ namespace KassaSystemet
         public static void SaveDiscountList(Dictionary<string, List<Discount>> allDiscounts)
         {
             string discountListString = Discount.CreateDiscountString(allDiscounts);
-            using(StreamWriter writer = new($"{CreateDiscountListFilePath()}", append: false))
+            using (StreamWriter writer = new($"{CreateDiscountListFilePath()}", append: false))
             {
                 writer.Write(discountListString);
             }
@@ -105,13 +106,23 @@ namespace KassaSystemet
             if (File.Exists(CreateDiscountListFilePath()))
             {
                 var discountListInfo = File.ReadLines(CreateDiscountListFilePath());
-                //Discount.allDiscounts.Clear();
+                Discount.allDiscounts.Clear();
                 foreach (var item in discountListInfo)
                 {
-                    string[] columns = item.Split(!);
-
+                    List<Discount> temp = new List<Discount>();
+                    string[] columns = item.Split('!');
+                    string productName = columns[0];
+                    for (int i = 1; i < columns.Length - 1; i += 3)
+                    {
+                        string startDate = columns[i];
+                        string endDate = columns[i + 1];
+                        decimal discountPercentage = Convert.ToDecimal(columns[i + 2]);
+                        temp.Add(new Discount(startDate, endDate, discountPercentage));
+                    }
+                    Discount.allDiscounts.Add(productName, temp);
                 }
             }
+            return Discount.allDiscounts;
         }
     }
 }

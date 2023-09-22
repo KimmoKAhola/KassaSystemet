@@ -19,7 +19,7 @@ namespace KassaSystemet
             StartDate = DateTime.Parse(startDate, CultureInfo.CurrentCulture); //!https://www.codingninjas.com/studio/library/how-to-convert-string-to-datetime-in-csharp
             EndDate = DateTime.Parse(endDate, CultureInfo.CurrentCulture); //!!Useful link above to improve on this class later
             //TODO add error handling. Discount percentage has to be between 0-100 %.
-            DiscountPercentage = discountPercentage/100m;
+            DiscountPercentage = discountPercentage / 100m;
         }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -61,7 +61,7 @@ namespace KassaSystemet
             DateTime currentDate = CurrentDate();
             foreach (var discount in allDiscounts[productName])
             {
-                if(discount.StartDate <= currentDate && currentDate <= discount.EndDate)
+                if (discount.StartDate <= currentDate && currentDate <= discount.EndDate)
                 {
                     return true; // The product key exists. Now check if the date is correct.
                 }
@@ -97,23 +97,25 @@ namespace KassaSystemet
             string formattedDiscountListString = "";
             foreach (var item in allDiscounts)
             {
-                formattedDiscountListString += item.Key+"!";
+                formattedDiscountListString += item.Key + "!";
                 foreach (var discount in item.Value)
                 {
-                    formattedDiscountListString += discount.StartDate.ToShortDateString() + "!" + discount.EndDate.ToShortDateString() + "!" + discount.DiscountPercentage+"!";
+                    formattedDiscountListString += discount.StartDate.ToShortDateString() + "!" + discount.EndDate.ToShortDateString() + "!" + discount.DiscountPercentage + "!";
                 }
                 formattedDiscountListString += "\n";
             }
-            return formattedDiscountListString.Remove(formattedDiscountListString.Length - 1)+"\n";
+            return formattedDiscountListString.Remove(formattedDiscountListString.Length - 1) + "\n";
         }
         public static void DisplayAllDiscounts(Dictionary<string, List<Discount>> allDiscounts)
         {
+            Console.WriteLine("****A list of all discounts in the system****\n");
             foreach (var item in allDiscounts)
             {
-                Console.Write($"Product ID: [{item.Key}]");
+                Console.Write($"The product with name: [{item.Key}]");
+                Console.Write($" has discount start and end dates: \n");
                 foreach (var discount in item.Value)
                 {
-                        Console.Write($"start and end dates [{discount.StartDate.ToShortDateString()}]-[{discount.EndDate.ToShortDateString()}] with discount percentage {discount.DiscountPercentage*100} %");
+                    Console.Write($"[{discount.StartDate.ToShortDateString()}]-[{discount.EndDate.ToShortDateString()}] and discount percentage {discount.DiscountPercentage * 100:F2} %\n");
                 }
             }
 
