@@ -17,7 +17,10 @@ namespace KassaSystemet
             decimal discountPercentage2 = 50m;
             //Discount.AddNewDiscount(input, startDate, endDate, discountPercentage);
             Discount.AddNewDiscount(input2, startDate2, endDate2, discountPercentage2);
-
+            Dictionary<int, Product> products = new Dictionary<int, Product>();
+            products = FileManager.LoadProductList();
+            Product.DisplayProducts(products);
+            Console.ReadKey();
             Menu.MainMenu();
         }
     }

@@ -128,7 +128,7 @@ namespace KassaSystemet
             string formattedProductListString = "";
             foreach (var item in productDictionary)
             {
-                formattedProductListString += item.Key + "," + item.Value.ProductName + "," + item.Value.UnitPrice + "," + item.Value.PriceType+",";
+                formattedProductListString += item.Key + "!" + item.Value.ProductName + "!" + item.Value.UnitPrice + "!" + item.Value.PriceType+"!";
             }
             return formattedProductListString.Remove(formattedProductListString.Length-1);
         }

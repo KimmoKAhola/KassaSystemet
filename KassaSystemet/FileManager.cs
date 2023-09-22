@@ -24,7 +24,7 @@ namespace KassaSystemet
 
         private static string CreateProductListFilePath()
         {
-            return $"../../../Files/PRODUCT_LIST_{GetCurrentDate()}.csv";
+            return "../../../Files/PRODUCT_LIST_ADMIN.csv";
         }
         private static string GetCurrentDate()
         {
@@ -75,9 +75,19 @@ namespace KassaSystemet
 
         }
 
-        public static void LoadProductList(Dictionary<int, Product> productDictionary)
+        public static Dictionary<int, Product> LoadProductList()
         {
-
+            var productListInfo = File.ReadAllLines("../../../Files/PRODUCT_LIST_ADMIN.csv");
+            Product.productDictionary.Clear();
+            foreach (var item in productListInfo)
+            {
+                string[] columns = item.Split('!');
+                for(int i = 0; i < columns.Length; i+=4)
+                {
+                    Product.productDictionary.Add(Convert.ToInt32(columns[i]), new Product(columns[i+1],Convert.ToDecimal(columns[i+2]),columns[i+3]));
+                }
+            }
+            return Product.productDictionary;
         }
     }
 }
