@@ -21,29 +21,29 @@ namespace KassaSystemet
         // TODO the product ID is only for internal use.
         public static string CreateReceipt(List<Purchase> shoppingCart, int receiptID)
         {
-            //Dictionary<string, List<Discount>> allDiscounts;
+            //TODO need to print out the discounted price if there is a discount
             string formattedReceipt = "";
-            formattedReceipt += ($"********Receipt ID[{receiptID}]*******************\n");
+            formattedReceipt += ($"\n********Receipt ID[{receiptID}]*******************\n");
             foreach (var item in shoppingCart)
             {
                 string productName = Product.GetProductName(Product.productDictionary, item.ProductID);
-                //string productName = item.ProductName;
                 decimal price = Product.FindProductPrice(Product.productDictionary, item.ProductID);
+                decimal discount = Discount.GetCurrentDiscountPercentage(productName) * 100m;
+                formattedReceipt += ($"\nProduct: {productName}" +
+                    $"  \tamount: {item.Amount}");
 
                 if (Discount.allDiscounts.ContainsKey(productName) && Discount.IsProductOnSale(productName))
                 {
                     price *= (1 - Discount.GetCurrentDiscountPercentage(productName));
+                    formattedReceipt += ($"  \tDiscounted price ({discount} % off) {Product.FindProductPriceType(Product.productDictionary, item.ProductID)}: {price}" +
+                    $"  \tsum: {price * item.Amount} SEK");
                 }
                 else
                 {
                     price = Product.FindProductPrice(Product.productDictionary, item.ProductID);
+                    formattedReceipt += ($"\tprice {Product.FindProductPriceType(Product.productDictionary, item.ProductID)}: {price}" +
+                    $"  \tsum: {price * item.Amount} SEK");
                 }
-
-                formattedReceipt += ($"\nProduct: {productName}" +
-                    $"  \tamount: {item.Amount}" +
-                    $"  \tprice {Product.FindProductPriceType(Product.productDictionary, item.ProductID)}: {price}" +
-                    $"  \tsum: {price * item.Amount} SEK " +
-                    $"  \tproduct id: {Product.GetProductID(Product.productDictionary, item.ProductID)}\n");
             }
             formattedReceipt += "\n--------------------------------";
             return formattedReceipt;

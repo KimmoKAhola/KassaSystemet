@@ -1,0 +1,10 @@
+********Receipt ID[0]*******************
+
+Product: Bananer  	amount: 10  	Discounted price (0,8 off) per kg: 3,900  	sum: 39,000 SEK
+--------------------------------********Receipt ID[1]*******************
+
+Product: Bananer  	amount: 10  	Discounted price (80,0 off) per kg: 3,900  	sum: 39,000 SEK
+--------------------------------********Receipt ID[2]*******************
+
+Product: Bananer  	amount: 10  	Discounted price (65,00 % off) per kg: 6,8250  	sum: 68,2500 SEK
+--------------------------------
