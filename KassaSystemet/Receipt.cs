@@ -26,8 +26,9 @@ namespace KassaSystemet
             formattedReceipt += ($"********Receipt ID[{receiptID}]*******************\n");
             foreach (var item in shoppingCart)
             {
-                string productName = item.ProductName;
-                decimal price = Product.FindProductPrice(Product.productDictionary, productName);
+                string productName = Product.GetProductName(Product.productDictionary, item.ProductID);
+                //string productName = item.ProductName;
+                decimal price = Product.FindProductPrice(Product.productDictionary, item.ProductID);
 
                 if (Discount.allDiscounts.ContainsKey(productName) && Discount.IsProductOnSale(productName))
                 {
@@ -35,14 +36,14 @@ namespace KassaSystemet
                 }
                 else
                 {
-                    price = Product.FindProductPrice(Product.productDictionary, productName);
+                    price = Product.FindProductPrice(Product.productDictionary, item.ProductID);
                 }
 
-                formattedReceipt += ($"\nProduct: {item.ProductName}" +
+                formattedReceipt += ($"\nProduct: {productName}" +
                     $"  \tamount: {item.Amount}" +
-                    $"  \tprice {Product.FindProductPriceType(Product.productDictionary, item.ProductName)}: {price}" +
+                    $"  \tprice {Product.FindProductPriceType(Product.productDictionary, item.ProductID)}: {price}" +
                     $"  \tsum: {price * item.Amount} SEK " +
-                    $"  \tproduct id: {Product.GetProductID(Product.productDictionary, item.ProductName)}\n");
+                    $"  \tproduct id: {Product.GetProductID(Product.productDictionary, item.ProductID)}\n");
             }
             formattedReceipt += "\n--------------------------------";
             return formattedReceipt;

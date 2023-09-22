@@ -170,8 +170,9 @@ namespace KassaSystemet
             Console.Write("Enter <product ID> <Amount>: ");
             string customerEntry = Console.ReadLine();
             string[] entries = customerEntry.Split(' ');
+            int productID = Convert.ToInt32(entries[0]);
             int amount = Convert.ToInt32(entries[1]);
-            Purchase.shoppingCart.Add(new Purchase(entries[0], amount)); // check this!
+            Purchase.shoppingCart.Add(new Purchase(productID, amount)); // check this!
             Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
         }
 

@@ -77,14 +77,17 @@ namespace KassaSystemet
 
         public static Dictionary<int, Product> LoadProductList()
         {
-            var productListInfo = File.ReadAllLines("../../../Files/PRODUCT_LIST_ADMIN.csv");
-            Product.productDictionary.Clear();
-            foreach (var item in productListInfo)
+            if (File.Exists(CreateProductListFilePath()))
             {
-                string[] columns = item.Split('!');
-                for(int i = 0; i < columns.Length; i+=4)
+                var productListInfo = File.ReadAllLines(CreateProductListFilePath());
+                Product.productDictionary.Clear();
+                foreach (var item in productListInfo)
                 {
-                    Product.productDictionary.Add(Convert.ToInt32(columns[i]), new Product(columns[i+1],Convert.ToDecimal(columns[i+2]),columns[i+3]));
+                    string[] columns = item.Split('!');
+                    for (int i = 0; i < columns.Length; i += 4)
+                    {
+                        Product.productDictionary.Add(Convert.ToInt32(columns[i]), new Product(columns[i + 1], Convert.ToDecimal(columns[i + 2]), columns[i + 3]));
+                    }
                 }
             }
             return Product.productDictionary;

@@ -16,17 +16,17 @@ namespace KassaSystemet
         //public static Dictionary<int, Product> productDictionary = Seed.seedDictionary;
         //TODO this is only used for seeding purposes
         public static Dictionary<int, Product> productDictionary = new(){ //TODO names are shortened because of formatting. Change later
-            { 300, new Product("Bananer", 19.50m, "per kg") },
+            { 300, new Product("Bananer", 19.50m, "per kg") }, 
             { 301, new Product("Äpplen", 25.99m, "per kg") },
-            { 302, new Product("Choklad", 13.37m, "per unit") },
-            { 303, new Product("Pepsi", 30.50m, "per unit") },
-            { 304, new Product("Kexchok", 18.99m, "per unit") },
-            { 305, new Product("Sallad", 27.50m, "per kg") },
-            { 306, new Product("Jordgub", 5.00m, "per kg") },
-            { 307, new Product("Nutella", 21.00m, "per unit") },
-            { 308, new Product("Toapapp", 7.00m, "per unit") },
-            { 309, new Product("Saffran", 5.50m, "per unit") },
-            { 310, new Product("Vatten", 100.00m, "per unit") }};
+            { 302, new Product("Choklad", 13.37m, "per unit") } };
+            //{ 303, new Product("Pepsi", 30.50m, "per unit") },
+            //{ 304, new Product("Kexchok", 18.99m, "per unit") },
+            //{ 305, new Product("Sallad", 27.50m, "per kg") },
+            //{ 306, new Product("Jordgub", 5.00m, "per kg") },
+            //{ 307, new Product("Nutella", 21.00m, "per unit") },
+            //{ 308, new Product("Toapapp", 7.00m, "per unit") },
+            //{ 309, new Product("Saffran", 5.50m, "per unit") },
+            //{ 310, new Product("Vatten", 100.00m, "per unit") }};
         public Product(string productName, decimal unitPrice, string priceType) // add price type (per kg or per piece later)
         {
             ProductName = productName;
@@ -37,6 +37,7 @@ namespace KassaSystemet
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
         public string PriceType { get; set; }
+
         public static void AddNewProduct(Dictionary<int, Product> dictionary, int productID, string productName, decimal unitPrice, string priceType)
         {
             // if (dictionary.ContainsKey(product.ProductID)) Kolla så att produkten samt ID ej finns i systemet.
@@ -51,34 +52,56 @@ namespace KassaSystemet
                 Console.WriteLine($"The product id {productID} already exists in the system.");
             }
         }
-        public static int GetProductID(Dictionary<int, Product> productDictionary, string productName)
+        public static int GetProductID(Dictionary<int, Product> productDictionary, int productID)
         {
-            //Want to type in "Bananas" and find its dictionary key.
+            //Want to type in ProductID and find its dictionary key.
             foreach (var item in productDictionary)
             {
-                if (item.Value.ProductName == productName)
+                if (item.Key == productID)
                 {
                     return item.Key;
                 }
             }
             return -50; //TODO If it does not exist return -50. Error handling should be implemented later.
         }
-        public static decimal FindProductPrice(Dictionary<int, Product> productDictionary, string productName)
+
+        public static int GetProductID(Dictionary<int, Product> productDictionary, string productName)
+        {
+            foreach (var item in productDictionary)
+            {
+                if(item.Value.ProductName == productName)
+                {
+                    return item.Key;
+                }
+            }
+            return -50;
+        }
+        public static decimal FindProductPrice(Dictionary<int, Product> productDictionary, int productID)
         {
             // Use this to find a certain unit price given a product name.
             // TODO lägg till felhantering
 
-            int productID = GetProductID(productDictionary, productName);
+            //int productID = GetProductID(productDictionary, productName);
             return productDictionary[productID].UnitPrice;
         }
-        public static string FindProductPriceType(Dictionary<int, Product> productDictionary, string productName)
+        //public static decimal FindProductPrice(Dictionary<int, Product> productDictionary, string productName)
+        //{
+        //    int productID = GetProductID(productDictionary, productName);
+        //    return productDictionary[productID].UnitPrice;
+        //}
+        public static string FindProductPriceType(Dictionary<int, Product> productDictionary, int productID)
         {
-            int productID = GetProductID(productDictionary, productName);
+            //int productID = GetProductID(productDictionary, produtID);
             return productDictionary[productID].PriceType;
         }
-        public static decimal FindProductPrice(Dictionary<int, Product> productDictionary, int productID)
+        //public static string FindProductPriceType(Dictionary<int, Product> productDictionary, string productName)
+        //{
+        //    int productID = GetProductID(productDictionary, productName);
+        //    return productDictionary[productID].PriceType;
+        //}
+        public static string GetProductName(Dictionary<int, Product> productDictionary, int productID)
         {
-            return productDictionary[productID].UnitPrice;
+            return productDictionary[productID].ProductName;
         }
         public static void ChangeProductPrice(Dictionary<int, Product> dictionary, int productID, decimal newPrice)
         {

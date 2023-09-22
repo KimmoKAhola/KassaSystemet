@@ -22,7 +22,7 @@ namespace KassaSystemet
         //    { new Purchase("Saffran", 25) },
         //    { new Purchase("Vatten", 3) } };
         public static List<Purchase> shoppingCart = new(){
-            { new Purchase("Bananer", 10)} };
+            { new Purchase(300, 10)} };
 
         /*
          *  Class which handles the "shopping cart".
@@ -31,9 +31,9 @@ namespace KassaSystemet
          *  different products
          */
 
-        public Purchase(string productName, int amount)
+        public Purchase(int productID, int amount)
         {
-            ProductName = productName;
+            ProductID = productID;
             Amount = amount;
         }
 
@@ -52,15 +52,20 @@ namespace KassaSystemet
             Console.WriteLine("*******Your current shopping cart contains the following items*******");
             foreach (var item in shoppingCart)
             {
-                Console.Write($"\nProduct: {item.ProductName}" +
+                string currentProductName = Product.GetProductName(Product.productDictionary, item.ProductID);
+                string currentProductType = Product.FindProductPriceType(Product.productDictionary, item.ProductID);
+                decimal currentPrice = Product.FindProductPrice(Product.productDictionary, item.ProductID);
+
+                Console.Write($"\nProduct: {currentProductName}" +
                     $"  \tamount: {item.Amount}" +
-                    $"  \tprice {Product.FindProductPriceType(Product.productDictionary, item.ProductName)}: {Product.FindProductPrice(Product.productDictionary, item.ProductName)} SEK" +
-                    $"  \ttotal sum: {Product.FindProductPrice(Product.productDictionary, item.ProductName) * item.Amount} SEK " +
-                    $"  \tproduct id: {Product.GetProductID(Product.productDictionary, item.ProductName)}\n");
+                    $"  \tprice {currentProductType}: {currentPrice} SEK" +
+                    $"  \ttotal sum: {currentPrice * item.Amount} SEK " +
+                    $"  \tproduct id: {item.ProductID}\n");
             }
         }
 
-        public string ProductName { get; set; }
+        //public string ProductName { get; set; }
+        public int ProductID {  get; set; }
         public int Amount { get; set; }
     }
 }
