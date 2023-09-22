@@ -13,3 +13,8 @@ Product: Bananer  	amount: 10  	Discounted price (65,00 % off) per kg: 6,8250  	
 Product: Bananer  	amount: 10	price per kg: 19,50  	sum: 195,00 SEK
 Product: Äpplen  	amount: 25	price per kg: 25,99  	sum: 649,75 SEK
 --------------------------------
+********Receipt ID[4]*******************
+
+Product: Bananer  	amount: 10	price per kg: 19,50  	sum: 195,00 SEK
+Product: Kaffe  	amount: 3  	Discounted price (95,00 % off) per unit: 2,2750  	sum: 6,8250 SEK
+--------------------------------

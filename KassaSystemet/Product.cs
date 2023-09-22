@@ -40,8 +40,6 @@ namespace KassaSystemet
 
         public static void AddNewProduct(Dictionary<int, Product> dictionary, int productID, string productName, decimal unitPrice, string priceType)
         {
-            // if (dictionary.ContainsKey(product.ProductID)) Kolla så att produkten samt ID ej finns i systemet.
-            // TODO Lägg till felhantering
             if (!dictionary.ContainsKey(productID))
             {
                 dictionary.Add(productID, new Product(productName, unitPrice, priceType));
@@ -113,20 +111,18 @@ namespace KassaSystemet
 
         public static void DisplayProducts(Dictionary<int, Product> dictionary)
         {
-            Console.WriteLine("\n\nID\tProduct Name\t\tUnit price\tDiscount price\tPrice type");
+            Console.WriteLine("\n\nID\tProduct Name\t\tUnit price\t\t\tPrice type");
             foreach (var item in dictionary)
             {
-                Console.WriteLine("Remember to add the discount price from Discount.AllDiscounts!!!");
                 Console.Write($"{item.Key}\t{item.Value.ProductName}\t\t\t{item.Value.UnitPrice}\t\t\t\t{item.Value.PriceType}\n");
             }
         }
 
         public static void CheckForSalesPrice()
         {
-
             DateTime today = DateTime.Now;
-            DateTime start = new DateTime(2023, 9, 19);
-            DateTime end = new DateTime(2023, 9, 25);
+            DateTime start = new(2023, 9, 19);
+            DateTime end = new(2023, 9, 25);
             DateTime.Compare(start, today); // returns -1 = is false
             DateTime.Compare(end, today); // returns 1 = is true
             //TODO Implement a function which checks if a product is on sale. Should check if current date is between sales date, then check products?

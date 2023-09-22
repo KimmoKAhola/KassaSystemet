@@ -114,6 +114,7 @@ namespace KassaSystemet
                     "3. Change price on a product\n" +
                     "4. Change name on a product\n" +
                     "5. Add a discount for a product\n" +
+                    "6. Display all available discounts\n" +
                     "0. Exit admin menu");
 
                 Console.Write("Enter a command: ");
@@ -146,6 +147,11 @@ namespace KassaSystemet
 
                     case "5":
                         Case5();
+                        Console.Write("Press any key to continue");
+                        break;
+                    case "6":
+                        Discount.DisplayAllDiscounts(Discount.allDiscounts);
+                        Console.ReadKey();
                         Console.Write("Press any key to continue");
                         break;
 

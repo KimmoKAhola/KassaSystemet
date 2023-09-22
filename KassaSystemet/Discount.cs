@@ -100,7 +100,7 @@ namespace KassaSystemet
                 formattedDiscountListString += item.Key + "!";
                 foreach (var discount in item.Value)
                 {
-                    formattedDiscountListString += discount.StartDate.ToShortDateString() + "!" + discount.EndDate.ToShortDateString() + "!" + discount.DiscountPercentage + "!";
+                    formattedDiscountListString += discount.StartDate.ToShortDateString() + "!" + discount.EndDate.ToShortDateString() + "!" + discount.DiscountPercentage*100m + "!";
                 }
                 formattedDiscountListString += "\n";
             }
@@ -118,7 +118,7 @@ namespace KassaSystemet
                     Console.Write($"[{discount.StartDate.ToShortDateString()}]-[{discount.EndDate.ToShortDateString()}] and discount percentage {discount.DiscountPercentage * 100:F2} %\n");
                 }
             }
-
+            Console.WriteLine();
         }
     }
 }

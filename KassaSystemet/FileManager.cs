@@ -13,7 +13,6 @@ namespace KassaSystemet
          * The methods here are used to create the filepath
          * and are also responsible to keep track of the receipt id
          */
-
         private static string CreateReceiptFilePath()
         {
             return $"../../../Files/RECEIPT_{GetCurrentDate()}.txt";
@@ -65,7 +64,6 @@ namespace KassaSystemet
                 receiptWriter.Write(receipt);
             }
         }
-
         public static void SaveProductList(Dictionary<int, Product> productDictionary)
         {
             string productListString = Product.CreateProductString(productDictionary);
@@ -74,7 +72,6 @@ namespace KassaSystemet
                 writer.Write(productListString);
             }
         }
-
         public static void SaveDiscountList(Dictionary<string, List<Discount>> allDiscounts)
         {
             string discountListString = Discount.CreateDiscountString(allDiscounts);
@@ -83,7 +80,6 @@ namespace KassaSystemet
                 writer.Write(discountListString);
             }
         }
-
         public static Dictionary<int, Product> LoadProductList()
         {
             if (File.Exists(CreateProductListFilePath()))
@@ -109,7 +105,7 @@ namespace KassaSystemet
                 Discount.allDiscounts.Clear();
                 foreach (var item in discountListInfo)
                 {
-                    List<Discount> temp = new List<Discount>();
+                    List<Discount> temp = new();
                     string[] columns = item.Split('!');
                     string productName = columns[0];
                     for (int i = 1; i < columns.Length - 1; i += 3)
