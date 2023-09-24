@@ -7,3 +7,17 @@ Product: Bananer  	amount: 10	price per kg: 19,50  	sum: 195,00 SEK
 
 Product: Bananer  	amount: 10	price per kg: 19,50  	sum: 195,00 SEK
 --------------------------------
+********Receipt ID[2]*******************
+
+Product: Bananer  	amount: 10	price per kg: 19,50  	sum: 195,00 SEK
+Product: Äpplen  	amount: 15,5	price per kg: 25,99  	sum: 402,845 SEK
+--------------------------------
+********Receipt ID[3]*******************
+
+Product: Bananer  	amount: 10	price per kg: 19,50 kr  	sum: 195,00 kr
+Product: Äpplen  	amount: 15,6	price per kg: 25,99 kr  	sum: 405,44 kr
+--------------------------------
+********Receipt ID[4]*******************
+
+Product: Bananer  	amount: 10	price per kg: 19,50 kr  	sum: 195,00 kr
+--------------------------------

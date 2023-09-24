@@ -38,10 +38,20 @@ namespace KassaSystemet
         /// </summary>
         /// <param name="productID"></param>
         /// <param name="amount"></param>
-        public Purchase(int productID, int amount)
+        public Purchase(int productID, decimal amount)
         {
             ProductID = productID;
-            Amount = amount;
+            if (Product.CheckPriceType(productID))
+            {
+                Amount = decimal.Round(amount, 2);
+            }
+            else
+            {
+                Console.WriteLine($"Your product with id [{productID}] is not sold per kg and your requested amount of {amount}" +
+                    $" has been rounded to {Math.Round(amount)}");
+                Amount = Math.Round(amount);
+            }
+            Console.WriteLine($"Added product ID [{productID}] and amount {amount} to your cart.");
         }
         /// <summary>
         /// This method performs the payment.
@@ -79,13 +89,13 @@ namespace KassaSystemet
 
                     Console.Write($"\nProduct: {currentProductName}" +
                         $"  \tamount: {item.Amount}" +
-                        $"  \tprice {currentProductType}: {currentPrice} SEK" +
-                        $"  \ttotal sum: {currentPrice * item.Amount} SEK " +
+                        $"  \tprice {currentProductType}: {currentPrice:C2}" +
+                        $"  \ttotal sum: {(currentPrice * item.Amount):C2} " +
                         $"  \tproduct id: {item.ProductID}\n");
                 }
             }
         }
         public int ProductID { get; }
-        public int Amount { get; }
+        public decimal Amount { get; }
     }
 }

@@ -31,7 +31,7 @@ namespace KassaSystemet
         {
             ProductName = productName;
             UnitPrice = unitPrice;
-            PriceType = priceType;
+            PriceType = priceType.ToLower();
         }
 
         public string ProductName { get; set; }
@@ -122,7 +122,7 @@ namespace KassaSystemet
             {
                 productDictionary[productID].UnitPrice = newPrice;
             }
-            else if(newPrice <= 0m)
+            else if (newPrice <= 0m)
             {
                 Console.WriteLine($"The price {newPrice} value is invalid. The price can not be lower or equal to 0.");
             }
@@ -180,6 +180,24 @@ namespace KassaSystemet
                 formattedProductListString += item.Key + "!" + item.Value.ProductName + "!" + item.Value.UnitPrice + "!" + item.Value.PriceType + "!";
             }
             return formattedProductListString.Remove(formattedProductListString.Length - 1);
+        }
+
+        /// <summary>
+        /// Returns true if priceType is per kg.
+        /// Returns false if priceType is per piece.
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <returns></returns>
+        public static bool CheckPriceType(int productID)
+        {
+            if (productDictionary.ContainsKey(productID) && FindProductPriceType(productDictionary, productID) == "per kg")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

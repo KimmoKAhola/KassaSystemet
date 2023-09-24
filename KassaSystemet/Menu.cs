@@ -68,9 +68,9 @@ namespace KassaSystemet
             {
                 Console.Clear();
                 Console.WriteLine("****Welcome to the customer menu****");
-                Console.WriteLine("1. Display your current cart");
-                Console.WriteLine("2. Enter products to purchase");
-                Console.WriteLine("00. Empty");
+                Console.WriteLine("1. Display your current cart.");
+                Console.WriteLine("2. Enter products to purchase.");
+                Console.WriteLine("3. Display available products.");
                 Console.WriteLine("PAY: purchase wares in your cart and exit.");
                 Console.Write("Enter command: ");
                 userInput = Console.ReadLine().ToUpper();
@@ -86,15 +86,18 @@ namespace KassaSystemet
                         Console.WriteLine("Add another product? (press 2) does not work atm");
                         userInput = Console.ReadLine();
                         break;
+
+                    case "3":
+                        Product.DisplayProducts(Product.productDictionary);
+                        Console.ReadKey();
+                        break;
+
                     case "PAY":
                         Console.WriteLine("Purchase the wares in your shopping cart. This saves the receipt to a file.");
                         Purchase.Pay(); // pay command in purchase class
                         userInput = "0";
                         break;
-                    case "00":
-                        Console.WriteLine("Nothing here");
-                        Console.ReadKey();
-                        break;
+
                     case "0":
                         MainMenu();
                         break;
@@ -120,7 +123,7 @@ namespace KassaSystemet
 
                 Console.Write("Enter a command: ");
                 //userInput = Console.ReadLine().ToUpper();
-                if (int.TryParse(Console.ReadLine(), out userInput) && (userInput > 0 && userInput < 7))
+                if (int.TryParse(Console.ReadLine(), out userInput) && (userInput >= 0 && userInput < 7))
                 {
                     switch (userInput)
                     {
@@ -184,9 +187,12 @@ namespace KassaSystemet
                 Console.WriteLine("You entered the information incorrectly. Try again!");
             }
             int productID = Convert.ToInt32(entries[0]);
-            int amount = Convert.ToInt32(entries[1]);
+            decimal amount = Convert.ToDecimal(entries[1]);
+            if (!Product.CheckPriceType(productID))
+            {
+                amount = Math.Round(Convert.ToDecimal(entries[1]));
+            }
             Purchase.shoppingCart.Add(new Purchase(productID, amount)); // check this!
-            Console.WriteLine($"Added {entries[0]} and {amount} to your cart!");
         }
 
         private static void AddNewProduct()

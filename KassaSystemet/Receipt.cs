@@ -36,14 +36,14 @@ namespace KassaSystemet
                 if (Discount.allDiscounts.ContainsKey(productID) && Discount.IsProductOnSale(productID))
                 {
                     price *= (1 - Discount.GetCurrentDiscountPercentage(productID));
-                    formattedReceipt += ($"  \tDiscounted price ({discount} % off) {Product.FindProductPriceType(Product.productDictionary, item.ProductID)}: {price}" +
-                    $"  \tsum: {price * item.Amount} SEK");
+                    formattedReceipt += ($"  \tDiscounted price ({discount} % off) {Product.FindProductPriceType(Product.productDictionary, item.ProductID)}: {price:C2}" +
+                    $"  \tsum: {(price * item.Amount):C2}");
                 }
                 else
                 {
                     price = Product.FindProductPrice(Product.productDictionary, item.ProductID);
-                    formattedReceipt += ($"\tprice {Product.FindProductPriceType(Product.productDictionary, item.ProductID)}: {price}" +
-                    $"  \tsum: {price * item.Amount} SEK");
+                    formattedReceipt += ($"\tprice {Product.FindProductPriceType(Product.productDictionary, item.ProductID)}: {price:C2}" +
+                    $"  \tsum: {(price * item.Amount):C2}");
                 }
             }
             formattedReceipt += "\n--------------------------------";
