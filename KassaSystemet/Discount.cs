@@ -82,13 +82,16 @@ namespace KassaSystemet
         }
         public static void AddNewDiscount(int productID, string startDate, string endDate, decimal discountPercentage)
         {
-            //TODO Needs error handling to check if startDate and endDate already exists.
-            Discount newDiscount = new Discount(startDate, endDate, discountPercentage);
-            if (!allDiscounts.ContainsKey(productID))
+            Discount newDiscount = new(startDate, endDate, discountPercentage);
+            if (!allDiscounts.ContainsKey(productID) && (discountPercentage > 0 && discountPercentage < 100))
             {
-                List<Discount> discountsPerItem = new List<Discount>();
+                List<Discount> discountsPerItem = new();
                 discountsPerItem.Add(newDiscount); // Key is product name
                 allDiscounts.Add(productID, discountsPerItem);
+            }
+            else if ((discountPercentage <= 0 || discountPercentage >= 100))
+            {
+                Console.WriteLine($"Your discount percentage of {discountPercentage} is not valid. Enter a value between 0 and 100.");
             }
             else
             {

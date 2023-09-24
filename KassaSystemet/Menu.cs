@@ -13,8 +13,6 @@ namespace KassaSystemet
 {
     public class Menu
     {
-        // !Underlined comment
-        // ?RED COMMENT
         public void MainMenu()
         {
             int menuOption;
@@ -30,28 +28,29 @@ namespace KassaSystemet
                 Console.WriteLine("4. Press 4 for a demonstration with hardcoded values");
                 Console.WriteLine("0. Avsluta. This saves all dictionaries to files");
                 Console.Write("Enter your command: ");
-                menuOption = Convert.ToInt32(Console.ReadLine());
-
-                switch (menuOption)
+                if (int.TryParse(Console.ReadLine(), out menuOption))
                 {
-                    case 1:
-                        //CustomerMenu customerMenu = new();
-                        CustomerMenu();
-                        menuOption = 0;
-                        break;
-                    case 2:
-                        AdminMenu();
-                        menuOption = 0;
-                        break;
-                    case 3:
-                        Console.WriteLine("receipt id value from file: " + FileManager.GetReceiptID());
-                        Console.ReadKey();
-                        break;
-                    case 0:
-                        FileManager.SaveProductList(Product.productDictionary);
-                        FileManager.SaveDiscountList(Discount.allDiscounts);
-                        Environment.Exit(0);
-                        break;
+                    switch (menuOption)
+                    {
+                        case 1:
+                            //CustomerMenu customerMenu = new();
+                            CustomerMenu();
+                            menuOption = 0;
+                            break;
+                        case 2:
+                            AdminMenu();
+                            menuOption = 0;
+                            break;
+                        case 3:
+                            Console.WriteLine("receipt id value from file: " + FileManager.GetReceiptID());
+                            Console.ReadKey();
+                            break;
+                        case 0:
+                            FileManager.SaveProductList(Product.productDictionary);
+                            FileManager.SaveDiscountList(Discount.allDiscounts);
+                            Environment.Exit(0);
+                            break;
+                    }
                 }
             } while (menuOption != 0);
         }
@@ -106,7 +105,7 @@ namespace KassaSystemet
         private void AdminMenu()
         {
 
-            string userInput;
+            int userInput;
             do
             {
                 Console.Clear();
@@ -120,68 +119,70 @@ namespace KassaSystemet
                     "0. Exit admin menu");
 
                 Console.Write("Enter a command: ");
-                userInput = Console.ReadLine().ToUpper();
-                switch (userInput)
+                //userInput = Console.ReadLine().ToUpper();
+                if (int.TryParse(Console.ReadLine(), out userInput) && (userInput > 0 && userInput < 7))
                 {
-                    case "1":
-                        //Add a new product to the system.
-                        AddNewProduct();
-                        Console.ReadKey();
-                        break;
+                    switch (userInput)
+                    {
+                        case 1:
+                            //Add a new product to the system.
+                            AddNewProduct();
+                            Console.ReadKey();
+                            break;
 
-                    case "2":
-                        //Display the products
-                        Console.Write("These are the available products in the system: ");
-                        Product.DisplayProducts(Product.productDictionary);
-                        Console.Write("Press any key to continue. ");
-                        Console.ReadKey();
-                        break;
+                        case 2:
+                            //Display the products
+                            Console.Write("These are the available products in the system: ");
+                            Product.DisplayProducts(Product.productDictionary);
+                            Console.Write("Press any key to continue. ");
+                            Console.ReadKey();
+                            break;
 
-                    case "3":
-                        ChangePriceOnProduct();
-                        Console.Write("Press any key to continue. ");
-                        Console.ReadKey();
-                        break;
+                        case 3:
+                            ChangePriceOnProduct();
+                            Console.Write("Press any key to continue. ");
+                            Console.ReadKey();
+                            break;
 
-                    case "4":
-                        ChangeNameOnProduct();
-                        Console.Write("Press any key to continue. ");
-                        Console.ReadKey();
-                        break;
+                        case 4:
+                            ChangeNameOnProduct();
+                            Console.Write("Press any key to continue. ");
+                            Console.ReadKey();
+                            break;
 
-                    case "5":
-                        AddNewDiscount();
-                        Console.Write("Press any key to continue");
-                        break;
-                    case "6":
-                        Discount.DisplayAllDiscounts(Discount.allDiscounts);
-                        Console.ReadKey();
-                        Console.Write("Press any key to continue");
-                        break;
+                        case 5:
+                            AddNewDiscount();
+                            Console.Write("Press any key to continue");
+                            break;
+                        case 6:
+                            Discount.DisplayAllDiscounts(Discount.allDiscounts);
+                            Console.ReadKey();
+                            Console.Write("Press any key to continue");
+                            break;
 
-                    case "0":
-                        MainMenu();
-                        break;
+                        case 0:
+                            MainMenu();
+                            break;
+                    }
                 }
-            } while (userInput != "0");
+                else
+                {
+                    Console.WriteLine("Incorrect input. Please enter a number 1-6.");
+                }
+            } while (userInput != 0);
             MainMenu();
         }
 
-
-        private static (string name, decimal price) EnterNamePrice()
-        {
-            Console.Write("Enter a name and a price: ");
-            string entry = Console.ReadLine();
-            string[] entries = entry.Split(' ');
-
-            return (entries[0], Convert.ToDecimal(entries[1]));
-        }
         private static void PurchaseProducts()
         {
             Console.WriteLine("Enter wares to your purchase, then print the receipt");
             Console.Write("Enter <product ID> <Amount>: ");
             string customerEntry = Console.ReadLine();
             string[] entries = customerEntry.Split(' ');
+            if (entries.Length != 2)
+            {
+                Console.WriteLine("You entered the information incorrectly. Try again!");
+            }
             int productID = Convert.ToInt32(entries[0]);
             int amount = Convert.ToInt32(entries[1]);
             Purchase.shoppingCart.Add(new Purchase(productID, amount)); // check this!

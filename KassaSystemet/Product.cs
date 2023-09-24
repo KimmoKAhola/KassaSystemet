@@ -118,9 +118,13 @@ namespace KassaSystemet
         }
         public static void ChangeProductPrice(Dictionary<int, Product> dictionary, int productID, decimal newPrice)
         {
-            if (dictionary.ContainsKey(GetProductID(dictionary, productID)))
+            if (dictionary.ContainsKey(GetProductID(dictionary, productID)) && newPrice > 0m)
             {
                 productDictionary[productID].UnitPrice = newPrice;
+            }
+            else if(newPrice <= 0m)
+            {
+                Console.WriteLine($"The price {newPrice} value is invalid. The price can not be lower or equal to 0.");
             }
             else
             {
