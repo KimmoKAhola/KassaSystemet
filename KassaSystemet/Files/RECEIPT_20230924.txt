@@ -1,0 +1,9 @@
+
+********Receipt ID[0]*******************
+
+Product: Bananer  	amount: 10	price per kg: 19,50  	sum: 195,00 SEK
+--------------------------------
+********Receipt ID[1]*******************
+
+Product: Bananer  	amount: 10	price per kg: 19,50  	sum: 195,00 SEK
+--------------------------------

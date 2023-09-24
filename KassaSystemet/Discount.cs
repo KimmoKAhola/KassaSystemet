@@ -52,6 +52,17 @@ namespace KassaSystemet
             Console.WriteLine("Not implemented yet!");
         }
 
+        public static bool IsDiscountListEmpty()
+        {
+            if (allDiscounts.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public static bool IsProductOnSale(int productID) // Send out true if currentDate is between startDate and endDate
         {
             if (!allDiscounts.ContainsKey(productID))
@@ -94,17 +105,25 @@ namespace KassaSystemet
         }
         public static string CreateDiscountString(Dictionary<int, List<Discount>> allDiscounts)
         {
-            string formattedDiscountListString = "";
-            foreach (var item in allDiscounts)
+            if (IsDiscountListEmpty())
             {
-                formattedDiscountListString += item.Key + "!";
-                foreach (var discount in item.Value)
-                {
-                    formattedDiscountListString += discount.StartDate.ToShortDateString() + "!" + discount.EndDate.ToShortDateString() + "!" + discount.DiscountPercentage*100m + "!";
-                }
-                formattedDiscountListString += "\n";
+                return "";
             }
-            return formattedDiscountListString.Remove(formattedDiscountListString.Length - 1) + "\n";
+            else
+            {
+
+                string formattedDiscountListString = "";
+                foreach (var item in allDiscounts)
+                {
+                    formattedDiscountListString += item.Key + "!";
+                    foreach (var discount in item.Value)
+                    {
+                        formattedDiscountListString += discount.StartDate.ToShortDateString() + "!" + discount.EndDate.ToShortDateString() + "!" + discount.DiscountPercentage * 100m + "!";
+                    }
+                    formattedDiscountListString += "\n";
+                }
+                return formattedDiscountListString.Remove(formattedDiscountListString.Length - 1) + "\n";
+            }
         }
         public static void DisplayAllDiscounts(Dictionary<int, List<Discount>> allDiscounts)
         {

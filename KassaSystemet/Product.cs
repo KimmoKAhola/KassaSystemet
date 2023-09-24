@@ -38,6 +38,15 @@ namespace KassaSystemet
         public decimal UnitPrice { get; set; }
         public string PriceType { get; set; }
 
+        public static bool IsProductListEmpty()
+        {
+            if (productDictionary.Count == 0)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
         public static void AddNewProduct(Dictionary<int, Product> dictionary, int productID, string productName, decimal unitPrice, string priceType)
         {
             if (!dictionary.ContainsKey(productID))
@@ -111,10 +120,17 @@ namespace KassaSystemet
 
         public static void DisplayProducts(Dictionary<int, Product> dictionary)
         {
-            Console.WriteLine("\n\nID\tProduct Name\t\tUnit price\t\t\tPrice type");
-            foreach (var item in dictionary)
+            if (IsProductListEmpty())
             {
-                Console.Write($"{item.Key}\t{item.Value.ProductName}\t\t\t{item.Value.UnitPrice}\t\t\t\t{item.Value.PriceType}\n");
+                Console.WriteLine("Your product list is currently empty.");
+            }
+            else
+            {
+                Console.WriteLine("\n\nID\tProduct Name\t\tUnit price\t\t\tPrice type");
+                foreach (var item in dictionary)
+                {
+                    Console.Write($"{item.Key}\t{item.Value.ProductName}\t\t\t{item.Value.UnitPrice}\t\t\t\t{item.Value.PriceType}\n");
+                }
             }
         }
 

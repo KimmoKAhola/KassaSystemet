@@ -67,7 +67,7 @@ namespace KassaSystemet
         {
             if (shoppingCart.Count == 0)
             {
-                Console.WriteLine("Your shopping cart is empty.");
+                Console.WriteLine("Your shopping cart is currently empty.");
             }
             else
             {
