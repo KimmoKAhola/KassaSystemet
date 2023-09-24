@@ -95,6 +95,27 @@ namespace KassaSystemet
                 }
             }
         }
+
+        /// <summary>
+        /// This method returns the longest string length
+        /// for all purchases in the shopping cart.
+        /// This is then returned and used to format
+        /// the receipt when using the Pay method.
+        /// </summary>
+        /// <param name="shoppingCart"></param>
+        /// <returns></returns>
+        public static int GetLongestName(List<Purchase> shoppingCart)
+        {
+            int maxLength = 0;
+            foreach (var item in shoppingCart)
+            {
+                if(Product.GetProductName(Product.productDictionary, item.ProductID).Length > maxLength)
+                {
+                    maxLength = Product.GetProductName(Product.productDictionary, item.ProductID).Length;
+                }
+            }
+            return maxLength;
+        }
         public int ProductID { get; }
         public decimal Amount { get; }
     }

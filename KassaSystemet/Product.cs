@@ -20,7 +20,7 @@ namespace KassaSystemet
             { 301, new Product("Äpplen", 25.99m, "per kg") },
             { 302, new Product("Choklad", 13.37m, "per unit") },
             { 303, new Product("Pepsi", 30.50m, "per unit") },
-            { 304, new Product("Kexchok", 18.99m, "per unit") },
+            { 304, new Product("Kexchoklaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad", 18.99m, "per unit") },
             { 305, new Product("Sallad", 27.50m, "per kg") },
             { 306, new Product("Jordgub", 5.00m, "per kg") },
             { 307, new Product("Nutella", 21.00m, "per unit") },
