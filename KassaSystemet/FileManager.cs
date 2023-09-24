@@ -13,6 +13,14 @@ namespace KassaSystemet
          * The methods here are used to create the filepath
          * and are also responsible to keep track of the receipt id
          */
+        private static void CreateFolder()
+        {
+            Directory.CreateDirectory(GetDirectoryFilePath());
+        }
+        private static string GetDirectoryFilePath()
+        {
+            return $"../../../Files";
+        }
         private static string CreateReceiptFilePath()
         {
             return $"../../../Files/RECEIPT_{GetCurrentDate()}.txt";
@@ -57,6 +65,10 @@ namespace KassaSystemet
         }
         public static void SaveReceipt(List<Purchase> shoppingCart, int receiptID)
         {
+            if (!Directory.Exists(GetDirectoryFilePath()))
+            {
+                CreateFolder();
+            }
             IncrementReceiptCounter();
             string receipt = Receipt.CreateReceipt(shoppingCart, receiptID);
             using (StreamWriter receiptWriter = new($"{CreateReceiptFilePath()}", append: true))
@@ -72,7 +84,7 @@ namespace KassaSystemet
                 writer.Write(productListString);
             }
         }
-        public static void SaveDiscountList(Dictionary<string, List<Discount>> allDiscounts)
+        public static void SaveDiscountList(Dictionary<int, List<Discount>> allDiscounts)
         {
             string discountListString = Discount.CreateDiscountString(allDiscounts);
             using (StreamWriter writer = new($"{CreateDiscountListFilePath()}", append: false))
@@ -97,7 +109,7 @@ namespace KassaSystemet
             }
             return Product.productDictionary;
         }
-        public static Dictionary<string, List<Discount>> LoadDiscountList()
+        public static Dictionary<int, List<Discount>> LoadDiscountList()
         {
             if (File.Exists(CreateDiscountListFilePath()))
             {
@@ -107,7 +119,7 @@ namespace KassaSystemet
                 {
                     List<Discount> temp = new();
                     string[] columns = item.Split('!');
-                    string productName = columns[0];
+                    int productID = Convert.ToInt32(columns[0]);
                     for (int i = 1; i < columns.Length - 1; i += 3)
                     {
                         string startDate = columns[i];
@@ -115,7 +127,7 @@ namespace KassaSystemet
                         decimal discountPercentage = Convert.ToDecimal(columns[i + 2]);
                         temp.Add(new Discount(startDate, endDate, discountPercentage));
                     }
-                    Discount.allDiscounts.Add(productName, temp);
+                    Discount.allDiscounts.Add(productID, temp);
                 }
             }
             return Discount.allDiscounts;

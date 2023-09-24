@@ -27,14 +27,15 @@ namespace KassaSystemet
             foreach (var item in shoppingCart)
             {
                 string productName = Product.GetProductName(Product.productDictionary, item.ProductID);
+                int productID = Product.GetProductID(Product.productDictionary, productName);
                 decimal price = Product.FindProductPrice(Product.productDictionary, item.ProductID);
-                decimal discount = Discount.GetCurrentDiscountPercentage(productName) * 100m;
+                decimal discount = Discount.GetCurrentDiscountPercentage(productID) * 100m;
                 formattedReceipt += ($"\nProduct: {productName}" +
                     $"  \tamount: {item.Amount}");
 
-                if (Discount.allDiscounts.ContainsKey(productName) && Discount.IsProductOnSale(productName))
+                if (Discount.allDiscounts.ContainsKey(productID) && Discount.IsProductOnSale(productID))
                 {
-                    price *= (1 - Discount.GetCurrentDiscountPercentage(productName));
+                    price *= (1 - Discount.GetCurrentDiscountPercentage(productID));
                     formattedReceipt += ($"  \tDiscounted price ({discount} % off) {Product.FindProductPriceType(Product.productDictionary, item.ProductID)}: {price}" +
                     $"  \tsum: {price * item.Amount} SEK");
                 }

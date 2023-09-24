@@ -11,7 +11,7 @@ namespace KassaSystemet
     public class Discount
     {
         //?This dictionary is ONLY used in the Discount class
-        public static Dictionary<string, List<Discount>> allDiscounts = new Dictionary<string, List<Discount>>(); // This contains different discount dates
+        public static Dictionary<int, List<Discount>> allDiscounts = new Dictionary<int, List<Discount>>(); // This contains different discount dates
         //allDiscounts.Add("Bananer", new Discount("2023/09/20", "2023/09/25", 0.5m));
         public Discount(string startDate, string endDate, decimal discountPercentage) // Write discountPercentage as eg 70 %
         {
@@ -23,20 +23,20 @@ namespace KassaSystemet
         }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string ProductName { get; set; }
+        public int ProductID { get; set; }
         public decimal DiscountPercentage { get; set; }
         public static DateTime CurrentDate()
         {
             return DateTime.Now;
         }
 
-        public static decimal GetCurrentDiscountPercentage(string productName)
+        public static decimal GetCurrentDiscountPercentage(int productID)
         {
-            if (IsProductOnSale(productName))
+            if (IsProductOnSale(productID))
             {
                 //If there is a discount on this given date we need to find it
                 DateTime currentDate = CurrentDate();
-                var availableDiscounts = allDiscounts[productName];
+                var availableDiscounts = allDiscounts[productID];
                 foreach (var discount in availableDiscounts)
                 {
                     if (discount.StartDate <= currentDate && currentDate <= discount.EndDate)
@@ -52,14 +52,14 @@ namespace KassaSystemet
             Console.WriteLine("Not implemented yet!");
         }
 
-        public static bool IsProductOnSale(string productName) // Send out true if currentDate is between startDate and endDate
+        public static bool IsProductOnSale(int productID) // Send out true if currentDate is between startDate and endDate
         {
-            if (!allDiscounts.ContainsKey(productName))
+            if (!allDiscounts.ContainsKey(productID))
             {
                 return false; //If the dictionary does not contain the key, it is not on sale
             }
             DateTime currentDate = CurrentDate();
-            foreach (var discount in allDiscounts[productName])
+            foreach (var discount in allDiscounts[productID])
             {
                 if (discount.StartDate <= currentDate && currentDate <= discount.EndDate)
                 {
@@ -68,31 +68,31 @@ namespace KassaSystemet
             }
             return false;
         }
-        public static void AddNewDiscount(string productName, string startDate, string endDate, decimal discountPercentage)
+        public static void AddNewDiscount(int productID, string startDate, string endDate, decimal discountPercentage)
         {
             //TODO Needs error handling to check if startDate and endDate already exists.
             Discount newDiscount = new Discount(startDate, endDate, discountPercentage);
-            if (!allDiscounts.ContainsKey(productName))
+            if (!allDiscounts.ContainsKey(productID))
             {
                 List<Discount> discountsPerItem = new List<Discount>();
                 discountsPerItem.Add(newDiscount); // Key is product name
-                allDiscounts.Add(productName, discountsPerItem);
+                allDiscounts.Add(productID, discountsPerItem);
             }
             else
             {
-                allDiscounts[productName].Add(newDiscount);//if productname already exists, then do not create a new addition to the discountDictionary
+                allDiscounts[productID].Add(newDiscount);//if productname already exists, then do not create a new addition to the discountDictionary
             }
         }
-        public static void PrintDiscount(Dictionary<string, Discount> dictionary) // This prints out products which have had discounts with their dates.
+        public static void PrintDiscount(Dictionary<int, Discount> dictionary) // This prints out products which have had discounts with their dates.
         {
             //TODO fix this so that it prints all available discounts per product (KEY) in discountDictionary.
-            Console.WriteLine("\nProduct Name(KEY)\tDiscount price\tDiscount is valid between");
+            Console.WriteLine("\nProduct ID(KEY)\tDiscount price\tDiscount is valid between");
             foreach (var item in dictionary)
             {
                 Console.Write($"{item.Key}\t\t\t{item.Value.DiscountPercentage}\t\t[{item.Value.StartDate.ToShortDateString()}]-[{item.Value.EndDate.ToShortDateString()}]\n");
             }
         }
-        public static string CreateDiscountString(Dictionary<string, List<Discount>> allDiscounts)
+        public static string CreateDiscountString(Dictionary<int, List<Discount>> allDiscounts)
         {
             string formattedDiscountListString = "";
             foreach (var item in allDiscounts)
@@ -106,12 +106,12 @@ namespace KassaSystemet
             }
             return formattedDiscountListString.Remove(formattedDiscountListString.Length - 1) + "\n";
         }
-        public static void DisplayAllDiscounts(Dictionary<string, List<Discount>> allDiscounts)
+        public static void DisplayAllDiscounts(Dictionary<int, List<Discount>> allDiscounts)
         {
             Console.WriteLine("****A list of all discounts in the system****\n");
             foreach (var item in allDiscounts)
             {
-                Console.Write($"The product with name: [{item.Key}]");
+                Console.Write($"The product with ID: [{item.Key}]");
                 Console.Write($" has discount start and end dates: \n");
                 foreach (var discount in item.Value)
                 {

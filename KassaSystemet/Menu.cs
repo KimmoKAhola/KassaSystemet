@@ -216,15 +216,15 @@ namespace KassaSystemet
 
         public static void Case5()
         {
-            Console.Write("Enter a product NAME (Bananer): ");
-            string input = Console.ReadLine();
+            Console.Write("Enter a product ID (Bananer=301): ");
+            int inputID = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter a start date: (YYYY/MM/DD): ");
             string startDate = Console.ReadLine();
             Console.Write("Enter a start date (YYYY/MM/DD): ");
             string endDate = Console.ReadLine();
             Console.Write("Enter a discount percentage (ex. 70 %): ");
             decimal discountPercentage = Convert.ToDecimal(Console.ReadLine());
-            Discount.AddNewDiscount(input, startDate, endDate, discountPercentage);
+            Discount.AddNewDiscount(inputID, startDate, endDate, discountPercentage);
         }
     }
 }
