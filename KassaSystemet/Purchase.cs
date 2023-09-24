@@ -43,7 +43,6 @@ namespace KassaSystemet
             ProductID = productID;
             Amount = amount;
         }
-
         /// <summary>
         /// This method performs the payment.
         /// Saves the receipt and clears the shopping cart afterwards.

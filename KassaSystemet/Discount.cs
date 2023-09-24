@@ -21,6 +21,7 @@ namespace KassaSystemet
             //TODO add error handling. Discount percentage has to be between 0-100 %.
             DiscountPercentage = discountPercentage / 100m;
         }
+
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int ProductID { get; set; }

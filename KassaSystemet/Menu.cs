@@ -11,11 +11,11 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace KassaSystemet
 {
-    public static class Menu
+    public class Menu
     {
         // !Underlined comment
         // ?RED COMMENT
-        public static void MainMenu()
+        public void MainMenu()
         {
             int menuOption;
 
@@ -35,6 +35,7 @@ namespace KassaSystemet
                 switch (menuOption)
                 {
                     case 1:
+                        //CustomerMenu customerMenu = new();
                         CustomerMenu();
                         menuOption = 0;
                         break;
@@ -55,8 +56,9 @@ namespace KassaSystemet
             } while (menuOption != 0);
         }
 
-        private static void CustomerMenu()
+        private void CustomerMenu()
         {
+
             /*
              * kund ska ange produktens ID samt antal/mängd
              * programmet ska fortsätta tills kund anger kommandot "PAY"
@@ -81,12 +83,11 @@ namespace KassaSystemet
                         Console.ReadKey();
                         break;
                     case "2":
-                        CustomerCase2();
+                        PurchaseProducts();
                         Console.WriteLine("Add another product? (press 2) does not work atm");
                         userInput = Console.ReadLine();
                         break;
                     case "PAY":
-                        //FileManager.CreateReceiptIDFile(receiptID);
                         Console.WriteLine("Purchase the wares in your shopping cart. This saves the receipt to a file.");
                         Purchase.Pay(); // pay command in purchase class
                         userInput = "0";
@@ -102,8 +103,9 @@ namespace KassaSystemet
             } while (userInput != "0");
             MainMenu();
         }
-        private static void AdminMenu()
+        private void AdminMenu()
         {
+
             string userInput;
             do
             {
@@ -122,11 +124,13 @@ namespace KassaSystemet
                 switch (userInput)
                 {
                     case "1":
+                        //Add a new product to the system.
                         AddNewProduct();
                         Console.ReadKey();
                         break;
 
                     case "2":
+                        //Display the products
                         Console.Write("These are the available products in the system: ");
                         Product.DisplayProducts(Product.productDictionary);
                         Console.Write("Press any key to continue. ");
@@ -134,19 +138,19 @@ namespace KassaSystemet
                         break;
 
                     case "3":
-                        Case3();
+                        ChangePriceOnProduct();
                         Console.Write("Press any key to continue. ");
                         Console.ReadKey();
                         break;
 
                     case "4":
-                        Case4();
+                        ChangeNameOnProduct();
                         Console.Write("Press any key to continue. ");
                         Console.ReadKey();
                         break;
 
                     case "5":
-                        Case5();
+                        AddNewDiscount();
                         Console.Write("Press any key to continue");
                         break;
                     case "6":
@@ -163,6 +167,7 @@ namespace KassaSystemet
             MainMenu();
         }
 
+
         private static (string name, decimal price) EnterNamePrice()
         {
             Console.Write("Enter a name and a price: ");
@@ -171,7 +176,7 @@ namespace KassaSystemet
 
             return (entries[0], Convert.ToDecimal(entries[1]));
         }
-        private static void CustomerCase2()
+        private static void PurchaseProducts()
         {
             Console.WriteLine("Enter wares to your purchase, then print the receipt");
             Console.Write("Enter <product ID> <Amount>: ");
@@ -203,8 +208,9 @@ namespace KassaSystemet
                 Product.AddNewProduct(Product.productDictionary, id, name, price, priceType);
             }
         }
-        private static void Case3()
+        private static void ChangePriceOnProduct()
         {
+            //Change price on a product
             Console.Write("Enter a product ID: ");
             int id = Convert.ToInt32(Console.ReadLine());
             if (Product.DoesProductExist(id))
@@ -215,7 +221,7 @@ namespace KassaSystemet
                 Product.ChangeProductPrice(Product.productDictionary, id, price);
             }
         }
-        private static void Case4()
+        private static void ChangeNameOnProduct()
         {
             Console.Write("Enter the name of the product you want to change: ");
             string oldName = Console.ReadLine();
@@ -224,9 +230,9 @@ namespace KassaSystemet
             Product.ChangeProductName(Product.productDictionary, oldName, newName);
         }
 
-        public static void Case5()
+        private static void AddNewDiscount()
         {
-            Console.Write("Enter a product ID (Bananer=301): ");
+            Console.Write("Enter a product ID (Bananer=300): ");
             int inputID = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter a start date: (YYYY/MM/DD): ");
             string startDate = Console.ReadLine();
@@ -236,5 +242,6 @@ namespace KassaSystemet
             decimal discountPercentage = Convert.ToDecimal(Console.ReadLine());
             Discount.AddNewDiscount(inputID, startDate, endDate, discountPercentage);
         }
+
     }
 }
