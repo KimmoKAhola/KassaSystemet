@@ -188,13 +188,20 @@ namespace KassaSystemet
             Console.Write("Adding a new product. Enter id, name and price: ");
             string adminEntry = Console.ReadLine();
             string[] adminEntries = adminEntry.Split(' ');
+            if (adminEntries.Length != 3)
+            {
+                Console.WriteLine("You entered the values incorrectly. Try again!");
+            }
+            else
+            {
 
-            int id = Convert.ToInt32(adminEntries[0]);
-            string name = adminEntries[1];
-            decimal price = Convert.ToDecimal(adminEntries[2]);
-            string priceType = "per unit"; // Change later. Hard coded for now
+                int id = Convert.ToInt32(adminEntries[0]);
+                string name = adminEntries[1];
+                decimal price = Convert.ToDecimal(adminEntries[2]);
+                string priceType = "per unit"; // Change later. Hard coded for now
 
-            Product.AddNewProduct(Product.productDictionary, id, name, price, priceType);
+                Product.AddNewProduct(Product.productDictionary, id, name, price, priceType);
+            }
         }
         private static void Case3()
         {
@@ -207,8 +214,6 @@ namespace KassaSystemet
                 decimal price = Convert.ToDecimal(Console.ReadLine());
                 Product.ChangeProductPrice(Product.productDictionary, id, price);
             }
-            else
-            { Console.WriteLine(Product.DoesProductExist(id)); }
         }
         private static void Case4()
         {
