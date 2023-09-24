@@ -36,7 +36,7 @@ namespace KassaSystemet
 
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
-        public string PriceType { get; set; }
+        public string PriceType { get; }
 
         public static bool IsProductListEmpty()
         {
@@ -99,9 +99,14 @@ namespace KassaSystemet
         }
         public static void ChangeProductPrice(Dictionary<int, Product> dictionary, int productID, decimal newPrice)
         {
-            // Ändra pris på varan.
-            //TODO lägg till felhantering
-            productDictionary[productID].UnitPrice = newPrice;
+            if (dictionary.ContainsKey(GetProductID(dictionary, productID)))
+            {
+                productDictionary[productID].UnitPrice = newPrice;
+            }
+            else
+            {
+                Console.WriteLine($"The product with ID [{productID}] does not exist in the system.");
+            }
         }
 
         public static void ChangeProductName(Dictionary<int, Product> dictionary, string oldName, string newName)
@@ -114,7 +119,7 @@ namespace KassaSystemet
             }
             else
             {
-                Console.WriteLine($"The product {oldName} does not exist in the system");
+                Console.WriteLine($"The product with name [{oldName}] does not exist in the system.");
             }
         }
 
