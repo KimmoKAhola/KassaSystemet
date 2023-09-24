@@ -38,6 +38,18 @@ namespace KassaSystemet
         public decimal UnitPrice { get; set; }
         public string PriceType { get; }
 
+        public static bool DoesProductExist(int productID)
+        {
+            if (productDictionary.ContainsKey(productID))
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine($"Your product with id [{productID}] does not exist in the system.");
+                return false;
+            }
+        }
         public static bool IsProductListEmpty()
         {
             if (productDictionary.Count == 0)
@@ -85,7 +97,14 @@ namespace KassaSystemet
         }
         public static decimal FindProductPrice(Dictionary<int, Product> productDictionary, int productID)
         {
-            return productDictionary[productID].UnitPrice;
+            if (productDictionary.ContainsKey(productID))
+            {
+                return productDictionary[productID].UnitPrice;
+            }
+            else
+            {
+                return -110m;
+            }
         }
 
         public static string FindProductPriceType(Dictionary<int, Product> productDictionary, int productID)

@@ -200,10 +200,15 @@ namespace KassaSystemet
         {
             Console.Write("Enter a product ID: ");
             int id = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine($"The current price for your product with id [{id}] is: {Product.FindProductPrice(Product.productDictionary, id)}");
-            Console.Write("Enter a new price: ");
-            decimal price = Convert.ToDecimal(Console.ReadLine());
-            Product.ChangeProductPrice(Product.productDictionary, id, price);
+            if (Product.DoesProductExist(id))
+            {
+                Console.WriteLine($"The current price for your product with id [{id}] is: {Product.FindProductPrice(Product.productDictionary, id)}");
+                Console.Write("Enter a new price: ");
+                decimal price = Convert.ToDecimal(Console.ReadLine());
+                Product.ChangeProductPrice(Product.productDictionary, id, price);
+            }
+            else
+            { Console.WriteLine(Product.DoesProductExist(id)); }
         }
         private static void Case4()
         {
