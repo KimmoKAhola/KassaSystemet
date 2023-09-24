@@ -99,6 +99,7 @@ namespace KassaSystemet
             if (!File.Exists(CreateReceiptIDFilePath()))
             {
                 CreateReceiptIDFile(Receipt.receiptID);
+                return 1;
             }
             return Convert.ToInt32(File.ReadLines(CreateReceiptIDFilePath()).First());
         }

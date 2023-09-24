@@ -45,13 +45,17 @@ namespace KassaSystemet
             {
                 Amount = decimal.Round(amount, 2);
             }
-            else
+            else if (amount == (int)amount)
             {
-                Console.WriteLine($"Your product with id [{productID}] is not sold per kg and your requested amount of {amount}" +
-                    $" has been rounded to {Math.Round(amount)}");
                 Amount = Math.Round(amount);
             }
-            Console.WriteLine($"Added product ID [{productID}] and amount {amount} to your cart.");
+            else
+            {
+                Amount = Math.Round(amount);
+                Console.WriteLine($"Your product with id [{productID}] is not sold per kg and your requested amount of {amount}" +
+                    $" has been rounded to {Amount}");
+            }
+            Console.WriteLine($"Added product ID [{productID}] and amount {Amount} to your cart.");
         }
         /// <summary>
         /// This method performs the payment.
@@ -109,7 +113,7 @@ namespace KassaSystemet
             int maxLength = 0;
             foreach (var item in shoppingCart)
             {
-                if(Product.GetProductName(Product.productDictionary, item.ProductID).Length > maxLength)
+                if (Product.GetProductName(Product.productDictionary, item.ProductID).Length > maxLength)
                 {
                     maxLength = Product.GetProductName(Product.productDictionary, item.ProductID).Length;
                 }

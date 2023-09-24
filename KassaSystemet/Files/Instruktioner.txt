@@ -38,14 +38,4 @@ foreach (var city in cities) {
 int rightPosition = Console.WindowWidth / 2;
 Console.SetCursorPosition(rightPosition, Console.CursorTop);
 
-// Sample list of city names and temperatures
-        List<(string City, int Temperature)> data = new List<(string, int)>
-        {
-            ("NY", 12),
-            ("Los Angeles", 25),
-            ("Chicago", 18),
-            ("San Francisco", 22)
-        };
-
-        // Determine the maximum length of the city names
-        int maxCityLength = data.Max(item => item.City.Length);
+// Fixa så att pris och summa inte råkar ut för avrundningsfel på kvittot!!!!

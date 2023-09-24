@@ -14,39 +14,39 @@ namespace KassaSystemet
         public static int receiptCounter = FileManager.GetReceiptID(); // Load receipt ID from file
         public static int receiptID = receiptCounter++; // These work as long as the receipt files are not deleted
 
-        //! Creates a formatted string. This string is then used in FileManager when it is saved to
-        //? a text file
-        // TODO Se info om strängformatering här https://learn.microsoft.com/en-us/dotnet/api/system.string.format?view=net-7.0
-        // TODO It is not necessary to see the product ID on the receipt. This should be removed later since
-        // TODO the product ID is only for internal use.
         public static string CreateReceipt(List<Purchase> shoppingCart, int receiptID)
         {
-            //TODO need to print out the discounted price if there is a discount
             string formattedReceipt = "";
-            formattedReceipt += ($"\n********Receipt ID[{receiptID}]*******************\n");
+            formattedReceipt += ($"{"Receipt ID: ",-5} [{receiptID}]\n");
+            formattedReceipt += ($"{"Product",-45} {"Amount",-15} {"Price",-20} {"Sum",-40}\n");
+            string numberOfDashedLines = new string('-', formattedReceipt.Length);
             foreach (var item in shoppingCart)
             {
                 string productName = Product.GetProductName(Product.productDictionary, item.ProductID);
                 int productID = Product.GetProductID(Product.productDictionary, productName);
                 decimal price = Product.FindProductPrice(Product.productDictionary, item.ProductID);
-                decimal discount = Discount.GetCurrentDiscountPercentage(productID) * 100m;
-                formattedReceipt += ($"\nProduct: {productName}" +
-                    $"  \tamount: {item.Amount}");
-
                 if (Discount.allDiscounts.ContainsKey(productID) && Discount.IsProductOnSale(productID))
                 {
                     price *= (1 - Discount.GetCurrentDiscountPercentage(productID));
-                    formattedReceipt += ($"  \tDiscounted price ({discount} % off) {Product.FindProductPriceType(Product.productDictionary, item.ProductID)}: {price:C2}" +
-                    $"  \tsum: {(price * item.Amount):C2}");
+                }
+                decimal discount = Discount.GetCurrentDiscountPercentage(productID) * 100m;
+                string priceType = Product.FindProductPriceType(Product.productDictionary, item.ProductID);
+
+                decimal sum = price * item.Amount;
+
+                string productInfo = ($"{productName,-45} {item.Amount,-15}{price,-20:C2} {sum,-15:C2}");
+
+                if (Discount.allDiscounts.ContainsKey(productID) && Discount.IsProductOnSale(productID))
+                {
+                    string discountInfo = $"---- {discount} % discount!";
+                    formattedReceipt += $"{productInfo,-10} {discountInfo,-10}\n";
                 }
                 else
                 {
-                    price = Product.FindProductPrice(Product.productDictionary, item.ProductID);
-                    formattedReceipt += ($"\tprice {Product.FindProductPriceType(Product.productDictionary, item.ProductID)}: {price:C2}" +
-                    $"  \tsum: {(price * item.Amount):C2}");
+                    formattedReceipt += $"{productInfo,-100}\n";
                 }
             }
-            formattedReceipt += "\n--------------------------------";
+            formattedReceipt += $"{numberOfDashedLines}\n";
             return formattedReceipt;
         }
     }
