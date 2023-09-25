@@ -188,11 +188,7 @@ namespace KassaSystemet
             }
             int productID = Convert.ToInt32(entries[0]);
             decimal amount = Convert.ToDecimal(entries[1]);
-            //if (!Product.CheckPriceType(productID))
-            //{
-            //    amount = Math.Round(Convert.ToDecimal(entries[1]));
-            //}
-            Purchase.shoppingCart.Add(new Purchase(productID, amount)); // check this!
+            Purchase.shoppingCart.Add(new Purchase(productID, amount));
         }
 
         private static void AddNewProduct()

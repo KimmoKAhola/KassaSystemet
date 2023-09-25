@@ -32,9 +32,9 @@ namespace KassaSystemet
                 decimal discount = Discount.GetCurrentDiscountPercentage(productID) * 100m;
                 string priceType = Product.FindProductPriceType(Product.productDictionary, item.ProductID);
 
-                decimal sum = price * item.Amount;
+                decimal sum = Math.Round(price * item.Amount, 4);
 
-                string productInfo = ($"{productName,-45} {item.Amount,-15}{price,-20:C2} {sum,-15:C2}");
+                string productInfo = ($"{productName,-45} {item.Amount,-15}{price,-20:C3} {sum,-15:C2}");
 
                 if (Discount.allDiscounts.ContainsKey(productID) && Discount.IsProductOnSale(productID))
                 {
