@@ -54,7 +54,6 @@ namespace KassaSystemet
                 }
             } while (menuOption != 0);
         }
-
         private void CustomerMenu()
         {
 
@@ -181,7 +180,6 @@ namespace KassaSystemet
             } while (userInput != 0);
             MainMenu();
         }
-
         private static void PurchaseProducts()
         {
             Console.WriteLine("Enter wares to your purchase, then print the receipt");
@@ -196,7 +194,6 @@ namespace KassaSystemet
             decimal amount = Convert.ToDecimal(entries[1]);
             Purchase.shoppingCart.Add(new Purchase(productID, amount));
         }
-
         private static void AddNewProduct()
         {
             Console.Write("Adding a new product. Enter id, name and price: ");
@@ -238,7 +235,6 @@ namespace KassaSystemet
             string newName = Console.ReadLine();
             Product.ChangeProductName(Product.productDictionary, oldName, newName);
         }
-
         private static void AddNewDiscount()
         {
             Console.Write("Enter a product ID (Bananer=300): ");
@@ -262,6 +258,5 @@ namespace KassaSystemet
 
             Discount.RemoveDiscount(Discount.allDiscounts, inputID, startDate, endDate);
         }
-
     }
 }

@@ -33,11 +33,9 @@ namespace KassaSystemet
             UnitPrice = unitPrice;
             PriceType = priceType.ToLower();
         }
-
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
         public string PriceType { get; }
-
         public static bool DoesProductExist(int productID)
         {
             if (productDictionary.ContainsKey(productID))
@@ -83,7 +81,6 @@ namespace KassaSystemet
             }
             return -50; //TODO If it does not exist return -50. Error handling should be implemented later.
         }
-
         public static int GetProductID(Dictionary<int, Product> productDictionary, string productName)
         {
             foreach (var item in productDictionary)
@@ -106,12 +103,10 @@ namespace KassaSystemet
                 return -110m;
             }
         }
-
         public static string FindProductPriceType(Dictionary<int, Product> productDictionary, int productID)
         {
             return productDictionary[productID].PriceType;
         }
-
         public static string GetProductName(Dictionary<int, Product> productDictionary, int productID)
         {
             return productDictionary[productID].ProductName;
@@ -131,7 +126,6 @@ namespace KassaSystemet
                 Console.WriteLine($"The product with ID [{productID}] does not exist in the system.");
             }
         }
-
         public static void ChangeProductName(Dictionary<int, Product> dictionary, string oldName, string newName)
         {
             if (dictionary.ContainsKey(GetProductID(dictionary, oldName)))
@@ -145,7 +139,6 @@ namespace KassaSystemet
                 Console.WriteLine($"The product with name [{oldName}] does not exist in the system.");
             }
         }
-
         public static void DisplayProducts(Dictionary<int, Product> dictionary)
         {
             if (IsProductListEmpty())
@@ -161,7 +154,6 @@ namespace KassaSystemet
                 }
             }
         }
-
         public static void CheckForSalesPrice()
         {
             DateTime today = DateTime.Now;
@@ -171,7 +163,6 @@ namespace KassaSystemet
             DateTime.Compare(end, today); // returns 1 = is true
             //TODO Implement a function which checks if a product is on sale. Should check if current date is between sales date, then check products?
         }
-
         public static string CreateProductString(Dictionary<int, Product> productDictionary)
         {
             string formattedProductListString = "";
@@ -181,7 +172,6 @@ namespace KassaSystemet
             }
             return formattedProductListString.Remove(formattedProductListString.Length - 1);
         }
-
         /// <summary>
         /// Returns true if priceType is per kg.
         /// Returns false if priceType is per piece.

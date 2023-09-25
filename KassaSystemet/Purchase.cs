@@ -75,7 +75,6 @@ namespace KassaSystemet
                 shoppingCart.Clear();
             }
         }
-
         public static void DisplayShoppingCart(List<Purchase> shoppingCart) // Fix this so it can be used in receipt creator
         {
             if (shoppingCart.Count == 0)
@@ -99,7 +98,6 @@ namespace KassaSystemet
                 }
             }
         }
-
         /// <summary>
         /// This method returns the longest string length
         /// for all purchases in the shopping cart.

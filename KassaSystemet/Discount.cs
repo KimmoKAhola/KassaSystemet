@@ -21,7 +21,6 @@ namespace KassaSystemet
             //TODO add error handling. Discount percentage has to be between 0-100 %.
             DiscountPercentage = discountPercentage / 100m;
         }
-
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int ProductID { get; set; }
@@ -30,7 +29,6 @@ namespace KassaSystemet
         {
             return DateTime.Now;
         }
-
         public static decimal GetCurrentDiscountPercentage(int productID)
         {
             if (IsProductOnSale(productID))
@@ -66,7 +64,6 @@ namespace KassaSystemet
                 }
             }
         }
-
         public static bool IsDiscountListEmpty()
         {
             if (allDiscounts.Count == 0)
@@ -140,7 +137,6 @@ namespace KassaSystemet
             }
             else
             {
-
                 string formattedDiscountListString = "";
                 foreach (var item in allDiscounts)
                 {
