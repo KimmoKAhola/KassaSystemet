@@ -6,6 +6,7 @@ namespace KassaSystemet
     {
         static void Main(string[] args)
         {
+            FileManager.LoadProductList();
             Menu menu = new();
             menu.MainMenu();
         }

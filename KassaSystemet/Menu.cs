@@ -199,7 +199,7 @@ namespace KassaSystemet
             Console.Write("Adding a new product. Enter id, name and price: ");
             string adminEntry = Console.ReadLine();
             string[] adminEntries = adminEntry.Split(' ');
-            if (adminEntries.Length != 3)
+            if (adminEntries.Length != 4)
             {
                 Console.WriteLine("You entered the values incorrectly. Try again!");
             }
@@ -209,7 +209,7 @@ namespace KassaSystemet
                 int id = Convert.ToInt32(adminEntries[0]);
                 string name = adminEntries[1];
                 decimal price = Convert.ToDecimal(adminEntries[2]);
-                string priceType = "per unit"; // Change later. Hard coded for now
+                string priceType = adminEntries[3]; // Change later. Hard coded for now
 
                 Product.AddNewProduct(Product.productDictionary, id, name, price, priceType);
             }
