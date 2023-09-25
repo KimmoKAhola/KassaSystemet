@@ -171,12 +171,12 @@ namespace KassaSystemet
         /// </summary>
         /// <param name="discountList"></param>
         /// <returns></returns>
-        public static Dictionary<int, List<Discount>> LoadDiscountList(Dictionary<int, List<Discount>> discountList)
+        public static Dictionary<int, List<Discount>> LoadDiscountList()
         {
             if (File.Exists(CreateDiscountListFilePath()))
             {
                 var discountListInfo = File.ReadLines(CreateDiscountListFilePath());
-                discountList.Clear();
+                Discount.allDiscounts.Clear();
                 foreach (var item in discountListInfo)
                 {
                     List<Discount> temp = new();
@@ -189,10 +189,10 @@ namespace KassaSystemet
                         decimal discountPercentage = Convert.ToDecimal(columns[i + 2]);
                         temp.Add(new Discount(startDate, endDate, discountPercentage));
                     }
-                    discountList.Add(productID, temp);
+                    Discount.allDiscounts.Add(productID, temp);
                 }
             }
-            return discountList;
+            return Discount.allDiscounts;
         }
     }
 }

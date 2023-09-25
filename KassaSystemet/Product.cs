@@ -156,7 +156,7 @@ namespace KassaSystemet
             {
                 foreach (var item in dictionary)
                 {
-                    formattedString += ($"{item.Key,-16}{item.Value.ProductName,-46}{item.Value.UnitPrice,-20}{item.Value.PriceType,-10}\n");
+                    formattedString += ($"{item.Key,-16}{item.Value.ProductName,-46}{item.Value.UnitPrice,-20:C2}{item.Value.PriceType,-10}\n");
                 }
                 Console.WriteLine(formattedString);
             }
