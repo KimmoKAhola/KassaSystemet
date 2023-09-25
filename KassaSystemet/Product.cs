@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet
 {
+    /// <summary>
+    /// Product class. Handles the product list.
+    /// Contains information about product name
+    /// product prices and price types.
+    /// </summary>
     public class Product
     {
         /*  Class for products
@@ -20,13 +25,13 @@ namespace KassaSystemet
             { 301, new Product("Äpplen", 25.99m, "per kg") },
             { 302, new Product("Choklad", 13.37m, "per unit") },
             { 303, new Product("Pepsi", 30.50m, "per unit") },
-            { 304, new Product("Kexchoklaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad", 18.99m, "per unit") },
+            { 304, new Product("Kexchoklad", 18.99m, "per unit") },
             { 305, new Product("Sallad", 27.50m, "per kg") },
-            { 306, new Product("Jordgub", 5.00m, "per kg") },
+            { 306, new Product("Jordgubbar", 5.00m, "per kg") },
             { 307, new Product("Nutella", 21.00m, "per unit") },
-            { 308, new Product("Toapapp", 7.00m, "per unit") },
+            { 308, new Product("Toapapper", 7.00m, "per unit") },
             { 309, new Product("Saffran", 5.50m, "per unit") },
-            { 310, new Product("Vatten", 100.00m, "per unit") }};
+            { 310, new Product("Kolsyrat vatten", 100.00m, "per unit") }};
         public Product(string productName, decimal unitPrice, string priceType) // add price type (per kg or per piece later)
         {
             ProductName = productName;
@@ -141,17 +146,19 @@ namespace KassaSystemet
         }
         public static void DisplayProducts(Dictionary<int, Product> dictionary)
         {
+            string formattedString = "";
+            formattedString += ($"{"ID",-15} {"Name",-45} {"Price",-20}{"Price type",-10}\n");
             if (IsProductListEmpty())
             {
                 Console.WriteLine("Your product list is currently empty.");
             }
             else
             {
-                Console.WriteLine("\n\nID\tProduct Name\t\tUnit price\t\t\tPrice type");
                 foreach (var item in dictionary)
                 {
-                    Console.Write($"{item.Key}\t{item.Value.ProductName}\t\t\t{item.Value.UnitPrice}\t\t\t\t{item.Value.PriceType}\n");
+                    formattedString += ($"{item.Key,-16}{item.Value.ProductName,-46}{item.Value.UnitPrice,-20}{item.Value.PriceType,-10}\n");
                 }
+                Console.WriteLine(formattedString);
             }
         }
         public static void CheckForSalesPrice()
