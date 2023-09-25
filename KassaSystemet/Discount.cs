@@ -48,9 +48,23 @@ namespace KassaSystemet
             }
             return -100m; //TODO Error handling
         }
-        public static void RemoveDiscount()
+        public static void RemoveDiscount(Dictionary<int, List<Discount>> allDicsounts, int productID, string startDate, string endDate)
         {
-            Console.WriteLine("Not implemented yet!");
+            if (allDicsounts.ContainsKey(productID))
+            {
+                var currentProduct = allDicsounts[productID];
+                foreach (var item in currentProduct)
+                {
+                    string temp = DateTime.Parse(startDate, CultureInfo.CurrentCulture).ToShortDateString();
+                    string temp2 = DateTime.Parse(endDate, CultureInfo.CurrentCulture).ToShortDateString();
+                    if (temp == startDate || temp2 == endDate)
+                    {
+                        Console.WriteLine($"Removed the discount for product id [{productID}] with discount dates [{startDate}]-[{endDate}]");
+                        allDicsounts[productID].Remove(item);
+                    }
+                    break;
+                }
+            }
         }
 
         public static bool IsDiscountListEmpty()
@@ -82,20 +96,31 @@ namespace KassaSystemet
         }
         public static void AddNewDiscount(int productID, string startDate, string endDate, decimal discountPercentage)
         {
-            Discount newDiscount = new(startDate, endDate, discountPercentage);
-            if (!allDiscounts.ContainsKey(productID) && (discountPercentage > 0 && discountPercentage < 100))
+            DateTime start = DateTime.Parse(startDate, CultureInfo.CurrentCulture);
+            DateTime end = DateTime.Parse(endDate, CultureInfo.CurrentCulture);
+            if (start.CompareTo(end) < 0) //Checks that start date is earlier than end date
             {
-                List<Discount> discountsPerItem = new();
-                discountsPerItem.Add(newDiscount); // Key is product name
-                allDiscounts.Add(productID, discountsPerItem);
-            }
-            else if ((discountPercentage <= 0 || discountPercentage >= 100))
-            {
-                Console.WriteLine($"Your discount percentage of {discountPercentage} is not valid. Enter a value between 0 and 100.");
+                Discount newDiscount = new(startDate, endDate, discountPercentage);
+                if (!allDiscounts.ContainsKey(productID) && (discountPercentage > 0 && discountPercentage < 100))
+                {
+                    List<Discount> discountsPerItem = new();
+                    discountsPerItem.Add(newDiscount); // Key is product name
+                    allDiscounts.Add(productID, discountsPerItem);
+                }
+                else if ((discountPercentage <= 0 || discountPercentage >= 100))
+                {
+                    Console.WriteLine($"Your discount percentage of {discountPercentage} is not valid. Enter a value between 0 and 100.");
+                }
+                else
+                {
+                    allDiscounts[productID].Add(newDiscount);//if productname already exists, then do not create a new addition to the discountDictionary
+                }
             }
             else
             {
-                allDiscounts[productID].Add(newDiscount);//if productname already exists, then do not create a new addition to the discountDictionary
+                Console.WriteLine("The start date can not be after the end date. The discount has not been added.");
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
             }
         }
         public static void PrintDiscount(Dictionary<int, Discount> dictionary) // This prints out products which have had discounts with their dates.

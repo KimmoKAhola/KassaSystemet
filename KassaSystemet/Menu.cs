@@ -119,11 +119,12 @@ namespace KassaSystemet
                     "4. Change name on a product\n" +
                     "5. Add a discount for a product\n" +
                     "6. Display all available discounts\n" +
+                    "7. Remove a discount from a product.\n" +
                     "0. Exit admin menu");
 
                 Console.Write("Enter a command: ");
                 //userInput = Console.ReadLine().ToUpper();
-                if (int.TryParse(Console.ReadLine(), out userInput) && (userInput >= 0 && userInput < 7))
+                if (int.TryParse(Console.ReadLine(), out userInput) && (userInput >= 0 && userInput < 8))
                 {
                     switch (userInput)
                     {
@@ -161,6 +162,11 @@ namespace KassaSystemet
                             Discount.DisplayAllDiscounts(Discount.allDiscounts);
                             Console.ReadKey();
                             Console.Write("Press any key to continue");
+                            break;
+                        case 7:
+                            RemoveDiscount();
+                            Console.WriteLine("Press any key to continue.");
+                            Console.ReadKey();
                             break;
 
                         case 0:
@@ -244,6 +250,17 @@ namespace KassaSystemet
             Console.Write("Enter a discount percentage (ex. 70 %): ");
             decimal discountPercentage = Convert.ToDecimal(Console.ReadLine());
             Discount.AddNewDiscount(inputID, startDate, endDate, discountPercentage);
+        }
+        private static void RemoveDiscount()
+        {
+            Console.Write("Enter a product ID: ");
+            int inputID = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter a start date: (YYYY-MM-DD): ");
+            string startDate = Console.ReadLine();
+            Console.Write("Enter an end date: (YYYY-MM-DD): ");
+            string endDate = Console.ReadLine();
+
+            Discount.RemoveDiscount(Discount.allDiscounts, inputID, startDate, endDate);
         }
 
     }
