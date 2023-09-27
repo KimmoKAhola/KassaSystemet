@@ -137,6 +137,7 @@ namespace KassaSystemet
             }
             else
             {
+                allDiscounts = allDiscounts.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
                 string formattedDiscountListString = "";
                 foreach (var item in allDiscounts)
                 {

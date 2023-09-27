@@ -165,7 +165,8 @@ namespace KassaSystemet
             }
             else
             {
-
+                //Sorts the dictionary by its key value.
+                productDictionary = productDictionary.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
                 string formattedProductListString = "";
                 foreach (var item in productDictionary)
                 {
