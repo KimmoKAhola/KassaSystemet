@@ -16,9 +16,20 @@ namespace KassaSystemet
         /// <summary>
         /// Creates a folder for all the files.
         /// </summary>
-        private static void CreateFolder()
+        public static void CreateFolders()
         {
-            Directory.CreateDirectory(GetDirectoryFilePath());
+            if (!Directory.CreateDirectory(GetDirectoryFilePath()).Exists)
+            {
+                Directory.CreateDirectory(GetDirectoryFilePath());
+            }
+            if (!Directory.CreateDirectory(GetDirectoryReceiptsFilePath()).Exists)
+            {
+                Directory.CreateDirectory(GetDirectoryReceiptsFilePath());
+            }
+            if (!Directory.CreateDirectory(GetDirectoryProductsFilePath()).Exists)
+            {
+                Directory.CreateDirectory(GetDirectoryProductsFilePath());
+            }
         }
         /// <summary>
         /// Returns a directory file path as a string.
@@ -28,13 +39,22 @@ namespace KassaSystemet
         {
             return $"../../../Files";
         }
+        private static string GetDirectoryReceiptsFilePath()
+        {
+            return $"../../../Files/Receipts";
+        }
+        private static string GetDirectoryProductsFilePath()
+        {
+            return $"../../../Files/ProductLists";
+        }
         /// <summary>
         /// Returns a file path string for the receipt.
         /// </summary>
         /// <returns></returns>
         private static string CreateReceiptFilePath()
         {
-            return $"../../../Files/RECEIPT_{GetCurrentDate()}.txt";
+            string filePath = GetDirectoryReceiptsFilePath();
+            return $"{filePath}/RECEIPT_{GetCurrentDate()}.txt";
         }
         /// <summary>
         /// Returns a date string for the receipt ID file.
@@ -42,7 +62,8 @@ namespace KassaSystemet
         /// <returns></returns>
         private static string CreateReceiptIDFilePath()
         {
-            return $"../../../Files/RECEIPT_ID_{GetCurrentDate()}.txt";
+            string filePath = GetDirectoryReceiptsFilePath();
+            return $"{filePath}/RECEIPT_ID_{GetCurrentDate()}.txt";
         }
         /// <summary>
         /// Returns the file path for the discount file as a string.
@@ -50,7 +71,8 @@ namespace KassaSystemet
         /// <returns></returns>
         private static string CreateDiscountListFilePath()
         {
-            return "../../../Files/DISCOUNT_LIST_ADMIN.txt";
+            string filePath = GetDirectoryProductsFilePath();
+            return $"{filePath}/DISCOUNT_LIST_ADMIN.txt";
         }
         /// <summary>
         /// Returns the product list file path as a string.
@@ -58,7 +80,8 @@ namespace KassaSystemet
         /// <returns></returns>
         private static string CreateProductListFilePath()
         {
-            return "../../../Files/PRODUCT_LIST_ADMIN.txt";
+            string filePath = GetDirectoryProductsFilePath();
+            return $"{filePath}/PRODUCT_LIST_ADMIN.txt";
         }
         /// <summary>
         /// Returns the current date as a string on the format "yyyyMMdd".
@@ -112,7 +135,7 @@ namespace KassaSystemet
         {
             if (!Directory.Exists(GetDirectoryFilePath()))
             {
-                CreateFolder();
+                CreateFolders();
             }
             IncrementReceiptCounter();
             string receipt = Receipt.CreateReceipt(shoppingCart, receiptID);

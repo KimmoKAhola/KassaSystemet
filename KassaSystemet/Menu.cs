@@ -50,6 +50,7 @@ namespace KassaSystemet
                             Console.ReadKey();
                             break;
                         case 0:
+                            FileManager.CreateFolders();
                             FileManager.SaveProductList(Product.productDictionary);
                             FileManager.SaveDiscountList(Discount.allDiscounts);
                             Environment.Exit(0);

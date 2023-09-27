@@ -6,9 +6,38 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet
 {
-    public static class Seed
+    public class Seed
     {
         //This class is used for seeding later. For now it just contains a dictionary with random products.
         //Currently only used for testing the different functions without having to type in anything manually.
+        
+        //File wares for seeding
+
+        
+
+        string wares = 
+            "300, Bananer, 15.50, per kg" +
+            "301, Äpplen 25.50 per kg" +
+            "302, Kaffe 65.50 per unit" +
+            "303, Choklad 19.90 per unit" +
+            "304, Lösgodis 89.90 per kg" +
+            "305, Rågbröd 55.00 per unit" +
+            "306, Toalettpapper 32.00 per unit" +
+            "307, Kex 25.60 per unit" +
+            "308, Vattenmelon 55.00 per kg" +
+            "309, Smör 79.00 per kg" +
+            "310, Gott & Blandat, 29.00, per unit" +
+            "311, Hushållsost, 79.00, per kg" +
+            "312, Kycklingfilé, 119.00, per kg" +
+            "313, Yoggi, 40.00, per unit" +
+            "314, Tomater på burk, 11.00, per unit" +
+            "315, Stekpanna, 339.00, per unit" +
+            "316, Dammsugare, 999.99, per unit" +
+            "317, Västerbottensost, 10.00, per kg" +
+            "318, Oxfilé, 399.99, per kg" +
+            "319, Päron, 35.99, per kg" +
+            "320, Pasta, 19.99, per unit";
+
+
     }
 }
