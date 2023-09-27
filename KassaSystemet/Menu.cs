@@ -119,11 +119,12 @@ namespace KassaSystemet
                     "5. Add a discount for a product\n" +
                     "6. Display all available discounts\n" +
                     "7. Remove a discount from a product.\n" +
+                    "8. Remove a product from the product list\n" +
                     "0. Exit admin menu");
 
                 Console.Write("Enter a command: ");
                 //userInput = Console.ReadLine().ToUpper();
-                if (int.TryParse(Console.ReadLine(), out userInput) && (userInput >= 0 && userInput < 8))
+                if (int.TryParse(Console.ReadLine(), out userInput) && (userInput >= 0 && userInput < 9))
                 {
                     switch (userInput)
                     {
@@ -164,6 +165,11 @@ namespace KassaSystemet
                             break;
                         case 7:
                             RemoveDiscount();
+                            Console.WriteLine("Press any key to continue.");
+                            Console.ReadKey();
+                            break;
+                        case 8:
+                            RemoveProduct();
                             Console.WriteLine("Press any key to continue.");
                             Console.ReadKey();
                             break;
@@ -257,6 +263,14 @@ namespace KassaSystemet
             string endDate = Console.ReadLine();
 
             Discount.RemoveDiscount(Discount.allDiscounts, inputID, startDate, endDate);
+        }
+
+        private static void RemoveProduct()
+        {
+            Console.Write("Enter a product ID: ");
+            int inputID = Convert.ToInt32(Console.ReadLine());
+
+            Product.RemoveProduct(inputID);
         }
     }
 }

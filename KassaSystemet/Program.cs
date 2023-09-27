@@ -10,6 +10,20 @@ namespace KassaSystemet
             FileManager.LoadDiscountList();
             Menu menu = new();
             menu.MainMenu();
+
+            //DateOnly date = new DateOnly();
+            //DateOnly date = new DateOnly(2023, 09, 25);
+
+            //Console.WriteLine(date);
+
+            //Console.Write("Enter a date YYYY-MM-DD");
+            //string input = Console.ReadLine();
+
+            //string[] dateInfo = input.Split('-');
+            //foreach (var item in dateInfo)
+            //{
+            //    Console.WriteLine(item);
+            //}
         }
     }
 }

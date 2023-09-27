@@ -20,18 +20,18 @@ namespace KassaSystemet
         */
         //public static Dictionary<int, Product> productDictionary = Seed.seedDictionary;
         //TODO this is only used for seeding purposes
-        public static Dictionary<int, Product> productDictionary = new(){ //TODO names are shortened because of formatting. Change later
-            { 300, new Product("Bananer", 19.50m, "per kg") },
-            { 301, new Product("Äpplen", 25.99m, "per kg") },
-            { 302, new Product("Choklad", 13.37m, "per unit") },
-            { 303, new Product("Pepsi", 30.50m, "per unit") },
-            { 304, new Product("Kexchoklad", 18.99m, "per unit") },
-            { 305, new Product("Sallad", 27.50m, "per kg") },
-            { 306, new Product("Jordgubbar", 5.00m, "per kg") },
-            { 307, new Product("Nutella", 21.00m, "per unit") },
-            { 308, new Product("Toapapper", 7.00m, "per unit") },
-            { 309, new Product("Saffran", 5.50m, "per unit") },
-            { 310, new Product("Kolsyrat vatten", 100.00m, "per unit") }};
+        public static Dictionary<int, Product> productDictionary = new() { }; //TODO names are shortened because of formatting. Change later
+            //{ 300, new Product("Bananer", 19.50m, "per kg") },
+            //{ 301, new Product("Äpplen", 25.99m, "per kg") },
+            //{ 302, new Product("Choklad", 13.37m, "per unit") },
+            //{ 303, new Product("Pepsi", 30.50m, "per unit") },
+            //{ 304, new Product("Kexchoklad", 18.99m, "per unit") },
+            //{ 305, new Product("Sallad", 27.50m, "per kg") },
+            //{ 306, new Product("Jordgubbar", 5.00m, "per kg") },
+            //{ 307, new Product("Nutella", 21.00m, "per unit") },
+            //{ 308, new Product("Toapapper", 7.00m, "per unit") },
+            //{ 309, new Product("Saffran", 5.50m, "per unit") },
+            //{ 310, new Product("Kolsyrat vatten", 100.00m, "per unit") }};
         public Product(string productName, decimal unitPrice, string priceType) // add price type (per kg or per piece later)
         {
             ProductName = productName;
@@ -150,7 +150,7 @@ namespace KassaSystemet
             formattedString += ($"{"ID",-15} {"Name",-45} {"Price",-20}{"Price type",-10}\n");
             if (IsProductListEmpty())
             {
-                Console.WriteLine("Your product list is currently empty.");
+                Console.WriteLine("There are no products available in the system.");
             }
             else
             {
@@ -172,12 +172,20 @@ namespace KassaSystemet
         }
         public static string CreateProductString(Dictionary<int, Product> productDictionary)
         {
-            string formattedProductListString = "";
-            foreach (var item in productDictionary)
+            if (productDictionary.Count == 0)
             {
-                formattedProductListString += item.Key + "!" + item.Value.ProductName + "!" + item.Value.UnitPrice + "!" + item.Value.PriceType + "!";
+                return "";
             }
-            return formattedProductListString.Remove(formattedProductListString.Length - 1);
+            else
+            {
+
+                string formattedProductListString = "";
+                foreach (var item in productDictionary)
+                {
+                    formattedProductListString += item.Key + "!" + item.Value.ProductName + "!" + item.Value.UnitPrice + "!" + item.Value.PriceType + "!";
+                }
+                return formattedProductListString.Remove(formattedProductListString.Length - 1);
+            }
         }
         /// <summary>
         /// Returns true if priceType is per kg.
@@ -194,6 +202,18 @@ namespace KassaSystemet
             else
             {
                 return false;
+            }
+        }
+
+        public static void RemoveProduct(int productID)
+        {
+            if (!productDictionary.ContainsKey(productID))
+            {
+                Console.WriteLine($"The product list does not contain the item with product ID [{productID}]");
+            }
+            else
+            {
+                productDictionary.Remove(productID);
             }
         }
     }
