@@ -202,10 +202,10 @@ namespace KassaSystemet
         }
         private static void AddNewProduct()
         {
-            Console.Write("Adding a new product. Enter id, name and price: ");
+            Console.Write("Adding a new product. Enter id, name, price and price type (per kg or per unit): ");
             string adminEntry = Console.ReadLine();
             string[] adminEntries = adminEntry.Split(' ');
-            if (adminEntries.Length != 4)
+            if (adminEntries.Length != 5)
             {
                 Console.WriteLine("You entered the values incorrectly. Try again!");
             }
@@ -215,9 +215,17 @@ namespace KassaSystemet
                 int id = Convert.ToInt32(adminEntries[0]);
                 string name = adminEntries[1];
                 decimal price = Convert.ToDecimal(adminEntries[2]);
-                string priceType = adminEntries[3]; // Change later. Hard coded for now
+                string priceType = adminEntries[3].ToLower() + " " + adminEntries[4].ToLower();
+                if (priceType == "per kg" || priceType == "per unit")
+                {
+                    priceType = adminEntries[3].ToLower() + " " + adminEntries[4].ToLower(); // Change later. Hard coded for now
+                    Product.AddNewProduct(Product.productDictionary, id, name, price, priceType);
+                }
+                else
+                {
+                    Console.WriteLine("You entered the values incorrectly. Try again!");
+                }
 
-                Product.AddNewProduct(Product.productDictionary, id, name, price, priceType);
             }
         }
         private static void ChangePriceOnProduct()
