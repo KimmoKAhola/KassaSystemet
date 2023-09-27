@@ -25,25 +25,6 @@ namespace KassaSystemet
             //{
             //    Console.WriteLine(item);
             //}
-
-            //Dictionary<int, string> temp = new Dictionary<int, string>();
-            //temp.Add(300, "A");
-            //temp.Add(302, "B");
-            //temp.Add(305, "C");
-            //temp.Add(301, "D");
-            //temp.Add(299, "E");
-            //temp.Add(280, "F");
-
-            //foreach (var item in temp)
-            //{
-            //    Console.WriteLine(item.Key + ", " + item.Value);
-            //}
-            //temp = temp.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
-
-            //foreach (var item in temp)
-            //{
-            //    Console.WriteLine(item.Key + ", " + item.Value);
-            //}
         }
     }
 }

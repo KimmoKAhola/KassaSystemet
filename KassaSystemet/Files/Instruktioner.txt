@@ -11,3 +11,6 @@ Console.Write("Enter a date YYYY-MM-DD");
 string input = Console.ReadLine();
 
 string[] dateInfo = input.Split('-');
+
+// Fixa så att kvitton sparas i en kvittomapp "Receipts" inuti "Files"
+// Fixa så att adminlistorna sparas i en adminmapp inuti "Files"
