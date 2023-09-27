@@ -13,6 +13,10 @@ namespace KassaSystemet
 {
     public class Menu
     {
+        /// <summary>
+        /// The main menu containing the navigation
+        /// for the whole program.
+        /// </summary>
         public void MainMenu()
         {
             int menuOption;
@@ -54,6 +58,10 @@ namespace KassaSystemet
                 }
             } while (menuOption != 0);
         }
+        /// <summary>
+        /// The sub menu containing the navigation
+        /// for the customer options.
+        /// </summary>
         private void CustomerMenu()
         {
 
@@ -104,6 +112,10 @@ namespace KassaSystemet
             } while (userInput != "0");
             MainMenu();
         }
+        /// <summary>
+        /// The sub menu containing the navigation
+        /// for the admin options.
+        /// </summary>
         private void AdminMenu()
         {
 
@@ -186,6 +198,11 @@ namespace KassaSystemet
             } while (userInput != 0);
             MainMenu();
         }
+        /// <summary>
+        /// A method for "purhcasing" products.
+        /// Enter product id and amount with a space between
+        /// to add product to shopping cart.
+        /// </summary>
         private static void PurchaseProducts()
         {
             Console.WriteLine("Enter wares to your purchase, then print the receipt");
@@ -200,6 +217,11 @@ namespace KassaSystemet
             decimal amount = Convert.ToDecimal(entries[1]);
             Purchase.shoppingCart.Add(new Purchase(productID, amount));
         }
+        /// <summary>
+        /// A method for adding a new product to the system
+        /// Enter id, name, price and price type with spaces in between
+        /// ex '300 Bananer 15,50 per kg'
+        /// </summary>
         private static void AddNewProduct()
         {
             Console.Write("Adding a new product. Enter id, name, price and price type (per kg or per unit): ");
@@ -228,6 +250,10 @@ namespace KassaSystemet
 
             }
         }
+        /// <summary>
+        /// A method for changing the price on a product.
+        /// Enter the product id and then enter a new price.
+        /// </summary>
         private static void ChangePriceOnProduct()
         {
             //Change price on a product
@@ -241,6 +267,10 @@ namespace KassaSystemet
                 Product.ChangeProductPrice(Product.productDictionary, id, price);
             }
         }
+        /// <summary>
+        /// A method to change name on a product.
+        /// Enter old name and new name.
+        /// </summary>
         private static void ChangeNameOnProduct()
         {
             Console.Write("Enter the name of the product you want to change: ");
@@ -249,18 +279,30 @@ namespace KassaSystemet
             string newName = Console.ReadLine();
             Product.ChangeProductName(Product.productDictionary, oldName, newName);
         }
+        /// <summary>
+        /// A method for adding new discounts to the system.
+        /// Enter product ID, start date YYYY-MM-DD
+        /// and end date YYYY-MM-DD
+        /// and discount percentage XX % to enter the value.
+        /// Ex: '300 2029-05-25 2029-05-30 70'
+        /// </summary>
         private static void AddNewDiscount()
         {
             Console.Write("Enter a product ID (Bananer=300): ");
             int inputID = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Enter a start date: (YYYY/MM/DD): ");
+            Console.Write("Enter a start date: (YYYY-MM-DD): ");
             string startDate = Console.ReadLine();
-            Console.Write("Enter a start date (YYYY/MM/DD): ");
+            Console.Write("Enter a start date (YYYY-MM-DD): ");
             string endDate = Console.ReadLine();
             Console.Write("Enter a discount percentage (ex. 70 %): ");
             decimal discountPercentage = Convert.ToDecimal(Console.ReadLine());
             Discount.AddNewDiscount(inputID, startDate, endDate, discountPercentage);
         }
+        /// <summary>
+        /// A method for removing discounts from the system.
+        /// Enter id, start date and end date to remove a discount.
+        /// Ex '300 2023-09-25 2023-10-05'
+        /// </summary>
         private static void RemoveDiscount()
         {
             Console.Write("Enter a product ID: ");
@@ -272,7 +314,10 @@ namespace KassaSystemet
 
             Discount.RemoveDiscount(Discount.allDiscounts, inputID, startDate, endDate);
         }
-
+        /// <summary>
+        /// A method for removing a product from the system.
+        /// Enter product id to remove that product.
+        /// </summary>
         private static void RemoveProduct()
         {
             Console.Write("Enter a product ID: ");

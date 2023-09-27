@@ -18,20 +18,7 @@ namespace KassaSystemet
             Create methods for adding products, removing product, changing price etc
             Admin method in menu class should call on this class.
         */
-        //public static Dictionary<int, Product> productDictionary = Seed.seedDictionary;
-        //TODO this is only used for seeding purposes
-        public static Dictionary<int, Product> productDictionary = new() { }; //TODO names are shortened because of formatting. Change later
-            //{ 300, new Product("Bananer", 19.50m, "per kg") },
-            //{ 301, new Product("Äpplen", 25.99m, "per kg") },
-            //{ 302, new Product("Choklad", 13.37m, "per unit") },
-            //{ 303, new Product("Pepsi", 30.50m, "per unit") },
-            //{ 304, new Product("Kexchoklad", 18.99m, "per unit") },
-            //{ 305, new Product("Sallad", 27.50m, "per kg") },
-            //{ 306, new Product("Jordgubbar", 5.00m, "per kg") },
-            //{ 307, new Product("Nutella", 21.00m, "per unit") },
-            //{ 308, new Product("Toapapper", 7.00m, "per unit") },
-            //{ 309, new Product("Saffran", 5.50m, "per unit") },
-            //{ 310, new Product("Kolsyrat vatten", 100.00m, "per unit") }};
+        public static Dictionary<int, Product> productDictionary = new() { };
         public Product(string productName, decimal unitPrice, string priceType) // add price type (per kg or per piece later)
         {
             ProductName = productName;
