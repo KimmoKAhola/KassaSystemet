@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-
-namespace KassaSystemet
+﻿namespace KassaSystemet
 {
-    /// <summary>
-    /// Product class. Handles the product list.
-    /// Contains information about product name
-    /// product prices and price types.
-    /// </summary>
     public class Product
     {
         public Product(string productName, decimal unitPrice, string priceType)
@@ -45,7 +32,21 @@ namespace KassaSystemet
         {
             if (!IsProductAvailable(products, productId))
             {
-                Product p = new Product("Test", 15.5m, "per kg");
+                Console.Write("Enter the product name: ");
+                string productName = Console.ReadLine();
+                Console.Write("Enter product price and price type (per kg/per unit) on the same line separated by a space: ");
+                string[] userInput = Console.ReadLine().Split(' ');
+                decimal price;
+                while (!(decimal.TryParse(userInput[0], out price)
+                    && userInput.Length != 3
+                    && (string.Compare($"{userInput[1]} {userInput[2]}", "Per unit", StringComparison.OrdinalIgnoreCase) == 0
+                    || string.Compare($"{userInput[1]} {userInput[2]}", "Per kg", StringComparison.OrdinalIgnoreCase) == 0)))
+                {
+                    Console.Write("Enter product price and price type (per kg/per unit) on the same line separated by a space: ");
+                    userInput = Console.ReadLine().Split(' ');
+                }
+                //decimal productPrice = price;
+                Product p = new Product(productName, price, $"{userInput[1]} {userInput[2]}");
                 products.Add(productId, p);
                 Console.WriteLine("Added the product to the system.");
             }

@@ -1,16 +1,8 @@
 ﻿
-using System.Runtime.CompilerServices;
-
 namespace KassaSystemet
 {
     public class Menu
     {
-        /// <summary>
-        /// The main menu containing the navigation
-        /// for the whole program.
-        /// </summary>
-        ///
-
         public static void MainMenu(Dictionary<int, Product> products)
         {
             int menuOption;
@@ -50,10 +42,6 @@ namespace KassaSystemet
                 }
             } while (menuOption != 0);
         }
-        /// <summary>
-        /// The sub menu containing the navigation
-        /// for the customer options.
-        /// </summary>
         public static void CustomerMenu(Dictionary<int, Product> products)
         {
             List<Purchase> shoppingCart = new();
@@ -98,10 +86,6 @@ namespace KassaSystemet
             } while (userInput != "0");
             MainMenu(products);
         }
-        /// <summary>
-        /// The sub menu containing the navigation
-        /// for the admin options.
-        /// </summary>
         private static void AdminMenu(Dictionary<int, Product> products)
         {
             int userInput, productId;
@@ -197,7 +181,6 @@ namespace KassaSystemet
             (int id, decimal amount) = UserInputHandler.ProductInput();
             shoppingCart.Add(new Purchase(id, amount));
         }
-
         public static void AddDiscount(Dictionary<int, Product> products)
         {
             (int productId, string startDate, string endDate, decimal discountPercentage) = UserInputHandler.DiscountInput();
