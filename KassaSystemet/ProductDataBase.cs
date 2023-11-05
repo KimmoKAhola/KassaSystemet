@@ -36,17 +36,10 @@ namespace KassaSystemet
                 string name = products[i + 1].Trim();
                 decimal price = Convert.ToDecimal(products[i + 2]);
                 string type = products[i + 3];
-                Product p = new Product(name, price, type);
-                productDatabase.Add(id, p);
+                productDatabase.Add(id, new Product(name, price, type));
             }
             return productDatabase;
         }
-        public static void DisplayProducts(Dictionary<int, Product> products)
-        {
-            foreach (var item in products)
-            {
-                Console.Write($"Product ID: {item.Key}, {item.Value}");
-            }
-        }
+        public static void DisplayProducts(Dictionary<int, Product> products) => products.ToList().ForEach(item => Console.WriteLine($"Product ID: {item.Key}, {item.Value}"));
     }
 }

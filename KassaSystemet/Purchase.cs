@@ -28,7 +28,7 @@ namespace KassaSystemet
                 Console.WriteLine("Your shopping cart is empty.");
             else
             {
-                Console.WriteLine("Varukorgen består av: ");
+                Console.WriteLine("Your cart contains the following items: ");
                 foreach (var item in shoppingCart)
                 {
                     string productInfo = $"{products[item.ProductID]}, Antal: {item.Amount}";

@@ -38,9 +38,6 @@ namespace KassaSystemet
             formattedReceipt += $"{numberOfDashedLines}\n";
             return formattedReceipt;
         }
-        public static int GetReceiptID()
-        {
-            return _receiptID;
-        }
+        public static int GetReceiptID() => _receiptID;
     }
 }
