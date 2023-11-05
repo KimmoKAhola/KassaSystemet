@@ -9,13 +9,6 @@ namespace KassaSystemet
 {
     public static class FileManager
     {
-        /* This class creates the text file which is saved to the hard drive
-         * The methods here are used to create the filepath
-         * and are also responsible to keep track of the receipt id
-         */
-        /// <summary>
-        /// Creates a folder for all the files.
-        /// </summary>
         public static void CreateFolders()
         {
             string filePath = GetDirectoryFilePath();
@@ -89,20 +82,17 @@ namespace KassaSystemet
             }
             return Convert.ToInt32(File.ReadLines(CreateReceiptIDFilePath()).First());
         }
-
         public static void SaveReceipt(string paymentInfo)
         {
             if (!Directory.Exists(GetDirectoryFilePath()))
-            {
                 CreateFolders();
-            }
+
             IncrementReceiptCounter();
             using (StreamWriter receiptWriter = new($"{CreateReceiptFilePath()}", append: true))
             {
                 receiptWriter.Write(paymentInfo);
             }
         }
-
         public static void SaveProductList(Dictionary<int, Product> products)
         {
             string productString = "";
@@ -119,7 +109,6 @@ namespace KassaSystemet
                 productListWriter.Write(productString);
             }
         }
-
         public static void SaveDiscountList(Dictionary<int, Product> products)
         {
             var allDiscountedProducts = Product.GetDiscountInfo(products).ToList();
@@ -140,7 +129,6 @@ namespace KassaSystemet
                 writer.Write(discountInfo);
             }
         }
-
         public static Dictionary<int, Product> LoadProductList()
         {
             Dictionary<int, Product> products = new Dictionary<int, Product>();
@@ -160,12 +148,10 @@ namespace KassaSystemet
                 }
             }
             else
-            {
                 products = ProductDataBase.SeedProducts();
-            }
+
             return products;
         }
-
         public static void LoadDiscountList(Dictionary<int, Product> products)
         {
             if (File.Exists(CreateDiscountListFilePath()))

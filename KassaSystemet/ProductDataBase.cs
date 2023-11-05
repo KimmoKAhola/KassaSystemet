@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace KassaSystemet
 {
     public static class ProductDataBase
@@ -46,7 +41,6 @@ namespace KassaSystemet
             }
             return productDatabase;
         }
-
         public static void DisplayProducts(Dictionary<int, Product> products)
         {
             foreach (var item in products)

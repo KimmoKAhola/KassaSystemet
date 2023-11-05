@@ -12,25 +12,19 @@ namespace KassaSystemet
     {
         public static (int first, decimal second) ProductInput()
         {
-            int id = 0;
-            decimal amount = 0;
-
+            int id;
+            decimal amount;
             while (true)
             {
                 Console.Write("Enter id and amount: ");
                 string[] userInput = Console.ReadLine().Split(' ');
 
                 if (userInput.Length == 2 && int.TryParse(userInput[0], out id) && decimal.TryParse(userInput[1], out amount))
-                {
                     return (id, amount);
-                }
                 else
-                {
                     Console.WriteLine("Invalid input. Please enter an integer and a decimal separated by a space.");
-                }
             }
         }
-
         public static int ProductIdInput()
         {
             int userInput = 0;
@@ -39,7 +33,6 @@ namespace KassaSystemet
                 Console.Write("Enter a product id: ");
                 if (int.TryParse(Console.ReadLine(), out int number) && number < 999 && number > 100)
                 {
-
                     userInput = number;
                     break;
                 }
@@ -48,7 +41,6 @@ namespace KassaSystemet
             }
             return userInput;
         }
-
         public static (int productId, string startDate, string endDate, decimal discountPercentage) DiscountInput()
         {
             while (true)

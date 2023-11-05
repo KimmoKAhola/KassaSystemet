@@ -9,11 +9,8 @@ namespace KassaSystemet
 {
     public static class Receipt
     {
-        /* A class which creates a formatted receipt
-         */
-        private static readonly int _receiptCounter = FileManager.GetReceiptID(); // Load receipt ID from file
-        private static readonly int _receiptID = _receiptCounter++; // These work as long as the receipt files are not deleted
-
+        private static readonly int _receiptCounter = FileManager.GetReceiptID();
+        private static readonly int _receiptID = _receiptCounter++;
         public static string CreateReceipt(List<Purchase> shoppingCart, Dictionary<int, Product> products)
         {
             string formattedReceipt = "";
@@ -30,9 +27,7 @@ namespace KassaSystemet
                     decimal discountPercentage = products[item.ProductID].Discounts.Max(discount => discount.DiscountPercentage);
                     price = price * (1 - discountPercentage);
                 }
-
                 decimal sum = Math.Round(price * item.Amount, 4);
-
                 string productInfo = $"{productName,-45} {item.Amount,-15}{price,-20:C3} {sum,-15:C2}";
                 if (products[item.ProductID].Discounts.Count > 0)
                 {
@@ -43,7 +38,6 @@ namespace KassaSystemet
             formattedReceipt += $"{numberOfDashedLines}\n";
             return formattedReceipt;
         }
-
         public static int GetReceiptID()
         {
             return _receiptID;
