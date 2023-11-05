@@ -11,10 +11,9 @@ namespace KassaSystemet
         /// </summary>
         ///
 
-        public static void MainMenu()
+        public static void MainMenu(Dictionary<int, Product> products)
         {
             int menuOption;
-            Dictionary<int, Product> products = ProductDataBase.SeedProducts();
             do
             {
                 Console.Clear();
@@ -42,6 +41,8 @@ namespace KassaSystemet
                             break;
                         case 0:
                             FileManager.CreateFolders();
+                            FileManager.SaveProductList(products);
+                            App.CloseApp(products);
                             //TODO Save here
                             Environment.Exit(0);
                             break;
@@ -95,7 +96,7 @@ namespace KassaSystemet
                         break;
                 }
             } while (userInput != "0");
-            MainMenu();
+            MainMenu(products);
         }
         /// <summary>
         /// The sub menu containing the navigation
@@ -120,7 +121,7 @@ namespace KassaSystemet
                     "0. Exit admin menu");
 
                 Console.Write("Enter a command: ");
-                if (int.TryParse(Console.ReadLine(), out userInput) && (userInput >= 0 && userInput < 9))
+                if (int.TryParse(Console.ReadLine(), out userInput) && (userInput >= 0 && userInput <= 9))
                 {
                     switch (userInput)
                     {
@@ -177,6 +178,8 @@ namespace KassaSystemet
                             Console.ReadKey();
                             break;
                         case 9:
+                            productId = UserInputHandler.ProductIdInput();
+                            Product.RemoveProduct(products, productId);
                             Console.WriteLine("Press any key to continue.");
                             Console.ReadKey();
                             break;
@@ -187,7 +190,7 @@ namespace KassaSystemet
                     Console.WriteLine("Incorrect input. Please enter a number 1-6.");
                 }
             } while (userInput != 0);
-            MainMenu();
+            MainMenu(products);
         }
         public static void AddProduct(List<Purchase> shoppingCart)
         {

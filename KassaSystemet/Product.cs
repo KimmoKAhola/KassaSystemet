@@ -38,6 +38,9 @@ namespace KassaSystemet
             });
         }
         public static IEnumerable<Product> GetAllDiscounts(Dictionary<int, Product> products) => products.Values.Where(p => p.Discounts.Count > 0);
+        public static IEnumerable<(int Key, Product Value)> GetDiscountInfo(Dictionary<int, Product> products)
+            => products.Where(p => p.Value.Discounts.Count > 0)
+            .Select(pair => (pair.Key, pair.Value));
         public static void AddNewProduct(Dictionary<int, Product> products, int productId)
         {
             if (!IsProductAvailable(products, productId))
@@ -48,6 +51,13 @@ namespace KassaSystemet
             }
             else
                 Console.WriteLine($"The ID {productId} already exists in the system.");
+        }
+        public static void RemoveProduct(Dictionary<int, Product> products, int productId)
+        {
+            if (IsProductAvailable(products, productId))
+                products.Remove(productId);
+            else
+                Console.WriteLine($"The ID {productId} does not exist in the system.");
         }
         public static void ChangePrice(Dictionary<int, Product> products, int productId)
         {
