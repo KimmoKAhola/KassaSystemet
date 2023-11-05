@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet
 {
-    public class FileManager
+    public static class FileManager
     {
         /* This class creates the text file which is saved to the hard drive
          * The methods here are used to create the filepath
@@ -31,10 +31,6 @@ namespace KassaSystemet
                 Directory.CreateDirectory(GetDirectoryProductsFilePath());
             }
         }
-        /// <summary>
-        /// Returns a directory file path as a string.
-        /// </summary>
-        /// <returns></returns>
         private static string GetDirectoryFilePath()
         {
             return $"../../../Files";
@@ -47,54 +43,30 @@ namespace KassaSystemet
         {
             return $"../../../Files/ProductLists";
         }
-        /// <summary>
-        /// Returns a file path string for the receipt.
-        /// </summary>
-        /// <returns></returns>
         private static string CreateReceiptFilePath()
         {
             string filePath = GetDirectoryReceiptsFilePath();
             return $"{filePath}/RECEIPT_{GetCurrentDate()}.txt";
         }
-        /// <summary>
-        /// Returns a date string for the receipt ID file.
-        /// </summary>
-        /// <returns></returns>
         private static string CreateReceiptIDFilePath()
         {
             string filePath = GetDirectoryReceiptsFilePath();
-            return $"{filePath}/RECEIPT_ID_{GetCurrentDate()}.txt";
+            return $"{filePath}/RECEIPT_ID.txt";
         }
-        /// <summary>
-        /// Returns the file path for the discount file as a string.
-        /// </summary>
-        /// <returns></returns>
         private static string CreateDiscountListFilePath()
         {
             string filePath = GetDirectoryProductsFilePath();
             return $"{filePath}/DISCOUNT_LIST_ADMIN.txt";
         }
-        /// <summary>
-        /// Returns the product list file path as a string.
-        /// </summary>
-        /// <returns></returns>
         private static string CreateProductListFilePath()
         {
             string filePath = GetDirectoryProductsFilePath();
             return $"{filePath}/PRODUCT_LIST_ADMIN.txt";
         }
-        /// <summary>
-        /// Returns the current date as a string on the format "yyyyMMdd".
-        /// </summary>
-        /// <returns></returns>
         private static string GetCurrentDate()
         {
             return DateTime.Now.ToString("yyyyMMdd");
         }
-        /// <summary>
-        /// Creates the file for the receipt ID file. This is where the receipt ID is saved after each purchase.
-        /// </summary>
-        /// <param name="receiptID"></param>
         private static void CreateReceiptIDFile(int receiptID)
         {
             using (StreamWriter idWriter = new StreamWriter($"{CreateReceiptIDFilePath()}", append: false))
@@ -102,10 +74,6 @@ namespace KassaSystemet
                 idWriter.Write(receiptID);
             }
         }
-        /// <summary>
-        /// Increments the receipt ID after each purchase.
-        /// </summary>
-        /// <returns></returns>
         public static int IncrementReceiptCounter()
         {
             int currentReceiptID = GetReceiptID();
@@ -113,109 +81,66 @@ namespace KassaSystemet
             CreateReceiptIDFile(newReceiptID); // Update the receipt ID file
             return newReceiptID;
         }
-        /// <summary>
-        /// Returns the receipt ID. Loads the ID from the receipt ID file.
-        /// </summary>
-        /// <returns></returns>
         public static int GetReceiptID()
         {
             if (!File.Exists(CreateReceiptIDFilePath()))
             {
-                CreateReceiptIDFile(Receipt.receiptID);
+                int id = Receipt.GetReceiptID();
+                CreateReceiptIDFile(id);
                 return 1;
             }
             return Convert.ToInt32(File.ReadLines(CreateReceiptIDFilePath()).First());
         }
-        /// <summary>
-        /// Saves the receipt to a txt file. Receives the string from the receipt class.
-        /// </summary>
-        /// <param name="shoppingCart"></param>
-        /// <param name="receiptID"></param>
-        public static void SaveReceipt(List<Purchase> shoppingCart, int receiptID)
+
+        public static void SaveReceipt(string paymentInfo)
         {
             if (!Directory.Exists(GetDirectoryFilePath()))
             {
                 CreateFolders();
             }
             IncrementReceiptCounter();
-            string receipt = Receipt.CreateReceipt(shoppingCart, receiptID);
             using (StreamWriter receiptWriter = new($"{CreateReceiptFilePath()}", append: true))
             {
-                receiptWriter.Write(receipt);
+                receiptWriter.Write(paymentInfo);
             }
         }
-        /// <summary>
-        /// Saves the product list to a txt file. Receives the product string from the product class.
-        /// </summary>
-        /// <param name="productDictionary"></param>
-        public static void SaveProductList(Dictionary<int, Product> productDictionary)
+
+        public static void SaveProductList(Dictionary<int, Product> products)
         {
-            string productListString = Product.CreateProductString(productDictionary);
-            using (StreamWriter writer = new($"{CreateProductListFilePath()}", append: false))
-            {
-                writer.Write(productListString);
-            }
+
         }
-        /// <summary>
-        /// Saves the discount list to a txt file. Receives the discount list from the Discount class.
-        /// </summary>
-        /// <param name="allDiscounts"></param>
-        public static void SaveDiscountList(Dictionary<int, List<Discount>> allDiscounts)
+
+        public static void SaveDiscountList()
         {
-            string discountListString = Discount.CreateDiscountString(allDiscounts);
+            //string discountListString = Discount.CreateDiscountString(allDiscounts);
+
             using (StreamWriter writer = new($"{CreateDiscountListFilePath()}", append: false))
             {
-                writer.Write(discountListString);
+                //writer.Write(discountListString);
             }
         }
-        /// <summary>
-        /// Loads the product list from a txt file each time the program is loaded.
-        /// </summary>
-        /// <returns></returns>
-        public static Dictionary<int, Product> LoadProductList()
+
+        public static void LoadProductList()
         {
             if (File.Exists(CreateProductListFilePath()))
             {
                 var productListInfo = File.ReadAllLines(CreateProductListFilePath());
-                Product.productDictionary.Clear();
+
                 foreach (var item in productListInfo)
                 {
                     string[] columns = item.Split('!');
                     for (int i = 0; i < columns.Length; i += 4)
                     {
-                        Product.productDictionary.Add(Convert.ToInt32(columns[i]), new Product(columns[i + 1], Convert.ToDecimal(columns[i + 2]), columns[i + 3]));
+
                     }
                 }
             }
-            return Product.productDictionary;
+
         }
-        /// <summary>
-        /// Loads the discount list when the program starts.
-        /// </summary>
-        /// <param name="discountList"></param>
-        /// <returns></returns>
+
         public static Dictionary<int, List<Discount>> LoadDiscountList()
         {
-            if (File.Exists(CreateDiscountListFilePath()))
-            {
-                var discountListInfo = File.ReadLines(CreateDiscountListFilePath());
-                Discount.allDiscounts.Clear();
-                foreach (var item in discountListInfo)
-                {
-                    List<Discount> temp = new();
-                    string[] columns = item.Split('!');
-                    int productID = Convert.ToInt32(columns[0]);
-                    for (int i = 1; i < columns.Length - 1; i += 3)
-                    {
-                        string startDate = columns[i];
-                        string endDate = columns[i + 1];
-                        decimal discountPercentage = Convert.ToDecimal(columns[i + 2]);
-                        temp.Add(new Discount(startDate, endDate, discountPercentage));
-                    }
-                    Discount.allDiscounts.Add(productID, temp);
-                }
-            }
-            return Discount.allDiscounts;
+            return new Dictionary<int, List<Discount>>();
         }
     }
 }

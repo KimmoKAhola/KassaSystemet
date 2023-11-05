@@ -8,15 +8,6 @@ namespace KassaSystemet
 {
     public class Purchase
     {
-        public static List<Purchase> shoppingCart = new() { };
-
-        /*
-         *  Class which handles the "shopping cart".
-         *  Currently contains a method to Pay and display current shopping cart
-         *  This class is also responsible for calculating the total cost when purchasing
-         *  different products
-         */
-
         /// <summary>
         /// Constructor for my shopping cart. Fills a with purchases based on product ID
         /// and amount. This is then connected to my product Dictionary when making a
@@ -27,27 +18,17 @@ namespace KassaSystemet
         public Purchase(int productID, decimal amount)
         {
             ProductID = productID;
-            if (Product.CheckPriceType(productID))
-            {
-                Amount = decimal.Round(amount, 2);
-            }
-            else if (amount == (int)amount)
-            {
-                Amount = Math.Round(amount);
-            }
-            else
-            {
-                Amount = Math.Round(amount);
-                Console.WriteLine($"Your product with id [{productID}] is not sold per kg and your requested amount of {amount}" +
-                    $" has been rounded to {Amount}");
-            }
-            Console.WriteLine($"Added product ID [{productID}] and amount {Amount} to your cart.");
+            Amount = amount;
+            Console.WriteLine($"Added product ID [{ProductID}] and amount {Amount} to your cart.");
         }
+        public int ProductID { get; }
+        public decimal Amount { get; }
+
         /// <summary>
         /// This method performs the payment.
         /// Saves the receipt and clears the shopping cart afterwards.
         /// </summary>
-        public static void Pay()
+        public static void Pay(List<Purchase> shoppingCart, Dictionary<int, Product> products)
         {
             //This method creates the receipt for the customer and saves it to the hard drive
             //After the customer has "paid" the cart is cleared
@@ -57,54 +38,26 @@ namespace KassaSystemet
             }
             else
             {
-                FileManager.SaveReceipt(shoppingCart, FileManager.GetReceiptID());
+                string receipt = Receipt.CreateReceipt(shoppingCart, products);
+                FileManager.SaveReceipt(receipt);
                 shoppingCart.Clear();
             }
         }
-        public static void DisplayShoppingCart(List<Purchase> shoppingCart) // Fix this so it can be used in receipt creator
+        public static void DisplayPurchases(List<Purchase> shoppingCart, Dictionary<int, Product> products)
         {
             if (shoppingCart.Count == 0)
             {
-                Console.WriteLine("Your shopping cart is currently empty.");
+                Console.WriteLine("Your shopping cart is empty.");
             }
             else
             {
-                Console.WriteLine("*******Your current shopping cart contains the following items*******");
+                Console.WriteLine("Varukorgen består av: ");
                 foreach (var item in shoppingCart)
                 {
-                    string currentProductName = Product.GetProductName(Product.productDictionary, item.ProductID);
-                    string currentProductType = Product.FindProductPriceType(Product.productDictionary, item.ProductID);
-                    decimal currentPrice = Product.FindProductPrice(Product.productDictionary, item.ProductID);
-
-                    Console.Write($"\nProduct: {currentProductName}" +
-                        $"  \tamount: {item.Amount}" +
-                        $"  \tprice {currentProductType}: {currentPrice:C2}" +
-                        $"  \ttotal sum: {(currentPrice * item.Amount):C2} " +
-                        $"  \tproduct id: {item.ProductID}\n");
+                    string productInfo = $"{products[item.ProductID]}, Antal: {item.Amount}";
+                    Console.WriteLine(productInfo);
                 }
             }
         }
-        /// <summary>
-        /// This method returns the longest string length
-        /// for all purchases in the shopping cart.
-        /// This is then returned and used to format
-        /// the receipt when using the Pay method.
-        /// </summary>
-        /// <param name="shoppingCart"></param>
-        /// <returns></returns>
-        public static int GetLongestName(List<Purchase> shoppingCart)
-        {
-            int maxLength = 0;
-            foreach (var item in shoppingCart)
-            {
-                if (Product.GetProductName(Product.productDictionary, item.ProductID).Length > maxLength)
-                {
-                    maxLength = Product.GetProductName(Product.productDictionary, item.ProductID).Length;
-                }
-            }
-            return maxLength;
-        }
-        public int ProductID { get; }
-        public decimal Amount { get; }
     }
 }
