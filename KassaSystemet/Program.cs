@@ -7,9 +7,9 @@ namespace KassaSystemet
     {
         static void Main(string[] args)
         {
-            //Product p = new Product("Bananer", 15.5m, "per kg");
-            //Discount d = new Discount("2023-09-09", "2023-10-15", 55m);
-            //Discount d2 = new Discount("2023-10-25", "2023-10-31", 75m);
+            //var test = new DateOnly(2023, 09, 10);
+            //var test2 = new DateOnly(2023, 09, 10);
+            //Console.WriteLine(test >= test2);
 
             App.Run();
         }
