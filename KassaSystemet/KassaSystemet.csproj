@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Files\" />
+    <Folder Include="Files\Receipts\" />
+    <Folder Include="Temporär mapp\" />
   </ItemGroup>
 
   <ItemGroup>

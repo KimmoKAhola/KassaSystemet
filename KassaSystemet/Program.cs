@@ -7,24 +7,11 @@ namespace KassaSystemet
     {
         static void Main(string[] args)
         {
-            FileManager.LoadProductList();
-            FileManager.LoadDiscountList();
-            Menu menu = new();
-            menu.MainMenu();
+            //Product p = new Product("Bananer", 15.5m, "per kg");
+            //Discount d = new Discount("2023-09-09", "2023-10-15", 55m);
+            //Discount d2 = new Discount("2023-10-25", "2023-10-31", 75m);
 
-            //DateOnly date = new DateOnly();
-            //DateOnly date = new DateOnly(2023, 09, 25);
-
-            //Console.WriteLine(date);
-
-            //Console.Write("Enter a date YYYY-MM-DD");
-            //string input = Console.ReadLine();
-
-            //string[] dateInfo = input.Split('-');
-            //foreach (var item in dateInfo)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            App.Run();
         }
     }
 }

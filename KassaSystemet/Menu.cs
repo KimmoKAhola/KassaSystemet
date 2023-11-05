@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿
+using System.Runtime.CompilerServices;
 
 namespace KassaSystemet
 {
@@ -17,10 +9,12 @@ namespace KassaSystemet
         /// The main menu containing the navigation
         /// for the whole program.
         /// </summary>
-        public void MainMenu()
+        ///
+
+        public static void MainMenu()
         {
             int menuOption;
-
+            Dictionary<int, Product> products = ProductDataBase.SeedProducts();
             do
             {
                 Console.Clear();
@@ -28,21 +22,18 @@ namespace KassaSystemet
                 Console.WriteLine("Choose an option below.");
                 Console.WriteLine("1. New customer");
                 Console.WriteLine("2. Admin tools");
-                Console.WriteLine("3. Load receipt ID file ** TEST ONLY DELETE LATER**");
-                Console.WriteLine("4. Press 4 for a demonstration with hardcoded values");
-                Console.WriteLine("0. Avsluta. This saves all dictionaries to files");
+                Console.WriteLine("0. Save & Exit.");
                 Console.Write("Enter your command: ");
                 if (int.TryParse(Console.ReadLine(), out menuOption))
                 {
                     switch (menuOption)
                     {
                         case 1:
-                            //CustomerMenu customerMenu = new();
-                            CustomerMenu();
+                            CustomerMenu(products);
                             menuOption = 0;
                             break;
                         case 2:
-                            AdminMenu();
+                            AdminMenu(products);
                             menuOption = 0;
                             break;
                         case 3:
@@ -51,8 +42,7 @@ namespace KassaSystemet
                             break;
                         case 0:
                             FileManager.CreateFolders();
-                            FileManager.SaveProductList(Product.productDictionary);
-                            FileManager.SaveDiscountList(Discount.allDiscounts);
+                            //TODO Save here
                             Environment.Exit(0);
                             break;
                     }
@@ -63,14 +53,10 @@ namespace KassaSystemet
         /// The sub menu containing the navigation
         /// for the customer options.
         /// </summary>
-        private void CustomerMenu()
+        public static void CustomerMenu(Dictionary<int, Product> products)
         {
+            List<Purchase> shoppingCart = new();
 
-            /*
-             * kund ska ange produktens ID samt antal/mängd
-             * programmet ska fortsätta tills kund anger kommandot "PAY"
-             * kvitto ska skrivas ut och sparas
-             */
             string userInput;
             do
             {
@@ -79,35 +65,33 @@ namespace KassaSystemet
                 Console.WriteLine("1. Display your current cart.");
                 Console.WriteLine("2. Enter products to purchase.");
                 Console.WriteLine("3. Display available products.");
+                Console.WriteLine("0: Return to main menu.");
                 Console.WriteLine("PAY: purchase wares in your cart and exit.");
                 Console.Write("Enter command: ");
                 userInput = Console.ReadLine().ToUpper();
                 switch (userInput)
                 {
                     case "1":
-                        Purchase.DisplayShoppingCart(Purchase.shoppingCart);
+                        Purchase.DisplayPurchases(shoppingCart, products);
                         Console.WriteLine("Press any key to continue");
                         Console.ReadKey();
                         break;
                     case "2":
-                        PurchaseProducts();
+                        AddProduct(shoppingCart);
                         Console.WriteLine("Add another product? (press 2) does not work atm");
                         userInput = Console.ReadLine();
                         break;
-
                     case "3":
-                        Product.DisplayProducts(Product.productDictionary);
+                        ProductDataBase.DisplayProducts(products);
                         Console.ReadKey();
                         break;
-
-                    case "PAY":
-                        Console.WriteLine("Purchase the wares in your shopping cart. This saves the receipt to a file.");
-                        Purchase.Pay(); // pay command in purchase class
+                    case "0":
                         userInput = "0";
                         break;
-
-                    case "0":
-                        MainMenu();
+                    case "PAY":
+                        Console.WriteLine("Purchase the wares in your shopping cart. This saves the receipt to a file.");
+                        Purchase.Pay(shoppingCart, products);
+                        userInput = "0";
                         break;
                 }
             } while (userInput != "0");
@@ -117,10 +101,9 @@ namespace KassaSystemet
         /// The sub menu containing the navigation
         /// for the admin options.
         /// </summary>
-        private void AdminMenu()
+        private static void AdminMenu(Dictionary<int, Product> products)
         {
-
-            int userInput;
+            int userInput, productId;
             do
             {
                 Console.Clear();
@@ -130,65 +113,72 @@ namespace KassaSystemet
                     "3. Change price on a product\n" +
                     "4. Change name on a product\n" +
                     "5. Add a discount for a product\n" +
-                    "6. Display all available discounts\n" +
-                    "7. Remove a discount from a product.\n" +
-                    "8. Remove a product from the product list\n" +
+                    "6. Display all available discounts for a single product\n" +
+                    "7. Display all available discounts in the system\n" +
+                    "8. Remove a discount from a product.\n" +
+                    "9. Remove a product from the product list\n" +
                     "0. Exit admin menu");
 
                 Console.Write("Enter a command: ");
-                //userInput = Console.ReadLine().ToUpper();
                 if (int.TryParse(Console.ReadLine(), out userInput) && (userInput >= 0 && userInput < 9))
                 {
                     switch (userInput)
                     {
                         case 1:
                             //Add a new product to the system.
-                            AddNewProduct();
+                            productId = UserInputHandler.ProductIdInput();
+                            Product.AddNewProduct(products, productId);
                             Console.ReadKey();
                             break;
 
                         case 2:
-                            //Display the products
-                            Console.Write("These are the available products in the system: ");
-                            Product.DisplayProducts(Product.productDictionary);
+                            Console.WriteLine("These are the available products in the system: ");
+                            Product.DisplayProducts(products);
                             Console.Write("Press any key to continue. ");
                             Console.ReadKey();
                             break;
 
                         case 3:
-                            ChangePriceOnProduct();
+                            productId = UserInputHandler.ProductIdInput();
+                            Product.ChangePrice(products, productId);
                             Console.Write("Press any key to continue. ");
                             Console.ReadKey();
                             break;
 
                         case 4:
-                            ChangeNameOnProduct();
+                            productId = UserInputHandler.ProductIdInput();
+                            Product.ChangeName(products, productId);
                             Console.Write("Press any key to continue. ");
                             Console.ReadKey();
                             break;
 
                         case 5:
-                            AddNewDiscount();
-                            Console.Write("Press any key to continue");
+                            Console.WriteLine("5. Add a discount for a product");
+                            AddDiscount(products);
+                            Console.Write("Press any key to continue. ");
+                            Console.ReadKey();
                             break;
                         case 6:
-                            Discount.DisplayAllDiscounts(Discount.allDiscounts);
+                            productId = UserInputHandler.ProductIdInput();
+                            if (Discount.ContainsDiscount(products, productId))
+                                Discount.Display(products[productId].Discounts);
+                            else
+                                Console.WriteLine($"The product id {productId} does not have a discount available.");
                             Console.ReadKey();
                             Console.Write("Press any key to continue");
                             break;
                         case 7:
-                            RemoveDiscount();
+                            Product.DisplayAllDiscounts(products);
                             Console.WriteLine("Press any key to continue.");
                             Console.ReadKey();
                             break;
                         case 8:
-                            RemoveProduct();
                             Console.WriteLine("Press any key to continue.");
                             Console.ReadKey();
                             break;
-
-                        case 0:
-                            MainMenu();
+                        case 9:
+                            Console.WriteLine("Press any key to continue.");
+                            Console.ReadKey();
                             break;
                     }
                 }
@@ -199,132 +189,16 @@ namespace KassaSystemet
             } while (userInput != 0);
             MainMenu();
         }
-        /// <summary>
-        /// A method for "purhcasing" products.
-        /// Enter product id and amount with a space between
-        /// to add product to shopping cart.
-        /// </summary>
-        private static void PurchaseProducts()
+        public static void AddProduct(List<Purchase> shoppingCart)
         {
-            Console.WriteLine("Enter wares to your purchase, then print the receipt");
-            Console.Write("Enter <product ID> <Amount>: ");
-            string customerEntry = Console.ReadLine();
-            string[] entries = customerEntry.Split(' ');
-            if (entries.Length != 2)
-            {
-                Console.WriteLine("You entered the information incorrectly. Try again!");
-            }
-            int productID = Convert.ToInt32(entries[0]);
-            decimal amount = Convert.ToDecimal(entries[1]);
-            Purchase.shoppingCart.Add(new Purchase(productID, amount));
+            (int id, decimal amount) = UserInputHandler.ProductInput();
+            shoppingCart.Add(new Purchase(id, amount));
         }
-        /// <summary>
-        /// A method for adding a new product to the system
-        /// Enter id, name, price and price type with spaces in between
-        /// ex '300 Bananer 15,50 per kg'
-        /// </summary>
-        private static void AddNewProduct()
-        {
-            Console.Write("Adding a new product. Enter id, name, price and price type (per kg or per unit): ");
-            string adminEntry = Console.ReadLine();
-            string[] adminEntries = adminEntry.Split(' ');
-            if (adminEntries.Length != 5)
-            {
-                Console.WriteLine("You entered the values incorrectly. Try again!");
-            }
-            else
-            {
 
-                int id = Convert.ToInt32(adminEntries[0]);
-                string name = adminEntries[1];
-                decimal price = Convert.ToDecimal(adminEntries[2]);
-                string priceType = adminEntries[3].ToLower() + " " + adminEntries[4].ToLower();
-                if (priceType == "per kg" || priceType == "per unit")
-                {
-                    priceType = adminEntries[3].ToLower() + " " + adminEntries[4].ToLower(); // Change later. Hard coded for now
-                    Product.AddNewProduct(Product.productDictionary, id, name, price, priceType);
-                }
-                else
-                {
-                    Console.WriteLine("You entered the values incorrectly. Try again!");
-                }
-
-            }
-        }
-        /// <summary>
-        /// A method for changing the price on a product.
-        /// Enter the product id and then enter a new price.
-        /// </summary>
-        private static void ChangePriceOnProduct()
+        public static void AddDiscount(Dictionary<int, Product> products)
         {
-            //Change price on a product
-            Console.Write("Enter a product ID: ");
-            int id = Convert.ToInt32(Console.ReadLine());
-            if (Product.DoesProductExist(id))
-            {
-                Console.WriteLine($"The current price for your product with id [{id}] is: {Product.FindProductPrice(Product.productDictionary, id)}");
-                Console.Write("Enter a new price: ");
-                decimal price = Convert.ToDecimal(Console.ReadLine());
-                Product.ChangeProductPrice(Product.productDictionary, id, price);
-            }
-        }
-        /// <summary>
-        /// A method to change name on a product.
-        /// Enter old name and new name.
-        /// </summary>
-        private static void ChangeNameOnProduct()
-        {
-            Console.Write("Enter the name of the product you want to change: ");
-            string oldName = Console.ReadLine();
-            Console.Write("Enter the new name: ");
-            string newName = Console.ReadLine();
-            Product.ChangeProductName(Product.productDictionary, oldName, newName);
-        }
-        /// <summary>
-        /// A method for adding new discounts to the system.
-        /// Enter product ID, start date YYYY-MM-DD
-        /// and end date YYYY-MM-DD
-        /// and discount percentage XX % to enter the value.
-        /// Ex: '300 2029-05-25 2029-05-30 70'
-        /// </summary>
-        private static void AddNewDiscount()
-        {
-            Console.Write("Enter a product ID (Bananer=300): ");
-            int inputID = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Enter a start date: (YYYY-MM-DD): ");
-            string startDate = Console.ReadLine();
-            Console.Write("Enter a start date (YYYY-MM-DD): ");
-            string endDate = Console.ReadLine();
-            Console.Write("Enter a discount percentage (ex. 70 %): ");
-            decimal discountPercentage = Convert.ToDecimal(Console.ReadLine());
-            Discount.AddNewDiscount(inputID, startDate, endDate, discountPercentage);
-        }
-        /// <summary>
-        /// A method for removing discounts from the system.
-        /// Enter id, start date and end date to remove a discount.
-        /// Ex '300 2023-09-25 2023-10-05'
-        /// </summary>
-        private static void RemoveDiscount()
-        {
-            Console.Write("Enter a product ID: ");
-            int inputID = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Enter a start date: (YYYY-MM-DD): ");
-            string startDate = Console.ReadLine();
-            Console.Write("Enter an end date: (YYYY-MM-DD): ");
-            string endDate = Console.ReadLine();
-
-            Discount.RemoveDiscount(Discount.allDiscounts, inputID, startDate, endDate);
-        }
-        /// <summary>
-        /// A method for removing a product from the system.
-        /// Enter product id to remove that product.
-        /// </summary>
-        private static void RemoveProduct()
-        {
-            Console.Write("Enter a product ID: ");
-            int inputID = Convert.ToInt32(Console.ReadLine());
-
-            Product.RemoveProduct(inputID);
+            (int productId, string startDate, string endDate, decimal discountPercentage) = UserInputHandler.DiscountInput();
+            products[productId].AddDiscount(new Discount(startDate, endDate, discountPercentage));
         }
     }
 }
