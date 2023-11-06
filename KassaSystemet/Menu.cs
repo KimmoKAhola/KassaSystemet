@@ -5,31 +5,28 @@ namespace KassaSystemet
     {
         public static void MainMenu()
         {
-            do
+            Console.Clear();
+            Console.WriteLine("***Menu for the cash register***");
+            Console.WriteLine("Choose an option below.");
+            Console.WriteLine("1. New customer");
+            Console.WriteLine("2. Admin tools");
+            Console.WriteLine("0. Save & Exit.");
+            Console.Write("Enter your command: ");
+            if (int.TryParse(Console.ReadLine(), out int menuOption))
             {
-                Console.Clear();
-                Console.WriteLine("***Menu for the cash register***");
-                Console.WriteLine("Choose an option below.");
-                Console.WriteLine("1. New customer");
-                Console.WriteLine("2. Admin tools");
-                Console.WriteLine("0. Save & Exit.");
-                Console.Write("Enter your command: ");
-                if (int.TryParse(Console.ReadLine(), out int menuOption))
+                switch (menuOption)
                 {
-                    switch (menuOption)
-                    {
-                        case 1:
-                            CustomerMenu();
-                            break;
-                        case 2:
-                            AdminMenu();
-                            break;
-                        case 0:
-                            App.CloseApp();
-                            break;
-                    }
+                    case 1:
+                        CustomerMenu();
+                        break;
+                    case 2:
+                        AdminMenu();
+                        break;
+                    case 0:
+                        App.CloseApp();
+                        break;
                 }
-            } while (true);
+            }
         }
         private static void CustomerMenu()
         {
@@ -68,6 +65,7 @@ namespace KassaSystemet
                 Console.Write("Press any key to continue: ");
                 Console.ReadKey();
             } while (userInput != "0");
+            MainMenu();
         }
         private static void AdminMenu()
         {
@@ -152,6 +150,7 @@ namespace KassaSystemet
                 else
                     Console.WriteLine("Incorrect input. Please enter a number 1-6.");
             } while (userInput != 0);
+            MainMenu();
         }
         private static void AddProduct(List<Purchase> shoppingCart)
         {
