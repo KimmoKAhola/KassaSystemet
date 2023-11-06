@@ -3,9 +3,9 @@ namespace KassaSystemet
 {
     public class Menu
     {
-        public static void MainMenu(Dictionary<int, Product> products)
+        public static void MainMenu()
         {
-            int menuOption;
+            var products = ProductCatalogue.Instance.Products;
             do
             {
                 Console.Clear();
@@ -15,7 +15,7 @@ namespace KassaSystemet
                 Console.WriteLine("2. Admin tools");
                 Console.WriteLine("0. Save & Exit.");
                 Console.Write("Enter your command: ");
-                if (int.TryParse(Console.ReadLine(), out menuOption))
+                if (int.TryParse(Console.ReadLine(), out int menuOption))
                 {
                     switch (menuOption)
                     {
@@ -27,25 +27,18 @@ namespace KassaSystemet
                             AdminMenu(products);
                             menuOption = 0;
                             break;
-                        case 3:
-                            Console.WriteLine("receipt id value from file: " + FileManager.GetReceiptID());
-                            Console.ReadKey();
-                            break;
                         case 0:
                             FileManager.CreateFolders();
                             FileManager.SaveProductList(products);
                             App.CloseApp(products);
-                            //TODO Save here
-                            Environment.Exit(0);
                             break;
                     }
                 }
-            } while (menuOption != 0);
+            } while (true);
         }
         public static void CustomerMenu(Dictionary<int, Product> products)
         {
             List<Purchase> shoppingCart = new();
-
             string userInput;
             do
             {
@@ -62,29 +55,23 @@ namespace KassaSystemet
                 {
                     case "1":
                         Purchase.DisplayPurchases(shoppingCart, products);
-                        Console.WriteLine("Press any key to continue");
-                        Console.ReadKey();
                         break;
                     case "2":
                         AddProduct(shoppingCart);
-                        Console.WriteLine("Add another product? (press 2) does not work atm");
-                        userInput = Console.ReadLine();
                         break;
                     case "3":
-                        ProductDataBase.DisplayProducts(products);
-                        Console.ReadKey();
+                        ProductCatalogue.Instance.DisplayProducts();
                         break;
                     case "0":
-                        userInput = "0";
+                        MainMenu();
                         break;
                     case "PAY":
-                        Console.WriteLine("Purchase the wares in your shopping cart. This saves the receipt to a file.");
                         Purchase.Pay(shoppingCart, products);
-                        userInput = "0";
                         break;
                 }
-            } while (userInput != "0");
-            MainMenu(products);
+                Console.Write("Press any key to continue: ");
+                Console.ReadKey();
+            } while (true);
         }
         private static void AdminMenu(Dictionary<int, Product> products)
         {
@@ -103,45 +90,36 @@ namespace KassaSystemet
                     "8. Remove a discount from a product.\n" +
                     "9. Remove a product from the product list\n" +
                     "0. Exit admin menu");
-
                 Console.Write("Enter a command: ");
                 if (int.TryParse(Console.ReadLine(), out userInput) && (userInput >= 0 && userInput <= 9))
                 {
                     switch (userInput)
                     {
                         case 1:
-                            //Add a new product to the system.
                             productId = UserInputHandler.ProductIdInput();
-                            Product.AddNewProduct(products, productId);
-                            Console.ReadKey();
+                            ProductCatalogue.Instance.AddNewProduct();
                             break;
-
                         case 2:
                             Console.WriteLine("These are the available products in the system: ");
-                            Product.DisplayProducts(products);
-                            Console.Write("Press any key to continue. ");
-                            Console.ReadKey();
+                            ProductCatalogue.Instance.DisplayProducts();
                             break;
-
                         case 3:
                             productId = UserInputHandler.ProductIdInput();
-                            Product.ChangePrice(products, productId);
-                            Console.Write("Press any key to continue. ");
-                            Console.ReadKey();
+                            if (ProductCatalogue.IsProductAvailable(productId))
+                                products[productId].ChangePrice();
+                            else
+                                Console.WriteLine($"The product id {productId} does not exist.");
                             break;
-
                         case 4:
                             productId = UserInputHandler.ProductIdInput();
-                            Product.ChangeName(products, productId);
-                            Console.Write("Press any key to continue. ");
-                            Console.ReadKey();
+                            if (ProductCatalogue.IsProductAvailable(productId))
+                                ProductCatalogue.Instance.Products[productId].ChangeName();
+                            else
+                                Console.WriteLine($"The product id {productId} does not exist.");
                             break;
-
                         case 5:
                             Console.WriteLine("5. Add a discount for a product");
                             AddDiscount(products);
-                            Console.Write("Press any key to continue. ");
-                            Console.ReadKey();
                             break;
                         case 6:
                             productId = UserInputHandler.ProductIdInput();
@@ -149,32 +127,26 @@ namespace KassaSystemet
                                 Discount.Display(products[productId].Discounts);
                             else
                                 Console.WriteLine($"The product id {productId} does not have a discount available.");
-                            Console.ReadKey();
-                            Console.Write("Press any key to continue");
                             break;
                         case 7:
-                            Product.DisplayAllDiscounts(products);
-                            Console.WriteLine("Press any key to continue.");
-                            Console.ReadKey();
+                            Product.DisplayAllDiscounts();
                             break;
                         case 8:
-                            Console.WriteLine("Press any key to continue.");
-                            Console.ReadKey();
                             break;
                         case 9:
                             productId = UserInputHandler.ProductIdInput();
-                            Product.RemoveProduct(products, productId);
-                            Console.WriteLine("Press any key to continue.");
-                            Console.ReadKey();
+                            //RemoveProduct();
+                            break;
+                        case 0:
+                            MainMenu();
                             break;
                     }
+                    Console.Write("Press any key to continue: ");
+                    Console.ReadKey();
                 }
                 else
-                {
                     Console.WriteLine("Incorrect input. Please enter a number 1-6.");
-                }
-            } while (userInput != 0);
-            MainMenu(products);
+            } while (true);
         }
         public static void AddProduct(List<Purchase> shoppingCart)
         {

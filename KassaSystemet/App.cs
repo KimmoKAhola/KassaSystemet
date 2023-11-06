@@ -10,8 +10,8 @@ namespace KassaSystemet
     {
         public static void Run()
         {
-            Dictionary<int, Product> products = InitializeSystem();
-            Menu.MainMenu(products);
+            //Dictionary<int, Product> products = InitializeSystem();
+            Menu.MainMenu();
         }
         private static Dictionary<int, Product> InitializeSystem()
         {
