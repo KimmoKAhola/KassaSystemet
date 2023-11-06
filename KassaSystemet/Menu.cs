@@ -45,7 +45,7 @@ namespace KassaSystemet
                 Console.WriteLine("1. Display your current cart.");
                 Console.WriteLine("2. Enter products to purchase.");
                 Console.WriteLine("3. Display available products.");
-                Console.WriteLine("0: Return to main menu.");
+                Console.WriteLine("0: Clear shoppingcart and return to main menu.");
                 Console.WriteLine("PAY: purchase wares in your cart and exit.");
                 Console.Write("Enter command: ");
                 userInput = Console.ReadLine().ToUpper();
@@ -61,7 +61,8 @@ namespace KassaSystemet
                         ProductCatalogue.Instance.DisplayProducts();
                         break;
                     case "0":
-                        MainMenu();
+                        userInput = "0";
+                        Console.WriteLine("Returning to the main menu.");
                         break;
                     case "PAY":
                         Purchase.Pay(shoppingCart, products);
@@ -69,7 +70,7 @@ namespace KassaSystemet
                 }
                 Console.Write("Press any key to continue: ");
                 Console.ReadKey();
-            } while (true);
+            } while (userInput != "0");
         }
         private static void AdminMenu(Dictionary<int, Product> products)
         {
@@ -142,7 +143,8 @@ namespace KassaSystemet
                                 Console.WriteLine($"The product id {productId} does not exist.");
                             break;
                         case 0:
-                            MainMenu();
+                            userInput = 0;
+                            Console.WriteLine("Return to the main menu.");
                             break;
                     }
                     Console.Write("Press any key to continue: ");
@@ -150,7 +152,7 @@ namespace KassaSystemet
                 }
                 else
                     Console.WriteLine("Incorrect input. Please enter a number 1-6.");
-            } while (true);
+            } while (userInput != 0);
         }
         public static void AddProduct(List<Purchase> shoppingCart)
         {
