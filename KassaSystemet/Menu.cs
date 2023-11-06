@@ -21,11 +21,9 @@ namespace KassaSystemet
                     {
                         case 1:
                             CustomerMenu(products);
-                            menuOption = 0;
                             break;
                         case 2:
                             AdminMenu(products);
-                            menuOption = 0;
                             break;
                         case 0:
                             FileManager.CreateFolders();
@@ -156,6 +154,7 @@ namespace KassaSystemet
         }
         public static void AddProduct(List<Purchase> shoppingCart)
         {
+            //TODO check if the product id exists in the product catalogue.
             (int id, decimal amount) = UserInputHandler.ProductInput();
             shoppingCart.Add(new Purchase(id, amount));
         }

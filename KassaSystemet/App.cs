@@ -10,15 +10,14 @@ namespace KassaSystemet
     {
         public static void Run()
         {
-            //Dictionary<int, Product> products = InitializeSystem();
+            InitializeSystem();
             Menu.MainMenu();
         }
-        private static Dictionary<int, Product> InitializeSystem()
+        private static void InitializeSystem()
         {
             FileManager.CreateFolders();
-            Dictionary<int, Product> products = FileManager.LoadProductList();
-            FileManager.LoadDiscountList(products);
-            return products;
+            var products = ProductCatalogue.Instance;
+            FileManager.LoadDiscountList(products.Products);
         }
         public static void CloseApp(Dictionary<int, Product> products)
         {

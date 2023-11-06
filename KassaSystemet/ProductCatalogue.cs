@@ -10,19 +10,9 @@ namespace KassaSystemet
         {
             Products = FileManager.LoadProductList();
         }
-
         private static ProductCatalogue instance;
-
         public Dictionary<int, Product> Products { get; }
-        public static ProductCatalogue Instance
-        {
-            get
-            {
-                instance ??= new ProductCatalogue();
-                return instance;
-            }
-        }
-
+        public static ProductCatalogue Instance => instance ??= new ProductCatalogue();
         public static readonly string _wares =
             "300!Bananer!15,50!per kg!" +
             "301!Äpplen!25,50!per kg!" +
