@@ -13,6 +13,7 @@ namespace KassaSystemet
         private static readonly int _receiptID = _receiptCounter++;
         public static string CreateReceipt(List<Purchase> shoppingCart, Dictionary<int, Product> products)
         {
+            decimal totalSumOfPurchase = 0;
             string formattedReceipt = "";
             formattedReceipt += ($"{"Receipt ID: ",-5} [{_receiptID}]\n");
             formattedReceipt += ($"{"Product",-45} {"Amount",-15} {"Price",-20} {"Sum",-40}\n");
@@ -34,7 +35,9 @@ namespace KassaSystemet
                     productInfo += $"{products[item.ProductID].Discounts.Max(discount => discount.DiscountPercentage) * 100m} % discount - original price: {products[item.ProductID].UnitPrice:C2}";
                 }
                 formattedReceipt += $"{productInfo,-100}\n";
+                totalSumOfPurchase += sum;
             }
+            formattedReceipt += $"\nThe total sum is: {totalSumOfPurchase:C2}\n";
             formattedReceipt += $"{numberOfDashedLines}\n";
             return formattedReceipt;
         }

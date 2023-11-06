@@ -6,7 +6,7 @@ namespace KassaSystemet
         public Purchase(int productID, decimal amount)
         {
             ProductID = productID;
-            if (ProductCatalogue.Instance.Products[productID].PriceType.ToLower() == "per unit")
+            if (ProductCatalogue.Instance.Products[productID].PriceType.ToLower() == "per unit" && amount % 1 != 0)
             {
                 amount = (int)amount;
                 Console.WriteLine($"Your product is sold per unit and the amount has been rounded down to {amount}");
@@ -22,10 +22,12 @@ namespace KassaSystemet
                 Console.WriteLine("Your shopping cart is empty. No purchase has been made");
             else
             {
+                Console.Clear();
                 string receipt = Receipt.CreateReceipt(shoppingCart, products);
                 FileManager.SaveReceipt(receipt);
                 shoppingCart.Clear();
                 Console.WriteLine("Your purchase has been made and a receipt has been created.");
+                Console.WriteLine(receipt);
             }
         }
         public static void DisplayPurchases(List<Purchase> shoppingCart, Dictionary<int, Product> products)
