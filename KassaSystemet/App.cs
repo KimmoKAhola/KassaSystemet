@@ -12,14 +12,14 @@ namespace KassaSystemet
         {
             Console.WindowWidth = 150;
             Console.WindowHeight = 50;
-            InitializeSystem();
-            Menu.MainMenu();
+            StartApp();
         }
-        private static void InitializeSystem()
+        private static void StartApp()
         {
             FileManager.CreateFolders();
             var products = ProductCatalogue.Instance;
             FileManager.LoadDiscountList();
+            Menu.MainMenu();
         }
         public static void CloseApp()
         {
