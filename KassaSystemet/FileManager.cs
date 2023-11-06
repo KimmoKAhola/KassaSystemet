@@ -9,6 +9,9 @@ namespace KassaSystemet
 {
     public static class FileManager
     {
+        private static readonly string _filesFolderPath = $"../../../Files";
+        private static readonly string _receiptsFolderPath = $"../../../Files/Receipts";
+        private static readonly string _productListFolderPath = $"../../../Files/ProductLists";
         public static void CreateFolders()
         {
             string filePath = GetDirectoryFilePath();
@@ -22,9 +25,9 @@ namespace KassaSystemet
             if (!Directory.Exists(productsPath))
                 Directory.CreateDirectory(GetDirectoryProductsFilePath());
         }
-        private static string GetDirectoryFilePath() => $"../../../Files";
-        private static string GetDirectoryReceiptsFilePath() => $"../../../Files/Receipts";
-        private static string GetDirectoryProductsFilePath() => $"../../../Files/ProductLists";
+        private static string GetDirectoryFilePath() => _filesFolderPath;
+        private static string GetDirectoryReceiptsFilePath() => _receiptsFolderPath;
+        private static string GetDirectoryProductsFilePath() => _productListFolderPath;
         private static string CreateReceiptFilePath()
         {
             string filePath = GetDirectoryReceiptsFilePath();

@@ -10,6 +10,8 @@ namespace KassaSystemet
     {
         public static void Run()
         {
+            Console.WindowWidth = 150;
+            Console.WindowHeight = 50;
             InitializeSystem();
             Menu.MainMenu();
         }

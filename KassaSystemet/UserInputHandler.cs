@@ -94,7 +94,6 @@ namespace KassaSystemet
                     Console.WriteLine("Invalid price type. Please enter 'per kg' or 'per unit'.");
                 }
             }
-
             return (productName, price, priceType);
         }
     }

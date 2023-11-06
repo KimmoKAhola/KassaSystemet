@@ -11,35 +11,44 @@ namespace KassaSystemet
     {
         private static readonly int _receiptCounter = FileManager.GetReceiptID();
         private static readonly int _receiptID = _receiptCounter++;
-        public static string CreateReceipt(List<Purchase> shoppingCart, Dictionary<int, Product> products)
+        public static string CreateReceipt(List<Purchase> shoppingCart)
         {
+            var products = ProductCatalogue.Instance.Products;
             decimal totalSumOfPurchase = 0;
-            string formattedReceipt = "";
-            formattedReceipt += ($"{"Receipt ID: ",-5} [{_receiptID}]\n");
-            formattedReceipt += ($"{"Product",-45} {"Amount",-15} {"Price",-20} {"Sum",-40}\n");
-            string numberOfDashedLines = new string('-', formattedReceipt.Length);
+            var receipt = new StringBuilder();
+
+            receipt.AppendLine($"{"Receipt ID:",-15} [{_receiptID}]");
+            receipt.AppendLine($"{"Product",-45} {"Amount",-15} {"Price",-20} {"Sum",-40}");
+
             foreach (var item in shoppingCart)
             {
-                string productName = products[item.ProductID].ProductName;
-                int productID = item.ProductID;
-                decimal price = products[item.ProductID].UnitPrice;
-                if (products[item.ProductID].Discounts.Count > 0 && products[item.ProductID].IsDiscountActive())
+                Product product = products[item.ProductID];
+                string productName = product.ProductName;
+                decimal price = product.UnitPrice;
+
+                if (product.IsDiscountActive())
                 {
-                    decimal discountPercentage = products[item.ProductID].Discounts.Max(discount => discount.DiscountPercentage);
-                    price = price * (1 - discountPercentage);
+                    decimal discountPercentage = product.Discounts.Max(discount => discount.DiscountPercentage);
+                    price *= (1 - discountPercentage);
                 }
+
                 decimal sum = Math.Round(price * item.Amount, 4);
-                string productInfo = $"{productName,-45} {item.Amount,-15}{price,-20:C3} {sum,-15:C2}";
-                if (products[item.ProductID].Discounts.Count > 0 && products[item.ProductID].IsDiscountActive())
+                receipt.AppendFormat("{0,-45} {1,-15}{2,-20:C3} {3,-15:C2}", productName, item.Amount, price, sum);
+
+                if (product.IsDiscountActive())
                 {
-                    productInfo += $"{products[item.ProductID].Discounts.Max(discount => discount.DiscountPercentage) * 100m} % discount - original price: {products[item.ProductID].UnitPrice:C2}";
+                    decimal discountPercentage = product.Discounts.Max(discount => discount.DiscountPercentage);
+                    receipt.AppendFormat("{0:P2} % discount - original price: {1:C2}", discountPercentage, product.UnitPrice);
                 }
-                formattedReceipt += $"{productInfo,-100}\n";
+
+                receipt.AppendLine();
                 totalSumOfPurchase += sum;
             }
-            formattedReceipt += $"\nThe total sum is: {totalSumOfPurchase:C2}\n";
-            formattedReceipt += $"{numberOfDashedLines}\n";
-            return formattedReceipt;
+            receipt.AppendLine();
+            receipt.AppendLine($"The total sum is: {totalSumOfPurchase:C2}");
+            receipt.AppendLine(new string('-', 144));
+
+            return receipt.ToString();
         }
         public static int GetReceiptID() => _receiptID;
     }

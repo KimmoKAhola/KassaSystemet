@@ -58,6 +58,11 @@ namespace KassaSystemet
             Products.Add(productId, p);
             Console.WriteLine($"Added the product {p.ProductName} with ID [{productId}] to the system.");
         }
+        public void AddNewDiscount()
+        {
+            (int productId, string startDate, string endDate, decimal discountPercentage) = UserInputHandler.DiscountInput();
+            Products[productId].AddDiscountToProduct(new Discount(startDate, endDate, discountPercentage));
+        }
         public bool IsProductAvailable(int productId) => Products.ContainsKey(productId);
         public bool DoesProductExist(int productId) => Products.ContainsKey(productId);
         public void RemoveProduct(int productId) => Products.Remove(productId);

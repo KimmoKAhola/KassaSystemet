@@ -16,21 +16,21 @@ namespace KassaSystemet
         }
         public int ProductID { get; }
         public decimal Amount { get; }
-        public static void Pay(List<Purchase> shoppingCart, Dictionary<int, Product> products)
+        public static void Pay(List<Purchase> shoppingCart)
         {
             if (shoppingCart.Count == 0)
                 Console.WriteLine("Your shopping cart is empty. No purchase has been made");
             else
             {
                 Console.Clear();
-                string receipt = Receipt.CreateReceipt(shoppingCart, products);
+                string receipt = Receipt.CreateReceipt(shoppingCart);
                 FileManager.SaveReceipt(receipt);
                 shoppingCart.Clear();
                 Console.WriteLine("Your purchase has been made and a receipt has been created.");
                 Console.WriteLine(receipt);
             }
         }
-        public static void DisplayPurchases(List<Purchase> shoppingCart, Dictionary<int, Product> products)
+        public static void DisplayPurchases(List<Purchase> shoppingCart)
         {
             if (shoppingCart.Count == 0)
                 Console.WriteLine("Your shopping cart is empty.");
@@ -39,7 +39,7 @@ namespace KassaSystemet
                 Console.WriteLine("Your cart contains the following items: ");
                 foreach (var item in shoppingCart)
                 {
-                    string productInfo = $"{products[item.ProductID]}, Antal: {item.Amount}";
+                    string productInfo = $"{ProductCatalogue.Instance.Products[item.ProductID]}, Antal: {item.Amount}";
                     Console.WriteLine(productInfo);
                 }
             }
