@@ -84,8 +84,9 @@ namespace KassaSystemet
                 receiptWriter.Write(paymentInfo);
             }
         }
-        public static void SaveProductList(Dictionary<int, Product> products)
+        public static void SaveProductList()
         {
+            var products = GetProductList();
             string productString = "";
             foreach (var item in products)
             {
@@ -100,8 +101,9 @@ namespace KassaSystemet
                 productListWriter.Write(productString);
             }
         }
-        public static void SaveDiscountList(Dictionary<int, Product> products)
+        public static void SaveDiscountList()
         {
+            var products = GetProductList();
             var allDiscountedProducts = Product.GetDiscountForSingleProduct(products).ToList();
             string discountInfo = "";
             foreach (var product in allDiscountedProducts)
@@ -143,8 +145,9 @@ namespace KassaSystemet
 
             return products;
         }
-        public static void LoadDiscountList(Dictionary<int, Product> products)
+        public static void LoadDiscountList()
         {
+            var products = GetProductList();
             if (File.Exists(CreateDiscountListFilePath()))
             {
                 var discountListInfo = File.ReadAllLines(CreateDiscountListFilePath());
@@ -164,5 +167,6 @@ namespace KassaSystemet
                 }
             }
         }
+        public static Dictionary<int, Product> GetProductList() => ProductCatalogue.Instance.Products;
     }
 }

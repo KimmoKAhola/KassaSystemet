@@ -19,13 +19,13 @@ namespace KassaSystemet
         {
             FileManager.CreateFolders();
             var products = ProductCatalogue.Instance;
-            FileManager.LoadDiscountList(products.Products);
+            FileManager.LoadDiscountList();
         }
-        public static void CloseApp(Dictionary<int, Product> products)
+        public static void CloseApp()
         {
             FileManager.CreateFolders();
-            FileManager.SaveProductList(products);
-            FileManager.SaveDiscountList(products);
+            FileManager.SaveProductList();
+            FileManager.SaveDiscountList();
             Environment.Exit(0);
         }
     }

@@ -5,7 +5,6 @@ namespace KassaSystemet
     {
         public static void MainMenu()
         {
-            var products = ProductCatalogue.Instance.Products;
             do
             {
                 Console.Clear();
@@ -20,21 +19,19 @@ namespace KassaSystemet
                     switch (menuOption)
                     {
                         case 1:
-                            CustomerMenu(products);
+                            CustomerMenu();
                             break;
                         case 2:
-                            AdminMenu(products);
+                            AdminMenu();
                             break;
                         case 0:
-                            FileManager.CreateFolders();
-                            FileManager.SaveProductList(products);
-                            App.CloseApp(products);
+                            App.CloseApp();
                             break;
                     }
                 }
             } while (true);
         }
-        public static void CustomerMenu(Dictionary<int, Product> products)
+        private static void CustomerMenu()
         {
             List<Purchase> shoppingCart = new();
             string userInput;
@@ -72,9 +69,11 @@ namespace KassaSystemet
                 Console.ReadKey();
             } while (userInput != "0");
         }
-        private static void AdminMenu(Dictionary<int, Product> products)
+        private static void AdminMenu()
         {
             int userInput, productId;
+            var products = ProductCatalogue.Instance.Products;
+            var productCatalogue = ProductCatalogue.Instance;
             do
             {
                 Console.Clear();
@@ -92,7 +91,6 @@ namespace KassaSystemet
                 Console.Write("Enter a command: ");
                 if (int.TryParse(Console.ReadLine(), out userInput) && (userInput >= 0 && userInput <= 9))
                 {
-                    var productCatalogue = ProductCatalogue.Instance;
                     switch (userInput)
                     {
                         case 1:
@@ -155,7 +153,7 @@ namespace KassaSystemet
                     Console.WriteLine("Incorrect input. Please enter a number 1-6.");
             } while (userInput != 0);
         }
-        public static void AddProduct(List<Purchase> shoppingCart)
+        private static void AddProduct(List<Purchase> shoppingCart)
         {
             (int id, decimal amount) = UserInputHandler.ProductInput();
             if (amount > 100)
