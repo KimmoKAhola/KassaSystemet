@@ -58,14 +58,14 @@ namespace KassaSystemet
             Products.Add(productId, p);
             Console.WriteLine("Added the product to the system.");
         }
-        public static bool IsProductAvailable(int productId) => Instance.Products.ContainsKey(productId);
-        public static bool DoesProductExist(int productId) => Instance.Products.ContainsKey(productId);
-        public static void RemoveProduct(int productId) => Instance.Products.Remove(productId);
+        public bool IsProductAvailable(int productId) => Products.ContainsKey(productId);
+        public bool DoesProductExist(int productId) => Products.ContainsKey(productId);
+        public void RemoveProduct(int productId) => Products.Remove(productId);
         public void DisplayProducts() => Products.ToList().ForEach(item => Console.WriteLine($"Product ID: {item.Key}, {item.Value}"));
-        public static IEnumerable<Product> GetAllDiscounts() => Instance.Products.Values.Where(p => p.Discounts.Count > 0);
+        public IEnumerable<Product> GetAllDiscounts() => Products.Values.Where(p => p.Discounts.Count > 0);
         public static void DisplayAllDiscounts()
         {
-            var discountedProducts = GetAllDiscounts();
+            var discountedProducts = Instance.GetAllDiscounts();
 
             discountedProducts.ToList().ForEach(product =>
             {
@@ -73,5 +73,7 @@ namespace KassaSystemet
                 product.Discounts.ForEach(discount => Console.WriteLine(discount.ToString()));
             });
         }
+
+
     }
 }

@@ -95,7 +95,7 @@ namespace KassaSystemet
                     {
                         case 1:
                             productId = UserInputHandler.ProductIdInput();
-                            if (!ProductCatalogue.DoesProductExist(productId))
+                            if (!ProductCatalogue.Instance.DoesProductExist(productId))
                                 ProductCatalogue.Instance.AddNewProduct(productId);
                             else
                                 Console.WriteLine($"The product id {productId} already exist.");
@@ -106,14 +106,14 @@ namespace KassaSystemet
                             break;
                         case 3:
                             productId = UserInputHandler.ProductIdInput();
-                            if (ProductCatalogue.IsProductAvailable(productId))
+                            if (ProductCatalogue.Instance.IsProductAvailable(productId))
                                 products[productId].ChangeProductPrice();
                             else
                                 Console.WriteLine($"The product id {productId} does not exist.");
                             break;
                         case 4:
                             productId = UserInputHandler.ProductIdInput();
-                            if (ProductCatalogue.IsProductAvailable(productId))
+                            if (ProductCatalogue.Instance.IsProductAvailable(productId))
                                 ProductCatalogue.Instance.Products[productId].ChangeProductName();
                             else
                                 Console.WriteLine($"The product id {productId} does not exist.");
@@ -136,8 +136,8 @@ namespace KassaSystemet
                             break;
                         case 9:
                             productId = UserInputHandler.ProductIdInput();
-                            if (ProductCatalogue.IsProductAvailable(productId))
-                                ProductCatalogue.RemoveProduct(productId);
+                            if (ProductCatalogue.Instance.IsProductAvailable(productId))
+                                ProductCatalogue.Instance.RemoveProduct(productId);
                             else
                                 Console.WriteLine($"The product id {productId} does not exist.");
                             break;
