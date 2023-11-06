@@ -86,7 +86,7 @@ namespace KassaSystemet
         }
         public static void SaveProductList()
         {
-            var products = GetProductList();
+            var products = GetProductList().OrderBy(x => x.Key);
             string productString = "";
             foreach (var item in products)
             {
