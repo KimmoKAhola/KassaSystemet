@@ -60,19 +60,28 @@ namespace KassaSystemet
             }
             return productDatabase;
         }
-        public void AddNewProduct()
+        public void AddNewProduct(int productId)
         {
-            string productName = Console.ReadLine();
-            decimal price = 0;
-            string[] userInput = Console.ReadLine().Split(' ');
-            int productId = 100;
-            Product p = new Product(productName, price, $"{userInput[1]} {userInput[2]}");
+            var info = UserInputHandler.NewProduct();
+
+            Product p = new Product(info.productName, info.price, $"{info.priceType[1]}");
             Products.Add(productId, p);
             Console.WriteLine("Added the product to the system.");
         }
         public static bool IsProductAvailable(int productId) => Instance.Products.ContainsKey(productId);
+        public static bool DoesProductExist(int productId) => Instance.Products.ContainsKey(productId);
         public static void RemoveProduct(int productId) => Instance.Products.Remove(productId);
         public void DisplayProducts() => Products.ToList().ForEach(item => Console.WriteLine($"Product ID: {item.Key}, {item.Value}"));
         public static IEnumerable<Product> GetAllDiscounts() => Instance.Products.Values.Where(p => p.Discounts.Count > 0);
+        public static void DisplayAllDiscounts()
+        {
+            var discountedProducts = GetAllDiscounts();
+
+            discountedProducts.ToList().ForEach(product =>
+            {
+                Console.WriteLine($"The product: {product.ProductName} has the following discounts: ");
+                product.Discounts.ForEach(discount => Console.WriteLine(discount.ToString()));
+            });
+        }
     }
 }

@@ -111,7 +111,7 @@ namespace KassaSystemet
         }
         public static void SaveDiscountList(Dictionary<int, Product> products)
         {
-            var allDiscountedProducts = Product.GetDiscountInfo(products).ToList();
+            var allDiscountedProducts = Product.GetDiscountForSingleProduct(products).ToList();
             string discountInfo = "";
             foreach (var product in allDiscountedProducts)
             {
@@ -168,7 +168,7 @@ namespace KassaSystemet
                         string endDate = columns[i + 1];
                         decimal discountPercentage = Convert.ToDecimal(columns[i + 2]) * 100m;
                         Discount d = new Discount(startDate, endDate, discountPercentage);
-                        products[key].AddDiscount(d);
+                        products[key].AddDiscountToProduct(d);
                     }
                 }
             }
