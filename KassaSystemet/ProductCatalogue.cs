@@ -1,8 +1,28 @@
 ﻿
+using System.Diagnostics;
+using System.IO;
+
 namespace KassaSystemet
 {
-    public static class ProductDataBase
+    public class ProductCatalogue
     {
+        private ProductCatalogue()
+        {
+            Products = FileManager.LoadProductList();
+        }
+
+        private static ProductCatalogue instance;
+
+        public Dictionary<int, Product> Products { get; }
+        public static ProductCatalogue Instance
+        {
+            get
+            {
+                instance ??= new ProductCatalogue();
+                return instance;
+            }
+        }
+
         public static readonly string _wares =
             "300!Bananer!15,50!per kg!" +
             "301!Äpplen!25,50!per kg!" +
@@ -40,6 +60,19 @@ namespace KassaSystemet
             }
             return productDatabase;
         }
-        public static void DisplayProducts(Dictionary<int, Product> products) => products.ToList().ForEach(item => Console.WriteLine($"Product ID: {item.Key}, {item.Value}"));
+        public void AddNewProduct()
+        {
+            string productName = Console.ReadLine();
+            decimal price = 0;
+            string[] userInput = Console.ReadLine().Split(' ');
+            int productId = 100;
+            Product p = new Product(productName, price, $"{userInput[1]} {userInput[2]}");
+            Products.Add(productId, p);
+            Console.WriteLine("Added the product to the system.");
+        }
+        public static bool IsProductAvailable(int productId) => Instance.Products.ContainsKey(productId);
+        public static void RemoveProduct(int productId) => Instance.Products.Remove(productId);
+        public void DisplayProducts() => Products.ToList().ForEach(item => Console.WriteLine($"Product ID: {item.Key}, {item.Value}"));
+        public static IEnumerable<Product> GetAllDiscounts() => Instance.Products.Values.Where(p => p.Discounts.Count > 0);
     }
 }

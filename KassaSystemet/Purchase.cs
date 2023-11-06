@@ -20,6 +20,7 @@ namespace KassaSystemet
                 string receipt = Receipt.CreateReceipt(shoppingCart, products);
                 FileManager.SaveReceipt(receipt);
                 shoppingCart.Clear();
+                Console.WriteLine("Your purchase has been made and a receipt has been created.");
             }
         }
         public static void DisplayPurchases(List<Purchase> shoppingCart, Dictionary<int, Product> products)

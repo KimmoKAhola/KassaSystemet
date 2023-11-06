@@ -148,7 +148,7 @@ namespace KassaSystemet
                 }
             }
             else
-                products = ProductDataBase.SeedProducts();
+                products = ProductCatalogue.SeedProducts();
 
             return products;
         }
