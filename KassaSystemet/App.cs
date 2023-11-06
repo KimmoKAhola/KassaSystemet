@@ -17,7 +17,6 @@ namespace KassaSystemet
         private static void StartApp()
         {
             FileManager.CreateFolders();
-            var products = ProductCatalogue.Instance;
             FileManager.LoadDiscountList();
             Menu.MainMenu();
         }
