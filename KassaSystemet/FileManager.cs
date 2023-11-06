@@ -22,18 +22,9 @@ namespace KassaSystemet
             if (!Directory.Exists(productsPath))
                 Directory.CreateDirectory(GetDirectoryProductsFilePath());
         }
-        private static string GetDirectoryFilePath()
-        {
-            return $"../../../Files";
-        }
-        private static string GetDirectoryReceiptsFilePath()
-        {
-            return $"../../../Files/Receipts";
-        }
-        private static string GetDirectoryProductsFilePath()
-        {
-            return $"../../../Files/ProductLists";
-        }
+        private static string GetDirectoryFilePath() => $"../../../Files";
+        private static string GetDirectoryReceiptsFilePath() => $"../../../Files/Receipts";
+        private static string GetDirectoryProductsFilePath() => $"../../../Files/ProductLists";
         private static string CreateReceiptFilePath()
         {
             string filePath = GetDirectoryReceiptsFilePath();
@@ -54,10 +45,7 @@ namespace KassaSystemet
             string filePath = GetDirectoryProductsFilePath();
             return $"{filePath}/PRODUCT_LIST_ADMIN.txt";
         }
-        private static string GetCurrentDate()
-        {
-            return DateTime.Now.ToString("yyyyMMdd");
-        }
+        private static string GetCurrentDate() => DateTime.Now.ToString("yyyyMMdd");
         private static void CreateReceiptIDFile(int receiptID)
         {
             using (StreamWriter idWriter = new StreamWriter($"{CreateReceiptIDFilePath()}", append: false))

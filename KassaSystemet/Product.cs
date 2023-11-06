@@ -4,24 +4,24 @@
     {
         public Product(string productName, decimal unitPrice, string priceType)
         {
-            ProductName = productName;
+            _productName = productName;
             _unitPrice = unitPrice;
             PriceType = priceType.ToLower();
             _discount = new();
         }
         private List<Discount> _discount;
         private decimal _unitPrice;
-        public string ProductName { get; set; }
+        private string _productName;
+        private int maxProductNameLength = 20;
+        public string ProductName
+        {
+            get => _productName;
+            set => _productName = (value.Length >= maxProductNameLength) ? value.Substring(0, maxProductNameLength) : value;
+        }
         public decimal UnitPrice
         {
             get => _unitPrice;
-            set
-            {
-                if (value > 0)
-                    _unitPrice = value;
-                else
-                    Console.WriteLine("The price can not be set to a negative value.");
-            }
+            set => _unitPrice = value;
         }
         public string PriceType { get; }
         public List<Discount> Discounts => _discount;
@@ -31,16 +31,30 @@
         public void ChangeProductPrice()
         {
             Console.Write("Enter a new price: ");
-            decimal price = Convert.ToDecimal(Console.ReadLine());
-            UnitPrice = price;
+            if (decimal.TryParse(Console.ReadLine(), out decimal price) && price > 0)
+            {
+                UnitPrice = price;
+                Console.WriteLine($"The price has been changed to {price:C2}.");
+            }
+            else
+                Console.WriteLine("Incorrect input. The price has not been changed.");
         }
+        public decimal GetBestDiscount() => Discounts.Max(discount => discount.DiscountPercentage);
         public void ChangeProductName()
         {
-            Console.Write("Enter a new name: ");
+            Console.Write("Enter a new product name: ");
             string name = Console.ReadLine();
             ProductName = name;
+            if (name.Length > maxProductNameLength)
+                Console.WriteLine($"Your product name was too long and has been shortened to {name.Substring(0, maxProductNameLength)}");
         }
         public void AddDiscountToProduct(Discount d) => _discount.Add(d);
+        public void Display() => Discounts.ForEach(x => Console.WriteLine(x.ToString()));
+        public bool IsDiscountActive()
+        {
+            DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+            return Discounts.Any(discount => today >= discount.StartDate && today <= discount.EndDate);
+        }
         public override string ToString() => $"Name: {ProductName}, Price: {UnitPrice:C2} {PriceType}";
     }
 }

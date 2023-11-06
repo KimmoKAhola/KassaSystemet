@@ -6,6 +6,11 @@ namespace KassaSystemet
         public Purchase(int productID, decimal amount)
         {
             ProductID = productID;
+            if (ProductCatalogue.Instance.Products[productID].PriceType.ToLower() == "per unit")
+            {
+                amount = (int)amount;
+                Console.WriteLine($"Your product is sold per unit and the amount has been rounded down to {amount}");
+            }
             Amount = amount;
             Console.WriteLine($"Added product ID [{ProductID}] and amount {Amount} to your cart.");
         }

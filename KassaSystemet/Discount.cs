@@ -25,12 +25,5 @@ namespace KassaSystemet
         public DateOnly EndDate { get; set; }
         public decimal DiscountPercentage { get; set; }
         public override string ToString() => $"Discount is valid between [{StartDate}] - [{EndDate}] with a discount of [{DiscountPercentage * 100m:F2} %]";
-        public static bool ContainsDiscount(Dictionary<int, Product> discount, int productId) => (discount.ContainsKey(productId) && discount[productId].Discounts.Count > 0);
-        public static void Display(List<Discount> discounts) => discounts.ForEach(x => Console.WriteLine(x.ToString()));
-        public static bool IsDiscountActive(Product product)
-        {
-            DateOnly today = DateOnly.FromDateTime(DateTime.Now);
-            return product.Discounts.Any(discount => today >= discount.StartDate && today <= discount.EndDate);
-        }
     }
 }

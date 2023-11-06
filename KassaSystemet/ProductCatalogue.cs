@@ -54,14 +54,27 @@ namespace KassaSystemet
         {
             var info = UserInputHandler.NewProduct();
 
-            Product p = new Product(info.productName, info.price, $"{info.priceType[1]}");
+            Product p = new Product(info.productName, info.price, $"{info.priceType}");
             Products.Add(productId, p);
-            Console.WriteLine("Added the product to the system.");
+            Console.WriteLine($"Added the product {p.ProductName} with ID [{productId}] to the system.");
         }
         public bool IsProductAvailable(int productId) => Products.ContainsKey(productId);
         public bool DoesProductExist(int productId) => Products.ContainsKey(productId);
         public void RemoveProduct(int productId) => Products.Remove(productId);
-        public void DisplayProducts() => Products.ToList().ForEach(item => Console.WriteLine($"Product ID: {item.Key}, {item.Value}"));
+        public bool ContainsDiscount(int productId) => (Products.ContainsKey(productId) && Products[productId].Discounts.Count > 0);
+        public void DisplayProducts()
+        {
+            foreach (var item in Products)
+            {
+                if (item.Value.Discounts.Count > 0 && item.Value.IsDiscountActive())
+                {
+                    decimal bestDiscount = item.Value.GetBestDiscount();
+                    Console.WriteLine($"Product ID: {item.Key}, {item.Value} - {bestDiscount * 100m} % discount!");
+                }
+                else
+                    Console.WriteLine($"Product ID: {item.Key}, {item.Value}");
+            }
+        }
         public IEnumerable<Product> GetAllDiscounts() => Products.Values.Where(p => p.Discounts.Count > 0);
         public static void DisplayAllDiscounts()
         {
@@ -73,7 +86,5 @@ namespace KassaSystemet
                 product.Discounts.ForEach(discount => Console.WriteLine(discount.ToString()));
             });
         }
-
-
     }
 }

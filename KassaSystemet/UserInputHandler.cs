@@ -31,7 +31,7 @@ namespace KassaSystemet
             while (true)
             {
                 Console.Write("Enter a product id: ");
-                if (int.TryParse(Console.ReadLine(), out int number) && number < 999 && number > 100)
+                if (int.TryParse(Console.ReadLine(), out int number) && number <= 999 && number >= 100)
                 {
                     userInput = number;
                     break;

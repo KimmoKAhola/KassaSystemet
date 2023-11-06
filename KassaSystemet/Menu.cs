@@ -124,8 +124,8 @@ namespace KassaSystemet
                             break;
                         case 6:
                             productId = UserInputHandler.ProductIdInput();
-                            if (Discount.ContainsDiscount(products, productId))
-                                Discount.Display(products[productId].Discounts);
+                            if (ProductCatalogue.Instance.ContainsDiscount(productId))
+                                products[productId].Display();
                             else
                                 Console.WriteLine($"The product id {productId} does not have a discount available.");
                             break;
@@ -154,9 +154,13 @@ namespace KassaSystemet
         }
         public static void AddProduct(List<Purchase> shoppingCart)
         {
-            //TODO check if the product id exists in the product catalogue.
             (int id, decimal amount) = UserInputHandler.ProductInput();
-            shoppingCart.Add(new Purchase(id, amount));
+            if (amount > 100)
+                Console.WriteLine($"You can not purchase more than {100} of a product!");
+            else if (ProductCatalogue.Instance.IsProductAvailable(id))
+                shoppingCart.Add(new Purchase(id, amount));
+            else
+                Console.WriteLine($"No product with id {id} exist in the system.");
         }
         public static void AddDiscount(Dictionary<int, Product> products)
         {
