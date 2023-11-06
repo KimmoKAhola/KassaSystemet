@@ -97,7 +97,10 @@ namespace KassaSystemet
                     {
                         case 1:
                             productId = UserInputHandler.ProductIdInput();
-                            ProductCatalogue.Instance.AddNewProduct();
+                            if (!ProductCatalogue.DoesProductExist(productId))
+                                ProductCatalogue.Instance.AddNewProduct(productId);
+                            else
+                                Console.WriteLine($"The product id {productId} already exist.");
                             break;
                         case 2:
                             Console.WriteLine("These are the available products in the system: ");
@@ -106,14 +109,14 @@ namespace KassaSystemet
                         case 3:
                             productId = UserInputHandler.ProductIdInput();
                             if (ProductCatalogue.IsProductAvailable(productId))
-                                products[productId].ChangePrice();
+                                products[productId].ChangeProductPrice();
                             else
                                 Console.WriteLine($"The product id {productId} does not exist.");
                             break;
                         case 4:
                             productId = UserInputHandler.ProductIdInput();
                             if (ProductCatalogue.IsProductAvailable(productId))
-                                ProductCatalogue.Instance.Products[productId].ChangeName();
+                                ProductCatalogue.Instance.Products[productId].ChangeProductName();
                             else
                                 Console.WriteLine($"The product id {productId} does not exist.");
                             break;
@@ -129,13 +132,16 @@ namespace KassaSystemet
                                 Console.WriteLine($"The product id {productId} does not have a discount available.");
                             break;
                         case 7:
-                            Product.DisplayAllDiscounts();
+                            ProductCatalogue.DisplayAllDiscounts();
                             break;
                         case 8:
                             break;
                         case 9:
                             productId = UserInputHandler.ProductIdInput();
-                            //RemoveProduct();
+                            if (ProductCatalogue.IsProductAvailable(productId))
+                                ProductCatalogue.RemoveProduct(productId);
+                            else
+                                Console.WriteLine($"The product id {productId} does not exist.");
                             break;
                         case 0:
                             MainMenu();
@@ -156,7 +162,7 @@ namespace KassaSystemet
         public static void AddDiscount(Dictionary<int, Product> products)
         {
             (int productId, string startDate, string endDate, decimal discountPercentage) = UserInputHandler.DiscountInput();
-            products[productId].AddDiscount(new Discount(startDate, endDate, discountPercentage));
+            products[productId].AddDiscountToProduct(new Discount(startDate, endDate, discountPercentage));
         }
     }
 }

@@ -25,32 +25,22 @@
         }
         public string PriceType { get; }
         public List<Discount> Discounts => _discount;
-        public static void DisplayAllDiscounts()
-        {
-            var discountedProducts = ProductCatalogue.GetAllDiscounts();
-
-            discountedProducts.ToList().ForEach(product =>
-            {
-                Console.WriteLine($"The product: {product.ProductName} has the following discounts: ");
-                product.Discounts.ForEach(discount => Console.WriteLine(discount.ToString()));
-            });
-        }
-        public static IEnumerable<(int Key, Product Value)> GetDiscountInfo(Dictionary<int, Product> products)
+        public static IEnumerable<(int Key, Product Value)> GetDiscountForSingleProduct(Dictionary<int, Product> products)
             => products.Where(p => p.Value.Discounts.Count > 0)
             .Select(pair => (pair.Key, pair.Value));
-        public void ChangePrice()
+        public void ChangeProductPrice()
         {
             Console.Write("Enter a new price: ");
             decimal price = Convert.ToDecimal(Console.ReadLine());
             UnitPrice = price;
         }
-        public void ChangeName()
+        public void ChangeProductName()
         {
             Console.Write("Enter a new name: ");
             string name = Console.ReadLine();
             ProductName = name;
         }
-        public void AddDiscount(Discount d) => _discount.Add(d);
+        public void AddDiscountToProduct(Discount d) => _discount.Add(d);
         public override string ToString() => $"Name: {ProductName}, Price: {UnitPrice:C2} {PriceType}";
     }
 }

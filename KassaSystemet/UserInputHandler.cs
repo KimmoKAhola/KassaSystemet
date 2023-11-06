@@ -63,5 +63,39 @@ namespace KassaSystemet
                 }
             }
         }
+        public static (string productName, decimal price, string priceType) NewProduct()
+        {
+            string productName;
+            decimal price;
+            string priceType;
+
+            Console.Write("Enter a product name: ");
+            productName = Console.ReadLine();
+
+            Console.Write("Enter a price: ");
+            while (!decimal.TryParse(Console.ReadLine(), out price) || price <= 0)
+            {
+                Console.WriteLine("Price must be a positive decimal value. Please try again.");
+                Console.Write("Enter a price: ");
+            }
+
+            while (true)
+            {
+                Console.Write("Enter a product price type (per kg/per unit): ");
+                string userInput = Console.ReadLine().ToLower();
+
+                if (userInput == "per kg" || userInput == "per unit")
+                {
+                    priceType = userInput;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid price type. Please enter 'per kg' or 'per unit'.");
+                }
+            }
+
+            return (productName, price, priceType);
+        }
     }
 }
