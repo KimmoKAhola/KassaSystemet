@@ -4,7 +4,9 @@
     {
         public Product(string productName, decimal unitPrice, string priceType)
         {
-            _productName = productName;
+            if (productName.Length >= 20)
+                Console.WriteLine($"Your product name was too long and has been shortened to {productName.Substring(0, maxProductNameLength)}");
+            ProductName = productName.Length >= maxProductNameLength ? productName.Substring(0, maxProductNameLength) : productName;
             _unitPrice = unitPrice;
             PriceType = priceType.ToLower();
             _discount = new();
