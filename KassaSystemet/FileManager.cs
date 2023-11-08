@@ -12,43 +12,20 @@ namespace KassaSystemet
         private static readonly string _filesFolderPath = $"../../../Files";
         private static readonly string _receiptsFolderPath = $"../../../Files/Receipts";
         private static readonly string _productListFolderPath = $"../../../Files/ProductLists";
+        private static Dictionary<int, Product> productCatalogue = ProductCatalogue.Instance.Products;
         public static void CreateFolders()
         {
-            string filePath = GetDirectoryFilePath();
-            string receiptsPath = GetDirectoryReceiptsFilePath();
-            string productsPath = GetDirectoryProductsFilePath();
-
-            if (!Directory.Exists(filePath))
-                Directory.CreateDirectory(GetDirectoryFilePath());
-            if (!Directory.Exists(receiptsPath))
-                Directory.CreateDirectory(GetDirectoryReceiptsFilePath());
-            if (!Directory.Exists(productsPath))
-                Directory.CreateDirectory(GetDirectoryProductsFilePath());
+            if (!Directory.Exists(_filesFolderPath))
+                Directory.CreateDirectory(_filesFolderPath);
+            if (!Directory.Exists(_receiptsFolderPath))
+                Directory.CreateDirectory(_receiptsFolderPath);
+            if (!Directory.Exists(_productListFolderPath))
+                Directory.CreateDirectory(_productListFolderPath);
         }
-        private static string GetDirectoryFilePath() => _filesFolderPath;
-        private static string GetDirectoryReceiptsFilePath() => _receiptsFolderPath;
-        private static string GetDirectoryProductsFilePath() => _productListFolderPath;
-        private static string CreateReceiptFilePath()
-        {
-            string filePath = GetDirectoryReceiptsFilePath();
-            return $"{filePath}/RECEIPT_{GetCurrentDate()}.txt";
-        }
-        private static string CreateReceiptIDFilePath()
-        {
-            string filePath = GetDirectoryReceiptsFilePath();
-            return $"{filePath}/RECEIPT_ID.txt";
-        }
-        private static string CreateDiscountListFilePath()
-        {
-            string filePath = GetDirectoryProductsFilePath();
-            return $"{filePath}/DISCOUNT_LIST_ADMIN.txt";
-        }
-        private static string CreateProductListFilePath()
-        {
-            string filePath = GetDirectoryProductsFilePath();
-            return $"{filePath}/PRODUCT_LIST_ADMIN.txt";
-        }
-        private static string GetCurrentDate() => DateTime.Now.ToString("yyyyMMdd");
+        private static string CreateReceiptFilePath() => $"{_receiptsFolderPath}/RECEIPT_{DateTime.Now.ToString("yyyyMMdd")}.txt";
+        private static string CreateReceiptIDFilePath() => $"{_receiptsFolderPath}/RECEIPT_ID.txt";
+        private static string CreateDiscountListFilePath() => $"{_productListFolderPath}/DISCOUNT_LIST_ADMIN.txt";
+        private static string CreateProductListFilePath() => $"{_productListFolderPath}/PRODUCT_LIST_ADMIN.txt";
         private static void CreateReceiptIDFile(int receiptID)
         {
             using (StreamWriter idWriter = new StreamWriter($"{CreateReceiptIDFilePath()}", append: false))
@@ -56,28 +33,23 @@ namespace KassaSystemet
                 idWriter.Write(receiptID);
             }
         }
-        public static int IncrementReceiptCounter()
+        private static void IncrementReceiptCounter()
         {
-            int currentReceiptID = GetReceiptID();
-            int newReceiptID = currentReceiptID + 1;
-            CreateReceiptIDFile(newReceiptID); // Update the receipt ID file
-            return newReceiptID;
+            int newReceiptID = GetReceiptID() + 1;
+            CreateReceiptIDFile(newReceiptID);
         }
         public static int GetReceiptID()
         {
             if (!File.Exists(CreateReceiptIDFilePath()))
             {
-                int id = Receipt.GetReceiptID();
+                int id = 1;
                 CreateReceiptIDFile(id);
-                return 1;
+                return id;
             }
             return Convert.ToInt32(File.ReadLines(CreateReceiptIDFilePath()).First());
         }
         public static void SaveReceipt(string paymentInfo)
         {
-            if (!Directory.Exists(GetDirectoryFilePath()))
-                CreateFolders();
-
             IncrementReceiptCounter();
             using (StreamWriter receiptWriter = new($"{CreateReceiptFilePath()}", append: true))
             {
@@ -86,9 +58,9 @@ namespace KassaSystemet
         }
         public static void SaveProductList()
         {
-            var products = GetProductList().OrderBy(x => x.Key);
+            var temp = productCatalogue.OrderBy(x => x.Key);
             string productString = "";
-            foreach (var item in products)
+            foreach (var item in temp)
             {
                 productString += item.Key;
                 productString += "!" + item.Value.ProductName;
@@ -103,8 +75,7 @@ namespace KassaSystemet
         }
         public static void SaveDiscountList()
         {
-            var products = GetProductList();
-            var allDiscountedProducts = Product.GetDiscountForSingleProduct(products).ToList();
+            var allDiscountedProducts = Product.GetDiscountForSingleProduct(productCatalogue).ToList();
             string discountInfo = "";
             foreach (var product in allDiscountedProducts)
             {
@@ -147,7 +118,7 @@ namespace KassaSystemet
         }
         public static void LoadDiscountList()
         {
-            var products = GetProductList();
+            var temp = productCatalogue;
             if (File.Exists(CreateDiscountListFilePath()))
             {
                 var discountListInfo = File.ReadAllLines(CreateDiscountListFilePath());
@@ -162,11 +133,10 @@ namespace KassaSystemet
                         string endDate = columns[i + 1];
                         decimal discountPercentage = Convert.ToDecimal(columns[i + 2]) * 100m;
                         Discount d = new Discount(startDate, endDate, discountPercentage);
-                        products[key].AddDiscountToProduct(d);
+                        temp[key].AddDiscountToProduct(d);
                     }
                 }
             }
         }
-        public static Dictionary<int, Product> GetProductList() => ProductCatalogue.Instance.Products;
     }
 }

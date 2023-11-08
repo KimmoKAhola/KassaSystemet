@@ -9,14 +9,12 @@ namespace KassaSystemet
 {
     public static class Receipt
     {
-        private static readonly int _receiptCounter = FileManager.GetReceiptID();
-        private static readonly int _receiptID = _receiptCounter++;
         public static string CreateReceipt(List<Purchase> shoppingCart)
         {
             var products = ProductCatalogue.Instance.Products;
             decimal totalSumOfPurchase = 0;
             var receipt = new StringBuilder();
-
+            int _receiptID = FileManager.GetReceiptID();
             receipt.AppendLine($"{"Receipt ID:",-15} [{_receiptID}]");
             receipt.AppendLine($"{"Product",-45} {"Amount",-15} {"Price",-20} {"Sum",-40}");
 
@@ -50,6 +48,5 @@ namespace KassaSystemet
 
             return receipt.ToString();
         }
-        public static int GetReceiptID() => _receiptID;
     }
 }
