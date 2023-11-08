@@ -146,6 +146,11 @@ namespace KassaSystemet
                             productId = UserInputHandler.ProductIdInput();
                             if (productCatalogue.IsProductAvailable(productId))
                                 productCatalogue.AddNewDiscount(productId);
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine($"The product id {productId} does not exist.");
+                            }
                             break;
                         case "6":
                             productId = UserInputHandler.ProductIdInput();
@@ -161,6 +166,14 @@ namespace KassaSystemet
                             ProductCatalogue.DisplayAllDiscounts();
                             break;
                         case "8":
+                            productId = UserInputHandler.ProductIdInput();
+                            if (productCatalogue.ContainsDiscount(productId))
+                                productCatalogue.Products[productId].RemoveDiscount();
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine($"The product id {productId} does not have a discount available.");
+                            }
                             break;
                         case "9":
                             productId = UserInputHandler.ProductIdInput();
@@ -202,8 +215,6 @@ namespace KassaSystemet
             else if (ProductCatalogue.Instance.IsProductAvailable(id))
             {
                 shoppingCart.Add(new Purchase(id, amount));
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Added the product with id {id} to the shopping cart.");
             }
             else
             {

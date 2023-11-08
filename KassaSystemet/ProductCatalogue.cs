@@ -66,6 +66,8 @@ namespace KassaSystemet
             if (info.startDate.CompareTo(info.endDate) < 0)
             {
                 Products[productId].AddDiscountToProduct(new Discount(info.startDate, info.endDate, info.discountPercentage));
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Your discount {info.startDate}-{info.endDate} {info.discountPercentage} % has been added.");
                 FileManager.SaveDiscountList();
             }
             else

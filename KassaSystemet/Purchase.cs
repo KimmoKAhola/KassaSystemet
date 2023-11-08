@@ -12,7 +12,8 @@ namespace KassaSystemet
                 Console.WriteLine($"Your product is sold per unit and the amount has been rounded down to {amount}");
             }
             Amount = amount;
-            Console.WriteLine($"Added product ID [{ProductID}] and amount {Amount} to your cart.");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Added the product {ProductCatalogue.Instance.Products[productID].ProductName} with ID [{ProductID}] and amount {Amount} to your cart.");
         }
         public int ProductID { get; }
         public decimal Amount { get; }

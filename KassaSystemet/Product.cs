@@ -1,4 +1,6 @@
-﻿namespace KassaSystemet
+﻿using System.Runtime.CompilerServices;
+
+namespace KassaSystemet
 {
     public class Product
     {
@@ -15,7 +17,6 @@
             _discount = new();
         }
         private List<Discount> _discount;
-        //private decimal _unitPrice;
         private string _productName;
         private int maxProductNameLength = 20;
         public string ProductName
@@ -35,19 +36,36 @@
             if (decimal.TryParse(Console.ReadLine(), out decimal price) && price > 0)
             {
                 UnitPrice = price;
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"The price has been changed to {price:C2}.");
             }
             else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Incorrect input. The price has not been changed.");
+            }
         }
         public decimal GetBestDiscount() => Discounts.Max(discount => discount.DiscountPercentage);
         public void ChangeProductName()
         {
             Console.Write("Enter a new product name: ");
-            string name = Console.ReadLine();
-            ProductName = name;
-            if (name.Length > maxProductNameLength)
-                Console.WriteLine($"Your product name was too long and has been shortened to {name.Substring(0, maxProductNameLength)}");
+            string productName = "";
+            while (productName.Length <= 1)
+            {
+                Console.Write("Enter a product name, at least 2 character long: ");
+                productName = Console.ReadLine();
+            }
+            ProductName = productName;
+            if (productName.Length > maxProductNameLength)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine($"Your product name was too long and has been shortened to {productName.Substring(0, maxProductNameLength)}");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Your product name has been set to {ProductName}");
+            }
         }
         public void AddDiscountToProduct(Discount d) => _discount.Add(d);
         public void Display() => Discounts.ForEach(x => Console.WriteLine(x.ToString()));
@@ -57,5 +75,26 @@
             return Discounts.Any(discount => today >= discount.StartDate && today <= discount.EndDate);
         }
         public override string ToString() => $"Name: {ProductName}, Price: {UnitPrice:C2} {PriceType}";
+        public void RemoveDiscount()
+        {
+            int numberOfDiscounts = Discounts.Count;
+            Console.WriteLine("You have the following discounts: ");
+            Display();
+            Console.Write($"Pick a discount to remove 1-{numberOfDiscounts}: ");
+            if (int.TryParse(Console.ReadLine(), out int choice) && choice >= 1 && choice < numberOfDiscounts)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"You removed the discount at {Discounts[choice - 1].StartDate} - {Discounts[choice - 1].EndDate}");
+                Discounts.RemoveAt(choice - 1);
+                FileManager.SaveDiscountList();
+                Console.ResetColor();
+                Display();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Incorrect input.");
+            }
+        }
     }
 }
