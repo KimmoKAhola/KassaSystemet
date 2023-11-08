@@ -32,7 +32,7 @@ namespace KassaSystemet
         private static void LoadApp()
         {
             Console.WriteLine();
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
             Console.CursorVisible = false;
             Random random = new Random();
             string blockSize = new string(' ', (150 / 25));

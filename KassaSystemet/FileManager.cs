@@ -15,12 +15,16 @@ namespace KassaSystemet
         private static Dictionary<int, Product> productCatalogue = ProductCatalogue.Instance.Products;
         public static void CreateFolders()
         {
-            if (!Directory.Exists(_filesFolderPath))
-                Directory.CreateDirectory(_filesFolderPath);
-            if (!Directory.Exists(_receiptsFolderPath))
-                Directory.CreateDirectory(_receiptsFolderPath);
-            if (!Directory.Exists(_productListFolderPath))
-                Directory.CreateDirectory(_productListFolderPath);
+            CreateDirectoryIfNotExists(_filesFolderPath);
+            CreateDirectoryIfNotExists(_receiptsFolderPath);
+            CreateDirectoryIfNotExists(_productListFolderPath);
+        }
+        private static void CreateDirectoryIfNotExists(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
         }
         private static string CreateReceiptFilePath() => $"{_receiptsFolderPath}/RECEIPT_{DateTime.Now.ToString("yyyyMMdd")}.txt";
         private static string CreateReceiptIDFilePath() => $"{_receiptsFolderPath}/RECEIPT_ID.txt";
