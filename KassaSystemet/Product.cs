@@ -4,9 +4,12 @@
     {
         public Product(string productName, decimal unitPrice, string priceType)
         {
-            if (productName.Length >= 20)
-                Console.WriteLine($"Your product name was too long and has been shortened to {productName.Substring(0, maxProductNameLength)}");
             ProductName = productName.Length >= maxProductNameLength ? productName.Substring(0, maxProductNameLength) : productName;
+            if (productName.Length >= 20)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine($"Your product name was too long and has been shortened to {ProductName}");
+            }
             _unitPrice = unitPrice;
             PriceType = priceType.ToLower();
             _discount = new();
