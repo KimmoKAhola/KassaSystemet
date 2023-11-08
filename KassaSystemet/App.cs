@@ -10,9 +10,9 @@ namespace KassaSystemet
     {
         public static void Run()
         {
-            Console.WindowWidth = 150; // Kraschar om man kör skalning på skalning
+            Console.WindowWidth = 150;
             Console.WindowHeight = 50;
-            //LoadApp();
+            LoadApp();
             Console.CursorVisible = true;
             StartApp();
         }
@@ -52,7 +52,7 @@ namespace KassaSystemet
                 Console.SetCursorPosition(0, 25);
                 Thread.Sleep(sleep);
                 if (i == 18)
-                    Thread.Sleep(10000);
+                    Thread.Sleep(5000);
             }
             Thread.Sleep(500);
             Console.Clear();
