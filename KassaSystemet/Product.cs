@@ -88,6 +88,7 @@ namespace KassaSystemet
                 Discounts.RemoveAt(choice - 1);
                 FileManager.SaveDiscountList();
                 Console.ResetColor();
+                Console.WriteLine("The remaining discounts are:");
                 Display();
             }
             else
