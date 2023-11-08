@@ -16,13 +16,17 @@ namespace KassaSystemet
             decimal amount;
             while (true)
             {
-                Console.Write("Enter id and amount: ");
+                Console.ResetColor();
+                Console.Write("Enter product id and an amount larger than 0: ");
                 string[] userInput = Console.ReadLine().Split(' ');
 
-                if (userInput.Length == 2 && int.TryParse(userInput[0], out id) && decimal.TryParse(userInput[1], out amount))
+                if (userInput.Length == 2 && int.TryParse(userInput[0], out id) && decimal.TryParse(userInput[1], out amount) && amount > 0)
                     return (id, amount);
                 else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid input. Please enter an integer and a decimal separated by a space.");
+                }
             }
         }
         public static int ProductIdInput()

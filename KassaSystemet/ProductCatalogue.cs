@@ -69,7 +69,10 @@ namespace KassaSystemet
                 FileManager.SaveDiscountList();
             }
             else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("The discount's start date can not be after later than the end date. Your discount has not been added.");
+            }
         }
         public bool IsProductAvailable(int productId) => Products.ContainsKey(productId);
         public bool DoesProductExist(int productId) => Products.ContainsKey(productId);

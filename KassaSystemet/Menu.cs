@@ -14,18 +14,24 @@ namespace KassaSystemet
                 Console.WriteLine("2. Admin tools");
                 Console.WriteLine("0. Save & Exit.");
                 Console.Write("Enter your command: ");
-                if (int.TryParse(Console.ReadLine(), out int menuOption))
+                string menuOption = Console.ReadLine();
                 {
                     switch (menuOption)
                     {
-                        case 1:
+                        case "1":
                             CustomerMenu();
                             break;
-                        case 2:
+                        case "2":
                             AdminMenu();
                             break;
-                        case 0:
+                        case "0":
                             App.CloseApp();
+                            break;
+                        default:
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Invalid input.");
+                            Thread.Sleep(1000);
+                            Console.ResetColor();
                             break;
                     }
                 }
@@ -64,7 +70,14 @@ namespace KassaSystemet
                     case "PAY":
                         Purchase.Pay(shoppingCart);
                         break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Invalid input.");
+                        Thread.Sleep(1000);
+                        Console.ResetColor();
+                        break;
                 }
+                Console.ResetColor();
                 Console.Write("Press any key to continue: ");
                 Console.ReadKey();
             } while (userInput != "0");
@@ -72,8 +85,8 @@ namespace KassaSystemet
         }
         private static void AdminMenu()
         {
-            int userInput, productId;
-            var products = ProductCatalogue.Instance.Products;
+            string userInput;
+            int productId;
             var productCatalogue = ProductCatalogue.Instance;
             do
             {
@@ -90,11 +103,11 @@ namespace KassaSystemet
                     "9. Remove a product from the product list\n" +
                     "0. Exit admin menu");
                 Console.Write("Enter a command: ");
-                if (int.TryParse(Console.ReadLine(), out userInput) && (userInput >= 0 && userInput <= 9))
+                userInput = Console.ReadLine();
                 {
                     switch (userInput)
                     {
-                        case 1:
+                        case "1":
                             productId = UserInputHandler.ProductIdInput();
                             if (!productCatalogue.DoesProductExist(productId))
                                 productCatalogue.AddNewProduct(productId);
@@ -104,21 +117,21 @@ namespace KassaSystemet
                                 Console.WriteLine($"The product id {productId} already exist.");
                             }
                             break;
-                        case 2:
+                        case "2":
                             Console.WriteLine("These are the available products in the system: ");
                             productCatalogue.DisplayProducts();
                             break;
-                        case 3:
+                        case "3":
                             productId = UserInputHandler.ProductIdInput();
                             if (productCatalogue.IsProductAvailable(productId))
-                                products[productId].ChangeProductPrice();
+                                productCatalogue.Products[productId].ChangeProductPrice();
                             else
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine($"The product id {productId} does not exist.");
                             }
                             break;
-                        case 4:
+                        case "4":
                             productId = UserInputHandler.ProductIdInput();
                             if (productCatalogue.IsProductAvailable(productId))
                                 productCatalogue.Products[productId].ChangeProductName();
@@ -128,49 +141,57 @@ namespace KassaSystemet
                                 Console.WriteLine($"The product id {productId} does not exist.");
                             }
                             break;
-                        case 5:
+                        case "5":
                             Console.WriteLine("5. Add a discount for a product");
                             productId = UserInputHandler.ProductIdInput();
                             if (productCatalogue.IsProductAvailable(productId))
                                 productCatalogue.AddNewDiscount(productId);
                             break;
-                        case 6:
+                        case "6":
                             productId = UserInputHandler.ProductIdInput();
                             if (productCatalogue.ContainsDiscount(productId))
-                                products[productId].Display();
+                                productCatalogue.Products[productId].Display();
                             else
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine($"The product id {productId} does not have a discount available.");
                             }
                             break;
-                        case 7:
+                        case "7":
                             ProductCatalogue.DisplayAllDiscounts();
                             break;
-                        case 8:
+                        case "8":
                             break;
-                        case 9:
+                        case "9":
                             productId = UserInputHandler.ProductIdInput();
                             if (productCatalogue.IsProductAvailable(productId))
+                            {
                                 productCatalogue.RemoveProduct(productId);
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine($"Removed the product with id {productId} from the system.");
+                            }
                             else
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine($"The product id {productId} does not exist.");
                             }
                             break;
-                        case 0:
-                            userInput = 0;
+                        case "0":
+                            userInput = "0";
                             Console.WriteLine("Return to the main menu.");
+                            break;
+                        default:
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Invalid input.");
+                            Thread.Sleep(1000);
+                            Console.ResetColor();
                             break;
                     }
                     Console.ResetColor();
                     Console.Write("Press any key to continue: ");
                     Console.ReadKey();
                 }
-                else
-                    Console.WriteLine("Incorrect input. Please enter a number 1-6.");
-            } while (userInput != 0);
+            } while (userInput != "0");
             MainMenu();
         }
         private static void AddProduct(List<Purchase> shoppingCart)
@@ -179,7 +200,11 @@ namespace KassaSystemet
             if (amount > 100)
                 Console.WriteLine($"You can not purchase more than {100} of a product!");
             else if (ProductCatalogue.Instance.IsProductAvailable(id))
+            {
                 shoppingCart.Add(new Purchase(id, amount));
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Added the product with id {id} to the shopping cart.");
+            }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
