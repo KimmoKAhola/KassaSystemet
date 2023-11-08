@@ -29,11 +29,9 @@ namespace KassaSystemet
             FileManager.SaveDiscountList();
             Environment.Exit(0);
         }
-
         private static void LoadApp()
         {
             Console.WriteLine();
-
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
             Random random = new Random();
