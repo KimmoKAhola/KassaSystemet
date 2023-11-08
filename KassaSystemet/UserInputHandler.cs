@@ -25,7 +25,7 @@ namespace KassaSystemet
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid input. Please enter an integer and a decimal separated by a space.");
+                    Console.WriteLine("Invalid input. Please enter an integer and a decimal value separated by a space.");
                 }
             }
         }
