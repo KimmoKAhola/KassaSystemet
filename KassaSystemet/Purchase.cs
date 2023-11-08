@@ -8,7 +8,7 @@ namespace KassaSystemet
             ProductID = productID;
             if (ProductCatalogue.Instance.Products[productID].PriceType.ToLower() == "per unit" && amount % 1 != 0)
             {
-                amount = (int)amount;
+                amount = (amount < 1) ? 1 : (int)amount;
                 Console.WriteLine($"Your product is sold per unit and the amount has been rounded down to {amount}");
             }
             Amount = amount;

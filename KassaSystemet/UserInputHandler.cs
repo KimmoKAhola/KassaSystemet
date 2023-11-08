@@ -41,7 +41,7 @@ namespace KassaSystemet
             }
             return userInput;
         }
-        public static (int productId, string startDate, string endDate, decimal discountPercentage) DiscountInput()
+        public static (string startDate, string endDate, decimal discountPercentage) DiscountInput()
         {
             while (true)
             {
@@ -49,13 +49,12 @@ namespace KassaSystemet
                     "\nExample: 300 2023-09-10 2023-09-15 75: ");
                 string[] userInput = Console.ReadLine().Split(' ');
 
-                if (userInput.Length == 4 &&
-                    int.TryParse(userInput[0], out int productId) && (productId >= 100 && productId <= 999) &&
+                if (userInput.Length == 3 &&
                     DateOnly.TryParseExact(userInput[1], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateOnly startDate) &&
                     DateOnly.TryParseExact(userInput[2], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateOnly endDate) &&
                     decimal.TryParse(userInput[3], out decimal discountPercentage))
                 {
-                    return (productId, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), discountPercentage);
+                    return (startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), discountPercentage);
                 }
                 else
                 {

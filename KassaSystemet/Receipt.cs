@@ -36,7 +36,7 @@ namespace KassaSystemet
                 if (product.HasActiveDiscount())
                 {
                     decimal discountPercentage = product.Discounts.Max(discount => discount.DiscountPercentage);
-                    receipt.AppendFormat("{0:P2} % discount - original price: {1:C2}", discountPercentage, product.UnitPrice);
+                    receipt.AppendFormat("{0:P2} discount - original price: {1:C2}", discountPercentage, product.UnitPrice);
                 }
 
                 receipt.AppendLine();

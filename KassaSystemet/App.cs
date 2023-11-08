@@ -10,7 +10,7 @@ namespace KassaSystemet
     {
         public static void Run()
         {
-            Console.WindowWidth = 150;
+            Console.WindowWidth = 150; // Kraschar om man kör skalning på skalning
             Console.WindowHeight = 50;
             StartApp();
         }

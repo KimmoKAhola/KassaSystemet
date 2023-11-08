@@ -4,30 +4,26 @@
     {
         public Product(string productName, decimal unitPrice, string priceType)
         {
-            ProductName = productName.Length >= maxProductNameLength ? productName.Substring(0, maxProductNameLength) : productName;
-            if (productName.Length >= 20)
+            ProductName = productName;
+            if (productName.Length > 20)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine($"Your product name was too long and has been shortened to {ProductName}");
             }
-            _unitPrice = unitPrice;
+            UnitPrice = unitPrice;
             PriceType = priceType.ToLower();
             _discount = new();
         }
         private List<Discount> _discount;
-        private decimal _unitPrice;
+        //private decimal _unitPrice;
         private string _productName;
         private int maxProductNameLength = 20;
         public string ProductName
         {
             get => _productName;
-            set => _productName = (value.Length >= maxProductNameLength) ? value.Substring(0, maxProductNameLength) : value;
+            set => _productName = (value.Length > maxProductNameLength) ? value.Substring(0, maxProductNameLength) : value;
         }
-        public decimal UnitPrice
-        {
-            get => _unitPrice;
-            set => _unitPrice = value;
-        }
+        public decimal UnitPrice { get; set; }
         public string PriceType { get; }
         public List<Discount> Discounts => _discount;
         public static IEnumerable<(int Key, Product Value)> GetDiscountForSingleProduct(Dictionary<int, Product> products)

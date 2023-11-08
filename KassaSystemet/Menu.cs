@@ -3,30 +3,33 @@ namespace KassaSystemet
 {
     public class Menu
     {
-        public static void MainMenu()
+        public static void MainMenu() // Lägg till en loop så att den inte stänger ner
         {
-            Console.Clear();
-            Console.WriteLine("***Menu for the cash register***");
-            Console.WriteLine("Choose an option below.");
-            Console.WriteLine("1. New customer");
-            Console.WriteLine("2. Admin tools");
-            Console.WriteLine("0. Save & Exit.");
-            Console.Write("Enter your command: ");
-            if (int.TryParse(Console.ReadLine(), out int menuOption))
+            do
             {
-                switch (menuOption)
+                Console.Clear();
+                Console.WriteLine("***Menu for the cash register***");
+                Console.WriteLine("Choose an option below.");
+                Console.WriteLine("1. New customer");
+                Console.WriteLine("2. Admin tools");
+                Console.WriteLine("0. Save & Exit.");
+                Console.Write("Enter your command: ");
+                if (int.TryParse(Console.ReadLine(), out int menuOption))
                 {
-                    case 1:
-                        CustomerMenu();
-                        break;
-                    case 2:
-                        AdminMenu();
-                        break;
-                    case 0:
-                        App.CloseApp();
-                        break;
+                    switch (menuOption)
+                    {
+                        case 1:
+                            CustomerMenu();
+                            break;
+                        case 2:
+                            AdminMenu();
+                            break;
+                        case 0:
+                            App.CloseApp();
+                            break;
+                    }
                 }
-            }
+            } while (true);
         }
         private static void CustomerMenu()
         {
@@ -127,7 +130,9 @@ namespace KassaSystemet
                             break;
                         case 5:
                             Console.WriteLine("5. Add a discount for a product");
-                            productCatalogue.AddNewDiscount();
+                            productId = UserInputHandler.ProductIdInput();
+                            if (productCatalogue.IsProductAvailable(productId))
+                                productCatalogue.AddNewDiscount(productId);
                             break;
                         case 6:
                             productId = UserInputHandler.ProductIdInput();

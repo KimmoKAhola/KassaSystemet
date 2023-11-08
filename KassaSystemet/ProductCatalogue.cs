@@ -56,15 +56,16 @@ namespace KassaSystemet
 
             var product = new Product(info.productName, info.price, $"{info.priceType}");
             Products.Add(productId, product);
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Added the product {product.ProductName} with ID [{productId}] to the system.");
             FileManager.SaveProductList();
         }
-        public void AddNewDiscount()
+        public void AddNewDiscount(int productId)
         {
             var info = UserInputHandler.DiscountInput();
             if (info.startDate.CompareTo(info.endDate) < 0)
             {
-                Products[info.productId].AddDiscountToProduct(new Discount(info.startDate, info.endDate, info.discountPercentage));
+                Products[productId].AddDiscountToProduct(new Discount(info.startDate, info.endDate, info.discountPercentage));
                 FileManager.SaveDiscountList();
             }
             else
