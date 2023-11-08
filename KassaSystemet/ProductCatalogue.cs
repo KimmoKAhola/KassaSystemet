@@ -79,7 +79,7 @@ namespace KassaSystemet
         public bool ContainsDiscount(int productId) => (Products.ContainsKey(productId) && Products[productId].Discounts.Count > 0);
         public void DisplayProducts()
         {
-            foreach (var item in Products)
+            foreach (var item in Products.OrderBy(x => x.Key))
             {
                 if (item.Value.Discounts.Count > 0 && item.Value.HasActiveDiscount())
                 {

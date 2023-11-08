@@ -12,7 +12,7 @@ namespace KassaSystemet
         {
             Console.WindowWidth = 150;
             Console.WindowHeight = 50;
-            LoadApp();
+            //LoadApp();
             Console.CursorVisible = true;
             StartApp();
         }
