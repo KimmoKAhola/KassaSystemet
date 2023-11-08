@@ -56,8 +56,7 @@ namespace KassaSystemet
 
             var product = new Product(info.productName, info.price, $"{info.priceType}");
             Products.Add(productId, product);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Added the product {product.ProductName} with ID [{productId}] to the system.");
+            Console.WriteLine($"Added the product {product.ProductName} with ID [{productId}] to the system.", Console.ForegroundColor = ConsoleColor.Green);
             FileManager.SaveProductList();
         }
         public void AddNewDiscount(int productId)
@@ -66,14 +65,12 @@ namespace KassaSystemet
             if (info.startDate.CompareTo(info.endDate) < 0)
             {
                 Products[productId].AddDiscountToProduct(new Discount(info.startDate, info.endDate, info.discountPercentage));
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Your discount {info.startDate}-{info.endDate} {info.discountPercentage} % has been added.");
+                Console.WriteLine($"Your discount {info.startDate}-{info.endDate} {info.discountPercentage} % has been added.", Console.ForegroundColor = ConsoleColor.Green);
                 FileManager.SaveDiscountList();
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("The discount's start date can not be after later than the end date. Your discount has not been added.");
+                Console.WriteLine("The discount's start date can not be after later than the end date. Your discount has not been added.", Console.ForegroundColor = ConsoleColor.Red);
             }
         }
         public bool IsProductAvailable(int productId) => Products.ContainsKey(productId);

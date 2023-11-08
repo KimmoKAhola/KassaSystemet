@@ -83,8 +83,7 @@ namespace KassaSystemet
             Console.Write($"Pick a discount to remove 1-{numberOfDiscounts}: ");
             if (int.TryParse(Console.ReadLine(), out int choice) && choice >= 1 && choice < numberOfDiscounts)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"You removed the discount at {Discounts[choice - 1].StartDate} - {Discounts[choice - 1].EndDate}");
+                Console.WriteLine($"You removed the discount at {Discounts[choice - 1].StartDate} - {Discounts[choice - 1].EndDate}", Console.ForegroundColor = ConsoleColor.Green);
                 Discounts.RemoveAt(choice - 1);
                 FileManager.SaveDiscountList();
                 Console.ResetColor();
@@ -93,8 +92,7 @@ namespace KassaSystemet
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Incorrect input.");
+                Console.WriteLine("Incorrect input.", Console.ForegroundColor = ConsoleColor.Red);
             }
         }
     }
