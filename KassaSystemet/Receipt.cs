@@ -24,7 +24,7 @@ namespace KassaSystemet
                 string productName = product.ProductName;
                 decimal price = product.UnitPrice;
 
-                if (product.IsDiscountActive())
+                if (product.HasActiveDiscount())
                 {
                     decimal discountPercentage = product.Discounts.Max(discount => discount.DiscountPercentage);
                     price *= (1 - discountPercentage);
@@ -33,7 +33,7 @@ namespace KassaSystemet
                 decimal sum = Math.Round(price * item.Amount, 4);
                 receipt.AppendFormat("{0,-45} {1,-15}{2,-20:C3} {3,-15:C2}", productName, item.Amount, price, sum);
 
-                if (product.IsDiscountActive())
+                if (product.HasActiveDiscount())
                 {
                     decimal discountPercentage = product.Discounts.Max(discount => discount.DiscountPercentage);
                     receipt.AppendFormat("{0:P2} % discount - original price: {1:C2}", discountPercentage, product.UnitPrice);

@@ -54,16 +54,21 @@ namespace KassaSystemet
         {
             var info = UserInputHandler.NewProduct();
 
-            Product p = new Product(info.productName, info.price, $"{info.priceType}");
-            Products.Add(productId, p);
-            Console.WriteLine($"Added the product {p.ProductName} with ID [{productId}] to the system.");
+            var product = new Product(info.productName, info.price, $"{info.priceType}");
+            Products.Add(productId, product);
+            Console.WriteLine($"Added the product {product.ProductName} with ID [{productId}] to the system.");
             FileManager.SaveProductList();
         }
         public void AddNewDiscount()
         {
-            (int productId, string startDate, string endDate, decimal discountPercentage) = UserInputHandler.DiscountInput();
-            Products[productId].AddDiscountToProduct(new Discount(startDate, endDate, discountPercentage));
-            FileManager.SaveDiscountList();
+            var info = UserInputHandler.DiscountInput();
+            if (info.startDate.CompareTo(info.endDate) < 0)
+            {
+                Products[info.productId].AddDiscountToProduct(new Discount(info.startDate, info.endDate, info.discountPercentage));
+                FileManager.SaveDiscountList();
+            }
+            else
+                Console.WriteLine("The discount's start date can not be after later than the end date. Your discount has not been added.");
         }
         public bool IsProductAvailable(int productId) => Products.ContainsKey(productId);
         public bool DoesProductExist(int productId) => Products.ContainsKey(productId);
@@ -73,7 +78,7 @@ namespace KassaSystemet
         {
             foreach (var item in Products)
             {
-                if (item.Value.Discounts.Count > 0 && item.Value.IsDiscountActive())
+                if (item.Value.Discounts.Count > 0 && item.Value.HasActiveDiscount())
                 {
                     decimal bestDiscount = item.Value.GetBestDiscount();
                     Console.WriteLine($"Product ID: {item.Key}, {item.Value} - {bestDiscount * 100m} % discount!");

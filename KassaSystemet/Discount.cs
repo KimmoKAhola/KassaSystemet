@@ -18,8 +18,6 @@ namespace KassaSystemet
                 EndDate = DateOnly.Parse(endDate);
                 DiscountPercentage = discountPercentage / 100m;
             }
-            else
-                Console.WriteLine("Incorrect input! The discount has not been added to the product.");
         }
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }

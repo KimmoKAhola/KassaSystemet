@@ -52,9 +52,9 @@
         }
         public void AddDiscountToProduct(Discount d) => _discount.Add(d);
         public void Display() => Discounts.ForEach(x => Console.WriteLine(x.ToString()));
-        public bool IsDiscountActive()
+        public bool HasActiveDiscount()
         {
-            DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+            var today = DateOnly.FromDateTime(DateTime.Now);
             return Discounts.Any(discount => today >= discount.StartDate && today <= discount.EndDate);
         }
         public override string ToString() => $"Name: {ProductName}, Price: {UnitPrice:C2} {PriceType}";
