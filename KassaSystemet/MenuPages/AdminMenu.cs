@@ -41,7 +41,8 @@ namespace KassaSystemet.MenuPages
                 bool isChanged = adminMenuHandler.HandleAdminMenuOption(userInput);
                 if (isChanged)
                 {
-                    _fileManagerStrategy.SaveProductCatalogue(ProductCatalogue.Instance.Products);
+                    GetSaveFormat(_fileManagerStrategy);
+                    _fileManagerStrategy.SaveProductCatalogueTextFile(ProductCatalogue.Instance.Products);
                     _fileManagerStrategy.SaveDiscountList(ProductCatalogue.Instance.Products);
                 }
                 Console.ResetColor();
@@ -49,6 +50,24 @@ namespace KassaSystemet.MenuPages
                 Console.ReadKey();
 
             } while (userInput != "0");
+        }
+
+        private static void GetSaveFormat(IFileManager _fileManagerStrategy)
+        {
+            Console.WriteLine("Choose save format:");
+            Console.WriteLine("1. TXT");
+            Console.WriteLine("2. CSV");
+
+            string userInput = Console.ReadLine();
+
+            if (userInput == "1")
+            {
+                _fileManagerStrategy.SaveProductCatalogueTextFile(ProductCatalogue.Instance.Products);
+            }
+            else
+            {
+                _fileManagerStrategy.SaveProductCatalogueCsvFile(ProductCatalogue.Instance.Products); ;
+            }
         }
     }
 }

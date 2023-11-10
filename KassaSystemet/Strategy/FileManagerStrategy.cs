@@ -10,7 +10,7 @@ namespace KassaSystemet.Strategy
 {
     public class FileManagerStrategy : IFileManager
     {
-        public void SaveProductCatalogue(Dictionary<int, Product> productCatalogue)
+        public void SaveProductCatalogueTextFile(Dictionary<int, Product> productCatalogue)
         {
             var temp = productCatalogue.OrderBy(x => x.Key);
             string productString = "";
@@ -22,10 +22,21 @@ namespace KassaSystemet.Strategy
                 productString += "!" + item.Value.PriceType + "!";
             }
             productString = productString.Substring(0, productString.Length - 1);
-            using (StreamWriter productListWriter = new($"{FileManagerOperations.CreateProductListFilePath()}", append: false))
+            using (StreamWriter productListWriter = new($"{FileManagerOperations.CreateProductListFilePathCsv()}", append: false))
             {
                 productListWriter.Write(productString);
             }
+        }
+        public void SaveProductCatalogueCsvFile(Dictionary<int, Product> productCatalogue)
+        {
+            var csvLines = ProductCatalogue.Instance.Products
+        .OrderBy(x => x.Key)
+        .Select(item =>
+            $"{item.Key},{item.Value.ProductName},{item.Value.UnitPrice},{item.Value.PriceType}");
+
+            string csvContent = string.Join("\n", csvLines);
+
+            File.WriteAllText(FileManagerOperations.CreateProductListFilePathCsv(), csvContent);
         }
         public void SaveDiscountList(Dictionary<int, Product> productCatalogue)
         {
@@ -50,9 +61,9 @@ namespace KassaSystemet.Strategy
         public Dictionary<int, Product> LoadProductList()
         {
             Dictionary<int, Product> products = new Dictionary<int, Product>();
-            if (File.Exists(FileManagerOperations.CreateProductListFilePath()))
+            if (File.Exists(FileManagerOperations.CreateProductListFilePathCsv()))
             {
-                var productListInfo = File.ReadAllLines(FileManagerOperations.CreateProductListFilePath());
+                var productListInfo = File.ReadAllLines(FileManagerOperations.CreateProductListFilePathCsv());
 
                 foreach (var item in productListInfo)
                 {

@@ -25,7 +25,8 @@ namespace KassaSystemet
         public static string CreateReceiptFilePath() => $"{_receiptsFolderPath}/RECEIPT_{DateTime.Now.ToString("yyyyMMdd")}.txt";
         public static string CreateReceiptIDFilePath() => $"{_receiptsFolderPath}/RECEIPT_ID.txt";
         public static string CreateDiscountListFilePath() => $"{_productListFolderPath}/DISCOUNT_LIST_ADMIN.txt";
-        public static string CreateProductListFilePath() => $"{_productListFolderPath}/PRODUCT_LIST_ADMIN.txt";
+        public static string CreateProductListFilePathText() => $"{_productListFolderPath}/PRODUCT_LIST_ADMIN.txt";
+        public static string CreateProductListFilePathCsv() => $"{_productListFolderPath}/PRODUCT_LIST_ADMIN.csv";
         private static void CreateReceiptIDFile(int receiptID)
         {
             using (StreamWriter idWriter = new StreamWriter($"{CreateReceiptIDFilePath()}", append: false))
