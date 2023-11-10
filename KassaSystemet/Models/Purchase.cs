@@ -1,5 +1,4 @@
-﻿
-namespace KassaSystemet
+﻿namespace KassaSystemet.Models
 {
     public class Purchase
     {
@@ -8,7 +7,7 @@ namespace KassaSystemet
             ProductID = productID;
             if (ProductCatalogue.Instance.Products[productID].PriceType.ToLower() == "per unit" && amount % 1 != 0)
             {
-                amount = (amount < 1) ? 1 : (int)amount;
+                amount = amount < 1 ? 1 : (int)amount;
                 Console.WriteLine($"Your product is sold per unit and the amount has been rounded down to {amount}", Console.ForegroundColor = ConsoleColor.DarkYellow);
             }
             Amount = amount;

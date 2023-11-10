@@ -1,4 +1,5 @@
 ﻿using KassaSystemet.Interfaces;
+using KassaSystemet.Models;
 using KassaSystemet.Strategy;
 using System;
 using System.Collections.Generic;

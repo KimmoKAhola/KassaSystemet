@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace KassaSystemet
+namespace KassaSystemet.Models
 {
     public class Product
     {
@@ -23,7 +23,7 @@ namespace KassaSystemet
         public string ProductName
         {
             get => _productName;
-            set => _productName = (value.Length > maxProductNameLength) ? value.Substring(0, maxProductNameLength) : value;
+            set => _productName = value.Length > maxProductNameLength ? value.Substring(0, maxProductNameLength) : value;
         }
         public decimal UnitPrice { get; set; }
         public string PriceType { get; }

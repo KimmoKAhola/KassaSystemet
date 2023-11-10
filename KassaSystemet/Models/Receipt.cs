@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace KassaSystemet
+namespace KassaSystemet.Models
 {
     public static class Receipt
     {
@@ -27,7 +27,7 @@ namespace KassaSystemet
                 if (product.HasActiveDiscount())
                 {
                     decimal discountPercentage = product.Discounts.Max(discount => discount.DiscountPercentage);
-                    price *= (1 - discountPercentage);
+                    price *= 1 - discountPercentage;
                 }
 
                 decimal sum = Math.Round(price * item.Amount, 4);

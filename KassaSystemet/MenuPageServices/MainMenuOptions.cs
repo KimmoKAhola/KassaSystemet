@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KassaSystemet
+namespace KassaSystemet.MenuPageServices
 {
-    public static class DisplayMenuOptions : IMenuDisplay
+    public class MainMenuOptions : IMenuDisplay
     {
-        public static void Display()
+        public void DisplayMenu()
         {
             Console.Clear();
             Console.WriteLine("***Menu for the cash register***");

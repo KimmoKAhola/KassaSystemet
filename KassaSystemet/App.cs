@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KassaSystemet.Strategy;
+using KassaSystemet.MenuPages;
 
 namespace KassaSystemet
 {
@@ -26,7 +27,7 @@ namespace KassaSystemet
         {
             FileManagerOperations.CreateFolders();
             _fileManager.LoadDiscountList();
-            Menu.MainMenu(_fileManager);
+            StartMenu.MainMenu(_fileManager);
         }
         public static void CloseApp()
         {

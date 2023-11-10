@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using KassaSystemet.Strategy;
 
-namespace KassaSystemet
+namespace KassaSystemet.Models
 {
     public class ProductCatalogue
     {
@@ -73,7 +73,7 @@ namespace KassaSystemet
                 Console.WriteLine("The discount's start date can not be after later than the end date. Your discount has not been added.", Console.ForegroundColor = ConsoleColor.Red);
         }
         public void RemoveProduct(int productId) => Products.Remove(productId);
-        public bool ContainsDiscount(int productId) => (Products.ContainsKey(productId) && Products[productId].Discounts.Count > 0);
+        public bool ContainsDiscount(int productId) => Products.ContainsKey(productId) && Products[productId].Discounts.Count > 0;
         public void DisplayProducts()
         {
             foreach (var item in Products.OrderBy(x => x.Key))

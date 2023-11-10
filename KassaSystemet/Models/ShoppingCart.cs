@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KassaSystemet
+namespace KassaSystemet.Models
 {
     public class ShoppingCart
     {
