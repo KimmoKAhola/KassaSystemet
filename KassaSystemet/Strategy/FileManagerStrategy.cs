@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.Strategy
 {
-    public class FileManagerStrategy : IFileManagerStrategy
+    public class FileManagerStrategy : IFileManager
     {
-        public void SaveProductList(Dictionary<int, Product> productCatalogue)
+        public void SaveProductCatalogue(Dictionary<int, Product> productCatalogue)
         {
             var temp = productCatalogue.OrderBy(x => x.Key);
             string productString = "";

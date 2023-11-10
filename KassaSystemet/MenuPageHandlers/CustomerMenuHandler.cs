@@ -18,7 +18,7 @@ namespace KassaSystemet.MenuPageServices
 
         }
 
-        public void HandleCustomerMenuOption(string userInput, IFileManagerStrategy fileManagerStrategy)
+        public void HandleCustomerMenuOption(string userInput, IFileManager fileManagerStrategy)
         {
             switch (userInput.ToUpper())
             {

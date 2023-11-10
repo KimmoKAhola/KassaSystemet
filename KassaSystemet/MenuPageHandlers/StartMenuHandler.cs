@@ -11,13 +11,15 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.MenuPageServices
 {
-    public class StartMenuOptions : IMenu
+    public class StartMenuHandler : IMenu
     {
         private readonly MenuFactory _menuFactory;
         private IMenu _menu;
-        private IFileManagerStrategy _fileManagerStrategy;
+        private IFileManager _fileManagerStrategy;
 
-        public StartMenuOptions(MenuFactory menuFactory, IFileManagerStrategy fileManagerStrategy)
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public StartMenuHandler(MenuFactory menuFactory, IFileManager fileManagerStrategy)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             _menuFactory = menuFactory;
             _fileManagerStrategy = fileManagerStrategy;
@@ -34,11 +36,15 @@ namespace KassaSystemet.MenuPageServices
                 Console.WriteLine("2. Admin tools");
                 Console.WriteLine("0. Save & Exit.");
                 Console.Write("Enter your command: ");
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 userInput = Console.ReadLine();
-                StartMenuHandler(userInput, _fileManagerStrategy);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8604 // Possible null reference argument.
+                MenuHandler(userInput, _fileManagerStrategy);
+#pragma warning restore CS8604 // Possible null reference argument.
             } while (userInput != "0");
         }
-        public void StartMenuHandler(string userInput, IFileManagerStrategy fileManagerStrategy)
+        public void MenuHandler(string userInput, IFileManager fileManagerStrategy)
         {
             switch (userInput)
             {

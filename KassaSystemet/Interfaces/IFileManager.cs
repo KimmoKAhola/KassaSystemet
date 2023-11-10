@@ -7,7 +7,7 @@ using KassaSystemet.Models;
 
 namespace KassaSystemet.Interfaces
 {
-    public interface IFileManagerStrategy : ISave, ILoad
+    public interface IFileManager : ISave, ILoad
     {
     }
 }

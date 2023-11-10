@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet
 {
-    public class FileManager
+    public class FileManager : IFileManager
     {
-        private readonly IFileManagerStrategy _fileManagerStrategy;
-        public FileManager(IFileManagerStrategy fileManagerStrategy)
+        private readonly IFileManager _fileManagerStrategy;
+        public FileManager(IFileManager fileManagerStrategy)
         {
             _fileManagerStrategy = fileManagerStrategy;
         }
         public void SaveReceipt(string paymentInfo) => _fileManagerStrategy.SaveReceipt(paymentInfo);
-        public void SaveProductList() => _fileManagerStrategy.SaveProductList(ProductCatalogue.Instance.Products);
-        public void SaveDiscountList() => _fileManagerStrategy.SaveDiscountList(ProductCatalogue.Instance.Products);
+        public void SaveProductCatalogue(Dictionary<int, Product> productCatalogue) => _fileManagerStrategy.SaveProductCatalogue(productCatalogue);
+        public void SaveDiscountList(Dictionary<int, Product> productCatalogue) => _fileManagerStrategy.SaveDiscountList(productCatalogue);
         public Dictionary<int, Product> LoadProductList() => _fileManagerStrategy.LoadProductList();
         public void LoadDiscountList() => _fileManagerStrategy.LoadDiscountList();
     }

@@ -5,7 +5,9 @@ namespace KassaSystemet.Models
     public class Product
     {
         private DateOnly _currentDate = DateOnly.FromDateTime(DateTime.Now);
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public Product(string productName, decimal unitPrice, string priceType)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             ProductName = productName;
             if (productName.Length > 20)
@@ -51,11 +53,15 @@ namespace KassaSystemet.Models
         {
             Console.Write("Enter a new product name: ");
             string productName = "";
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             while (productName.Length <= 1)
             {
                 Console.Write("Enter a product name, at least 2 character long: ");
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 productName = Console.ReadLine();
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             ProductName = productName;
             if (productName.Length > maxProductNameLength)
             {

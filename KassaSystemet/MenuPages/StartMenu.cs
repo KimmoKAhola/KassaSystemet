@@ -8,17 +8,17 @@ namespace KassaSystemet.MenuPages
 {
     public class StartMenu
     {
-        private readonly IFileManagerStrategy _fileManagerStrategy;
+        private readonly IFileManager _fileManagerStrategy;
         private readonly MenuFactory _menuFactory;
-        public StartMenu(MenuFactory menuFactory, IFileManagerStrategy fileManagerStrategy)
+        public StartMenu(MenuFactory menuFactory)
         {
             _menuFactory = menuFactory;
-            _fileManagerStrategy = fileManagerStrategy;
+            //_fileManagerStrategy = fileManagerStrategy;
         }
 
         public void Start()
         {
-            StartMenuOptions startMenuOptions = new StartMenuOptions(_menuFactory, _fileManagerStrategy);
+            StartMenuHandler startMenuOptions = new StartMenuHandler(_menuFactory, _fileManagerStrategy);
             startMenuOptions.InitializeMenu();
         }
     }

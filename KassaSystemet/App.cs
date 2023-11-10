@@ -12,14 +12,10 @@ namespace KassaSystemet
 {
     public class App
     {
-        private readonly FileManager _fileManager;
         private readonly MenuFactory _menuFactory;
-        private readonly IFileManagerStrategy _strategy;
-        public App()
+        public App(MenuFactory menuFactory)
         {
-            IFileManagerStrategy strategy = new FileManagerStrategy();
-            _fileManager = new FileManager(strategy);
-            _menuFactory = new MenuFactory(strategy);
+            _menuFactory = menuFactory;
         }
         public void Run()
         {
@@ -30,8 +26,7 @@ namespace KassaSystemet
         private void StartApp()
         {
             FileManagerOperations.CreateFolders();
-            _fileManager.LoadDiscountList();
-            StartMenu _startMenu = new StartMenu(_menuFactory, _strategy);
+            StartMenu _startMenu = new StartMenu(_menuFactory);
             _startMenu.Start();
         }
     }

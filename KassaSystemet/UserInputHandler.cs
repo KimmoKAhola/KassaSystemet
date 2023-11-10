@@ -18,7 +18,9 @@ namespace KassaSystemet
             {
                 Console.ResetColor();
                 Console.Write("Enter product id and an amount larger than 0: ");
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 string[] userInput = Console.ReadLine().Split(' ');
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                 if (userInput.Length == 2 && int.TryParse(userInput[0], out id) && decimal.TryParse(userInput[1], out amount) && amount > 0)
                     return (id, amount);
@@ -52,7 +54,9 @@ namespace KassaSystemet
                 Console.ResetColor();
                 Console.Write("Enter a start date, end date and percentage (yyyy-MM-dd) (yyyy-MM-dd) (percentage) separated by a space: " +
                     "\nExample: 2023-09-10 2023-09-15 75: ");
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 string[] userInput = Console.ReadLine().Split(' ');
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                 if (userInput.Length == 3 &&
                     DateOnly.TryParseExact(userInput[0], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateOnly startDate) &&
@@ -74,11 +78,15 @@ namespace KassaSystemet
             decimal price;
             string priceType;
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             while (productName.Length <= 1)
             {
                 Console.Write("Enter a product name, at least 2 character long: ");
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 productName = Console.ReadLine();
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             Console.Write("Enter a price: ");
             while (!decimal.TryParse(Console.ReadLine(), out price) || price <= 0)
             {
@@ -89,7 +97,9 @@ namespace KassaSystemet
             while (true)
             {
                 Console.Write("Enter a product price type (per kg/per unit): ");
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 string userInput = Console.ReadLine().ToLower();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                 if (userInput == "per kg" || userInput == "per unit")
                 {
