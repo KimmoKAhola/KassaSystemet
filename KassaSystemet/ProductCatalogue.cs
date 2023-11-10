@@ -73,8 +73,6 @@ namespace KassaSystemet
                 Console.WriteLine("The discount's start date can not be after later than the end date. Your discount has not been added.", Console.ForegroundColor = ConsoleColor.Red);
             }
         }
-        public bool IsProductAvailable(int productId) => Products.ContainsKey(productId);
-        public bool DoesProductExist(int productId) => Products.ContainsKey(productId);
         public void RemoveProduct(int productId) => Products.Remove(productId);
         public bool ContainsDiscount(int productId) => (Products.ContainsKey(productId) && Products[productId].Discounts.Count > 0);
         public void DisplayProducts()

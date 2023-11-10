@@ -108,7 +108,7 @@ namespace KassaSystemet
                     {
                         case "1":
                             productId = UserInputHandler.ProductIdInput();
-                            if (!productCatalogue.DoesProductExist(productId))
+                            if (!productCatalogue.Products.ContainsKey(productId))
                                 productCatalogue.AddNewProduct(productId);
                             else
                             {
@@ -121,7 +121,7 @@ namespace KassaSystemet
                             break;
                         case "3":
                             productId = UserInputHandler.ProductIdInput();
-                            if (productCatalogue.IsProductAvailable(productId))
+                            if (productCatalogue.Products.ContainsKey(productId))
                                 productCatalogue.Products[productId].ChangeProductPrice();
                             else
                             {
@@ -130,7 +130,7 @@ namespace KassaSystemet
                             break;
                         case "4":
                             productId = UserInputHandler.ProductIdInput();
-                            if (productCatalogue.IsProductAvailable(productId))
+                            if (productCatalogue.Products.ContainsKey(productId))
                                 productCatalogue.Products[productId].ChangeProductName();
                             else
                             {
@@ -140,7 +140,7 @@ namespace KassaSystemet
                         case "5":
                             Console.WriteLine("5. Add a discount for a product");
                             productId = UserInputHandler.ProductIdInput();
-                            if (productCatalogue.IsProductAvailable(productId))
+                            if (productCatalogue.Products.ContainsKey(productId))
                                 productCatalogue.AddNewDiscount(productId);
                             else
                             {
@@ -170,7 +170,7 @@ namespace KassaSystemet
                             break;
                         case "9":
                             productId = UserInputHandler.ProductIdInput();
-                            if (productCatalogue.IsProductAvailable(productId))
+                            if (productCatalogue.Products.ContainsKey(productId))
                             {
                                 productCatalogue.RemoveProduct(productId);
                                 Console.WriteLine($"Removed the product with id {productId} from the system.", Console.ForegroundColor = ConsoleColor.Green);
@@ -201,14 +201,14 @@ namespace KassaSystemet
         {
             (int id, decimal amount) = UserInputHandler.ProductInput();
             if (amount > 100)
-                Console.WriteLine($"You can not purchase more than {100} of a product!", Console.ForegroundColor = ConsoleColor.Red);
-            else if (ProductCatalogue.Instance.IsProductAvailable(id))
+                Console.WriteLine($"You can not purchase more than {100} of a product!", ConsoleColor.Red);
+            else if (ProductCatalogue.Instance.Products.ContainsKey(id))
             {
                 shoppingCart.Add(new Purchase(id, amount));
             }
             else
             {
-                Console.WriteLine($"No product with id {id} exist in the system.", Console.ForegroundColor = ConsoleColor.Red);
+                Console.WriteLine($"No product with id {id} exist in the system.", ConsoleColor.Red);
             }
         }
     }
