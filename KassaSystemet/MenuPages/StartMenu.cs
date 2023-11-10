@@ -2,6 +2,7 @@
 using KassaSystemet.Interfaces;
 using KassaSystemet.MenuPageServices;
 using KassaSystemet.Models;
+using KassaSystemet.Strategy;
 
 namespace KassaSystemet.MenuPages
 {
@@ -25,28 +26,28 @@ namespace KassaSystemet.MenuPages
 
         }
 
-        public void StartMenuHandler(string userInput)
-        {
-            switch (userInput)
-            {
-                case "1":
-                    _menu = _menuFactory.CreateMenu("Customer Menu");
-                    _menu.DisplayMenu();
-                    break;
-                case "2":
-                    _menu = _menuFactory.CreateMenu("Admin Menu");
-                    _menu.DisplayMenu();
-                    break;
-                case "0":
-                    App.CloseApp();
-                    break;
-                default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid input.");
-                    Thread.Sleep(1000);
-                    Console.ResetColor();
-                    break;
-            }
-        }
+        //public void StartMenuHandler(string userInput)
+        //{
+        //    switch (userInput)
+        //    {
+        //        case "1":
+        //            _menu = _menuFactory.CreateMenu("Customer Menu");
+        //            _menu.DisplayMenu();
+        //            break;
+        //        case "2":
+        //            _menu = _menuFactory.CreateMenu("Admin Menu");
+        //            _menu.DisplayMenu();
+        //            break;
+        //        case "0":
+        //            App.CloseApp();
+        //            break;
+        //        default:
+        //            Console.ForegroundColor = ConsoleColor.Red;
+        //            Console.WriteLine("Invalid input.");
+        //            Thread.Sleep(1000);
+        //            Console.ResetColor();
+        //            break;
+        //    }
+        //}
     }
 }

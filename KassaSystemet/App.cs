@@ -10,39 +10,28 @@ using KassaSystemet.Factories.MenuFactory;
 
 namespace KassaSystemet
 {
-    public static class App
+    public class App
     {
-        private static readonly FileManager _fileManager;
-        private static readonly MenuFactory _menuFactory;
-
-        static App()
+        private readonly FileManager _fileManager;
+        private readonly MenuFactory _menuFactory;
+        public App()
         {
             IFileManagerStrategy strategy = new FileManagerStrategy();
             _fileManager = new FileManager(strategy);
             _menuFactory = new MenuFactory();
         }
-        public static void Run()
+        public void Run()
         {
             Console.WindowWidth = 150;
             Console.WindowHeight = 50;
             StartApp();
         }
-        private static void StartApp()
+        private void StartApp()
         {
             FileManagerOperations.CreateFolders();
             _fileManager.LoadDiscountList();
-            MenuFactory factory = new MenuFactory();
-            StartMenu startMenu = new StartMenu(factory);
-            startMenu.Start(_fileManager);
-            //StartMenu.MainMenu(_fileManager);
-            //StartMenu.Instance.Start();
-            //_menuFactory.CreateMenu();
-        }
-        public static void CloseApp()
-        {
-            _fileManager.SaveProductList();
-            _fileManager.SaveDiscountList();
-            Environment.Exit(0);
+            StartMenu _startMenu = new StartMenu(_menuFactory);
+            _startMenu.Start(_fileManager);
         }
     }
 }
