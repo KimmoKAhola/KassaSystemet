@@ -1,8 +1,11 @@
 ﻿
+using System.Runtime.CompilerServices;
+
 namespace KassaSystemet
 {
     public class Menu
     {
+        private static AdminMenuHandler adminMenuHandler;
         public static void MainMenu(FileManager fileManager)
         {
             do
@@ -85,6 +88,8 @@ namespace KassaSystemet
         }
         private static void AdminMenu(FileManager fileManager)
         {
+            adminMenuHandler ??= new AdminMenuHandler();
+
             string userInput;
             do
             {
@@ -102,50 +107,13 @@ namespace KassaSystemet
                     "0. Exit admin menu");
                 Console.Write("Enter a command: ");
                 userInput = Console.ReadLine();
+                bool isChanged = adminMenuHandler.HandleAdminMenuOption(userInput);
+                if (isChanged)
                 {
-                    switch (userInput)
-                    {
-                        case "1":
-                            AdminMenuHandler.HandleAdminMenuOption("1", fileManager);
-                            break;
-                        case "2":
-                            AdminMenuHandler.HandleAdminMenuOption("2", fileManager);
-                            break;
-                        case "3":
-                            AdminMenuHandler.HandleAdminMenuOption("3", fileManager);
-                            break;
-                        case "4":
-                            AdminMenuHandler.HandleAdminMenuOption("4", fileManager);
-                            break;
-                        case "5":
-                            AdminMenuHandler.HandleAdminMenuOption("5", fileManager);
-                            break;
-                        case "6":
-                            AdminMenuHandler.HandleAdminMenuOption("6", fileManager);
-                            break;
-                        case "7":
-                            AdminMenuHandler.HandleAdminMenuOption("7", fileManager);
-                            break;
-                        case "8":
-                            AdminMenuHandler.HandleAdminMenuOption("8", fileManager);
-                            break;
-                        case "9":
-                            AdminMenuHandler.HandleAdminMenuOption("9", fileManager);
-                            break;
-                        case "0":
-                            userInput = "0";
-                            Console.WriteLine("Return to the main menu.");
-                            break;
-                            //default:
-                            //    Console.WriteLine("Invalid input.", Console.ForegroundColor = ConsoleColor.Red);
-                            //    Thread.Sleep(1000);
-                            //    Console.ResetColor();
-                            //    break;
-                    }
-                    Console.ResetColor();
-                    Console.Write("Press any key to continue: ");
-                    Console.ReadKey();
+                    fileManager.SaveProductList();
+                    fileManager.SaveDiscountList();
                 }
+                Console.ResetColor();
             } while (userInput != "0");
             MainMenu(fileManager);
         }
