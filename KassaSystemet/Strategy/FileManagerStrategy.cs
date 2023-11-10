@@ -12,20 +12,17 @@ namespace KassaSystemet.Strategy
     {
         public void SaveProductCatalogueTextFile(Dictionary<int, Product> productCatalogue)
         {
-            var temp = productCatalogue.OrderBy(x => x.Key);
-            string productString = "";
-            foreach (var item in temp)
-            {
-                productString += item.Key;
-                productString += "!" + item.Value.ProductName;
-                productString += "!" + item.Value.UnitPrice;
-                productString += "!" + item.Value.PriceType + "!";
-            }
+            string productString = FormatProductCatalogueToTextFile(productCatalogue);
             productString = productString.Substring(0, productString.Length - 1);
             using (StreamWriter productListWriter = new($"{FileManagerOperations.CreateProductListFilePathCsv()}", append: false))
             {
                 productListWriter.Write(productString);
             }
+        }
+        private static string FormatProductCatalogueToTextFile(Dictionary<int, Product> productCatalogue)
+        {
+            var formattedProductCatalogue = productCatalogue.OrderBy(x => x.Key).Select(item => $"{item.Key}!{item.Value.ProductName}!{item.Value.UnitPrice}!{item.Value.PriceType}");
+            return string.Join("", formattedProductCatalogue);
         }
         public void SaveProductCatalogueCsvFile(Dictionary<int, Product> productCatalogue)
         {
