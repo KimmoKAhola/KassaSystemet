@@ -1,5 +1,6 @@
 ﻿
 using KassaSystemet.Factories.MenuFactory;
+using KassaSystemet.Factories.ModelFactory;
 using KassaSystemet.Interfaces;
 using KassaSystemet.MenuPages;
 using KassaSystemet.Strategy;
@@ -10,9 +11,10 @@ namespace KassaSystemet
     {
         static void Main(string[] args)
         {
-            IFileManager manager = new FileManager(new FileManagerStrategy());
-            MenuFactory factory = new MenuFactory(manager);
-            var myApp = new App(factory);
+            IFileManager fileManager = new FileManager(new FileManagerStrategy());
+            MenuFactory menuFactory = new MenuFactory(fileManager);
+            ModelFactory modelFactory = new ModelFactory();
+            var myApp = new App(menuFactory);
             myApp.Run();
         }
     }

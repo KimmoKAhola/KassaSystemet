@@ -77,7 +77,7 @@ namespace KassaSystemet.Strategy
                 }
             }
             else
-                products = ProductCatalogue.SeedProducts();
+                products = ProductCatalogue.Instance.SeedProducts();
 
             return products;
         }

@@ -15,7 +15,7 @@ namespace KassaSystemet.Factories.MenuFactory
         {
             _fileManagerStrategy = fileManagerStrategy;
         }
-        public IMenu CreateMenu(string menuType)
+        public IMenuHandler CreateMenu(string menuType)
         {
             switch (menuType)
             {

@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.MenuPageServices
 {
-    public class StartMenuHandler : IMenu
+    public class StartMenuHandler : IMenuHandler
     {
         private readonly MenuFactory _menuFactory;
-        private IMenu _menu;
+        private IMenuHandler _menu;
         public StartMenuHandler(MenuFactory menuFactory)
         {
             _menuFactory = menuFactory;

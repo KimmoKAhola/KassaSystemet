@@ -8,5 +8,9 @@ namespace KassaSystemet.Interfaces
 {
     public interface IDiscount
     {
+        public DateOnly StartDate { get; set; }
+        public DateOnly EndDate { get; set; }
+        public decimal DiscountPercentage { get; set; }
+        string ToString();
     }
 }

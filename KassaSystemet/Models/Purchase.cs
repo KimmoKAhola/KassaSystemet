@@ -1,6 +1,8 @@
-﻿namespace KassaSystemet.Models
+﻿using KassaSystemet.Interfaces;
+
+namespace KassaSystemet.Models
 {
-    public class Purchase
+    public class Purchase : IPurchase
     {
         public Purchase(int productID, decimal amount)
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.MenuPages
 {
-    public class CustomerMenu : IMenu
+    public class CustomerMenu : IMenuHandler
     {
         private static CustomerMenuHandler _customerMenuHandler;
         private IFileManager _fileManagerStrategy;

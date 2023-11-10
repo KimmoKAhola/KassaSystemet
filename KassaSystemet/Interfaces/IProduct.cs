@@ -8,5 +8,9 @@ namespace KassaSystemet.Interfaces
 {
     public interface IProduct
     {
+        public decimal UnitPrice { get; set; }
+        public string PriceType { get; }
+        void ChangeProductName();
+        void ChangeProductPrice();
     }
 }

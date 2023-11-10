@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KassaSystemet.Interfaces;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.Models
 {
-    public class Discount
+    public class Discount : IDiscount
     {
         public Discount(string startDate, string endDate, decimal discountPercentage)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KassaSystemet.Factories.ModelFactory;
 using KassaSystemet.Models;
 
 namespace KassaSystemet.MenuPageServices
@@ -10,6 +11,7 @@ namespace KassaSystemet.MenuPageServices
     public class AdminMenuHandler
     {
         private ProductCatalogue productCatalogue = ProductCatalogue.Instance;
+        private ModelFactory _modelFactory;
         public AdminMenuHandler()
         {
         }

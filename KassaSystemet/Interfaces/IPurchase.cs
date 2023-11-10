@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.Interfaces
 {
-    public interface IMenu
+    public interface IPurchase
     {
-        void InitializeMenu();
+        public int ProductID { get; }
+        public decimal Amount { get; }
     }
 }

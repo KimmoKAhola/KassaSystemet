@@ -3,15 +3,18 @@ using KassaSystemet.Interfaces;
 using System.Diagnostics;
 using System.IO;
 using KassaSystemet.Strategy;
+using KassaSystemet.Factories.ModelFactory;
 
 namespace KassaSystemet.Models
 {
     public class ProductCatalogue
     {
-        FileManager fileManager = new FileManager(new FileManagerStrategy());
+        FileManager _fileManager = new FileManager(new FileManagerStrategy());
+        ModelFactory _modelFactory;
         private ProductCatalogue()
         {
-            Products = fileManager.LoadProductList();
+            _modelFactory = new ModelFactory();
+            Products = _fileManager.LoadProductList();
         }
         private static ProductCatalogue instance;
         public Dictionary<int, Product> Products { get; }
@@ -38,7 +41,7 @@ namespace KassaSystemet.Models
             "318!Oxfilé!399,99!per kg!" +
             "319!Päron!35,99!per kg!" +
             "320!Pasta!19,99!per unit!";
-        public static Dictionary<int, Product> SeedProducts()
+        public Dictionary<int, Product> SeedProducts()
         {
             Dictionary<int, Product> productDatabase = new();
             string[] products = _wares.Split('!');
@@ -49,15 +52,15 @@ namespace KassaSystemet.Models
                 string name = products[i + 1].Trim();
                 decimal price = Convert.ToDecimal(products[i + 2]);
                 string type = products[i + 3];
-                productDatabase.Add(id, new Product(name, price, type));
+                var product = _modelFactory.CreateProduct(name, price, type);
+                productDatabase.Add(id, product);
             }
             return productDatabase;
         }
         public void AddNewProduct(int productId)
         {
             var info = UserInputHandler.NewProduct();
-
-            var product = new Product(info.productName, info.price, $"{info.priceType}");
+            var product = _modelFactory.CreateProduct(info.productName, info.price, $"{info.priceType}");
             Products.Add(productId, product);
             Console.WriteLine($"Added the product {product.ProductName} with ID [{productId}] to the system.", Console.ForegroundColor = ConsoleColor.Green);
         }
@@ -66,7 +69,8 @@ namespace KassaSystemet.Models
             var info = UserInputHandler.DiscountInput();
             if (info.startDate.CompareTo(info.endDate) < 0)
             {
-                Products[productId].AddDiscountToProduct(new Discount(info.startDate, info.endDate, info.discountPercentage));
+                var discount = _modelFactory.CreateDiscount(info.startDate, info.endDate, info.discountPercentage);
+                Products[productId].AddDiscountToProduct(discount);
                 Console.WriteLine($"Your discount {info.startDate}-{info.endDate} {info.discountPercentage} % has been added.", Console.ForegroundColor = ConsoleColor.Green);
             }
             else

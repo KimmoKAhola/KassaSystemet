@@ -1,4 +1,5 @@
-﻿using KassaSystemet.Interfaces;
+﻿using KassaSystemet.Factories.ModelFactory;
+using KassaSystemet.Interfaces;
 using KassaSystemet.MenuPageServices;
 using KassaSystemet.Models;
 using KassaSystemet.Strategy;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.MenuPages
 {
-    public class AdminMenu : IMenu
+    public class AdminMenu : IMenuHandler
     {
         private static AdminMenuHandler adminMenuHandler;
         private IFileManager _fileManagerStrategy;

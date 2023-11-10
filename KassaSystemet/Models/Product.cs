@@ -1,8 +1,9 @@
-﻿using System.Runtime.CompilerServices;
+﻿using KassaSystemet.Interfaces;
+using System.Runtime.CompilerServices;
 
 namespace KassaSystemet.Models
 {
-    public class Product
+    public class Product : IProduct
     {
         private DateOnly _currentDate = DateOnly.FromDateTime(DateTime.Now);
         public Product(string productName, decimal unitPrice, string priceType)
