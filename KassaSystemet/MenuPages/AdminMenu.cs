@@ -59,7 +59,6 @@ namespace KassaSystemet.MenuPages
             Console.WriteLine("2. CSV");
 
             string userInput = Console.ReadLine();
-
             if (userInput == "1")
             {
                 _fileManagerStrategy.SaveProductCatalogueTextFile(ProductCatalogue.Instance.Products);

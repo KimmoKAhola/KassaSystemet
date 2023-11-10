@@ -17,17 +17,15 @@
         public decimal Amount { get; }
         public static string Pay(List<Purchase> shoppingCart)
         {
-            //if (shoppingCart.Count == 0)
-            //    Console.WriteLine("Your shopping cart is empty. No purchase has been made", Console.ForegroundColor = ConsoleColor.Red);
-            //else
-            //{
+            if (shoppingCart.Count == 0)
+                Console.WriteLine("Your shopping cart is empty. No purchase has been made", Console.ForegroundColor = ConsoleColor.Red);
+
             Console.Clear();
             string receipt = Receipt.CreateReceipt(shoppingCart);
-            //FileManager.SaveReceipt(receipt);
             shoppingCart.Clear();
             Console.WriteLine("Your purchase has been made and a receipt has been created.", Console.ForegroundColor = ConsoleColor.Green);
             Console.WriteLine(receipt);
-            //}
+
             return receipt;
         }
         public static void DisplayPurchases(List<Purchase> shoppingCart)

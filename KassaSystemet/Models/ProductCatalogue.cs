@@ -13,9 +13,7 @@ namespace KassaSystemet.Models
         {
             Products = fileManager.LoadProductList();
         }
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private static ProductCatalogue instance;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public Dictionary<int, Product> Products { get; }
         public static ProductCatalogue Instance => instance ??= new ProductCatalogue();
         public static readonly string _wares =
