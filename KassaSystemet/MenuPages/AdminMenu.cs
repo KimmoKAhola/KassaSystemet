@@ -43,7 +43,7 @@ namespace KassaSystemet.MenuPages
                 if (isChanged)
                 {
                     GetSaveFormat(_fileManagerStrategy);
-                    _fileManagerStrategy.SaveProductCatalogueTextFile(ProductCatalogue.Instance.Products);
+                    _fileManagerStrategy.SaveProductCatalogueToTextFile(ProductCatalogue.Instance.Products);
                     _fileManagerStrategy.SaveDiscountList(ProductCatalogue.Instance.Products);
                 }
                 Console.ResetColor();
@@ -62,11 +62,11 @@ namespace KassaSystemet.MenuPages
             string userInput = Console.ReadLine();
             if (userInput == "1")
             {
-                _fileManagerStrategy.SaveProductCatalogueTextFile(ProductCatalogue.Instance.Products);
+                _fileManagerStrategy.SaveProductCatalogueToTextFile(ProductCatalogue.Instance.Products);
             }
             else
             {
-                _fileManagerStrategy.SaveProductCatalogueCsvFile(ProductCatalogue.Instance.Products); ;
+                _fileManagerStrategy.SaveProductCatalogueToCsvFile(ProductCatalogue.Instance.Products); ;
             }
         }
     }

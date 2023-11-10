@@ -10,7 +10,7 @@ namespace KassaSystemet.Strategy
 {
     public class FileManagerStrategy : IFileManager
     {
-        public void SaveProductCatalogueTextFile(Dictionary<int, Product> productCatalogue)
+        public void SaveProductCatalogueToTextFile(Dictionary<int, Product> productCatalogue)
         {
             string productString = FormatProductCatalogueToTextFile(productCatalogue);
             productString = productString.Substring(0, productString.Length - 1);
@@ -32,7 +32,7 @@ namespace KassaSystemet.Strategy
 
             return string.Join("\n", csvLines);
         }
-        public void SaveProductCatalogueCsvFile(Dictionary<int, Product> productCatalogue)
+        public void SaveProductCatalogueToCsvFile(Dictionary<int, Product> productCatalogue)
         {
             string csvContent = FormatProductCatalogueToCsvFile();
             using (StreamWriter productCsvWriter = new($"{FileManagerOperations.CreateProductListFilePathCsv()}", append: false))

@@ -18,8 +18,8 @@ namespace KassaSystemet
             _fileManagerStrategy = fileManagerStrategy;
         }
         public void SaveReceipt(string paymentInfo) => _fileManagerStrategy.SaveReceipt(paymentInfo);
-        public void SaveProductCatalogueTextFile(Dictionary<int, Product> productCatalogue) => _fileManagerStrategy.SaveProductCatalogueTextFile(productCatalogue);
-        public void SaveProductCatalogueCsvFile(Dictionary<int, Product> productCatalogue) => _fileManagerStrategy.SaveProductCatalogueTextFile(productCatalogue);
+        public void SaveProductCatalogueToTextFile(Dictionary<int, Product> productCatalogue) => _fileManagerStrategy.SaveProductCatalogueToTextFile(productCatalogue);
+        public void SaveProductCatalogueToCsvFile(Dictionary<int, Product> productCatalogue) => _fileManagerStrategy.SaveProductCatalogueToTextFile(productCatalogue);
         public void SaveDiscountList(Dictionary<int, Product> productCatalogue) => _fileManagerStrategy.SaveDiscountList(productCatalogue);
         public Dictionary<int, Product> LoadProductList() => _fileManagerStrategy.LoadProductList();
         public void LoadDiscountList() => _fileManagerStrategy.LoadDiscountList();
