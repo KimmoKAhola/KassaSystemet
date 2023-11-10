@@ -10,13 +10,7 @@ namespace KassaSystemet
         {
             do
             {
-                Console.Clear();
-                Console.WriteLine("***Menu for the cash register***");
-                Console.WriteLine("Choose an option below.");
-                Console.WriteLine("1. New customer");
-                Console.WriteLine("2. Admin tools");
-                Console.WriteLine("0. Save & Exit.");
-                Console.Write("Enter your command: ");
+                DisplayMenuOptions.Display();
                 string menuOption = Console.ReadLine();
                 {
                     switch (menuOption)
