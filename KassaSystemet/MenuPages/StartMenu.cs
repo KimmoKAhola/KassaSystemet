@@ -1,4 +1,5 @@
 ﻿using KassaSystemet.Factories.MenuFactory;
+using KassaSystemet.Interfaces;
 using KassaSystemet.MenuPageServices;
 using KassaSystemet.Models;
 
@@ -6,123 +7,48 @@ namespace KassaSystemet.MenuPages
 {
     public class StartMenu
     {
-        private static AdminMenuHandler adminMenuHandler;
-        private MenuFactory menuFactory;
-        public void MainMenu(FileManager fileManager)
+        private readonly MenuFactory _menuFactory;
+        private IMenu _menu;
+        public StartMenu(MenuFactory menuFactory)
         {
-            do
-            {
-                string menuOption = Console.ReadLine();
-                {
-                    switch (menuOption)
-                    {
-                        case "1":
-                            menuFactory = new MenuFactory("Customer Menu");
-                            CustomerMenu(fileManager);
-                            break;
-                        case "2":
-                            menuFactory = new("Admin Menu");
-                            AdminMenu(fileManager);
-                            break;
-                        case "0":
-                            App.CloseApp();
-                            break;
-                        default:
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Invalid input.");
-                            Thread.Sleep(1000);
-                            Console.ResetColor();
-                            break;
-                    }
-                }
-            } while (true);
+            _menuFactory = menuFactory;
         }
-        //private static void CustomerMenu(FileManager fileManager)
-        //{
-        //    List<Purchase> shoppingCart = new();
-        //    string userInput;
-        //    do
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("****Welcome to the customer menu****");
-        //        Console.WriteLine("1. Display your current cart.");
-        //        Console.WriteLine("2. Enter products to purchase.");
-        //        Console.WriteLine("3. Display available products.");
-        //        Console.WriteLine("0: Clear shoppingcart and return to main menu.");
-        //        Console.WriteLine("PAY: purchase wares in your cart and exit.");
-        //        Console.Write("Enter command: ");
-        //        userInput = Console.ReadLine().ToUpper();
-        //        switch (userInput)
-        //        {
-        //            case "1":
-        //                Purchase.DisplayPurchases(shoppingCart);
-        //                break;
-        //            case "2":
-        //                AddProduct(shoppingCart);
-        //                break;
-        //            case "3":
-        //                ProductCatalogue.Instance.DisplayProducts();
-        //                break;
-        //            case "0":
-        //                userInput = "0";
-        //                Console.WriteLine("Returning to the main menu.");
-        //                break;
-        //            case "PAY":
-        //                string receipt = Purchase.Pay(shoppingCart);
-        //                fileManager.SaveReceipt(receipt);
-        //                break;
-        //            default:
-        //                Console.WriteLine("Invalid input.", Console.ForegroundColor = ConsoleColor.Red);
-        //                Thread.Sleep(1000);
-        //                Console.ResetColor();
-        //                break;
-        //        }
-        //        Console.ResetColor();
-        //        Console.Write("Press any key to continue: ");
-        //        Console.ReadKey();
-        //    } while (userInput != "0");
-        //    MainMenu(fileManager);
-        //}
-        //private static void AdminMenu(FileManager fileManager)
-        //{
-        //    adminMenuHandler ??= new AdminMenuHandler();
 
-        //    string userInput;
-        //    do
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("Admin menu");
-        //        Console.WriteLine("1. Add a new product to the system\n" +
-        //            "2. Display available products in the system\n" +
-        //            "3. Change price on a product\n" +
-        //            "4. Change name on a product\n" +
-        //            "5. Add a discount for a product\n" +
-        //            "6. Display all available discounts for a single product\n" +
-        //            "7. Display all available discounts in the system\n" +
-        //            "8. Remove a discount from a product.\n" +
-        //            "9. Remove a product from the product list\n" +
-        //            "0. Exit admin menu");
-        //        Console.Write("Enter a command: ");
-        //        userInput = Console.ReadLine();
-        //        bool isChanged = adminMenuHandler.HandleAdminMenuOption(userInput);
-        //        if (isChanged)
-        //        {
-        //            fileManager.SaveProductList();
-        //            fileManager.SaveDiscountList();
-        //        }
-        //        Console.ResetColor();
-        //    } while (userInput != "0");
-        //    MainMenu(fileManager);
-        //}
-        private static void AddProduct(List<Purchase> shoppingCart)
+        public void Start(FileManager fileManager)
         {
-            (int id, decimal amount) = UserInputHandler.ProductInput();
-            if (amount > 100)
-                Console.WriteLine($"You can not purchase more than {100} of a product!", ConsoleColor.Red);
-            else if (ProductCatalogue.Instance.Products.ContainsKey(id))
-                shoppingCart.Add(new Purchase(id, amount));
-            else
-                Console.WriteLine($"No product with id {id} exist in the system.", ConsoleColor.Red);
+            StartMenuOptions startMenuOptions = new StartMenuOptions(_menuFactory);
+            startMenuOptions.DisplayMenu();
+        }
+
+        public void ChangeMenu(string menuType)
+        {
+
+        }
+
+        public void StartMenuHandler(string userInput)
+        {
+            switch (userInput)
+            {
+                case "1":
+                    _menu = _menuFactory.CreateMenu("Customer Menu");
+                    _menu.DisplayMenu();
+                    //CustomerMenu(fileManager);
+                    break;
+                case "2":
+                    _menu = _menuFactory.CreateMenu("Admin Menu");
+                    _menu.DisplayMenu();
+                    //AdminMenu(fileManager);
+                    break;
+                case "0":
+                    App.CloseApp();
+                    break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid input.");
+                    Thread.Sleep(1000);
+                    Console.ResetColor();
+                    break;
+            }
         }
     }
 }

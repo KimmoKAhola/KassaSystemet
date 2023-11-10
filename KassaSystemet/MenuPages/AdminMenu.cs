@@ -1,5 +1,6 @@
 ﻿using KassaSystemet.Interfaces;
 using KassaSystemet.MenuPageServices;
+using KassaSystemet.Strategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,17 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.MenuPages
 {
-    public class AdminMenu : IMenuDisplay
+    public class AdminMenu : IMenu
     {
         private static AdminMenuHandler adminMenuHandler;
-        private static AdminMenu adminMenu;
+        private FileManager fileManager;
         public AdminMenu()
         {
+            IFileManagerStrategy strategy = new FileManagerStrategy();
+            fileManager ??= new FileManager(strategy);
+            adminMenuHandler ??= new AdminMenuHandler();
         }
+
         public void DisplayMenu()
         {
             string userInput;
@@ -41,6 +46,9 @@ namespace KassaSystemet.MenuPages
                     fileManager.SaveDiscountList();
                 }
                 Console.ResetColor();
+                Console.Write("Press any key to continue: ");
+                Console.ReadKey();
+
             } while (userInput != "0");
         }
     }

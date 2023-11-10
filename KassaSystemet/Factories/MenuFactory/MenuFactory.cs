@@ -1,4 +1,5 @@
 ﻿using KassaSystemet.Interfaces;
+using KassaSystemet.MenuPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,10 @@ namespace KassaSystemet.Factories.MenuFactory
 {
     public class MenuFactory
     {
-        public IMenuDisplay CreateMenu(string menuType)
+        public IMenu CreateMenu(string menuType)
         {
             switch (menuType)
             {
-                case "Start Menu":
-                    return new StartMenu();
                 case "Customer Menu":
                     return new CustomerMenu();
                 case "Admin Menu":

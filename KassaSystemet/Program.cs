@@ -1,4 +1,7 @@
 ﻿
+using KassaSystemet.Factories.MenuFactory;
+using KassaSystemet.MenuPages;
+
 namespace KassaSystemet
 {
     internal class Program

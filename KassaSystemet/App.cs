@@ -6,16 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using KassaSystemet.Strategy;
 using KassaSystemet.MenuPages;
+using KassaSystemet.Factories.MenuFactory;
 
 namespace KassaSystemet
 {
     public static class App
     {
         private static readonly FileManager _fileManager;
+        private static readonly MenuFactory _menuFactory;
+
         static App()
         {
             IFileManagerStrategy strategy = new FileManagerStrategy();
             _fileManager = new FileManager(strategy);
+            _menuFactory = new MenuFactory();
         }
         public static void Run()
         {
@@ -27,7 +31,12 @@ namespace KassaSystemet
         {
             FileManagerOperations.CreateFolders();
             _fileManager.LoadDiscountList();
-            StartMenu.MainMenu(_fileManager);
+            MenuFactory factory = new MenuFactory();
+            StartMenu startMenu = new StartMenu(factory);
+            startMenu.Start(_fileManager);
+            //StartMenu.MainMenu(_fileManager);
+            //StartMenu.Instance.Start();
+            //_menuFactory.CreateMenu();
         }
         public static void CloseApp()
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.Interfaces
 {
-    public interface IMenuDisplay
+    public interface IMenu
     {
         void DisplayMenu();
     }
