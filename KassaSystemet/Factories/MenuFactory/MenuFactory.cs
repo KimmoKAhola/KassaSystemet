@@ -10,7 +10,7 @@ namespace KassaSystemet.Factories.MenuFactory
 {
     public class MenuFactory
     {
-        private readonly IFileManager _fileManagerStrategy;
+        private IFileManager _fileManagerStrategy;
         public MenuFactory(IFileManager fileManagerStrategy)
         {
             _fileManagerStrategy = fileManagerStrategy;
