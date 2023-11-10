@@ -32,12 +32,10 @@ namespace KassaSystemet.MenuPages
                 case "1":
                     _menu = _menuFactory.CreateMenu("Customer Menu");
                     _menu.DisplayMenu();
-                    //CustomerMenu(fileManager);
                     break;
                 case "2":
                     _menu = _menuFactory.CreateMenu("Admin Menu");
                     _menu.DisplayMenu();
-                    //AdminMenu(fileManager);
                     break;
                 case "0":
                     App.CloseApp();
