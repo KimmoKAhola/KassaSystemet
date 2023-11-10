@@ -4,6 +4,7 @@ namespace KassaSystemet
 {
     public class Product
     {
+        private DateOnly _currentDate = DateOnly.FromDateTime(DateTime.Now);
         public Product(string productName, decimal unitPrice, string priceType)
         {
             ProductName = productName;
@@ -69,11 +70,7 @@ namespace KassaSystemet
         }
         public void AddDiscountToProduct(Discount d) => _discount.Add(d);
         public void Display() => Discounts.ForEach(x => Console.WriteLine(x.ToString()));
-        public bool HasActiveDiscount()
-        {
-            var today = DateOnly.FromDateTime(DateTime.Now);
-            return Discounts.Any(discount => today >= discount.StartDate && today <= discount.EndDate);
-        }
+        public bool HasActiveDiscount() => Discounts.Any(discount => _currentDate >= discount.StartDate && _currentDate <= discount.EndDate);
         public override string ToString() => $"Name: {ProductName}, Price: {UnitPrice:C2} {PriceType}";
         public void RemoveDiscount()
         {
@@ -85,7 +82,6 @@ namespace KassaSystemet
             {
                 Console.WriteLine($"You removed the discount at {Discounts[choice - 1].StartDate} - {Discounts[choice - 1].EndDate}", Console.ForegroundColor = ConsoleColor.Green);
                 Discounts.RemoveAt(choice - 1);
-                FileManager.SaveDiscountList();
                 Console.ResetColor();
                 Console.WriteLine("The remaining discounts are:");
                 Display();

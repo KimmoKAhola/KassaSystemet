@@ -16,19 +16,20 @@ namespace KassaSystemet
         }
         public int ProductID { get; }
         public decimal Amount { get; }
-        public static void Pay(List<Purchase> shoppingCart)
+        public static string Pay(List<Purchase> shoppingCart)
         {
-            if (shoppingCart.Count == 0)
-                Console.WriteLine("Your shopping cart is empty. No purchase has been made", Console.ForegroundColor = ConsoleColor.Red);
-            else
-            {
-                Console.Clear();
-                string receipt = Receipt.CreateReceipt(shoppingCart);
-                FileManager.SaveReceipt(receipt);
-                shoppingCart.Clear();
-                Console.WriteLine("Your purchase has been made and a receipt has been created.", Console.ForegroundColor = ConsoleColor.Green);
-                Console.WriteLine(receipt);
-            }
+            //if (shoppingCart.Count == 0)
+            //    Console.WriteLine("Your shopping cart is empty. No purchase has been made", Console.ForegroundColor = ConsoleColor.Red);
+            //else
+            //{
+            Console.Clear();
+            string receipt = Receipt.CreateReceipt(shoppingCart);
+            //FileManager.SaveReceipt(receipt);
+            shoppingCart.Clear();
+            Console.WriteLine("Your purchase has been made and a receipt has been created.", Console.ForegroundColor = ConsoleColor.Green);
+            Console.WriteLine(receipt);
+            //}
+            return receipt;
         }
         public static void DisplayPurchases(List<Purchase> shoppingCart)
         {

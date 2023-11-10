@@ -14,7 +14,7 @@ namespace KassaSystemet
             var products = ProductCatalogue.Instance.Products;
             decimal totalSumOfPurchase = 0;
             var receipt = new StringBuilder();
-            int _receiptID = FileManager.GetReceiptID();
+            int _receiptID = FileManagerOperations.GetReceiptID();
             receipt.AppendLine($"{"Receipt ID:",-15} [{_receiptID}]");
             receipt.AppendLine($"{"Product",-45} {"Amount",-15} {"Price",-20} {"Sum",-40}");
 

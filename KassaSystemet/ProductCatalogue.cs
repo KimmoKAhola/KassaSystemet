@@ -1,6 +1,8 @@
 ﻿
+using KassaSystemet.Interfaces;
 using System.Diagnostics;
 using System.IO;
+using KassaSystemet.Strategy;
 
 namespace KassaSystemet
 {
@@ -8,7 +10,8 @@ namespace KassaSystemet
     {
         private ProductCatalogue()
         {
-            Products = FileManager.LoadProductList();
+            ILoad fileManager = new FileManager(new FileManagerStrategy());
+            Products = fileManager.LoadProductList();
         }
         private static ProductCatalogue instance;
         public Dictionary<int, Product> Products { get; }
@@ -57,7 +60,6 @@ namespace KassaSystemet
             var product = new Product(info.productName, info.price, $"{info.priceType}");
             Products.Add(productId, product);
             Console.WriteLine($"Added the product {product.ProductName} with ID [{productId}] to the system.", Console.ForegroundColor = ConsoleColor.Green);
-            FileManager.SaveProductList();
         }
         public void AddNewDiscount(int productId)
         {
@@ -66,12 +68,9 @@ namespace KassaSystemet
             {
                 Products[productId].AddDiscountToProduct(new Discount(info.startDate, info.endDate, info.discountPercentage));
                 Console.WriteLine($"Your discount {info.startDate}-{info.endDate} {info.discountPercentage} % has been added.", Console.ForegroundColor = ConsoleColor.Green);
-                FileManager.SaveDiscountList();
             }
             else
-            {
                 Console.WriteLine("The discount's start date can not be after later than the end date. Your discount has not been added.", Console.ForegroundColor = ConsoleColor.Red);
-            }
         }
         public void RemoveProduct(int productId) => Products.Remove(productId);
         public bool ContainsDiscount(int productId) => (Products.ContainsKey(productId) && Products[productId].Discounts.Count > 0);
