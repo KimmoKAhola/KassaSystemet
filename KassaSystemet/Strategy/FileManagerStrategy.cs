@@ -60,6 +60,14 @@ namespace KassaSystemet.Strategy
                 writer.Write(discountInfo);
             }
         }
+
+        private string FormatDiscountList()
+        {
+            var allDiscountedProducts = Product.GetDiscountForSingleProduct(ProductCatalogue.Instance.Products).ToList();
+
+
+            return string.Join("\n", allDiscountedProducts);
+        }
         public Dictionary<int, Product> LoadProductList()
         {
             Dictionary<int, Product> products = new Dictionary<int, Product>();
