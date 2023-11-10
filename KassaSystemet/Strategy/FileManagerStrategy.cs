@@ -70,9 +70,9 @@ namespace KassaSystemet.Strategy
 
             return products;
         }
-        public void LoadDiscountList(Dictionary<int, Product> productCatalogue)
+        public void LoadDiscountList()
         {
-            var temp = productCatalogue;
+            var temp = ProductCatalogue.Instance.Products;
             if (File.Exists(FileManagerOperations.CreateDiscountListFilePath()))
             {
                 var discountListInfo = File.ReadAllLines(FileManagerOperations.CreateDiscountListFilePath());

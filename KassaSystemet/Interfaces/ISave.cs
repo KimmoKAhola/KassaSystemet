@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KassaSystemet.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ namespace KassaSystemet.Interfaces
 {
     public interface ISave
     {
-        void SaveProductList();
-        void SaveDiscountList();
+        void SaveProductList(Dictionary<int, Product> productCatalogue);
+        void SaveDiscountList(Dictionary<int, Product> productCatalogue);
+        void SaveReceipt(string paymentInfo);
     }
 }

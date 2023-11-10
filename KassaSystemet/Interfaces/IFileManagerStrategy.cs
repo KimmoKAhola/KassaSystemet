@@ -7,12 +7,7 @@ using KassaSystemet.Models;
 
 namespace KassaSystemet.Interfaces
 {
-    public interface IFileManagerStrategy
+    public interface IFileManagerStrategy : ISave, ILoad
     {
-        void SaveProductList(Dictionary<int, Product> productCatalogue);
-        void SaveDiscountList(Dictionary<int, Product> productCatalogue);
-        Dictionary<int, Product> LoadProductList();
-        void LoadDiscountList(Dictionary<int, Product> productCatalogue);
-        void SaveReceipt(string paymenyInfo);
     }
 }

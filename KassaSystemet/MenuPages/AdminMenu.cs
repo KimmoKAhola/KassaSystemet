@@ -1,5 +1,6 @@
 ﻿using KassaSystemet.Interfaces;
 using KassaSystemet.MenuPageServices;
+using KassaSystemet.Models;
 using KassaSystemet.Strategy;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,14 @@ namespace KassaSystemet.MenuPages
     public class AdminMenu : IMenu
     {
         private static AdminMenuHandler adminMenuHandler;
-        private FileManager fileManager;
-        public AdminMenu()
+        private readonly IFileManagerStrategy _fileManagerStrategy;
+        public AdminMenu(IFileManagerStrategy strategy)
         {
-            IFileManagerStrategy strategy = new FileManagerStrategy();
-            fileManager ??= new FileManager(strategy);
+            _fileManagerStrategy = strategy;
             adminMenuHandler ??= new AdminMenuHandler();
         }
 
-        public void DisplayMenu()
+        public void InitializeMenu()
         {
             string userInput;
             do
@@ -42,8 +42,8 @@ namespace KassaSystemet.MenuPages
                 bool isChanged = adminMenuHandler.HandleAdminMenuOption(userInput);
                 if (isChanged)
                 {
-                    fileManager.SaveProductList();
-                    fileManager.SaveDiscountList();
+                    _fileManagerStrategy.SaveProductList(ProductCatalogue.Instance.Products);
+                    _fileManagerStrategy.SaveDiscountList(ProductCatalogue.Instance.Products);
                 }
                 Console.ResetColor();
                 Console.Write("Press any key to continue: ");

@@ -8,6 +8,6 @@ namespace KassaSystemet.Interfaces
 {
     public interface IMenu
     {
-        void DisplayMenu();
+        void InitializeMenu();
     }
 }

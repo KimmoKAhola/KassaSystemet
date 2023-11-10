@@ -1,6 +1,7 @@
 ﻿using KassaSystemet;
 using KassaSystemet.Factories.MenuFactory;
 using KassaSystemet.Interfaces;
+using KassaSystemet.Strategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,14 @@ namespace KassaSystemet.MenuPageServices
     {
         private readonly MenuFactory _menuFactory;
         private IMenu _menu;
+        private IFileManagerStrategy _fileManagerStrategy;
 
-        public StartMenuOptions(MenuFactory menuFactory)
+        public StartMenuOptions(MenuFactory menuFactory, IFileManagerStrategy fileManagerStrategy)
         {
             _menuFactory = menuFactory;
+            _fileManagerStrategy = fileManagerStrategy;
         }
-        public void DisplayMenu()
+        public void InitializeMenu()
         {
             string userInput;
             do
@@ -32,20 +35,20 @@ namespace KassaSystemet.MenuPageServices
                 Console.WriteLine("0. Save & Exit.");
                 Console.Write("Enter your command: ");
                 userInput = Console.ReadLine();
-                StartMenuHandler(userInput);
+                StartMenuHandler(userInput, _fileManagerStrategy);
             } while (userInput != "0");
         }
-        public void StartMenuHandler(string userInput)
+        public void StartMenuHandler(string userInput, IFileManagerStrategy fileManagerStrategy)
         {
             switch (userInput)
             {
                 case "1":
                     _menu = _menuFactory.CreateMenu("Customer Menu");
-                    _menu.DisplayMenu();
+                    _menu.InitializeMenu();
                     break;
                 case "2":
                     _menu = _menuFactory.CreateMenu("Admin Menu");
-                    _menu.DisplayMenu();
+                    _menu.InitializeMenu();
                     break;
                 case "0":
                     Environment.Exit(0);

@@ -10,14 +10,19 @@ namespace KassaSystemet.Factories.MenuFactory
 {
     public class MenuFactory
     {
+        private readonly IFileManagerStrategy _fileManagerStrategy;
+        public MenuFactory(IFileManagerStrategy fileManagerStrategy)
+        {
+            _fileManagerStrategy = fileManagerStrategy;
+        }
         public IMenu CreateMenu(string menuType)
         {
             switch (menuType)
             {
                 case "Customer Menu":
-                    return new CustomerMenu();
+                    return new CustomerMenu(_fileManagerStrategy);
                 case "Admin Menu":
-                    return new AdminMenu();
+                    return new AdminMenu(_fileManagerStrategy);
                 default:
                     return null;
             }

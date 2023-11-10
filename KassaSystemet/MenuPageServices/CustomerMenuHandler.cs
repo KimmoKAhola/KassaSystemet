@@ -18,9 +18,9 @@ namespace KassaSystemet.MenuPageServices
 
         }
 
-        public void HandleCustomerMenuOption(string userInput)
+        public void HandleCustomerMenuOption(string userInput, IFileManagerStrategy fileManagerStrategy)
         {
-            switch (userInput)
+            switch (userInput.ToUpper())
             {
                 case "1":
                     Purchase.DisplayPurchases(_shoppingCart);
@@ -37,7 +37,7 @@ namespace KassaSystemet.MenuPageServices
                     break;
                 case "PAY":
                     string receipt = Purchase.Pay(_shoppingCart);
-                    //fileManager.SaveReceipt(receipt);
+                    fileManagerStrategy.SaveReceipt(receipt);
                     break;
                 default:
                     Console.WriteLine("Invalid input.", Console.ForegroundColor = ConsoleColor.Red);

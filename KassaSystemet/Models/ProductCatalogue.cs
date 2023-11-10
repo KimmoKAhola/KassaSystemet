@@ -8,9 +8,9 @@ namespace KassaSystemet.Models
 {
     public class ProductCatalogue
     {
+        FileManager fileManager = new FileManager(new FileManagerStrategy());
         private ProductCatalogue()
         {
-            ILoad fileManager = new FileManager(new FileManagerStrategy());
             Products = fileManager.LoadProductList();
         }
         private static ProductCatalogue instance;
