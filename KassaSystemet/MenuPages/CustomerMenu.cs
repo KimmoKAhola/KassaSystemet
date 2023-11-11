@@ -31,7 +31,7 @@ namespace KassaSystemet.MenuPages
                 _customerMenuHandler.HandleCustomerMenuOption(userInput, _fileManagerStrategy, _userInputHandler);
             } while (userInput != "0");
         }
-        private static void DisplayMenu()
+        public void DisplayMenu()
         {
             Console.Clear();
             Console.WriteLine("****Welcome to the customer menu****");

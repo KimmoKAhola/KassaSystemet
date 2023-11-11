@@ -42,7 +42,7 @@ namespace KassaSystemet.MenuPages
 
             } while (userInput != "0");
         }
-        private static void DisplayMenu()
+        public void DisplayMenu()
         {
             Console.Clear();
             Console.WriteLine("Admin menu");

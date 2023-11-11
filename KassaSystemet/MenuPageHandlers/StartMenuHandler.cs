@@ -24,16 +24,20 @@ namespace KassaSystemet.MenuPageServices
             string userInput;
             do
             {
-                Console.Clear();
-                Console.WriteLine("***Menu for the cash register***");
-                Console.WriteLine("Choose an option below.");
-                Console.WriteLine("1. New customer");
-                Console.WriteLine("2. Admin tools");
-                Console.WriteLine("0. Save & Exit.");
-                Console.Write("Enter your command: ");
+                DisplayMenu();
                 userInput = Console.ReadLine();
                 MenuHandler(userInput);
             } while (userInput != "0");
+        }
+        public void DisplayMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("***Menu for the cash register***");
+            Console.WriteLine("Choose an option below.");
+            Console.WriteLine("1. New customer");
+            Console.WriteLine("2. Admin tools");
+            Console.WriteLine("0. Save & Exit.");
+            Console.Write("Enter your command: ");
         }
         public void MenuHandler(string userInput)
         {

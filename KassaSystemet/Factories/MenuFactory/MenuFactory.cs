@@ -25,6 +25,8 @@ namespace KassaSystemet.Factories.MenuFactory
                     return new CustomerMenu(_fileManagerStrategy, _userInputHandler);
                 case MenuFactoryEnum.AdminMenu:
                     return new AdminMenu(_fileManagerStrategy, _userInputHandler);
+                case MenuFactoryEnum.InfoMenu:
+                    return new InfoMenu();
                 default:
                     return null;
             }

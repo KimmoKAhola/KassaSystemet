@@ -9,5 +9,6 @@ namespace KassaSystemet.Interfaces
     public interface IMenuHandler
     {
         void InitializeMenu();
+        void DisplayMenu();
     }
 }
