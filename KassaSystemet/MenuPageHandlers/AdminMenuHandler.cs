@@ -12,17 +12,9 @@ namespace KassaSystemet.MenuPageServices
     public class AdminMenuHandler
     {
         private ProductCatalogue productCatalogue = ProductCatalogue.Instance;
-        private ModelFactory _modelFactory;
-        private List<Purchase> _shoppingCart;
-        private IUserInputHandler _userInputHandler;
-        //public CustomerMenuHandler(IUserInputHandler userInputHandler)
-        //{
-        //    _shoppingCart = new List<Purchase>();
-        //    _userInputHandler = userInputHandler;
-        //}
-        public AdminMenuHandler(IUserInputHandler userInputHandler)
+
+        public AdminMenuHandler()
         {
-            _userInputHandler = userInputHandler;
         }
         public bool HandleAdminMenuOption(string userInput, IUserInputHandler userInputHandler)
         {

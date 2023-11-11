@@ -12,14 +12,12 @@ namespace KassaSystemet.MenuPageServices
     public class CustomerMenuHandler
     {
         private List<Purchase> _shoppingCart;
-        private IUserInputHandler _userInputHandler;
-        public CustomerMenuHandler(IUserInputHandler userInputHandler)
+        public CustomerMenuHandler()
         {
             _shoppingCart = new List<Purchase>();
-            _userInputHandler = userInputHandler;
         }
 
-        public void HandleCustomerMenuOption(string userInput, IFileManager fileManagerStrategy)
+        public void HandleCustomerMenuOption(string userInput, IFileManager fileManagerStrategy, IUserInputHandler userInputHandler)
         {
             switch (userInput.ToUpper())
             {
@@ -27,7 +25,7 @@ namespace KassaSystemet.MenuPageServices
                     Purchase.DisplayPurchases(_shoppingCart);
                     break;
                 case "2":
-                    AddProduct(_shoppingCart, _userInputHandler);
+                    AddProduct(_shoppingCart, userInputHandler);
                     break;
                 case "3":
                     ProductCatalogue.Instance.DisplayProducts();

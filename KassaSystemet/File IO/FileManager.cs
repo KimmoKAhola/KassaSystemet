@@ -12,7 +12,7 @@ namespace KassaSystemet
 {
     public class FileManager : IFileManager
     {
-        private readonly IFileManager _fileManagerStrategy;
+        private IFileManager _fileManagerStrategy;
         public FileManager(IFileManager fileManagerStrategy)
         {
             _fileManagerStrategy = fileManagerStrategy;

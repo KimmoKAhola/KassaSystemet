@@ -17,13 +17,13 @@ namespace KassaSystemet.Factories.MenuFactory
             _fileManagerStrategy = fileManagerStrategy;
             _userInputHandler = userInputHandler;
         }
-        public IMenuHandler CreateMenu(string menuType)
+        public IMenuHandler CreateMenu(MenuFactoryEnum factoryEnum)
         {
-            switch (menuType)
+            switch (factoryEnum)
             {
-                case "Customer Menu":
+                case MenuFactoryEnum.CustomerMenu:
                     return new CustomerMenu(_fileManagerStrategy, _userInputHandler);
-                case "Admin Menu":
+                case MenuFactoryEnum.AdminMenu:
                     return new AdminMenu(_fileManagerStrategy, _userInputHandler);
                 default:
                     return null;

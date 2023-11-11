@@ -13,7 +13,7 @@ namespace KassaSystemet.MenuPageServices
 {
     public class StartMenuHandler : IMenuHandler
     {
-        private readonly MenuFactory _menuFactory;
+        private MenuFactory _menuFactory;
         private IMenuHandler _menu;
         public StartMenuHandler(MenuFactory menuFactory)
         {
@@ -40,11 +40,11 @@ namespace KassaSystemet.MenuPageServices
             switch (userInput)
             {
                 case "1":
-                    _menu = _menuFactory.CreateMenu("Customer Menu");
+                    _menu = _menuFactory.CreateMenu(MenuFactoryEnum.CustomerMenu);
                     _menu.InitializeMenu();
                     break;
                 case "2":
-                    _menu = _menuFactory.CreateMenu("Admin Menu");
+                    _menu = _menuFactory.CreateMenu(MenuFactoryEnum.AdminMenu);
                     _menu.InitializeMenu();
                     break;
                 case "0":

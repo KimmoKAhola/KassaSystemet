@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.Factories.ModelFactory
 {
-    public class ModelFactory
+    public static class ModelFactory
     {
-        public Product CreateProduct(string productName, decimal unitPrice, string priceType)
+        public static Product CreateProduct(string productName, decimal unitPrice, string priceType)
         {
             return new Product(productName, unitPrice, priceType);
         }
 
-        public Purchase CreatePurchase(int productID, decimal amount)
+        public static Purchase CreatePurchase(int productID, decimal amount)
         {
             return new Purchase(productID, amount);
         }
 
-        public Discount CreateDiscount(string startDate, string endDate, decimal discountPercentage)
+        public static Discount CreateDiscount(string startDate, string endDate, decimal discountPercentage)
         {
             return new Discount(startDate, endDate, discountPercentage);
         }

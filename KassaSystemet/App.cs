@@ -12,7 +12,7 @@ namespace KassaSystemet
 {
     public class App
     {
-        private readonly MenuFactory _menuFactory;
+        private MenuFactory _menuFactory;
         public App(MenuFactory menuFactory)
         {
             _menuFactory = menuFactory;

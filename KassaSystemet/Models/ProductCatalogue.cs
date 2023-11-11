@@ -10,17 +10,14 @@ namespace KassaSystemet.Models
     public class ProductCatalogue
     {
         FileManager _fileManager = new FileManager(new FileManagerStrategy());
-        ModelFactory _modelFactory;
-        private IUserInputHandler _userInputHandler;
         private ProductCatalogue()
         {
-            _modelFactory = new ModelFactory();
             Products = _fileManager.LoadProductList();
         }
         private static ProductCatalogue instance;
         public Dictionary<int, Product> Products { get; }
         public static ProductCatalogue Instance => instance ??= new ProductCatalogue();
-        public static readonly string _wares =
+        private static string _wares =
             "300!Bananer!15,50!per kg!" +
             "301!Äpplen!25,50!per kg!" +
             "302!Kaffe!65,50!per unit!" +
@@ -53,7 +50,7 @@ namespace KassaSystemet.Models
                 string name = products[i + 1].Trim();
                 decimal price = Convert.ToDecimal(products[i + 2]);
                 string type = products[i + 3];
-                var product = _modelFactory.CreateProduct(name, price, type);
+                var product = ModelFactory.CreateProduct(name, price, type);
                 productDatabase.Add(id, product);
             }
             return productDatabase;
@@ -64,7 +61,7 @@ namespace KassaSystemet.Models
             var productName = info.Item1;
             var price = info.Item2;
             var priceType = info.Item3;
-            var product = _modelFactory.CreateProduct(productName, price, $"{priceType}");
+            var product = ModelFactory.CreateProduct(productName, price, $"{priceType}");
             Products.Add(productId, product);
             Console.WriteLine($"Added the product {product.ProductName} with ID [{productId}] to the system.", Console.ForegroundColor = ConsoleColor.Green);
         }
@@ -77,7 +74,7 @@ namespace KassaSystemet.Models
 
             if (startDate.CompareTo(endDate) < 0)
             {
-                var discount = _modelFactory.CreateDiscount(startDate, endDate, discountPercentage);
+                var discount = ModelFactory.CreateDiscount(startDate, endDate, discountPercentage);
                 Products[productId].AddDiscountToProduct(discount);
                 Console.WriteLine($"Your discount {startDate}-{endDate} {discountPercentage} % has been added.", Console.ForegroundColor = ConsoleColor.Green);
             }

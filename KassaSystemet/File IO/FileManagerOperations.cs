@@ -8,9 +8,9 @@ namespace KassaSystemet
 {
     public static class FileManagerOperations
     {
-        private static readonly string _filesFolderPath = $"../../../Files";
-        private static readonly string _receiptsFolderPath = $"../../../Files/Receipts";
-        private static readonly string _productListFolderPath = $"../../../Files/ProductLists";
+        private static string _filesFolderPath = $"../../../Files";
+        private static string _receiptsFolderPath = $"../../../Files/Receipts";
+        private static string _productListFolderPath = $"../../../Files/ProductLists";
         public static void CreateFolders()
         {
             CreateDirectoryIfNotExists(_filesFolderPath);

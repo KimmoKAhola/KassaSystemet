@@ -20,26 +20,14 @@ namespace KassaSystemet.MenuPages
         {
             _fileManagerStrategy = strategy;
             _userInputHandler = userInputHandler;
-            adminMenuHandler ??= new AdminMenuHandler(_userInputHandler);
+            adminMenuHandler ??= new AdminMenuHandler();
         }
         public void InitializeMenu()
         {
             string userInput;
             do
             {
-                Console.Clear();
-                Console.WriteLine("Admin menu");
-                Console.WriteLine("1. Add a new product to the system\n" +
-                    "2. Display available products in the system\n" +
-                    "3. Change price on a product\n" +
-                    "4. Change name on a product\n" +
-                    "5. Add a discount for a product\n" +
-                    "6. Display all available discounts for a single product\n" +
-                    "7. Display all available discounts in the system\n" +
-                    "8. Remove a discount from a product.\n" +
-                    "9. Remove a product from the product list\n" +
-                    "0. Exit admin menu");
-                Console.Write("Enter a command: ");
+                DisplayMenu();
                 userInput = Console.ReadLine();
                 bool isChanged = adminMenuHandler.HandleAdminMenuOption(userInput, _userInputHandler);
                 if (isChanged)
@@ -53,6 +41,22 @@ namespace KassaSystemet.MenuPages
                 Console.ReadKey();
 
             } while (userInput != "0");
+        }
+        private static void DisplayMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Admin menu");
+            Console.WriteLine("1. Add a new product to the system\n" +
+                "2. Display available products in the system\n" +
+                "3. Change price on a product\n" +
+                "4. Change name on a product\n" +
+                "5. Add a discount for a product\n" +
+                "6. Display all available discounts for a single product\n" +
+                "7. Display all available discounts in the system\n" +
+                "8. Remove a discount from a product.\n" +
+                "9. Remove a product from the product list\n" +
+                "0. Exit admin menu");
+            Console.Write("Enter a command: ");
         }
 
         private static void GetSaveFormat(IFileManager _fileManagerStrategy)
