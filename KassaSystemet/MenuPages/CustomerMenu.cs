@@ -14,10 +14,10 @@ namespace KassaSystemet.MenuPages
         private static CustomerMenuHandler _customerMenuHandler;
         private IFileManager _fileManagerStrategy;
         private IUserInputHandler _userInputHandler;
-        public CustomerMenu(IFileManager fileManagerStrategy)
+        public CustomerMenu(IFileManager fileManagerStrategy, IUserInputHandler userInputHandler)
         {
             _fileManagerStrategy = fileManagerStrategy;
-            //_userInputHandler = userInputHandler;
+            _userInputHandler = userInputHandler;
             _customerMenuHandler ??= new CustomerMenuHandler(_userInputHandler);
         }
 

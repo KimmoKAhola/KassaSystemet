@@ -73,7 +73,7 @@ namespace KassaSystemet.Strategy
             Dictionary<int, Product> products = new Dictionary<int, Product>();
             if (File.Exists(FileManagerOperations.CreateProductListFilePathCsv()))
             {
-                var productListInfo = File.ReadAllLines(FileManagerOperations.CreateProductListFilePathCsv());
+                var productListInfo = File.ReadAllLines(FileManagerOperations.CreateProductListFilePathText());
 
                 foreach (var item in productListInfo)
                 {

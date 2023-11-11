@@ -16,9 +16,10 @@ namespace KassaSystemet.MenuPages
         private static AdminMenuHandler adminMenuHandler;
         private IFileManager _fileManagerStrategy;
         private IUserInputHandler _userInputHandler;
-        public AdminMenu(IFileManager strategy)
+        public AdminMenu(IFileManager strategy, IUserInputHandler userInputHandler)
         {
             _fileManagerStrategy = strategy;
+            _userInputHandler = userInputHandler;
             adminMenuHandler ??= new AdminMenuHandler(_userInputHandler);
         }
         public void InitializeMenu()

@@ -12,8 +12,8 @@ namespace KassaSystemet
         static void Main(string[] args)
         {
             IFileManager fileManager = new FileManager(new FileManagerStrategy());
-            MenuFactory menuFactory = new MenuFactory(fileManager);
-            ModelFactory modelFactory = new ModelFactory(); //TODO remove?
+            IUserInputHandler userInputHandler = new UserInputHandler();
+            MenuFactory menuFactory = new MenuFactory(fileManager, userInputHandler);
             var myApp = new App(menuFactory);
             myApp.Run();
         }
