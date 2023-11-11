@@ -122,5 +122,13 @@ namespace KassaSystemet.Strategy
                 receiptWriter.Write(paymentInfo);
             }
         }
+
+        public string LoadInfoMenu()
+        {
+            var filePath = FileManagerOperations.CreateInfoMenuFilePath();
+
+            var result = File.ReadAllText(filePath);
+            return result;
+        }
     }
 }
