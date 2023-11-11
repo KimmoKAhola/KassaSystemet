@@ -1,4 +1,5 @@
 ﻿using KassaSystemet.Interfaces;
+using KassaSystemet.MenuPageServices;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -119,6 +120,26 @@ namespace KassaSystemet
                     return userInput;
                 else
                     Console.WriteLine("Invalid price type. Please enter 'per kg' or 'per unit'.");
+            }
+        }
+
+        public static MenuHandlerEnum GetUserEnum()
+        {
+            while (true)
+            {
+                Console.Write("Enter your command: ");
+                string userInput = Console.ReadLine();
+                if (IsValidEnumInput(userInput, out MenuHandlerEnum result))
+                    return result;
+                else
+                    PrintErrorMessage();
+            }
+        }
+        private static bool IsValidEnumInput(string userInput, out MenuHandlerEnum result)
+        {
+            while (true)
+            {
+                return Enum.TryParse(userInput, out result);
             }
         }
         private static void PrintErrorMessage()

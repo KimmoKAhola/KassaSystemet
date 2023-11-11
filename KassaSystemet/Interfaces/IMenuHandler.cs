@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KassaSystemet.MenuPageServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
