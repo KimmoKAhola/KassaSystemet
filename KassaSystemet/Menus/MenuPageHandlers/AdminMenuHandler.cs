@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using KassaSystemet.Factories.ModelFactory;
 using KassaSystemet.Interfaces;
 using KassaSystemet.Models;
-using KassaSystemet.MenuPages;
+using KassaSystemet.Menus.MenuPages;
 
-namespace KassaSystemet.MenuPageServices
+namespace KassaSystemet.Menus.MenuPageHandlers
 {
     public class AdminMenuHandler
     {

@@ -1,5 +1,6 @@
 ﻿using KassaSystemet.Interfaces;
-using KassaSystemet.MenuPages;
+using KassaSystemet.Menus.MenuPageHandlers;
+using KassaSystemet.Menus.MenuPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;

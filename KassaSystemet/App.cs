@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KassaSystemet.Strategy;
-using KassaSystemet.MenuPages;
 using KassaSystemet.Factories.MenuFactory;
+using KassaSystemet.Menus.MenuPages;
 
 namespace KassaSystemet
 {

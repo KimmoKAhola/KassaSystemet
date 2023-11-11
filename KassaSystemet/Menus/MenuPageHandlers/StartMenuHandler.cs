@@ -1,5 +1,4 @@
-﻿using KassaSystemet;
-using KassaSystemet.Factories.MenuFactory;
+﻿using KassaSystemet.Factories.MenuFactory;
 using KassaSystemet.Interfaces;
 using KassaSystemet.Strategy;
 using System;
@@ -8,9 +7,10 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using KassaSystemet.MenuPages;
+using KassaSystemet.Menus.MenuPages;
+using KassaSystemet.Utilities;
 
-namespace KassaSystemet.MenuPageServices
+namespace KassaSystemet.Menus.MenuPageHandlers
 {
     public class StartMenuHandler : IMenuHandler
     {
@@ -20,7 +20,7 @@ namespace KassaSystemet.MenuPageServices
         }
         private MenuFactory _menuFactory;
         private IMenuHandler _menu;
-        private Dictionary<StartMenuEnum, string> _menuDisplayNames = new Dictionary<StartMenuEnum, string>()
+        private Dictionary<StartMenuEnum, string> _startMenu = new Dictionary<StartMenuEnum, string>()
         {
             {StartMenuEnum.First, "Customer Menu." },
             {StartMenuEnum.Second, "Admin Menu." },
@@ -41,7 +41,7 @@ namespace KassaSystemet.MenuPageServices
         {
             Console.Clear();
             Console.WriteLine("Choose an option below.");
-            foreach (var item in _menuDisplayNames)
+            foreach (var item in _startMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
             }

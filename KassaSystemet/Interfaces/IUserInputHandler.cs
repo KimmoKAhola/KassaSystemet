@@ -1,4 +1,4 @@
-﻿using KassaSystemet.MenuPages;
+﻿using KassaSystemet.Menus.MenuPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,7 @@ namespace KassaSystemet.Interfaces
         (string, decimal, string) NewProduct();
 
         AdminMenuEnum GetAdminMenuEnum();
+        CustomerMenuEnum GetCustomerMenuEnum();
         //StartMenuEnum GetStartMenuEnum();
 
     }

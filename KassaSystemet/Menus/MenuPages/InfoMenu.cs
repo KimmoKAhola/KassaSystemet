@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KassaSystemet.MenuPages
+namespace KassaSystemet.Menus.MenuPages
 {
     public class InfoMenu : IMenuHandler
     {

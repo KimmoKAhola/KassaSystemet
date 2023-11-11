@@ -1,10 +1,10 @@
 ﻿using KassaSystemet.Factories.MenuFactory;
 using KassaSystemet.Interfaces;
-using KassaSystemet.MenuPageServices;
+using KassaSystemet.Menus.MenuPageHandlers;
 using KassaSystemet.Models;
 using KassaSystemet.Strategy;
 
-namespace KassaSystemet.MenuPages
+namespace KassaSystemet.Menus.MenuPages
 {
     public enum StartMenuEnum
     {

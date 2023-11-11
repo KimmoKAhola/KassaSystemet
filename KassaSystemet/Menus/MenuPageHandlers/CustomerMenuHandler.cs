@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KassaSystemet.Models;
+using KassaSystemet.Factories.ModelFactory;
+using KassaSystemet.Menus.MenuPages;
 
-namespace KassaSystemet.MenuPageServices
+namespace KassaSystemet.Menus.MenuPageHandlers
 {
     public class CustomerMenuHandler
     {
@@ -17,26 +19,25 @@ namespace KassaSystemet.MenuPageServices
             _shoppingCart = new List<Purchase>();
         }
 
-        public void HandleCustomerMenuOption(string userInput, IFileManager fileManagerStrategy, IUserInputHandler userInputHandler)
+        public void HandleCustomerMenuOption(CustomerMenuEnum userInput, IFileManager fileManagerStrategy, IUserInputHandler userInputHandler)
         {
-            switch (userInput.ToUpper())
+            switch (userInput)
             {
-                case "1":
+                case CustomerMenuEnum.First:
                     Purchase.DisplayPurchases(_shoppingCart);
                     break;
-                case "2":
+                case CustomerMenuEnum.Second:
                     AddProduct(_shoppingCart, userInputHandler);
                     break;
-                case "3":
+                case CustomerMenuEnum.Third:
                     ProductCatalogue.Instance.DisplayProducts();
                     break;
-                case "0":
-                    userInput = "0";
-                    Console.WriteLine("Returning to the main menu.");
-                    break;
-                case "PAY":
+                case CustomerMenuEnum.Pay:
                     string receipt = Purchase.Pay(_shoppingCart);
                     fileManagerStrategy.SaveReceipt(receipt);
+                    break;
+                case CustomerMenuEnum.Exit:
+                    Console.WriteLine("Returning to the main menu.");
                     break;
                 default:
                     Console.WriteLine("Invalid input.", Console.ForegroundColor = ConsoleColor.Red);
@@ -54,7 +55,7 @@ namespace KassaSystemet.MenuPageServices
             if (amount > 100)
                 Console.WriteLine($"You can not purchase more than {100} of a product!", ConsoleColor.Red);
             else if (ProductCatalogue.Instance.Products.ContainsKey(id))
-                shoppingCart.Add(new Purchase(id, amount));
+                shoppingCart.Add(ModelFactory.CreatePurchase(id, amount));
             else
                 Console.WriteLine($"No product with id {id} exist in the system.", ConsoleColor.Red);
         }

@@ -1,5 +1,5 @@
 ﻿using KassaSystemet.Interfaces;
-using KassaSystemet.MenuPageServices;
+using KassaSystemet.Menus.MenuPageHandlers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,9 +8,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using KassaSystemet.MenuPages;
+using KassaSystemet.Menus.MenuPages;
 
-namespace KassaSystemet
+namespace KassaSystemet.Utilities
 {
     public class UserInputHandler : IUserInputHandler
     {
@@ -33,7 +33,7 @@ namespace KassaSystemet
             productId = 0;
             productAmount = 0;
 
-            return (userInput.Length == 2 && int.TryParse(userInput[0], out productId) && decimal.TryParse(userInput[1], out productAmount) && productAmount > 0);
+            return userInput.Length == 2 && int.TryParse(userInput[0], out productId) && decimal.TryParse(userInput[1], out productAmount) && productAmount > 0;
         }
 
         public int ProductIdInput()
@@ -75,10 +75,10 @@ namespace KassaSystemet
             endDate = default;
             discountPercentage = 0m;
 
-            return (userInput.Length == 3 &&
+            return userInput.Length == 3 &&
                     DateOnly.TryParseExact(userInput[0], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate) &&
                     DateOnly.TryParseExact(userInput[1], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out endDate) &&
-                    decimal.TryParse(userInput[2], out discountPercentage));
+                    decimal.TryParse(userInput[2], out discountPercentage);
         }
         public (string, decimal, string) NewProduct()
         {
@@ -149,6 +149,19 @@ namespace KassaSystemet
                     PrintErrorMessage();
             }
         }
+
+        public CustomerMenuEnum GetCustomerMenuEnum()
+        {
+            while (true)
+            {
+                Console.Write("Enter your command: ");
+                string userInput = Console.ReadLine();
+                if (IsValidEnumInput(userInput, out CustomerMenuEnum result))
+                    return result;
+                else
+                    PrintErrorMessage();
+            }
+        }
         private static bool IsValidEnumInput(string userInput, out StartMenuEnum result)
         {
             while (true)
@@ -157,6 +170,13 @@ namespace KassaSystemet
             }
         }
         private static bool IsValidEnumInput(string userInput, out AdminMenuEnum result)
+        {
+            while (true)
+            {
+                return Enum.TryParse(userInput, out result);
+            }
+        }
+        private static bool IsValidEnumInput(string userInput, out CustomerMenuEnum result)
         {
             while (true)
             {

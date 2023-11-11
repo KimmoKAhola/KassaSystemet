@@ -2,8 +2,9 @@
 using KassaSystemet.Factories.MenuFactory;
 using KassaSystemet.Factories.ModelFactory;
 using KassaSystemet.Interfaces;
-using KassaSystemet.MenuPages;
+using KassaSystemet.Menus.MenuPageHandlers;
 using KassaSystemet.Strategy;
+using KassaSystemet.Utilities;
 
 namespace KassaSystemet
 {

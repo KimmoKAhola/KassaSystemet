@@ -1,6 +1,6 @@
 ﻿using KassaSystemet.Factories.ModelFactory;
 using KassaSystemet.Interfaces;
-using KassaSystemet.MenuPageServices;
+using KassaSystemet.Menus.MenuPageHandlers;
 using KassaSystemet.Models;
 using KassaSystemet.Strategy;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KassaSystemet.MenuPages
+namespace KassaSystemet.Menus.MenuPages
 {
     public enum AdminMenuEnum
     {
@@ -35,7 +35,7 @@ namespace KassaSystemet.MenuPages
         private static AdminMenuHandler adminMenuHandler;
         private IFileManager _fileManagerStrategy;
         private IUserInputHandler _userInputHandler;
-        private Dictionary<AdminMenuEnum, string> _adminMenuDisplayNames = new Dictionary<AdminMenuEnum, string>()
+        private Dictionary<AdminMenuEnum, string> _adminMenu = new Dictionary<AdminMenuEnum, string>()
         {
             {AdminMenuEnum.First, "Add a new product to the system." },
             {AdminMenuEnum.Second, "Display available products in the system." },
@@ -68,7 +68,7 @@ namespace KassaSystemet.MenuPages
         {
             Console.Clear();
             Console.WriteLine("**Admin menu**\nChoose an option below.");
-            foreach (var item in _adminMenuDisplayNames)
+            foreach (var item in _adminMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
             }
