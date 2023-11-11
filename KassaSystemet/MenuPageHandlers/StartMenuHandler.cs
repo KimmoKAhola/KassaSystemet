@@ -8,46 +8,61 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using KassaSystemet.MenuPages;
 
 namespace KassaSystemet.MenuPageServices
 {
     public class StartMenuHandler : IMenuHandler
     {
-        private readonly MenuFactory _menuFactory;
-        private IMenuHandler _menu;
         public StartMenuHandler(MenuFactory menuFactory)
         {
             _menuFactory = menuFactory;
         }
+        private MenuFactory _menuFactory;
+        private IMenuHandler _menu;
+        private Dictionary<StartMenuEnum, string> _menuDisplayNames = new Dictionary<StartMenuEnum, string>()
+        {
+            {StartMenuEnum.First, "Customer Menu." },
+            {StartMenuEnum.Second, "Admin Menu." },
+            {StartMenuEnum.Third, "Info Menu." },
+            {StartMenuEnum.Exit, "Save & Exit." },
+        };
         public void InitializeMenu()
         {
-            string userInput;
+            StartMenuEnum userInput;
             do
             {
-                Console.Clear();
-                Console.WriteLine("***Menu for the cash register***");
-                Console.WriteLine("Choose an option below.");
-                Console.WriteLine("1. New customer");
-                Console.WriteLine("2. Admin tools");
-                Console.WriteLine("0. Save & Exit.");
-                Console.Write("Enter your command: ");
-                userInput = Console.ReadLine();
+                DisplayMenu();
+                userInput = UserInputHandler.GetStartMenuEnum();
                 MenuHandler(userInput);
-            } while (userInput != "0");
+            } while (userInput != StartMenuEnum.Exit);
         }
-        public void MenuHandler(string userInput)
+        public void DisplayMenu()
         {
-            switch (userInput)
+            Console.Clear();
+            Console.WriteLine("Choose an option below.");
+            foreach (var item in _menuDisplayNames)
             {
-                case "1":
-                    _menu = _menuFactory.CreateMenu("Customer Menu");
+                Console.WriteLine($"{(int)item.Key}. {item.Value}");
+            }
+        }
+        public void MenuHandler(StartMenuEnum menuHandlerEnum)
+        {
+            switch (menuHandlerEnum)
+            {
+                case StartMenuEnum.First:
+                    _menu = _menuFactory.CreateMenu(MenuFactoryEnum.CustomerMenu);
                     _menu.InitializeMenu();
                     break;
-                case "2":
-                    _menu = _menuFactory.CreateMenu("Admin Menu");
+                case StartMenuEnum.Second:
+                    _menu = _menuFactory.CreateMenu(MenuFactoryEnum.AdminMenu);
                     _menu.InitializeMenu();
                     break;
-                case "0":
+                case StartMenuEnum.Third:
+                    _menu = _menuFactory.CreateMenu(MenuFactoryEnum.InfoMenu);
+                    _menu.InitializeMenu();
+                    break;
+                case StartMenuEnum.Exit:
                     Environment.Exit(0);
                     break;
                 default:

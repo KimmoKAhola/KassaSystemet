@@ -15,10 +15,9 @@ namespace KassaSystemet.MenuPageServices
         public CustomerMenuHandler()
         {
             _shoppingCart = new List<Purchase>();
-
         }
 
-        public void HandleCustomerMenuOption(string userInput, IFileManager fileManagerStrategy)
+        public void HandleCustomerMenuOption(string userInput, IFileManager fileManagerStrategy, IUserInputHandler userInputHandler)
         {
             switch (userInput.ToUpper())
             {
@@ -26,7 +25,7 @@ namespace KassaSystemet.MenuPageServices
                     Purchase.DisplayPurchases(_shoppingCart);
                     break;
                 case "2":
-                    AddProduct(_shoppingCart);
+                    AddProduct(_shoppingCart, userInputHandler);
                     break;
                 case "3":
                     ProductCatalogue.Instance.DisplayProducts();
@@ -49,9 +48,9 @@ namespace KassaSystemet.MenuPageServices
             Console.Write("Press any key to continue: ");
             Console.ReadKey();
         }
-        private static void AddProduct(List<Purchase> shoppingCart)
+        private static void AddProduct(List<Purchase> shoppingCart, IUserInputHandler userInputHandler)
         {
-            (int id, decimal amount) = UserInputHandler.ProductInput();
+            (int id, decimal amount) = userInputHandler.ProductInput();
             if (amount > 100)
                 Console.WriteLine($"You can not purchase more than {100} of a product!", ConsoleColor.Red);
             else if (ProductCatalogue.Instance.Products.ContainsKey(id))

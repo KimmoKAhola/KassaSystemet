@@ -1,4 +1,5 @@
-﻿using KassaSystemet.Interfaces;
+﻿using KassaSystemet.Factories.ModelFactory;
+using KassaSystemet.Interfaces;
 using KassaSystemet.Models;
 using System;
 using System.Collections.Generic;
@@ -73,7 +74,7 @@ namespace KassaSystemet.Strategy
             Dictionary<int, Product> products = new Dictionary<int, Product>();
             if (File.Exists(FileManagerOperations.CreateProductListFilePathCsv()))
             {
-                var productListInfo = File.ReadAllLines(FileManagerOperations.CreateProductListFilePathCsv());
+                var productListInfo = File.ReadAllLines(FileManagerOperations.CreateProductListFilePathText());
 
                 foreach (var item in productListInfo)
                 {
@@ -81,8 +82,8 @@ namespace KassaSystemet.Strategy
 
                     for (int i = 0; i < columns.Length; i += 4)
                     {
-                        Product p = new Product(columns[i + 1], Convert.ToDecimal(columns[i + 2]), columns[i + 3]);
-                        products.Add(Convert.ToInt32(columns[i]), p);
+                        var product = ModelFactory.CreateProduct(columns[i + 1], Convert.ToDecimal(columns[i + 2]), columns[i + 3]);
+                        products.Add(Convert.ToInt32(columns[i]), product);
                     }
                 }
             }
@@ -107,8 +108,8 @@ namespace KassaSystemet.Strategy
                         string startDate = columns[i];
                         string endDate = columns[i + 1];
                         decimal discountPercentage = Convert.ToDecimal(columns[i + 2]) * 100m;
-                        Discount d = new Discount(startDate, endDate, discountPercentage);
-                        temp[key].AddDiscountToProduct(d);
+                        var discount = ModelFactory.CreateDiscount(startDate, endDate, discountPercentage);
+                        temp[key].AddDiscountToProduct(discount);
                     }
                 }
             }
@@ -120,6 +121,14 @@ namespace KassaSystemet.Strategy
             {
                 receiptWriter.Write(paymentInfo);
             }
+        }
+
+        public string LoadInfoMenu()
+        {
+            var filePath = FileManagerOperations.CreateInfoMenuFilePath();
+
+            var result = File.ReadAllText(filePath);
+            return result;
         }
     }
 }

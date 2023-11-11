@@ -11,5 +11,6 @@ namespace KassaSystemet.Interfaces
     {
         Dictionary<int, Product> LoadProductList();
         void LoadDiscountList();
+        string LoadInfoMenu();
     }
 }

@@ -8,9 +8,10 @@ namespace KassaSystemet
 {
     public static class FileManagerOperations
     {
-        private static readonly string _filesFolderPath = $"../../../Files";
-        private static readonly string _receiptsFolderPath = $"../../../Files/Receipts";
-        private static readonly string _productListFolderPath = $"../../../Files/ProductLists";
+        private static string _filesFolderPath = $"../../../Files";
+        private static string _receiptsFolderPath = $"../../../Files/Receipts";
+        private static string _productListFolderPath = $"../../../Files/ProductLists";
+        private static string _seededDataFolderPath = $"../../../Data Seeding";
         public static void CreateFolders()
         {
             CreateDirectoryIfNotExists(_filesFolderPath);
@@ -24,6 +25,7 @@ namespace KassaSystemet
         }
         public static string CreateReceiptFilePath() => $"{_receiptsFolderPath}/RECEIPT_{DateTime.Now.ToString("yyyyMMdd")}.txt";
         public static string CreateReceiptIDFilePath() => $"{_receiptsFolderPath}/RECEIPT_ID.txt";
+        public static string CreateInfoMenuFilePath() => $"{_seededDataFolderPath}/infoMenu.txt";
         public static string CreateDiscountListFilePath() => $"{_productListFolderPath}/DISCOUNT_LIST_ADMIN.txt";
         public static string CreateProductListFilePathText() => $"{_productListFolderPath}/PRODUCT_LIST_ADMIN.txt";
         public static string CreateProductListFilePathCsv() => $"{_productListFolderPath}/PRODUCT_LIST_ADMIN.csv";

@@ -1,4 +1,5 @@
 ﻿using KassaSystemet.Interfaces;
+using KassaSystemet.MenuPageServices;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using KassaSystemet.MenuPages;
 
 namespace KassaSystemet
 {
@@ -119,6 +121,46 @@ namespace KassaSystemet
                     return userInput;
                 else
                     Console.WriteLine("Invalid price type. Please enter 'per kg' or 'per unit'.");
+            }
+        }
+
+        public static StartMenuEnum GetStartMenuEnum()
+        {
+            while (true)
+            {
+                Console.Write("Enter your command: ");
+                string userInput = Console.ReadLine();
+                if (IsValidEnumInput(userInput, out StartMenuEnum result))
+                    return result;
+                else
+                    PrintErrorMessage();
+            }
+        }
+
+        public AdminMenuEnum GetAdminMenuEnum()
+        {
+            while (true)
+            {
+                Console.Write("Enter your command: ");
+                string userInput = Console.ReadLine();
+                if (IsValidEnumInput(userInput, out AdminMenuEnum result))
+                    return result;
+                else
+                    PrintErrorMessage();
+            }
+        }
+        private static bool IsValidEnumInput(string userInput, out StartMenuEnum result)
+        {
+            while (true)
+            {
+                return Enum.TryParse(userInput, out result);
+            }
+        }
+        private static bool IsValidEnumInput(string userInput, out AdminMenuEnum result)
+        {
+            while (true)
+            {
+                return Enum.TryParse(userInput, out result);
             }
         }
         private static void PrintErrorMessage()
