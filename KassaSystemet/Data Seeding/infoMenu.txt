@@ -1,4 +1,18 @@
-HEJ, här finns det massa häftig information om mig som har skapat detta kassasystem.
+Art modified from https://www.asciiart.eu/computers/computers
+           __________                                 
+         .'----------`.                              
+         | .--------. |                             
+         | |C# CASH | |       __________              
+         | |REGISTER| |      /__________\             
+.--------| `--------' |------|    --=-- |-------------.
+|        `----,-.-----'      |o ======  |             | 
+|       ______|_|_______     |__________|             | 
+|      /  %%%%%%%%%%%%  \    Created by Kimmo Ahola   | 
+|     /  %%%%%%%%%%%%%%  \   Student at KYH, year 2023| 
+|     ^^^^^^^^^^^^^^^^^^^^   Studying .NET developer  | 
++-----------------------------------------------------+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+This cash register system has been created by Kimmo Ahola, a .NET student
+at KYH, during autumn 2023 for the C# programming course.
 
-Visste du att: blablablabla....
 Press any key to continue....
