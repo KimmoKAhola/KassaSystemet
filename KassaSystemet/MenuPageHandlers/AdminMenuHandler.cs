@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using KassaSystemet.Factories.ModelFactory;
 using KassaSystemet.Interfaces;
 using KassaSystemet.Models;
+using KassaSystemet.MenuPages;
 
 namespace KassaSystemet.MenuPageServices
 {
@@ -16,39 +17,39 @@ namespace KassaSystemet.MenuPageServices
         public AdminMenuHandler()
         {
         }
-        public bool HandleAdminMenuOption(string userInput, IUserInputHandler userInputHandler)
+        public bool HandleAdminMenuOption(AdminMenuEnum adminMenuHandlerEnum, IUserInputHandler userInputHandler)
         {
             bool _isChanged = false;
-            switch (userInput)
+            switch (adminMenuHandlerEnum)
             {
-                case "1":
+                case AdminMenuEnum.First:
                     AddNewProduct(ref _isChanged, userInputHandler);
                     break;
-                case "2":
+                case AdminMenuEnum.Second:
                     DisplayAvailableProducts();
                     break;
-                case "3":
+                case AdminMenuEnum.Third:
                     ChangeProductPrice(ref _isChanged, userInputHandler);
                     break;
-                case "4":
+                case AdminMenuEnum.Fourth:
                     ChangeProductName(ref _isChanged, userInputHandler);
                     break;
-                case "5":
+                case AdminMenuEnum.Fifth:
                     AddProductDiscount(ref _isChanged, userInputHandler);
                     break;
-                case "6":
+                case AdminMenuEnum.Sixth:
                     DisplayProductDiscount(userInputHandler);
                     break;
-                case "7":
+                case AdminMenuEnum.Seventh:
                     DisplayAllDiscounts();
                     break;
-                case "8":
+                case AdminMenuEnum.Eighth:
                     RemoveProductDiscount(ref _isChanged, userInputHandler);
                     break;
-                case "9":
+                case AdminMenuEnum.Ninth:
                     RemoveProduct(ref _isChanged, userInputHandler);
                     break;
-                case "0":
+                case AdminMenuEnum.Exit:
                     Console.WriteLine("Return to the main menu.");
                     break;
                 default:

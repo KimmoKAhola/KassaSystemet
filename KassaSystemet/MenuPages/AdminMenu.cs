@@ -11,24 +11,50 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.MenuPages
 {
+    public enum AdminMenuEnum
+    {
+        First = 1,
+        Second,
+        Third,
+        Fourth,
+        Fifth,
+        Sixth,
+        Seventh,
+        Eighth,
+        Ninth,
+        Exit
+    }
     public class AdminMenu : IMenuHandler
     {
-        private static AdminMenuHandler adminMenuHandler;
-        private IFileManager _fileManagerStrategy;
-        private IUserInputHandler _userInputHandler;
         public AdminMenu(IFileManager strategy, IUserInputHandler userInputHandler)
         {
             _fileManagerStrategy = strategy;
             _userInputHandler = userInputHandler;
             adminMenuHandler ??= new AdminMenuHandler();
         }
+        private static AdminMenuHandler adminMenuHandler;
+        private IFileManager _fileManagerStrategy;
+        private IUserInputHandler _userInputHandler;
+        private Dictionary<AdminMenuEnum, string> _adminMenuDisplayNames = new Dictionary<AdminMenuEnum, string>()
+        {
+            {AdminMenuEnum.First, "Add a new product to the system." },
+            {AdminMenuEnum.Second, "Display available products in the system." },
+            {AdminMenuEnum.Third, "Change a product's price." },
+            {AdminMenuEnum.Fourth, "Change a product's name." },
+            {AdminMenuEnum.Fifth, "Add a new discount to the system." },
+            {AdminMenuEnum.Sixth, "Display all available discounts for a specific product." },
+            {AdminMenuEnum.Seventh, "Display all available discounts in the system." },
+            {AdminMenuEnum.Eighth, "Remove a specific discount from a product." },
+            {AdminMenuEnum.Ninth, "Remove a product from the system." },
+            {AdminMenuEnum.Exit, "Return to the main menu." },
+        };
         public void InitializeMenu()
         {
-            string userInput;
+            AdminMenuEnum userInput;
             do
             {
                 DisplayMenu();
-                userInput = Console.ReadLine();
+                userInput = _userInputHandler.GetAdminMenuEnum();
                 bool isChanged = adminMenuHandler.HandleAdminMenuOption(userInput, _userInputHandler);
                 if (isChanged)
                 {
@@ -36,27 +62,16 @@ namespace KassaSystemet.MenuPages
                     _fileManagerStrategy.SaveProductCatalogueToTextFile(ProductCatalogue.Instance.Products);
                     _fileManagerStrategy.SaveDiscountList(ProductCatalogue.Instance.Products);
                 }
-                Console.ResetColor();
-                Console.Write("Press any key to continue: ");
-                Console.ReadKey();
-
-            } while (userInput != "0");
+            } while (userInput != AdminMenuEnum.Exit);
         }
         public void DisplayMenu()
         {
             Console.Clear();
-            Console.WriteLine("Admin menu");
-            Console.WriteLine("1. Add a new product to the system\n" +
-                "2. Display available products in the system\n" +
-                "3. Change price on a product\n" +
-                "4. Change name on a product\n" +
-                "5. Add a discount for a product\n" +
-                "6. Display all available discounts for a single product\n" +
-                "7. Display all available discounts in the system\n" +
-                "8. Remove a discount from a product.\n" +
-                "9. Remove a product from the product list\n" +
-                "0. Exit admin menu");
-            Console.Write("Enter a command: ");
+            Console.WriteLine("**Admin menu**\nChoose an option below.");
+            foreach (var item in _adminMenuDisplayNames)
+            {
+                Console.WriteLine($"{(int)item.Key}. {item.Value}");
+            }
         }
 
         private static void GetSaveFormat(IFileManager _fileManagerStrategy)

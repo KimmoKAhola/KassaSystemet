@@ -6,6 +6,13 @@ using KassaSystemet.Strategy;
 
 namespace KassaSystemet.MenuPages
 {
+    public enum StartMenuEnum
+    {
+        First = 1,
+        Second,
+        Third,
+        Exit
+    }
     public class StartMenu
     {
         private MenuFactory _menuFactory;

@@ -8,41 +8,34 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using KassaSystemet.MenuPages;
 
 namespace KassaSystemet.MenuPageServices
 {
-    public enum MenuHandlerEnum
-    {
-        first = 1,
-        second,
-        third,
-        exit
-    }
     public class StartMenuHandler : IMenuHandler
     {
-        private MenuFactory _menuFactory;
-        private IMenuHandler _menu;
-        private MenuHandlerEnum _MenuHandlerEnum;
-        private Dictionary<MenuHandlerEnum, string> _menuDisplayNames = new Dictionary<MenuHandlerEnum, string>()
-        {
-            {MenuHandlerEnum.first, "Customer Menu." },
-            {MenuHandlerEnum.second, "Admin Menu." },
-            {MenuHandlerEnum.third, "Info Menu." },
-            {MenuHandlerEnum.exit, "Save & Exit." },
-        };
         public StartMenuHandler(MenuFactory menuFactory)
         {
             _menuFactory = menuFactory;
         }
+        private MenuFactory _menuFactory;
+        private IMenuHandler _menu;
+        private Dictionary<StartMenuEnum, string> _menuDisplayNames = new Dictionary<StartMenuEnum, string>()
+        {
+            {StartMenuEnum.First, "Customer Menu." },
+            {StartMenuEnum.Second, "Admin Menu." },
+            {StartMenuEnum.Third, "Info Menu." },
+            {StartMenuEnum.Exit, "Save & Exit." },
+        };
         public void InitializeMenu()
         {
-            MenuHandlerEnum userInput;
+            StartMenuEnum userInput;
             do
             {
                 DisplayMenu();
-                userInput = UserInputHandler.GetUserEnum();
+                userInput = UserInputHandler.GetStartMenuEnum();
                 MenuHandler(userInput);
-            } while (userInput != MenuHandlerEnum.exit);
+            } while (userInput != StartMenuEnum.Exit);
         }
         public void DisplayMenu()
         {
@@ -53,23 +46,23 @@ namespace KassaSystemet.MenuPageServices
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
             }
         }
-        public void MenuHandler(MenuHandlerEnum menuHandlerEnum)
+        public void MenuHandler(StartMenuEnum menuHandlerEnum)
         {
             switch (menuHandlerEnum)
             {
-                case MenuHandlerEnum.first:
+                case StartMenuEnum.First:
                     _menu = _menuFactory.CreateMenu(MenuFactoryEnum.CustomerMenu);
                     _menu.InitializeMenu();
                     break;
-                case MenuHandlerEnum.second:
+                case StartMenuEnum.Second:
                     _menu = _menuFactory.CreateMenu(MenuFactoryEnum.AdminMenu);
                     _menu.InitializeMenu();
                     break;
-                case MenuHandlerEnum.third:
+                case StartMenuEnum.Third:
                     _menu = _menuFactory.CreateMenu(MenuFactoryEnum.InfoMenu);
                     _menu.InitializeMenu();
                     break;
-                case MenuHandlerEnum.exit:
+                case StartMenuEnum.Exit:
                     Environment.Exit(0);
                     break;
                 default:
