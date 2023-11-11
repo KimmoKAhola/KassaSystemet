@@ -1,6 +1,8 @@
-﻿using System;
+﻿using KassaSystemet.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -8,98 +10,122 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet
 {
-    public static class UserInputHandler
+    public class UserInputHandler : IUserInputHandler
     {
-        public static (int first, decimal second) ProductInput()
+        public (int, decimal) ProductInput()
         {
-            int id;
-            decimal amount;
             while (true)
             {
-                Console.ResetColor();
-                Console.Write("Enter product id and an amount larger than 0: ");
+                Console.Write("Enter product id and a product amount larger than 0: ");
                 string[] userInput = Console.ReadLine().Split(' ');
 
-                if (userInput.Length == 2 && int.TryParse(userInput[0], out id) && decimal.TryParse(userInput[1], out amount) && amount > 0)
+                if (IsValidInput(userInput, out int id, out decimal amount))
                     return (id, amount);
                 else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid input. Please enter an integer and a decimal value separated by a space.");
-                }
+                    PrintErrorMessage();
             }
         }
-        public static int ProductIdInput()
+
+        private static bool IsValidInput(string[] userInput, out int productId, out decimal productAmount)
         {
-            int userInput = 0;
+            productId = 0;
+            productAmount = 0;
+
+            return (userInput.Length == 2 && int.TryParse(userInput[0], out productId) && decimal.TryParse(userInput[1], out productAmount) && productAmount > 0);
+        }
+
+        public int ProductIdInput()
+        {
             while (true)
             {
-                Console.Write("Enter a product id: ");
-                if (int.TryParse(Console.ReadLine(), out int number) && number <= 999 && number >= 100)
-                {
-                    userInput = number;
-                    break;
-                }
+                Console.Write("Enter a 3-digit product id: ");
+                string userInput = Console.ReadLine();
+
+                if (IsValidInput(userInput))
+                    return Convert.ToInt32(userInput);
                 else
-                    Console.WriteLine("Incorrect input. Please enter a 3-digit product ID.");
+                    PrintErrorMessage();
             }
-            return userInput;
         }
-        public static (string startDate, string endDate, decimal discountPercentage) DiscountInput()
+
+        private static bool IsValidInput(string userInput)
+        {
+            return int.TryParse(userInput, out int productId) && productId <= 999 && productId >= 100;
+        }
+        public (string, string, decimal) DiscountInput()
         {
             while (true)
             {
-                Console.ResetColor();
                 Console.Write("Enter a start date, end date and percentage (yyyy-MM-dd) (yyyy-MM-dd) (percentage) separated by a space: " +
                     "\nExample: 2023-09-10 2023-09-15 75: ");
                 string[] userInput = Console.ReadLine().Split(' ');
 
-                if (userInput.Length == 3 &&
-                    DateOnly.TryParseExact(userInput[0], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateOnly startDate) &&
-                    DateOnly.TryParseExact(userInput[1], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateOnly endDate) &&
-                    decimal.TryParse(userInput[2], out decimal discountPercentage))
-                {
+                if (IsValidInput(userInput, out DateOnly startDate, out DateOnly endDate, out decimal discountPercentage))
                     return (startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), discountPercentage);
-                }
                 else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid input. Please enter valid dates (yyyy-MM-dd) and a valid percentage value separated by spaces.");
-                }
+                    PrintErrorMessage();
             }
         }
-        public static (string productName, decimal price, string priceType) NewProduct()
+
+        private static bool IsValidInput(string[] userInput, out DateOnly startDate, out DateOnly endDate, out decimal discountPercentage)
+        {
+            startDate = default;
+            endDate = default;
+            discountPercentage = 0m;
+
+            return (userInput.Length == 3 &&
+                    DateOnly.TryParseExact(userInput[0], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate) &&
+                    DateOnly.TryParseExact(userInput[1], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out endDate) &&
+                    decimal.TryParse(userInput[2], out discountPercentage));
+        }
+        public (string, decimal, string) NewProduct()
+        {
+            string productName = GetValidProductName();
+            decimal price = GetValidProductPrice();
+            string priceType = GetValidProductPriceType();
+
+            return (productName, price, priceType);
+        }
+        private static string GetValidProductName()
         {
             string productName = "";
-            decimal price;
-            string priceType;
-
             while (productName.Length <= 1)
             {
                 Console.Write("Enter a product name, at least 2 character long: ");
                 productName = Console.ReadLine();
             }
-            Console.Write("Enter a price: ");
+            return productName;
+        }
+
+        private static decimal GetValidProductPrice()
+        {
+            decimal price;
+            Console.Write($"Enter a price above {0:C2}: ");
             while (!decimal.TryParse(Console.ReadLine(), out price) || price <= 0)
             {
-                Console.WriteLine("Price must be a positive decimal value. Please try again.");
-                Console.Write("Enter a price: ");
+                PrintErrorMessage();
             }
+            return price;
+        }
 
+        private static string GetValidProductPriceType()
+        {
             while (true)
             {
                 Console.Write("Enter a product price type (per kg/per unit): ");
                 string userInput = Console.ReadLine().ToLower();
 
                 if (userInput == "per kg" || userInput == "per unit")
-                {
-                    priceType = userInput;
-                    break;
-                }
+                    return userInput;
                 else
                     Console.WriteLine("Invalid price type. Please enter 'per kg' or 'per unit'.");
             }
-            return (productName, price, priceType);
+        }
+        private static void PrintErrorMessage()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Invalid input. Please enter your input as prompted.");
+            Console.ResetColor();
         }
     }
 }
