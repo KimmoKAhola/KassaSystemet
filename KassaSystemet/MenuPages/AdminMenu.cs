@@ -15,10 +15,11 @@ namespace KassaSystemet.MenuPages
     {
         private static AdminMenuHandler adminMenuHandler;
         private IFileManager _fileManagerStrategy;
+        private IUserInputHandler _userInputHandler;
         public AdminMenu(IFileManager strategy)
         {
             _fileManagerStrategy = strategy;
-            adminMenuHandler ??= new AdminMenuHandler();
+            adminMenuHandler ??= new AdminMenuHandler(_userInputHandler);
         }
         public void InitializeMenu()
         {
@@ -39,7 +40,7 @@ namespace KassaSystemet.MenuPages
                     "0. Exit admin menu");
                 Console.Write("Enter a command: ");
                 userInput = Console.ReadLine();
-                bool isChanged = adminMenuHandler.HandleAdminMenuOption(userInput);
+                bool isChanged = adminMenuHandler.HandleAdminMenuOption(userInput, _userInputHandler);
                 if (isChanged)
                 {
                     GetSaveFormat(_fileManagerStrategy);

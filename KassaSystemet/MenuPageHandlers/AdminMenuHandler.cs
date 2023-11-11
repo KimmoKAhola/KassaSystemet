@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KassaSystemet.Factories.ModelFactory;
+using KassaSystemet.Interfaces;
 using KassaSystemet.Models;
 
 namespace KassaSystemet.MenuPageServices
@@ -12,40 +13,48 @@ namespace KassaSystemet.MenuPageServices
     {
         private ProductCatalogue productCatalogue = ProductCatalogue.Instance;
         private ModelFactory _modelFactory;
-        public AdminMenuHandler()
+        private List<Purchase> _shoppingCart;
+        private IUserInputHandler _userInputHandler;
+        //public CustomerMenuHandler(IUserInputHandler userInputHandler)
+        //{
+        //    _shoppingCart = new List<Purchase>();
+        //    _userInputHandler = userInputHandler;
+        //}
+        public AdminMenuHandler(IUserInputHandler userInputHandler)
         {
+            _userInputHandler = userInputHandler;
         }
-        public bool HandleAdminMenuOption(string userInput)
+        public bool HandleAdminMenuOption(string userInput, IUserInputHandler userInputHandler)
         {
             bool _isChanged = false;
             switch (userInput)
             {
                 case "1":
-                    AddNewProduct(ref _isChanged);
+                    AddNewProduct(ref _isChanged, userInputHandler);
                     break;
                 case "2":
                     DisplayAvailableProducts();
                     break;
                 case "3":
-                    ChangeProductPrice(ref _isChanged);
+                    ChangeProductPrice(ref _isChanged, userInputHandler);
                     break;
                 case "4":
-                    ChangeProductName(ref _isChanged);
+                    ChangeProductName(ref _isChanged, userInputHandler);
                     break;
                 case "5":
-                    AddProductDiscount(ref _isChanged);
+                    AddProductDiscount(ref _isChanged, userInputHandler);
                     break;
                 case "6":
-                    DisplayProductDiscount();
+                    DisplayProductDiscount(userInputHandler);
                     break;
                 case "7":
                     DisplayAllDiscounts();
                     break;
                 case "8":
-                    RemoveProductDiscount(ref _isChanged);
+                    RemoveProductDiscount(ref _isChanged, userInputHandler);
                     break;
                 case "9":
-                    RemoveProduct(ref _isChanged);
+                    RemoveProduct(ref _isChanged, userInputHandler);
                     break;
                 case "0":
                     Console.WriteLine("Return to the main menu.");
@@ -58,12 +67,12 @@ namespace KassaSystemet.MenuPageServices
             }
             return _isChanged;
         }
-        private void AddNewProduct(ref bool isChanged)
+        private void AddNewProduct(ref bool isChanged, IUserInputHandler userInputHandler)
         {
-            int productId = UserInputHandler.ProductIdInput();
+            int productId = userInputHandler.ProductIdInput();
             if (!productCatalogue.Products.ContainsKey(productId))
             {
-                productCatalogue.AddNewProduct(productId);
+                productCatalogue.AddNewProduct(productId, userInputHandler);
                 isChanged = true;
             }
             else
@@ -74,9 +83,9 @@ namespace KassaSystemet.MenuPageServices
             Console.WriteLine("These are the available products in the system: ");
             productCatalogue.DisplayProducts();
         }
-        private void ChangeProductPrice(ref bool isChanged)
+        private void ChangeProductPrice(ref bool isChanged, IUserInputHandler userInputHandler)
         {
-            int productId = UserInputHandler.ProductIdInput();
+            int productId = userInputHandler.ProductIdInput();
             if (productCatalogue.Products.ContainsKey(productId))
             {
                 productCatalogue.Products[productId].ChangeProductPrice();
@@ -85,9 +94,9 @@ namespace KassaSystemet.MenuPageServices
             else
                 Console.WriteLine($"The product id {productId} does not exist.", Console.ForegroundColor = ConsoleColor.Red);
         }
-        private void ChangeProductName(ref bool isChanged)
+        private void ChangeProductName(ref bool isChanged, IUserInputHandler userInputHandler)
         {
-            int productId = UserInputHandler.ProductIdInput();
+            int productId = userInputHandler.ProductIdInput();
             if (productCatalogue.Products.ContainsKey(productId))
             {
                 productCatalogue.Products[productId].ChangeProductName();
@@ -96,21 +105,21 @@ namespace KassaSystemet.MenuPageServices
             else
                 Console.WriteLine($"The product id {productId} does not exist.", Console.ForegroundColor = ConsoleColor.Red);
         }
-        private void AddProductDiscount(ref bool isChanged)
+        private void AddProductDiscount(ref bool isChanged, IUserInputHandler userInputHandler)
         {
-            int productId = UserInputHandler.ProductIdInput();
+            int productId = userInputHandler.ProductIdInput();
 
             if (productCatalogue.Products.ContainsKey(productId))
             {
-                productCatalogue.AddNewDiscount(productId);
+                productCatalogue.AddNewDiscount(productId, userInputHandler);
                 isChanged = true;
             }
             else
                 Console.WriteLine($"The product id {productId} does not exist.", Console.ForegroundColor = ConsoleColor.Red);
         }
-        private void DisplayProductDiscount()
+        private void DisplayProductDiscount(IUserInputHandler userInputHandler)
         {
-            int productId = UserInputHandler.ProductIdInput();
+            int productId = userInputHandler.ProductIdInput();
             if (productCatalogue.ContainsDiscount(productId))
                 productCatalogue.Products[productId].Display();
             else
@@ -119,9 +128,9 @@ namespace KassaSystemet.MenuPageServices
             }
         }
         private static void DisplayAllDiscounts() => ProductCatalogue.DisplayAllDiscounts();
-        private void RemoveProductDiscount(ref bool isChanged)
+        private void RemoveProductDiscount(ref bool isChanged, IUserInputHandler userInputHandler)
         {
-            int productId = UserInputHandler.ProductIdInput();
+            int productId = userInputHandler.ProductIdInput();
             if (productCatalogue.ContainsDiscount(productId))
             {
                 productCatalogue.Products[productId].RemoveDiscount();
@@ -130,9 +139,9 @@ namespace KassaSystemet.MenuPageServices
             else
                 Console.WriteLine($"The product id {productId} does not have a discount available.", Console.ForegroundColor = ConsoleColor.Red);
         }
-        private void RemoveProduct(ref bool isChanged)
+        private void RemoveProduct(ref bool isChanged, IUserInputHandler userInputHandler)
         {
-            int productId = UserInputHandler.ProductIdInput();
+            int productId = userInputHandler.ProductIdInput();
             if (productCatalogue.Products.ContainsKey(productId))
             {
                 productCatalogue.RemoveProduct(productId);

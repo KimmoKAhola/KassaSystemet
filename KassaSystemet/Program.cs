@@ -14,7 +14,7 @@ namespace KassaSystemet
             GetValidProductPriceType();
             IFileManager fileManager = new FileManager(new FileManagerStrategy());
             MenuFactory menuFactory = new MenuFactory(fileManager);
-            ModelFactory modelFactory = new ModelFactory();
+            ModelFactory modelFactory = new ModelFactory(); //TODO remove?
             var myApp = new App(menuFactory);
             myApp.Run();
         }

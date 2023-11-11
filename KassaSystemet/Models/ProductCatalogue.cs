@@ -11,6 +11,7 @@ namespace KassaSystemet.Models
     {
         FileManager _fileManager = new FileManager(new FileManagerStrategy());
         ModelFactory _modelFactory;
+        private IUserInputHandler _userInputHandler;
         private ProductCatalogue()
         {
             _modelFactory = new ModelFactory();
@@ -57,21 +58,28 @@ namespace KassaSystemet.Models
             }
             return productDatabase;
         }
-        public void AddNewProduct(int productId)
+        public void AddNewProduct(int productId, IUserInputHandler userInputHandler)
         {
-            var info = UserInputHandler.NewProduct();
-            var product = _modelFactory.CreateProduct(info.productName, info.price, $"{info.priceType}");
+            var info = userInputHandler.NewProduct();
+            var productName = info.Item1;
+            var price = info.Item2;
+            var priceType = info.Item3;
+            var product = _modelFactory.CreateProduct(productName, price, $"{priceType}");
             Products.Add(productId, product);
             Console.WriteLine($"Added the product {product.ProductName} with ID [{productId}] to the system.", Console.ForegroundColor = ConsoleColor.Green);
         }
-        public void AddNewDiscount(int productId)
+        public void AddNewDiscount(int productId, IUserInputHandler userInputHandler)
         {
-            var info = UserInputHandler.DiscountInput();
-            if (info.startDate.CompareTo(info.endDate) < 0)
+            var info = userInputHandler.DiscountInput();
+            var startDate = info.Item1;
+            var endDate = info.Item2;
+            var discountPercentage = info.Item3;
+
+            if (startDate.CompareTo(endDate) < 0)
             {
-                var discount = _modelFactory.CreateDiscount(info.startDate, info.endDate, info.discountPercentage);
+                var discount = _modelFactory.CreateDiscount(startDate, endDate, discountPercentage);
                 Products[productId].AddDiscountToProduct(discount);
-                Console.WriteLine($"Your discount {info.startDate}-{info.endDate} {info.discountPercentage} % has been added.", Console.ForegroundColor = ConsoleColor.Green);
+                Console.WriteLine($"Your discount {startDate}-{endDate} {discountPercentage} % has been added.", Console.ForegroundColor = ConsoleColor.Green);
             }
             else
                 Console.WriteLine("The discount's start date can not be after later than the end date. Your discount has not been added.", Console.ForegroundColor = ConsoleColor.Red);
