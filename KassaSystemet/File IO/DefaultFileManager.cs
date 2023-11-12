@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KassaSystemet.Strategy
+namespace KassaSystemet.File_IO
 {
     public class DefaultFileManager : IFileManager
     {

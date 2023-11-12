@@ -1,6 +1,6 @@
 ﻿using KassaSystemet.Interfaces;
 using KassaSystemet.Models;
-using KassaSystemet.Strategy;
+using KassaSystemet.File_IO;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;

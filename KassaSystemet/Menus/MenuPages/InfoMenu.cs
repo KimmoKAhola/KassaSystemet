@@ -1,5 +1,5 @@
 ﻿using KassaSystemet.Interfaces;
-using KassaSystemet.Strategy;
+using KassaSystemet.File_IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

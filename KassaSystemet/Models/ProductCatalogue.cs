@@ -2,7 +2,7 @@
 using KassaSystemet.Interfaces;
 using System.Diagnostics;
 using System.IO;
-using KassaSystemet.Strategy;
+using KassaSystemet.File_IO;
 using KassaSystemet.Factories.ModelFactory;
 
 namespace KassaSystemet.Models
