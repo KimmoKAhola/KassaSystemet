@@ -23,7 +23,5 @@ namespace KassaSystemet
         public Dictionary<int, Product> LoadProductListFromFile() => _fileManagerStrategy.LoadProductListFromFile();
         public void LoadDiscountListFromFile() => _fileManagerStrategy.LoadDiscountListFromFile();
         public string LoadInfoMenuFromFile() => _fileManagerStrategy.LoadInfoMenuFromFile();
-
-        //List<Discount> ILoad.LoadDiscountListFromFile() => _fileManagerStrategy.LoadDiscountListFromFile();
     }
 }

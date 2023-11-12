@@ -14,18 +14,22 @@ namespace KassaSystemet
 {
     public class App
     {
-        public App()
+
+        private MenuFactory _menuFactory;
+        private IFileManager _fileManager;
+
+        public App(MenuFactory menuFactory, IFileManager fileManager)
         {
+            _menuFactory = menuFactory;
+            _fileManager = fileManager;
         }
+
         public void StartApp()
         {
-            IFileManager fileManager = new FileManager(new DefaultFileManager());
-            IUserInputHandler userInputHandler = new UserInputHandler();
-            MenuFactory menuFactory = new MenuFactory(fileManager, userInputHandler);
             FileManagerOperations.CreateFolders();
-            fileManager.LoadDiscountListFromFile();
+            _fileManager.LoadDiscountListFromFile();
 
-            AppHandler startMenuOptions = new AppHandler(menuFactory);
+            AppHandler startMenuOptions = new AppHandler(_menuFactory);
             startMenuOptions.InitializeMenu();
         }
     }

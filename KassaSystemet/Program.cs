@@ -1,4 +1,5 @@
 ﻿
+using Autofac;
 using KassaSystemet.Factories.MenuFactory;
 using KassaSystemet.Factories.ModelFactory;
 using KassaSystemet.File_IO;
@@ -13,15 +14,21 @@ namespace KassaSystemet
     {
         static void Main(string[] args)
         {
-            //IFileManager fileManager = new FileManager(new DefaultFileManager());
+            var builder = new ContainerBuilder();
 
-            //IUserInputHandler userInputHandler = new UserInputHandler();
+            builder.RegisterType<DefaultFileManager>().As<IFileManager>();
+            builder.RegisterType<UserInputHandler>().As<IUserInputHandler>();
+            builder.RegisterType<MenuFactory>().AsSelf();
+            builder.RegisterType<AppHandler>().AsSelf();
+            builder.RegisterType<App>().AsSelf();
 
-            //MenuFactory menuFactory = new MenuFactory(fileManager, userInputHandler);
+            var container = builder.Build();
 
-            //var myApp = new App(menuFactory, fileManager);
-            var myApp = new App();
-            myApp.StartApp();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<App>();
+                app.StartApp();
+            }
         }
     }
 }

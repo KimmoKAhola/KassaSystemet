@@ -26,7 +26,6 @@ namespace KassaSystemet.Strategy
                 writer.Write(discountInfo);
             }
         }
-
         private string FormatDiscountList()
         {
             var allDiscountedProducts = Product.GetDiscountForSingleProduct(ProductCatalogue.Instance.Products).ToList();

@@ -26,8 +26,6 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             _menuFactory = menuFactory;
         }
         private MenuFactory _menuFactory;
-        //private IFileManager _fileManager;
-        //private IUserInputHandler _userInputHandler;
         private IMenu _menu;
         private Dictionary<StartMenuEnum, string> _startMenu = new Dictionary<StartMenuEnum, string>()
         {
