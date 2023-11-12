@@ -1,4 +1,5 @@
 ﻿using KassaSystemet.Factories.ModelFactory;
+using KassaSystemet.File_IO;
 using KassaSystemet.Interfaces;
 using KassaSystemet.Menus.MenuPageHandlers;
 using KassaSystemet.Models;
@@ -24,6 +25,11 @@ namespace KassaSystemet.Menus.MenuPages
         Ninth,
         Exit
     }
+    enum SaveFormatEnum
+    {
+        CSV = 1,
+        JSON
+    }
     public class AdminMenu : IMenuHandler
     {
         public AdminMenu(IFileManager strategy, IUserInputHandler userInputHandler)
@@ -48,6 +54,11 @@ namespace KassaSystemet.Menus.MenuPages
             {AdminMenuEnum.Ninth, "Remove a product from the system." },
             {AdminMenuEnum.Exit, "Return to the main menu." },
         };
+        private Dictionary<SaveFormatEnum, string> _saveMenu = new Dictionary<SaveFormatEnum, string>()
+        {
+            {SaveFormatEnum.CSV, "CSV format" },
+            {SaveFormatEnum.JSON, "JSON format" },
+        };
         public void InitializeMenu()
         {
             AdminMenuEnum userInput;
@@ -58,9 +69,13 @@ namespace KassaSystemet.Menus.MenuPages
                 bool isChanged = adminMenuHandler.HandleAdminMenuOption(userInput, _userInputHandler);
                 if (isChanged)
                 {
-                    GetSaveFormat(_fileManagerStrategy);
-                    _fileManagerStrategy.SaveProductCatalogueToTextFile(ProductCatalogue.Instance.Products);
-                    _fileManagerStrategy.SaveDiscountList(ProductCatalogue.Instance.Products);
+                    if (_fileManagerStrategy is ISave)
+                    {
+                        var temp = _fileManagerStrategy as ISave;
+                        GetSaveFormat(temp);
+                    }
+                    _fileManagerStrategy.SaveProductCatalogueToFile(ProductCatalogue.Instance.Products);
+                    _fileManagerStrategy.SaveDiscountListToFile(ProductCatalogue.Instance.Products);
                 }
             } while (userInput != AdminMenuEnum.Exit);
         }
@@ -73,22 +88,28 @@ namespace KassaSystemet.Menus.MenuPages
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
             }
         }
-
-        private static void GetSaveFormat(IFileManager _fileManagerStrategy)
+        public void DisplaySaveMenu()
         {
-            Console.WriteLine("Choose save format:");
-            Console.WriteLine("1. TXT");
-            Console.WriteLine("2. CSV");
-
+            Console.Clear();
+            Console.WriteLine("Choose an option below.");
+            foreach (var item in _saveMenu)
+            {
+                Console.WriteLine($"{(int)item.Key}. {item.Value}");
+            }
+        }
+        private static void GetSaveFormat(ISave temp)
+        {
+            Console.Write("Choose save format:");
             string userInput = Console.ReadLine();
             if (userInput == "1")
             {
-                _fileManagerStrategy.SaveProductCatalogueToTextFile(ProductCatalogue.Instance.Products);
+                temp = new SaveFileToCSV();
             }
-            else
+            else if (userInput == "2")
             {
-                _fileManagerStrategy.SaveProductCatalogueToCsvFile(ProductCatalogue.Instance.Products); ;
+                temp = new SaveFileToJson();
             }
+            temp.SaveProductCatalogueToFile(ProductCatalogue.Instance.Products);
         }
     }
 }

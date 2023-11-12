@@ -17,13 +17,7 @@ namespace KassaSystemet
         {
             _menuFactory = menuFactory;
         }
-        public void Run()
-        {
-            Console.WindowWidth = 150;
-            Console.WindowHeight = 50;
-            StartApp();
-        }
-        private void StartApp()
+        public void StartApp()
         {
             FileManagerOperations.CreateFolders();
             StartMenu _startMenu = new StartMenu(_menuFactory);

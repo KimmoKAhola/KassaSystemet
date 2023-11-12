@@ -27,7 +27,6 @@ namespace KassaSystemet.Utilities
                     PrintErrorMessage();
             }
         }
-
         private static bool IsValidInput(string[] userInput, out int productId, out decimal productAmount)
         {
             productId = 0;
@@ -35,7 +34,6 @@ namespace KassaSystemet.Utilities
 
             return userInput.Length == 2 && int.TryParse(userInput[0], out productId) && decimal.TryParse(userInput[1], out productAmount) && productAmount > 0;
         }
-
         public int ProductIdInput()
         {
             while (true)
@@ -49,7 +47,6 @@ namespace KassaSystemet.Utilities
                     PrintErrorMessage();
             }
         }
-
         private static bool IsValidInput(string userInput)
         {
             return int.TryParse(userInput, out int productId) && productId <= 999 && productId >= 100;
@@ -68,7 +65,6 @@ namespace KassaSystemet.Utilities
                     PrintErrorMessage();
             }
         }
-
         private static bool IsValidInput(string[] userInput, out DateOnly startDate, out DateOnly endDate, out decimal discountPercentage)
         {
             startDate = default;
@@ -98,7 +94,6 @@ namespace KassaSystemet.Utilities
             }
             return productName;
         }
-
         private static decimal GetValidProductPrice()
         {
             decimal price;
@@ -109,7 +104,6 @@ namespace KassaSystemet.Utilities
             }
             return price;
         }
-
         private static string GetValidProductPriceType()
         {
             while (true)
@@ -123,7 +117,6 @@ namespace KassaSystemet.Utilities
                     Console.WriteLine("Invalid price type. Please enter 'per kg' or 'per unit'.");
             }
         }
-
         public static StartMenuEnum GetStartMenuEnum()
         {
             while (true)
@@ -136,7 +129,6 @@ namespace KassaSystemet.Utilities
                     PrintErrorMessage();
             }
         }
-
         public AdminMenuEnum GetAdminMenuEnum()
         {
             while (true)
@@ -149,7 +141,6 @@ namespace KassaSystemet.Utilities
                     PrintErrorMessage();
             }
         }
-
         public CustomerMenuEnum GetCustomerMenuEnum()
         {
             while (true)

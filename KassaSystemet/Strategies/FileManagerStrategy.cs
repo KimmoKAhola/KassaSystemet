@@ -11,15 +11,6 @@ namespace KassaSystemet.Strategy
 {
     public class FileManagerStrategy : IFileManager
     {
-        public void SaveProductCatalogueToTextFile(Dictionary<int, Product> productCatalogue)
-        {
-            string productString = FormatProductCatalogueToTextFile(productCatalogue);
-            productString = productString.Substring(0, productString.Length - 1);
-            using (StreamWriter productListWriter = new($"{FileManagerOperations.CreateProductListFilePathCsv()}", append: false))
-            {
-                productListWriter.Write(productString);
-            }
-        }
         private static string FormatProductCatalogueToTextFile(Dictionary<int, Product> productCatalogue)
         {
             var formattedProductCatalogue = productCatalogue.OrderBy(x => x.Key).Select(item => $"{item.Key}!{item.Value.ProductName}!{item.Value.UnitPrice}!{item.Value.PriceType}");
@@ -41,7 +32,7 @@ namespace KassaSystemet.Strategy
                 productCsvWriter.Write(csvContent);
             }
         }
-        public void SaveDiscountList(Dictionary<int, Product> productCatalogue)
+        public void SaveDiscountListToFile(Dictionary<int, Product> productCatalogue)
         {
             var allDiscountedProducts = Product.GetDiscountForSingleProduct(productCatalogue).ToList();
             string discountInfo = "";
@@ -69,10 +60,10 @@ namespace KassaSystemet.Strategy
 
             return string.Join("\n", allDiscountedProducts);
         }
-        public Dictionary<int, Product> LoadProductList()
+        public Dictionary<int, Product> LoadProductListFromFile()
         {
             Dictionary<int, Product> products = new Dictionary<int, Product>();
-            if (File.Exists(FileManagerOperations.CreateProductListFilePathCsv()))
+            if (File.Exists(FileManagerOperations.CreateProductListFilePathText()))
             {
                 var productListInfo = File.ReadAllLines(FileManagerOperations.CreateProductListFilePathText());
 
@@ -88,11 +79,11 @@ namespace KassaSystemet.Strategy
                 }
             }
             else
-                products = ProductCatalogue.Instance.SeedProducts();
+                products = ProductCatalogue.SeedProducts();
 
             return products;
         }
-        public void LoadDiscountList()
+        public void LoadDiscountListFromFile()
         {
             var temp = ProductCatalogue.Instance.Products;
             if (File.Exists(FileManagerOperations.CreateDiscountListFilePath()))
@@ -114,7 +105,7 @@ namespace KassaSystemet.Strategy
                 }
             }
         }
-        public void SaveReceipt(string paymentInfo)
+        public void SaveReceiptToFile(string paymentInfo)
         {
             FileManagerOperations.IncrementReceiptCounter();
             using (StreamWriter receiptWriter = new($"{FileManagerOperations.CreateReceiptFilePath()}", append: true))
@@ -123,12 +114,22 @@ namespace KassaSystemet.Strategy
             }
         }
 
-        public string LoadInfoMenu()
+        public string LoadInfoMenuFromFile()
         {
             var filePath = FileManagerOperations.CreateInfoMenuFilePath();
 
             var result = File.ReadAllText(filePath);
             return result;
+        }
+
+        public void SaveProductCatalogueToFile(Dictionary<int, Product> productCatalogue)
+        {
+            string productString = FormatProductCatalogueToTextFile(productCatalogue);
+            productString = productString.Substring(0, productString.Length - 1);
+            using (StreamWriter productListWriter = new($"{FileManagerOperations.CreateProductListFilePathText()}", append: false))
+            {
+                productListWriter.Write(productString);
+            }
         }
     }
 }

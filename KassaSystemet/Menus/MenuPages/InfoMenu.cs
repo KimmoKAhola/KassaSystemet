@@ -24,7 +24,7 @@ namespace KassaSystemet.Menus.MenuPages
         }
         private static string LoadInfo(IFileManager fileManager)
         {
-            return fileManager.LoadInfoMenu();
+            return fileManager.LoadInfoMenuFromFile();
         }
         public void InitializeMenu()
         {

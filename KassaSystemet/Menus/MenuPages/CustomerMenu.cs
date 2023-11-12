@@ -36,7 +36,6 @@ namespace KassaSystemet.Menus.MenuPages
             {CustomerMenuEnum.Pay, "Purchase all products in your shopping cart." },
             {CustomerMenuEnum.Exit, "Exit and clear your current shopping cart." },
         };
-
         public void InitializeMenu()
         {
             CustomerMenuEnum userInput;

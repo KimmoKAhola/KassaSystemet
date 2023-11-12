@@ -16,7 +16,7 @@ namespace KassaSystemet
             IUserInputHandler userInputHandler = new UserInputHandler();
             MenuFactory menuFactory = new MenuFactory(fileManager, userInputHandler);
             var myApp = new App(menuFactory);
-            myApp.Run();
+            myApp.StartApp();
         }
     }
 }

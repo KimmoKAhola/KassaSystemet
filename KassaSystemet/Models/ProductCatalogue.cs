@@ -12,7 +12,7 @@ namespace KassaSystemet.Models
         FileManager _fileManager = new FileManager(new FileManagerStrategy());
         private ProductCatalogue()
         {
-            Products = _fileManager.LoadProductList();
+            Products = _fileManager.LoadProductListFromFile();
         }
         private static ProductCatalogue instance;
         public Dictionary<int, Product> Products { get; }
@@ -39,7 +39,7 @@ namespace KassaSystemet.Models
             "318!Oxfilé!399,99!per kg!" +
             "319!Päron!35,99!per kg!" +
             "320!Pasta!19,99!per unit!";
-        public Dictionary<int, Product> SeedProducts()
+        public static Dictionary<int, Product> SeedProducts()
         {
             Dictionary<int, Product> productDatabase = new();
             string[] products = _wares.Split('!');

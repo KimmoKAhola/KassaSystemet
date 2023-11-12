@@ -13,10 +13,6 @@ namespace KassaSystemet.Menus.MenuPageHandlers
     public class AdminMenuHandler
     {
         private ProductCatalogue productCatalogue = ProductCatalogue.Instance;
-
-        public AdminMenuHandler()
-        {
-        }
         public bool HandleAdminMenuOption(AdminMenuEnum adminMenuHandlerEnum, IUserInputHandler userInputHandler)
         {
             bool _isChanged = false;

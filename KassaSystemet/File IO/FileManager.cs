@@ -17,12 +17,11 @@ namespace KassaSystemet
         {
             _fileManagerStrategy = fileManagerStrategy;
         }
-        public void SaveReceipt(string paymentInfo) => _fileManagerStrategy.SaveReceipt(paymentInfo);
-        public void SaveProductCatalogueToTextFile(Dictionary<int, Product> productCatalogue) => _fileManagerStrategy.SaveProductCatalogueToTextFile(productCatalogue);
-        public void SaveProductCatalogueToCsvFile(Dictionary<int, Product> productCatalogue) => _fileManagerStrategy.SaveProductCatalogueToTextFile(productCatalogue);
-        public void SaveDiscountList(Dictionary<int, Product> productCatalogue) => _fileManagerStrategy.SaveDiscountList(productCatalogue);
-        public Dictionary<int, Product> LoadProductList() => _fileManagerStrategy.LoadProductList();
-        public void LoadDiscountList() => _fileManagerStrategy.LoadDiscountList();
-        public string LoadInfoMenu() => _fileManagerStrategy.LoadInfoMenu();
+        public void SaveReceiptToFile(string paymentInfo) => _fileManagerStrategy.SaveReceiptToFile(paymentInfo);
+        public void SaveProductCatalogueToFile(Dictionary<int, Product> productCatalogue) => _fileManagerStrategy.SaveProductCatalogueToFile(productCatalogue);
+        public void SaveDiscountListToFile(Dictionary<int, Product> productCatalogue) => _fileManagerStrategy.SaveDiscountListToFile(productCatalogue);
+        public Dictionary<int, Product> LoadProductListFromFile() => _fileManagerStrategy.LoadProductListFromFile();
+        public void LoadDiscountListFromFile() => _fileManagerStrategy.LoadDiscountListFromFile();
+        public string LoadInfoMenuFromFile() => _fileManagerStrategy.LoadInfoMenuFromFile();
     }
 }

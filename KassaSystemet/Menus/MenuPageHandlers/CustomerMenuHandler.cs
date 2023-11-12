@@ -34,7 +34,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     break;
                 case CustomerMenuEnum.Pay:
                     string receipt = Purchase.Pay(_shoppingCart);
-                    fileManagerStrategy.SaveReceipt(receipt);
+                    fileManagerStrategy.SaveReceiptToFile(receipt);
                     break;
                 case CustomerMenuEnum.Exit:
                     Console.WriteLine("Returning to the main menu.");

@@ -9,8 +9,8 @@ namespace KassaSystemet.Interfaces
 {
     public interface ILoad
     {
-        Dictionary<int, Product> LoadProductList();
-        void LoadDiscountList();
-        string LoadInfoMenu();
+        Dictionary<int, Product> LoadProductListFromFile();
+        void LoadDiscountListFromFile();
+        string LoadInfoMenuFromFile();
     }
 }

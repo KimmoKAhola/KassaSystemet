@@ -8,11 +8,10 @@ Art modified from https://www.asciiart.eu/computers/computers
 |        `----,-.-----'      |o ======  |             | 
 |       ______|_|_______     |__________|             | 
 |      /  %%%%%%%%%%%%  \    Created by Kimmo Ahola   | 
-|     /  %%%%%%%%%%%%%%  \   Student at KYH, year 2023| 
-|     ^^^^^^^^^^^^^^^^^^^^   Studying .NET developer  | 
+|     /  %%%%%%%%%%%%%%  \   The Whisky-Infused Coder | 
+|     ^^^^^^^^^^^^^^^^^^^^   Student at KYH, year 2023| 
 +-----------------------------------------------------+
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-This cash register system has been created by Kimmo Ahola, a .NET student
-at KYH, during autumn 2023 for the C# programming course.
+  When the code gets quirky, it's just the whisky's influence talking!
+  This cash register system brought to you by Kimmo Ahola, the daring .NET whisky coder.
 
 Press any key to continue....

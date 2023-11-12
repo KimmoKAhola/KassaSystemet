@@ -20,7 +20,6 @@ namespace KassaSystemet.Menus.MenuPages
         {
             _menuFactory = menuFactory;
         }
-
         public void Start()
         {
             StartMenuHandler startMenuOptions = new StartMenuHandler(_menuFactory);
