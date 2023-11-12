@@ -5,7 +5,7 @@ using KassaSystemet.Factories.ModelFactory;
 using KassaSystemet.File_IO;
 using KassaSystemet.Interfaces;
 using KassaSystemet.Menus.MenuPageHandlers;
-using KassaSystemet.Strategy;
+using KassaSystemet.File_IO;
 using KassaSystemet.Utilities;
 
 namespace KassaSystemet

@@ -10,6 +10,7 @@ namespace KassaSystemet.Factories.MenuFactory
     {
         CustomerMenu,
         AdminMenu,
+        PersonalMenu,
         InfoMenu
     }
 }

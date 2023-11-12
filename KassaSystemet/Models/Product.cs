@@ -42,10 +42,7 @@ namespace KassaSystemet.Models
                 Console.WriteLine($"The price has been changed to {price:C2}.");
             }
             else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Incorrect input. The price has not been changed.");
-            }
+                PrintErrorMessage("Incorrect input. The price has not been changed.");
         }
         public decimal GetBestDiscount() => Discounts.Max(discount => discount.DiscountPercentage);
         public void ChangeProductName()
@@ -64,10 +61,7 @@ namespace KassaSystemet.Models
                 Console.WriteLine($"Your product name was too long and has been shortened to {productName.Substring(0, maxProductNameLength)}");
             }
             else
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Your product name has been set to {ProductName}");
-            }
+                PrintErrorMessage("Your product name has been set to {ProductName}");
         }
         public void AddDiscountToProduct(Discount d) => _discount.Add(d);
         public void Display() => Discounts.ForEach(x => Console.WriteLine(x.ToString()));
@@ -92,5 +86,7 @@ namespace KassaSystemet.Models
                 Console.WriteLine("Incorrect input.", Console.ForegroundColor = ConsoleColor.Red);
             }
         }
+        private void PrintErrorMessage(string message) => Console.WriteLine(message);
+        private void PrintSuccessMessage(string message) => Console.WriteLine(message);
     }
 }
