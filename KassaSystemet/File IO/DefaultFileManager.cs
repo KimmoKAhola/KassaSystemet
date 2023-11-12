@@ -17,7 +17,7 @@ namespace KassaSystemet.Strategy
             var formattedProductCatalogue = productCatalogue.OrderBy(x => x.Key).Select(item => $"{item.Key}!{item.Value.ProductName}!{item.Value.UnitPrice}!{item.Value.PriceType}\n");
             return string.Join("", formattedProductCatalogue);
         }
-        public void SaveDiscountListToFile()
+        public void SaveDiscountCatalogueToFile()
         {
             var discountInfo = FormatDiscountList();
 
@@ -26,7 +26,7 @@ namespace KassaSystemet.Strategy
                 writer.Write(discountInfo);
             }
         }
-        private string FormatDiscountList()
+        private static string FormatDiscountList()
         {
             var allDiscountedProducts = Product.GetDiscountForSingleProduct(ProductCatalogue.Instance.Products).ToList();
             StringBuilder discountInfoBuilder = new StringBuilder();
@@ -52,39 +52,46 @@ namespace KassaSystemet.Strategy
             if (File.Exists(FileManagerOperations.CreateProductListFilePathText()))
             {
                 var productListInfo = File.ReadAllLines(FileManagerOperations.CreateProductListFilePathText());
-
-                foreach (var item in productListInfo)
-                {
-                    string[] columns = item.Split('!');
-
-                    var product = ModelFactory.CreateProduct(columns[1], Convert.ToDecimal(columns[2]), columns[3]);
-                    products.Add(Convert.ToInt32(columns[0]), product);
-                }
+                return AddProductsToProductCatalogue(productListInfo);
             }
             else
                 products = ProductCatalogue.SeedProducts();
 
             return products;
         }
+        private static Dictionary<int, Product> AddProductsToProductCatalogue(string[] productListInfo)
+        {
+            Dictionary<int, Product> products = new Dictionary<int, Product>();
+            foreach (var item in productListInfo)
+            {
+                string[] columns = item.Split('!');
+
+                var product = ModelFactory.CreateProduct(columns[1], Convert.ToDecimal(columns[2]), columns[3]);
+                products.Add(Convert.ToInt32(columns[0]), product);
+            }
+            return products;
+        }
         public void LoadDiscountListFromFile()
         {
-            var temp = ProductCatalogue.Instance.Products;
             if (File.Exists(FileManagerOperations.CreateDiscountListFilePath()))
             {
                 var discountListInfo = File.ReadAllLines(FileManagerOperations.CreateDiscountListFilePath());
-
-                foreach (var item in discountListInfo)
+                AddDiscountsToFile(discountListInfo);
+            }
+        }
+        private static void AddDiscountsToFile(string[] discountListInfo)
+        {
+            foreach (var item in discountListInfo)
+            {
+                string[] columns = item.Split('!');
+                int key = Convert.ToInt32(columns[0]);
+                for (int i = 1; i < columns.Length; i += 3)
                 {
-                    string[] columns = item.Split('!');
-                    int key = Convert.ToInt32(columns[0]);
-                    for (int i = 1; i < columns.Length; i += 3)
-                    {
-                        string startDate = columns[i];
-                        string endDate = columns[i + 1];
-                        decimal discountPercentage = Convert.ToDecimal(columns[i + 2]) * 100m;
-                        var discount = ModelFactory.CreateDiscount(startDate, endDate, discountPercentage);
-                        temp[key].AddDiscountToProduct(discount);
-                    }
+                    string startDate = columns[i];
+                    string endDate = columns[i + 1];
+                    decimal discountPercentage = Convert.ToDecimal(columns[i + 2]) * 100m;
+                    var discount = ModelFactory.CreateDiscount(startDate, endDate, discountPercentage);
+                    ProductCatalogue.Instance.Products[key].AddDiscountToProduct(discount);
                 }
             }
         }

@@ -9,24 +9,35 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.File_IO
 {
-    public class SaveFileToJson : ISave
+    public class SaveFileToJson : ISave, IFolder
     {
         private Dictionary<int, Product> _productCatalogue = ProductCatalogue.Instance.Products;
-        public void SaveDiscountListToFile()
+        private static string _receiptsFolderPath = $"../../../Files/Receipts";
+        private static string _productListFolderPath = $"../../../Files/ProductLists";
+        public static string GetDiscountListFilePath() => $"{_productListFolderPath}/DISCOUNT_LIST_ADMIN";
+        public string GetProductListFolderPath() => $"{_productListFolderPath}/Product_LIST_ADMIN";
+        public string GetReceiptFolderPath() => $"{_receiptsFolderPath}";
+
+        public void SaveDiscountCatalogueToFile()
         {
-            throw new NotImplementedException();
+            var discount = ProductCatalogue.Instance.GetAllDiscounts().ToString();
+            string filePath = $"{GetDiscountListFilePath()}.json";
+            File.WriteAllText(filePath, discount);
         }
 
         public void SaveProductCatalogueToFile()
         {
             string jsonString = JsonSerializer.Serialize(_productCatalogue, new JsonSerializerOptions { WriteIndented = true });
-            string _productListFolderPath = $"../../../Files/ProductLists";
-            string filePath = $"{_productListFolderPath}/PRODUCT_LIST_ADMIN.json";
-            // Write the JSON string to the specified file
+            string filePath = $"{GetProductListFolderPath()}.json";
             File.WriteAllText(filePath, jsonString);
         }
 
         public void SaveReceiptToFile(string paymentInfo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetDiscountListFolderPath()
         {
             throw new NotImplementedException();
         }

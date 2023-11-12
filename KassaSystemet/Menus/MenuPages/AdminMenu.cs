@@ -76,7 +76,7 @@ namespace KassaSystemet.Menus.MenuPages
                         GetSaveFormat(temp, _userInputHandler);
                     }
                     _fileManagerStrategy.SaveProductCatalogueToFile();
-                    _fileManagerStrategy.SaveDiscountListToFile();
+                    _fileManagerStrategy.SaveDiscountCatalogueToFile();
                 }
             } while (userInput != AdminMenuEnum.Exit);
         }
@@ -113,9 +113,11 @@ namespace KassaSystemet.Menus.MenuPages
                     temp = new SaveFileToJson();
                     break;
             }
-            Console.WriteLine("Product list has been save to the chosen format.");
-            Thread.Sleep(2000);
             temp.SaveProductCatalogueToFile();
+            temp.SaveDiscountCatalogueToFile();
+            PrintSuccessMessage("Product list has been save to the chosen format.");
+            Thread.Sleep(2000);
         }
+        private static void PrintSuccessMessage(string message) => Console.WriteLine(message);
     }
 }

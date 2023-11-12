@@ -24,7 +24,7 @@ namespace KassaSystemet.Utilities
                 if (IsValidInput(userInput, out int id, out decimal amount))
                     return (id, amount);
                 else
-                    PrintErrorMessage();
+                    PrintErrorMessage("Enter product id and a product amount larger than 0: ");
             }
         }
         private static bool IsValidInput(string[] userInput, out int productId, out decimal productAmount)
@@ -44,7 +44,7 @@ namespace KassaSystemet.Utilities
                 if (IsValidInput(userInput))
                     return Convert.ToInt32(userInput);
                 else
-                    PrintErrorMessage();
+                    PrintErrorMessage("Enter a 3-digit product id: ");
             }
         }
         private static bool IsValidInput(string userInput)
@@ -62,7 +62,7 @@ namespace KassaSystemet.Utilities
                 if (IsValidInput(userInput, out DateOnly startDate, out DateOnly endDate, out decimal discountPercentage))
                     return (startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), discountPercentage);
                 else
-                    PrintErrorMessage();
+                    PrintErrorMessage("Please enter the input as in the given example.");
             }
         }
         private static bool IsValidInput(string[] userInput, out DateOnly startDate, out DateOnly endDate, out decimal discountPercentage)
@@ -100,7 +100,7 @@ namespace KassaSystemet.Utilities
             Console.Write($"Enter a price above {0:C2}: ");
             while (!decimal.TryParse(Console.ReadLine(), out price) || price <= 0)
             {
-                PrintErrorMessage();
+                PrintErrorMessage("Enter a price above {0:C2}: ");
             }
             return price;
         }
@@ -114,7 +114,7 @@ namespace KassaSystemet.Utilities
                 if (userInput == "per kg" || userInput == "per unit")
                     return userInput;
                 else
-                    Console.WriteLine("Invalid price type. Please enter 'per kg' or 'per unit'.");
+                    PrintErrorMessage("Invalid price type. Please enter 'per kg' or 'per unit'.");
             }
         }
         public static StartMenuEnum GetStartMenuEnum()
@@ -126,7 +126,7 @@ namespace KassaSystemet.Utilities
                 if (IsValidEnumInput(userInput, out StartMenuEnum result))
                     return result;
                 else
-                    PrintErrorMessage();
+                    PrintErrorMessage("Enter a valid input");
             }
         }
         public AdminMenuEnum GetAdminMenuEnum()
@@ -138,7 +138,7 @@ namespace KassaSystemet.Utilities
                 if (IsValidEnumInput(userInput, out AdminMenuEnum result))
                     return result;
                 else
-                    PrintErrorMessage();
+                    PrintErrorMessage("Enter a valid input");
             }
         }
         public CustomerMenuEnum GetCustomerMenuEnum()
@@ -150,7 +150,7 @@ namespace KassaSystemet.Utilities
                 if (IsValidEnumInput(userInput, out CustomerMenuEnum result))
                     return result;
                 else
-                    PrintErrorMessage();
+                    PrintErrorMessage("Enter a valid input");
             }
         }
 
@@ -163,7 +163,7 @@ namespace KassaSystemet.Utilities
                 if (IsValidEnumInput(userInput, out SaveFormatEnum result))
                     return result;
                 else
-                    PrintErrorMessage();
+                    PrintErrorMessage("Enter a valid input");
             }
         }
         private static bool IsValidEnumInput(string userInput, out StartMenuEnum result)
@@ -195,10 +195,10 @@ namespace KassaSystemet.Utilities
                 return Enum.TryParse(userInput, out result);
             }
         }
-        private static void PrintErrorMessage()
+        private static void PrintErrorMessage(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Invalid input. Please enter your input as prompted.");
+            Console.WriteLine(message);
             Console.ResetColor();
         }
     }

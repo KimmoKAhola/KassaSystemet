@@ -9,8 +9,9 @@ namespace KassaSystemet.Interfaces
 {
     public interface ISave
     {
-        void SaveDiscountListToFile();
+        void SaveDiscountCatalogueToFile();
         void SaveReceiptToFile(string paymentInfo);
         void SaveProductCatalogueToFile();
+        //void SaveDiscountCatalogueToFile();
     }
 }

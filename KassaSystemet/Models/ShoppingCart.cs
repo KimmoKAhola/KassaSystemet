@@ -23,17 +23,17 @@ namespace KassaSystemet.Models
         {
             (int id, decimal amount) = userInputHandler.ProductInput();
             if (amount > 100)
-                Console.WriteLine($"You can not purchase more than {100} of a product!", ConsoleColor.Red);
+                PrintErrorMessage($"You can not purchase more than {100} of a product!");
             else if (ProductCatalogue.Instance.Products.ContainsKey(id))
                 Purchases.Add(ModelFactory.CreatePurchase(id, amount));
             else
-                Console.WriteLine($"No product with id {id} exist in the system.", ConsoleColor.Red);
+                PrintErrorMessage($"No product with id {id} exist in the system.");
         }
 
         public void DisplayPurchases()
         {
             if (Purchases.Count == 0)
-                Console.WriteLine("Your shopping cart is empty.", Console.ForegroundColor = ConsoleColor.Red);
+                PrintErrorMessage("Your shopping cart is empty.");
             else
             {
                 Console.WriteLine("Your cart contains the following items: ");
@@ -47,39 +47,28 @@ namespace KassaSystemet.Models
 
         public string Pay()
         {
-            if (Purchases.Count == 0)
-                Console.WriteLine("Your shopping cart is empty. No purchase has been made", Console.ForegroundColor = ConsoleColor.Red);
-
             Console.Clear();
             var receipt = ModelFactory.CreateReceipt(this);
             string result = receipt.CreateReceipt();
             Purchases.Clear();
-            Console.WriteLine("Your purchase has been made and a receipt has been created.", Console.ForegroundColor = ConsoleColor.Green);
-            Console.ResetColor();
-            Console.WriteLine(result);
+            PrintMessage("Your purchase has been made and a receipt has been created.");
+            PrintMessage(result);
             return result;
         }
 
         public decimal CalculateSum(int productId)
         {
-            var products = ProductCatalogue.Instance.Products;
-            var sum = products[productId].UnitPrice;
+            var sum = ProductCatalogue.Instance.Products[productId].UnitPrice;
 
-            if (products[productId].HasActiveDiscount())
-                sum *= 1 - products[productId].Discounts.Max(discount => discount.DiscountPercentage);
+            if (ProductCatalogue.Instance.Products[productId].HasActiveDiscount())
+                sum *= 1 - ProductCatalogue.Instance.Products[productId].Discounts.Max(discount => discount.DiscountPercentage);
 
             return sum;
         }
 
-        public decimal CalculateTotalSum()
-        {
-            var products = ProductCatalogue.Instance.Products;
-            var sum = 0m;
-            foreach (var item in Purchases)
-            {
-                sum += CalculateSum(item.ProductID);
-            }
-            return sum;
-        }
+        public decimal CalculateTotalSum() => Purchases.Sum(product => CalculateSum(product.ProductID));
+
+        private void PrintMessage(string message) => Console.WriteLine(message);
+        private void PrintErrorMessage(string message) => Console.WriteLine(message);
     }
 }
