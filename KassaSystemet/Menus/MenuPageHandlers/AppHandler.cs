@@ -19,7 +19,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
         Third,
         Exit
     }
-    public class AppHandler
+    public class AppHandler : IMenu
     {
         public AppHandler(MenuFactory menuFactory)
         {

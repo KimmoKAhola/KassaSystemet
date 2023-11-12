@@ -16,6 +16,9 @@ namespace KassaSystemet
     {
         private MenuFactory _menuFactory;
         private IFileManager _fileManager;
+        IFileManager fileManager = new FileManager(new DefaultFileManager());
+        IUserInputHandler userInputHandler = new UserInputHandler();
+        MenuFactory menuFactory = new MenuFactory(fileManager, userInputHandler);
         private static AppHandler _startMenuHandler;
         public App(MenuFactory menuFactory, IFileManager fileManager)
         {
@@ -32,13 +35,5 @@ namespace KassaSystemet
             AppHandler startMenuOptions = new AppHandler(_menuFactory);
             startMenuOptions.InitializeMenu();
         }
-        //public void StartApp()
-        //{
-        //    FileManagerOperations.CreateFolders();
-        //    IFileManager fileManager = new FileManager(new DefaultFileManager());
-        //    IUserInputHandler userInputHandler = new UserInputHandler();
-        //    StartMenu _startMenu = new StartMenu(fileManager, userInputHandler);
-        //    _startMenu.InitializeMenu();
-        //}
     }
 }
