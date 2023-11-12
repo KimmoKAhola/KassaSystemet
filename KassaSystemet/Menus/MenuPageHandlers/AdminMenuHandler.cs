@@ -54,6 +54,8 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     Console.ResetColor();
                     break;
             }
+            Console.Write("Press any key to continue: ");
+            Console.ReadKey();
             return _isChanged;
         }
         private void AddNewProduct(ref bool isChanged, IUserInputHandler userInputHandler)

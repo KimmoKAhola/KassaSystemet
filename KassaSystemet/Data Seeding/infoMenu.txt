@@ -11,7 +11,7 @@ Art modified from https://www.asciiart.eu/computers/computers
 |     /  %%%%%%%%%%%%%%  \   The Whisky-Infused Coder | 
 |     ^^^^^^^^^^^^^^^^^^^^   Student at KYH, year 2023| 
 +-----------------------------------------------------+
-  When the code gets quirky, it's just the whisky's influence talking!
-  This cash register system brought to you by Kimmo Ahola, the daring .NET whisky coder.
+  When the code gets poor, it's just the whisky's influence talking!
+  This cash register system brought to you by Kimmo Ahola, the .NET whisky coder.
 
-Press any key to continue....
+Press any key to continue.... 

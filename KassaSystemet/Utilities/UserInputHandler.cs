@@ -153,6 +153,19 @@ namespace KassaSystemet.Utilities
                     PrintErrorMessage();
             }
         }
+
+        public SaveFormatEnum GetSaveFormatEnum()
+        {
+            while (true)
+            {
+                Console.Write("Enter your command: ");
+                string userInput = Console.ReadLine();
+                if (IsValidEnumInput(userInput, out SaveFormatEnum result))
+                    return result;
+                else
+                    PrintErrorMessage();
+            }
+        }
         private static bool IsValidEnumInput(string userInput, out StartMenuEnum result)
         {
             while (true)
@@ -168,6 +181,14 @@ namespace KassaSystemet.Utilities
             }
         }
         private static bool IsValidEnumInput(string userInput, out CustomerMenuEnum result)
+        {
+            while (true)
+            {
+                return Enum.TryParse(userInput, out result);
+            }
+        }
+
+        private static bool IsValidEnumInput(string userInput, out SaveFormatEnum result)
         {
             while (true)
             {

@@ -18,7 +18,7 @@ namespace KassaSystemet.File_IO
             return string.Join("\n", csvLines);
         }
 
-        public void SaveProductCatalogueToFile(Dictionary<int, Product> productCatalogue)
+        public void SaveProductCatalogueToFile()
         {
             string productString = FormatProductCatalogueToFile();
             productString = productString.Substring(0, productString.Length - 1);
@@ -27,7 +27,7 @@ namespace KassaSystemet.File_IO
                 productListWriter.Write(productString);
             }
         }
-        public void SaveDiscountListToFile(Dictionary<int, Product> productCatalogue)
+        public void SaveDiscountListToFile()
         {
             throw new NotImplementedException();
         }

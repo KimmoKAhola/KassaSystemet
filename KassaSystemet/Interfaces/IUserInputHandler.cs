@@ -17,6 +17,6 @@ namespace KassaSystemet.Interfaces
         AdminMenuEnum GetAdminMenuEnum();
         CustomerMenuEnum GetCustomerMenuEnum();
         //StartMenuEnum GetStartMenuEnum();
-
+        SaveFormatEnum GetSaveFormatEnum();
     }
 }

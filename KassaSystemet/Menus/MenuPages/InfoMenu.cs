@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.Menus.MenuPages
 {
-    public class InfoMenu : IMenuHandler
+    public class InfoMenu : IMenu
     {
         private IFileManager _fileManager;
         public InfoMenu(IFileManager fileManager)

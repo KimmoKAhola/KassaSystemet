@@ -11,14 +11,15 @@ namespace KassaSystemet.File_IO
 {
     public class SaveFileToJson : ISave
     {
-        public void SaveDiscountListToFile(Dictionary<int, Product> productCatalogue)
+        private Dictionary<int, Product> _productCatalogue = ProductCatalogue.Instance.Products;
+        public void SaveDiscountListToFile()
         {
             throw new NotImplementedException();
         }
 
-        public void SaveProductCatalogueToFile(Dictionary<int, Product> productCatalogue)
+        public void SaveProductCatalogueToFile()
         {
-            string jsonString = JsonSerializer.Serialize(ProductCatalogue.Instance.Products, new JsonSerializerOptions { WriteIndented = true });
+            string jsonString = JsonSerializer.Serialize(_productCatalogue, new JsonSerializerOptions { WriteIndented = true });
             string _productListFolderPath = $"../../../Files/ProductLists";
             string filePath = $"{_productListFolderPath}/PRODUCT_LIST_ADMIN.json";
             // Write the JSON string to the specified file

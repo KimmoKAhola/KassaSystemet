@@ -17,7 +17,7 @@ namespace KassaSystemet.Menus.MenuPages
         Pay,
         Exit
     }
-    public class CustomerMenu : IMenuHandler
+    public class CustomerMenu : IMenu
     {
         public CustomerMenu(IFileManager fileManagerStrategy, IUserInputHandler userInputHandler)
         {
@@ -38,6 +38,7 @@ namespace KassaSystemet.Menus.MenuPages
         };
         public void InitializeMenu()
         {
+            _fileManagerStrategy.LoadDiscountListFromFile();
             CustomerMenuEnum userInput;
             do
             {

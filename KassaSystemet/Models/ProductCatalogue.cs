@@ -9,13 +9,15 @@ namespace KassaSystemet.Models
 {
     public class ProductCatalogue
     {
-        FileManager _fileManager = new FileManager(new FileManagerStrategy());
+        ILoad _fileManager = new DefaultFileManager();
         private ProductCatalogue()
         {
             Products = _fileManager.LoadProductListFromFile();
+            //Discounts = _fileManager.LoadDiscountListFromFile();
         }
         private static ProductCatalogue instance;
         public Dictionary<int, Product> Products { get; }
+        public List<Discount> Discounts { get; }
         public static ProductCatalogue Instance => instance ??= new ProductCatalogue();
         private static string _wares =
             "300!Bananer!15,50!per kg!" +

@@ -12,14 +12,23 @@ using KassaSystemet.Utilities;
 
 namespace KassaSystemet.Menus.MenuPageHandlers
 {
-    public class StartMenuHandler : IMenuHandler
+    public enum StartMenuEnum
     {
-        public StartMenuHandler(MenuFactory menuFactory)
+        First = 1,
+        Second,
+        Third,
+        Exit
+    }
+    public class AppHandler
+    {
+        public AppHandler(MenuFactory menuFactory)
         {
             _menuFactory = menuFactory;
         }
         private MenuFactory _menuFactory;
-        private IMenuHandler _menu;
+        //private IFileManager _fileManager;
+        //private IUserInputHandler _userInputHandler;
+        private IMenu _menu;
         private Dictionary<StartMenuEnum, string> _startMenu = new Dictionary<StartMenuEnum, string>()
         {
             {StartMenuEnum.First, "Customer Menu." },
@@ -27,6 +36,17 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             {StartMenuEnum.Third, "Info Menu." },
             {StartMenuEnum.Exit, "Save & Exit." },
         };
+
+        public void DisplayMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Choose an option below.");
+            foreach (var item in _startMenu)
+            {
+                Console.WriteLine($"{(int)item.Key}. {item.Value}");
+            }
+        }
+
         public void InitializeMenu()
         {
             StartMenuEnum userInput;
@@ -36,15 +56,6 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                 userInput = UserInputHandler.GetStartMenuEnum();
                 MenuHandler(userInput);
             } while (userInput != StartMenuEnum.Exit);
-        }
-        public void DisplayMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("Choose an option below.");
-            foreach (var item in _startMenu)
-            {
-                Console.WriteLine($"{(int)item.Key}. {item.Value}");
-            }
         }
         public void MenuHandler(StartMenuEnum menuHandlerEnum)
         {

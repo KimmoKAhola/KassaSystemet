@@ -8,6 +8,7 @@ namespace KassaSystemet.Factories.MenuFactory
 {
     public enum MenuFactoryEnum
     {
+        StartMenu,
         CustomerMenu,
         AdminMenu,
         InfoMenu

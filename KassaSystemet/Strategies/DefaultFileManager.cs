@@ -9,44 +9,18 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.Strategy
 {
-    public class FileManagerStrategy : IFileManager
+    public class DefaultFileManager : IFileManager
     {
-        private static string FormatProductCatalogueToTextFile(Dictionary<int, Product> productCatalogue)
+        private static string FormatProductCatalogueToTextFile()
         {
-            var formattedProductCatalogue = productCatalogue.OrderBy(x => x.Key).Select(item => $"{item.Key}!{item.Value.ProductName}!{item.Value.UnitPrice}!{item.Value.PriceType}");
+            var productCatalogue = ProductCatalogue.Instance.Products;
+            var formattedProductCatalogue = productCatalogue.OrderBy(x => x.Key).Select(item => $"{item.Key}!{item.Value.ProductName}!{item.Value.UnitPrice}!{item.Value.PriceType}\n");
             return string.Join("", formattedProductCatalogue);
         }
+        public void SaveDiscountListToFile()
+        {
+            var discountInfo = FormatDiscountList();
 
-        private static string FormatProductCatalogueToCsvFile()
-        {
-            var csvLines = ProductCatalogue.Instance.Products.OrderBy(x => x.Key).Select(item =>
-            $"{item.Key},{item.Value.ProductName},{item.Value.UnitPrice},{item.Value.PriceType}");
-
-            return string.Join("\n", csvLines);
-        }
-        public void SaveProductCatalogueToCsvFile(Dictionary<int, Product> productCatalogue)
-        {
-            string csvContent = FormatProductCatalogueToCsvFile();
-            using (StreamWriter productCsvWriter = new($"{FileManagerOperations.CreateProductListFilePathCsv()}", append: false))
-            {
-                productCsvWriter.Write(csvContent);
-            }
-        }
-        public void SaveDiscountListToFile(Dictionary<int, Product> productCatalogue)
-        {
-            var allDiscountedProducts = Product.GetDiscountForSingleProduct(productCatalogue).ToList();
-            string discountInfo = "";
-            foreach (var product in allDiscountedProducts)
-            {
-                discountInfo += product.Key;
-                for (int i = 0; i < product.Value.Discounts.Count; i++)
-                {
-                    discountInfo += "!" + product.Value.Discounts[i].StartDate;
-                    discountInfo += "!" + product.Value.Discounts[i].EndDate;
-                    discountInfo += "!" + product.Value.Discounts[i].DiscountPercentage;
-                }
-                discountInfo += "\n";
-            }
             using (StreamWriter writer = new($"{FileManagerOperations.CreateDiscountListFilePath()}", append: false))
             {
                 writer.Write(discountInfo);
@@ -56,9 +30,22 @@ namespace KassaSystemet.Strategy
         private string FormatDiscountList()
         {
             var allDiscountedProducts = Product.GetDiscountForSingleProduct(ProductCatalogue.Instance.Products).ToList();
+            StringBuilder discountInfoBuilder = new StringBuilder();
 
+            foreach (var product in allDiscountedProducts)
+            {
+                discountInfoBuilder.Append(product.Key);
 
-            return string.Join("\n", allDiscountedProducts);
+                for (int i = 0; i < product.Value.Discounts.Count; i++)
+                {
+                    discountInfoBuilder.Append($"!{product.Value.Discounts[i].StartDate}");
+                    discountInfoBuilder.Append($"!{product.Value.Discounts[i].EndDate}");
+                    discountInfoBuilder.Append($"!{product.Value.Discounts[i].DiscountPercentage}");
+                }
+
+                discountInfoBuilder.AppendLine();
+            }
+            return discountInfoBuilder.ToString();
         }
         public Dictionary<int, Product> LoadProductListFromFile()
         {
@@ -71,11 +58,8 @@ namespace KassaSystemet.Strategy
                 {
                     string[] columns = item.Split('!');
 
-                    for (int i = 0; i < columns.Length; i += 4)
-                    {
-                        var product = ModelFactory.CreateProduct(columns[i + 1], Convert.ToDecimal(columns[i + 2]), columns[i + 3]);
-                        products.Add(Convert.ToInt32(columns[i]), product);
-                    }
+                    var product = ModelFactory.CreateProduct(columns[1], Convert.ToDecimal(columns[2]), columns[3]);
+                    products.Add(Convert.ToInt32(columns[0]), product);
                 }
             }
             else
@@ -113,19 +97,15 @@ namespace KassaSystemet.Strategy
                 receiptWriter.Write(paymentInfo);
             }
         }
-
         public string LoadInfoMenuFromFile()
         {
             var filePath = FileManagerOperations.CreateInfoMenuFilePath();
-
             var result = File.ReadAllText(filePath);
             return result;
         }
-
-        public void SaveProductCatalogueToFile(Dictionary<int, Product> productCatalogue)
+        public void SaveProductCatalogueToFile()
         {
-            string productString = FormatProductCatalogueToTextFile(productCatalogue);
-            productString = productString.Substring(0, productString.Length - 1);
+            string productString = FormatProductCatalogueToTextFile();
             using (StreamWriter productListWriter = new($"{FileManagerOperations.CreateProductListFilePathText()}", append: false))
             {
                 productListWriter.Write(productString);

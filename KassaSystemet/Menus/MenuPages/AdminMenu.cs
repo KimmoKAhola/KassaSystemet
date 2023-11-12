@@ -25,12 +25,12 @@ namespace KassaSystemet.Menus.MenuPages
         Ninth,
         Exit
     }
-    enum SaveFormatEnum
+    public enum SaveFormatEnum
     {
         CSV = 1,
         JSON
     }
-    public class AdminMenu : IMenuHandler
+    public class AdminMenu : IMenu
     {
         public AdminMenu(IFileManager strategy, IUserInputHandler userInputHandler)
         {
@@ -72,10 +72,11 @@ namespace KassaSystemet.Menus.MenuPages
                     if (_fileManagerStrategy is ISave)
                     {
                         var temp = _fileManagerStrategy as ISave;
-                        GetSaveFormat(temp);
+                        DisplaySaveMenu();
+                        GetSaveFormat(temp, _userInputHandler);
                     }
-                    _fileManagerStrategy.SaveProductCatalogueToFile(ProductCatalogue.Instance.Products);
-                    _fileManagerStrategy.SaveDiscountListToFile(ProductCatalogue.Instance.Products);
+                    _fileManagerStrategy.SaveProductCatalogueToFile();
+                    _fileManagerStrategy.SaveDiscountListToFile();
                 }
             } while (userInput != AdminMenuEnum.Exit);
         }
@@ -88,28 +89,33 @@ namespace KassaSystemet.Menus.MenuPages
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
             }
         }
-        public void DisplaySaveMenu()
+        private void DisplaySaveMenu()
         {
             Console.Clear();
+            Console.ResetColor();
+            Console.WriteLine("Your product list has been updated and will be saved. Please choose a file format.");
             Console.WriteLine("Choose an option below.");
             foreach (var item in _saveMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
             }
         }
-        private static void GetSaveFormat(ISave temp)
+        private static void GetSaveFormat(ISave temp, IUserInputHandler userInputHandler)
         {
-            Console.Write("Choose save format:");
-            string userInput = Console.ReadLine();
-            if (userInput == "1")
+            SaveFormatEnum userInput = userInputHandler.GetSaveFormatEnum();
+
+            switch (userInput)
             {
-                temp = new SaveFileToCSV();
+                case SaveFormatEnum.CSV:
+                    temp = new SaveFileToCSV();
+                    break;
+                case SaveFormatEnum.JSON:
+                    temp = new SaveFileToJson();
+                    break;
             }
-            else if (userInput == "2")
-            {
-                temp = new SaveFileToJson();
-            }
-            temp.SaveProductCatalogueToFile(ProductCatalogue.Instance.Products);
+            Console.WriteLine("Product list has been save to the chosen format.");
+            Thread.Sleep(2000);
+            temp.SaveProductCatalogueToFile();
         }
     }
 }
