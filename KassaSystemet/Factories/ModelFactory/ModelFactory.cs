@@ -24,5 +24,15 @@ namespace KassaSystemet.Factories.ModelFactory
         {
             return new Discount(startDate, endDate, discountPercentage);
         }
+
+        public static ShoppingCart CreateShoppingCart()
+        {
+            return new ShoppingCart();
+        }
+
+        public static Receipt CreateReceipt(ShoppingCart shoppingCart)
+        {
+            return new Receipt(shoppingCart);
+        }
     }
 }

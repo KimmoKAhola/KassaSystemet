@@ -1,5 +1,4 @@
-﻿using KassaSystemet;
-using KassaSystemet.Factories.MenuFactory;
+﻿using KassaSystemet.Factories.MenuFactory;
 using KassaSystemet.Interfaces;
 using KassaSystemet.Strategy;
 using System;
@@ -8,25 +7,44 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using KassaSystemet.MenuPages;
+using KassaSystemet.Menus.MenuPages;
+using KassaSystemet.Utilities;
 
-namespace KassaSystemet.MenuPageServices
+namespace KassaSystemet.Menus.MenuPageHandlers
 {
-    public class StartMenuHandler : IMenuHandler
+    public enum StartMenuEnum
     {
-        public StartMenuHandler(MenuFactory menuFactory)
+        First = 1,
+        Second,
+        Third,
+        Exit
+    }
+    public class AppHandler : IMenu
+    {
+        public AppHandler(MenuFactory menuFactory)
         {
             _menuFactory = menuFactory;
         }
         private MenuFactory _menuFactory;
-        private IMenuHandler _menu;
-        private Dictionary<StartMenuEnum, string> _menuDisplayNames = new Dictionary<StartMenuEnum, string>()
+        private IMenu _menu;
+        private Dictionary<StartMenuEnum, string> _startMenu = new Dictionary<StartMenuEnum, string>()
         {
             {StartMenuEnum.First, "Customer Menu." },
             {StartMenuEnum.Second, "Admin Menu." },
             {StartMenuEnum.Third, "Info Menu." },
             {StartMenuEnum.Exit, "Save & Exit." },
         };
+
+        public void DisplayMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Choose an option below.");
+            foreach (var item in _startMenu)
+            {
+                Console.WriteLine($"{(int)item.Key}. {item.Value}");
+            }
+        }
+
         public void InitializeMenu()
         {
             StartMenuEnum userInput;
@@ -36,15 +54,6 @@ namespace KassaSystemet.MenuPageServices
                 userInput = UserInputHandler.GetStartMenuEnum();
                 MenuHandler(userInput);
             } while (userInput != StartMenuEnum.Exit);
-        }
-        public void DisplayMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("Choose an option below.");
-            foreach (var item in _menuDisplayNames)
-            {
-                Console.WriteLine($"{(int)item.Key}. {item.Value}");
-            }
         }
         public void MenuHandler(StartMenuEnum menuHandlerEnum)
         {

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KassaSystemet.MenuPages
+namespace KassaSystemet.Menus.MenuPages
 {
-    public class InfoMenu : IMenuHandler
+    public class InfoMenu : IMenu
     {
         private IFileManager _fileManager;
         public InfoMenu(IFileManager fileManager)
@@ -24,7 +24,7 @@ namespace KassaSystemet.MenuPages
         }
         private static string LoadInfo(IFileManager fileManager)
         {
-            return fileManager.LoadInfoMenu();
+            return fileManager.LoadInfoMenuFromFile();
         }
         public void InitializeMenu()
         {

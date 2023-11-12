@@ -6,17 +6,13 @@ using System.Threading.Tasks;
 using KassaSystemet.Factories.ModelFactory;
 using KassaSystemet.Interfaces;
 using KassaSystemet.Models;
-using KassaSystemet.MenuPages;
+using KassaSystemet.Menus.MenuPages;
 
-namespace KassaSystemet.MenuPageServices
+namespace KassaSystemet.Menus.MenuPageHandlers
 {
     public class AdminMenuHandler
     {
         private ProductCatalogue productCatalogue = ProductCatalogue.Instance;
-
-        public AdminMenuHandler()
-        {
-        }
         public bool HandleAdminMenuOption(AdminMenuEnum adminMenuHandlerEnum, IUserInputHandler userInputHandler)
         {
             bool _isChanged = false;
@@ -58,6 +54,8 @@ namespace KassaSystemet.MenuPageServices
                     Console.ResetColor();
                     break;
             }
+            Console.Write("Press any key to continue: ");
+            Console.ReadKey();
             return _isChanged;
         }
         private void AddNewProduct(ref bool isChanged, IUserInputHandler userInputHandler)

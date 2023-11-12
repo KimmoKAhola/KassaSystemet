@@ -1,5 +1,6 @@
 ﻿using KassaSystemet.Interfaces;
-using KassaSystemet.MenuPages;
+using KassaSystemet.Menus.MenuPageHandlers;
+using KassaSystemet.Menus.MenuPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +11,23 @@ namespace KassaSystemet.Factories.MenuFactory
 {
     public class MenuFactory
     {
-        private IFileManager _fileManagerStrategy;
+        private IFileManager _fileManager;
         private IUserInputHandler _userInputHandler;
-        public MenuFactory(IFileManager fileManagerStrategy, IUserInputHandler userInputHandler)
+        public MenuFactory(IFileManager fileManager, IUserInputHandler userInputHandler)
         {
-            _fileManagerStrategy = fileManagerStrategy;
+            _fileManager = fileManager;
             _userInputHandler = userInputHandler;
         }
-        public IMenuHandler CreateMenu(MenuFactoryEnum factoryEnum)
+        public IMenu CreateMenu(MenuFactoryEnum factoryEnum)
         {
             switch (factoryEnum)
             {
                 case MenuFactoryEnum.CustomerMenu:
-                    return new CustomerMenu(_fileManagerStrategy, _userInputHandler);
+                    return new CustomerMenu(_fileManager, _userInputHandler);
                 case MenuFactoryEnum.AdminMenu:
-                    return new AdminMenu(_fileManagerStrategy, _userInputHandler);
+                    return new AdminMenu(_fileManager, _userInputHandler);
                 case MenuFactoryEnum.InfoMenu:
-                    return new InfoMenu(_fileManagerStrategy);
+                    return new InfoMenu(_fileManager);
                 default:
                     return null;
             }

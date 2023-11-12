@@ -1,5 +1,5 @@
 ﻿using KassaSystemet.Interfaces;
-using KassaSystemet.MenuPageServices;
+using KassaSystemet.Menus.MenuPageHandlers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,9 +8,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using KassaSystemet.MenuPages;
+using KassaSystemet.Menus.MenuPages;
 
-namespace KassaSystemet
+namespace KassaSystemet.Utilities
 {
     public class UserInputHandler : IUserInputHandler
     {
@@ -27,15 +27,13 @@ namespace KassaSystemet
                     PrintErrorMessage();
             }
         }
-
         private static bool IsValidInput(string[] userInput, out int productId, out decimal productAmount)
         {
             productId = 0;
             productAmount = 0;
 
-            return (userInput.Length == 2 && int.TryParse(userInput[0], out productId) && decimal.TryParse(userInput[1], out productAmount) && productAmount > 0);
+            return userInput.Length == 2 && int.TryParse(userInput[0], out productId) && decimal.TryParse(userInput[1], out productAmount) && productAmount > 0;
         }
-
         public int ProductIdInput()
         {
             while (true)
@@ -49,7 +47,6 @@ namespace KassaSystemet
                     PrintErrorMessage();
             }
         }
-
         private static bool IsValidInput(string userInput)
         {
             return int.TryParse(userInput, out int productId) && productId <= 999 && productId >= 100;
@@ -68,17 +65,16 @@ namespace KassaSystemet
                     PrintErrorMessage();
             }
         }
-
         private static bool IsValidInput(string[] userInput, out DateOnly startDate, out DateOnly endDate, out decimal discountPercentage)
         {
             startDate = default;
             endDate = default;
             discountPercentage = 0m;
 
-            return (userInput.Length == 3 &&
+            return userInput.Length == 3 &&
                     DateOnly.TryParseExact(userInput[0], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate) &&
                     DateOnly.TryParseExact(userInput[1], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out endDate) &&
-                    decimal.TryParse(userInput[2], out discountPercentage));
+                    decimal.TryParse(userInput[2], out discountPercentage);
         }
         public (string, decimal, string) NewProduct()
         {
@@ -98,7 +94,6 @@ namespace KassaSystemet
             }
             return productName;
         }
-
         private static decimal GetValidProductPrice()
         {
             decimal price;
@@ -109,7 +104,6 @@ namespace KassaSystemet
             }
             return price;
         }
-
         private static string GetValidProductPriceType()
         {
             while (true)
@@ -123,7 +117,6 @@ namespace KassaSystemet
                     Console.WriteLine("Invalid price type. Please enter 'per kg' or 'per unit'.");
             }
         }
-
         public static StartMenuEnum GetStartMenuEnum()
         {
             while (true)
@@ -136,7 +129,6 @@ namespace KassaSystemet
                     PrintErrorMessage();
             }
         }
-
         public AdminMenuEnum GetAdminMenuEnum()
         {
             while (true)
@@ -144,6 +136,31 @@ namespace KassaSystemet
                 Console.Write("Enter your command: ");
                 string userInput = Console.ReadLine();
                 if (IsValidEnumInput(userInput, out AdminMenuEnum result))
+                    return result;
+                else
+                    PrintErrorMessage();
+            }
+        }
+        public CustomerMenuEnum GetCustomerMenuEnum()
+        {
+            while (true)
+            {
+                Console.Write("Enter your command: ");
+                string userInput = Console.ReadLine();
+                if (IsValidEnumInput(userInput, out CustomerMenuEnum result))
+                    return result;
+                else
+                    PrintErrorMessage();
+            }
+        }
+
+        public SaveFormatEnum GetSaveFormatEnum()
+        {
+            while (true)
+            {
+                Console.Write("Enter your command: ");
+                string userInput = Console.ReadLine();
+                if (IsValidEnumInput(userInput, out SaveFormatEnum result))
                     return result;
                 else
                     PrintErrorMessage();
@@ -157,6 +174,21 @@ namespace KassaSystemet
             }
         }
         private static bool IsValidEnumInput(string userInput, out AdminMenuEnum result)
+        {
+            while (true)
+            {
+                return Enum.TryParse(userInput, out result);
+            }
+        }
+        private static bool IsValidEnumInput(string userInput, out CustomerMenuEnum result)
+        {
+            while (true)
+            {
+                return Enum.TryParse(userInput, out result);
+            }
+        }
+
+        private static bool IsValidEnumInput(string userInput, out SaveFormatEnum result)
         {
             while (true)
             {

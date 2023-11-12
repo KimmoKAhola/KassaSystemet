@@ -1,4 +1,17 @@
-HEJ, här finns det massa häftig information om mig som har skapat detta kassasystem.
+Art modified from https://www.asciiart.eu/computers/computers
+           __________                                 
+         .'----------`.                              
+         | .--------. |                             
+         | |C# CASH | |       __________              
+         | |REGISTER| |      /__________\             
+.--------| `--------' |------|    --=-- |-------------.
+|        `----,-.-----'      |o ======  |             | 
+|       ______|_|_______     |__________|             | 
+|      /  %%%%%%%%%%%%  \    Created by Kimmo Ahola   | 
+|     /  %%%%%%%%%%%%%%  \   The Whisky-Infused Coder | 
+|     ^^^^^^^^^^^^^^^^^^^^   Student at KYH, year 2023| 
++-----------------------------------------------------+
+  When the code gets poor, it's just the whisky's influence talking!
+  This cash register system brought to you by Kimmo Ahola, the .NET whisky coder.
 
-Visste du att: blablablabla....
-Press any key to continue....
+Press any key to continue.... 
