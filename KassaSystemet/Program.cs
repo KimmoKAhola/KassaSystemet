@@ -13,13 +13,14 @@ namespace KassaSystemet
     {
         static void Main(string[] args)
         {
-            IFileManager fileManager = new FileManager(new DefaultFileManager());
+            //IFileManager fileManager = new FileManager(new DefaultFileManager());
 
-            IUserInputHandler userInputHandler = new UserInputHandler();
+            //IUserInputHandler userInputHandler = new UserInputHandler();
 
-            MenuFactory menuFactory = new MenuFactory(fileManager, userInputHandler);
+            //MenuFactory menuFactory = new MenuFactory(fileManager, userInputHandler);
 
-            var myApp = new App(menuFactory, fileManager);
+            //var myApp = new App(menuFactory, fileManager);
+            var myApp = new App();
             myApp.StartApp();
         }
     }

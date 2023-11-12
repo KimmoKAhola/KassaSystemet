@@ -13,7 +13,6 @@ namespace KassaSystemet.Models
         private ProductCatalogue()
         {
             Products = _fileManager.LoadProductListFromFile();
-            //Discounts = _fileManager.LoadDiscountListFromFile();
         }
         private static ProductCatalogue instance;
         public Dictionary<int, Product> Products { get; }
