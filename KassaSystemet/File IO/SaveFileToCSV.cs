@@ -21,7 +21,7 @@ namespace KassaSystemet.File_IO
         public void SaveProductCatalogueToFile()
         {
             string productString = FormatProductCatalogueToFile();
-            productString = productString.Substring(0, productString.Length - 1);
+            //productString = productString.Substring(0, productString.Length - 1);
             using (StreamWriter productListWriter = new($"{FileManagerOperations.CreateProductListFilePathCsv()}", append: false))
             {
                 productListWriter.Write(productString);

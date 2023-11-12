@@ -16,7 +16,8 @@ namespace KassaSystemet.Menus.MenuPageHandlers
         private ShoppingCart _shoppingCart;
         public CustomerMenuHandler()
         {
-            _shoppingCart = new ShoppingCart();
+            if (_shoppingCart == null || _shoppingCart.Purchases.Count == 0)
+                _shoppingCart = new ShoppingCart();
         }
 
         public void HandleCustomerMenuOption(CustomerMenuEnum userInput, IFileManager fileManagerStrategy, IUserInputHandler userInputHandler)
@@ -27,14 +28,19 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     _shoppingCart.DisplayPurchases();
                     break;
                 case CustomerMenuEnum.Second:
-                    _shoppingCart.AddProduct(userInputHandler);
+                    _shoppingCart.AddProductToCart(userInputHandler);
                     break;
                 case CustomerMenuEnum.Third:
                     ProductCatalogue.Instance.DisplayProducts();
                     break;
                 case CustomerMenuEnum.Pay:
-                    string receipt = _shoppingCart.Pay();
-                    fileManagerStrategy.SaveReceiptToFile(receipt);
+                    if (_shoppingCart.Purchases.Count > 0)
+                    {
+                        string receipt = _shoppingCart.Pay();
+                        fileManagerStrategy.SaveReceiptToFile(receipt);
+                    }
+                    else
+                        Console.WriteLine("Your shopping cart is empty.");
                     break;
                 case CustomerMenuEnum.Exit:
                     Console.WriteLine("Returning to the main menu.");

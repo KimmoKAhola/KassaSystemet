@@ -7,45 +7,60 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace KassaSystemet.Models
 {
-    public static class Receipt
+    public class Receipt
     {
-        public static string CreateReceipt(List<Purchase> shoppingCart)
+        public Receipt()
         {
-            var products = ProductCatalogue.Instance.Products;
-            decimal totalSumOfPurchase = 0;
-            var receipt = new StringBuilder();
+
+        }
+        private const int _receiptPadding = 15;
+        private const int _productPadding = 45;
+        private const int _amountPadding = 15;
+        private const int _pricePadding = 20;
+        private const int _sumPadding = 40;
+        private static string ReceiptHeader()
+        {
+            StringBuilder receiptHeader = new StringBuilder();
             int _receiptID = FileManagerOperations.GetReceiptID();
-            receipt.AppendLine($"{"Receipt ID:",-15} [{_receiptID}]");
-            receipt.AppendLine($"{"Product",-45} {"Amount",-15} {"Price",-20} {"Sum",-40}");
+            receiptHeader.AppendLine($"{"Receipt ID:"} {_receiptID}");
+            receiptHeader.AppendLine($"{"Product"} {"Amount",_amountPadding} {"Price",_pricePadding}");
+            return receiptHeader.ToString();
+        }
 
-            foreach (var item in shoppingCart)
+        private static string ReceiptBody(ShoppingCart shoppingCart)
+        {
+            StringBuilder receiptBody = new StringBuilder();
+            foreach (var item in shoppingCart.Purchases)
             {
-                Product product = products[item.ProductID];
-                string productName = product.ProductName;
-                decimal price = product.UnitPrice;
+                var productName = ProductCatalogue.Instance.Products[item.ProductID].ProductName;
+                var amount = item.Amount;
+                var price = ProductCatalogue.Instance.Products[item.ProductID].UnitPrice;
+                var sum = shoppingCart.CalculateSum(item.ProductID);
 
-                if (product.HasActiveDiscount())
-                {
-                    decimal discountPercentage = product.Discounts.Max(discount => discount.DiscountPercentage);
-                    price *= 1 - discountPercentage;
-                }
-
-                decimal sum = Math.Round(price * item.Amount, 4);
-                receipt.AppendFormat("{0,-45} {1,-15}{2,-20:C3} {3,-15:C2}", productName, item.Amount, price, sum);
-
-                if (product.HasActiveDiscount())
-                {
-                    decimal discountPercentage = product.Discounts.Max(discount => discount.DiscountPercentage);
-                    receipt.AppendFormat("{0:P2} discount - original price: {1:C2}", discountPercentage, product.UnitPrice);
-                }
-
-                receipt.AppendLine();
-                totalSumOfPurchase += sum;
+                receiptBody.AppendFormat("{0}{1,-15}{2,-20}{3,-40}", productName, amount, price, sum);
+                receiptBody.AppendLine();
             }
-            receipt.AppendLine();
-            receipt.AppendLine($"The total sum is: {totalSumOfPurchase:C2}");
-            receipt.AppendLine(new string('-', 144));
+            return receiptBody.ToString();
+        }
+        private static string ReceiptBottom(ShoppingCart shoppingCart)
+        {
+            StringBuilder receiptBottom = new StringBuilder();
+            var totalSum = shoppingCart.CalculateTotalSum();
+            receiptBottom.AppendFormat("Total sum of purchase: {0:C2}", totalSum);
+            return receiptBottom.ToString();
+        }
 
+
+        public static string CreateReceipt(ShoppingCart shoppingCart)
+        {
+            StringBuilder receipt = new StringBuilder();
+            string header = ReceiptHeader();
+            string body = ReceiptBody(shoppingCart);
+            string bottom = ReceiptBottom(shoppingCart);
+            receipt.AppendLine(header);
+            receipt.AppendLine(body);
+            receipt.AppendLine();
+            receipt.AppendLine(bottom);
             return receipt.ToString();
         }
     }
