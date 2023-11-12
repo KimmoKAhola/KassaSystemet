@@ -13,10 +13,10 @@ namespace KassaSystemet.Menus.MenuPageHandlers
 {
     public class CustomerMenuHandler
     {
-        private List<Purchase> _shoppingCart;
+        private ShoppingCart _shoppingCart;
         public CustomerMenuHandler()
         {
-            _shoppingCart = new List<Purchase>();
+            _shoppingCart = new ShoppingCart();
         }
 
         public void HandleCustomerMenuOption(CustomerMenuEnum userInput, IFileManager fileManagerStrategy, IUserInputHandler userInputHandler)
@@ -24,16 +24,16 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             switch (userInput)
             {
                 case CustomerMenuEnum.First:
-                    Purchase.DisplayPurchases(_shoppingCart);
+                    _shoppingCart.DisplayPurchases();
                     break;
                 case CustomerMenuEnum.Second:
-                    AddProduct(_shoppingCart, userInputHandler);
+                    _shoppingCart.AddProduct(userInputHandler);
                     break;
                 case CustomerMenuEnum.Third:
                     ProductCatalogue.Instance.DisplayProducts();
                     break;
                 case CustomerMenuEnum.Pay:
-                    string receipt = Purchase.Pay(_shoppingCart);
+                    string receipt = _shoppingCart.Pay();
                     fileManagerStrategy.SaveReceiptToFile(receipt);
                     break;
                 case CustomerMenuEnum.Exit:
@@ -48,16 +48,6 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             Console.ResetColor();
             Console.Write("Press any key to continue: ");
             Console.ReadKey();
-        }
-        private static void AddProduct(List<Purchase> shoppingCart, IUserInputHandler userInputHandler)
-        {
-            (int id, decimal amount) = userInputHandler.ProductInput();
-            if (amount > 100)
-                Console.WriteLine($"You can not purchase more than {100} of a product!", ConsoleColor.Red);
-            else if (ProductCatalogue.Instance.Products.ContainsKey(id))
-                shoppingCart.Add(ModelFactory.CreatePurchase(id, amount));
-            else
-                Console.WriteLine($"No product with id {id} exist in the system.", ConsoleColor.Red);
         }
     }
 }
