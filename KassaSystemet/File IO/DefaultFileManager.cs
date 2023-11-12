@@ -34,15 +34,20 @@ namespace KassaSystemet.File_IO
             foreach (var product in allDiscountedProducts)
             {
                 discountInfoBuilder.Append(product.Key);
-
-                for (int i = 0; i < product.Value.Discounts.Count; i++)
-                {
-                    discountInfoBuilder.Append($"!{product.Value.Discounts[i].StartDate}");
-                    discountInfoBuilder.Append($"!{product.Value.Discounts[i].EndDate}");
-                    discountInfoBuilder.Append($"!{product.Value.Discounts[i].DiscountPercentage}");
-                }
-
+                string discount = FormatDiscountForSingleProduct(product.Value);
+                discountInfoBuilder.Append(discount);
                 discountInfoBuilder.AppendLine();
+            }
+            return discountInfoBuilder.ToString();
+        }
+        private static string FormatDiscountForSingleProduct(Product product)
+        {
+            StringBuilder discountInfoBuilder = new StringBuilder();
+            for (int i = 0; i < product.Discounts.Count; i++)
+            {
+                discountInfoBuilder.Append($"!{product.Discounts[i].StartDate}");
+                discountInfoBuilder.Append($"!{product.Discounts[i].EndDate}");
+                discountInfoBuilder.Append($"!{product.Discounts[i].DiscountPercentage}");
             }
             return discountInfoBuilder.ToString();
         }
