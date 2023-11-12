@@ -9,57 +9,56 @@ namespace KassaSystemet.Models
 {
     public class Receipt
     {
-        public Receipt()
+        public Receipt(ShoppingCart shoppingCart)
         {
-
+            _shoppingCart = shoppingCart;
         }
-        private const int _receiptPadding = 15;
-        private const int _productPadding = 45;
-        private const int _amountPadding = 15;
-        private const int _pricePadding = 20;
-        private const int _sumPadding = 40;
-        private static string ReceiptHeader()
+
+        private const int ProductPadding = -20;
+        private const int AmountPadding = 10;
+        private const int PricePadding = 20;
+        private const int SumPadding = 20;
+
+        private ShoppingCart _shoppingCart;
+
+        private StringBuilder ReceiptHeader()
         {
             StringBuilder receiptHeader = new StringBuilder();
-            int _receiptID = FileManagerOperations.GetReceiptID();
-            receiptHeader.AppendLine($"{"Receipt ID:"} {_receiptID}");
-            receiptHeader.AppendLine($"{"Product"} {"Amount",_amountPadding} {"Price",_pricePadding}");
-            return receiptHeader.ToString();
+            int receiptID = FileManagerOperations.GetReceiptID();
+            receiptHeader.AppendLine($"{"Receipt ID:"} {receiptID} - Time of purchase: {_shoppingCart.TimeOfPurchase}");
+            receiptHeader.AppendLine($"{"Product",ProductPadding}{"Amount",AmountPadding}{"Price",PricePadding}{"Sum",SumPadding}");
+            return receiptHeader;
         }
-
-        private static string ReceiptBody(ShoppingCart shoppingCart)
+        private StringBuilder ReceiptBody()
         {
             StringBuilder receiptBody = new StringBuilder();
-            foreach (var item in shoppingCart.Purchases)
+            foreach (var item in _shoppingCart.Purchases)
             {
                 var productName = ProductCatalogue.Instance.Products[item.ProductID].ProductName;
                 var amount = item.Amount;
                 var price = ProductCatalogue.Instance.Products[item.ProductID].UnitPrice;
-                var sum = shoppingCart.CalculateSum(item.ProductID);
+                var sum = _shoppingCart.CalculateSum(item.ProductID);
 
-                receiptBody.AppendFormat("{0}{1,-15}{2,-20}{3,-40}", productName, amount, price, sum);
-                receiptBody.AppendLine();
+                receiptBody.AppendLine($"{productName,ProductPadding}{amount,AmountPadding}{price,PricePadding:C2}{sum,SumPadding:C2}");
             }
-            return receiptBody.ToString();
+            return receiptBody;
         }
-        private static string ReceiptBottom(ShoppingCart shoppingCart)
+
+        private StringBuilder ReceiptBottom()
         {
             StringBuilder receiptBottom = new StringBuilder();
-            var totalSum = shoppingCart.CalculateTotalSum();
-            receiptBottom.AppendFormat("Total sum of purchase: {0:C2}", totalSum);
-            return receiptBottom.ToString();
+            receiptBottom.AppendLine($"Total sum of purchase: {_shoppingCart.CalculateTotalSum():C2}");
+            return receiptBottom;
         }
 
-
-        public static string CreateReceipt(ShoppingCart shoppingCart)
+        public string CreateReceipt()
         {
             StringBuilder receipt = new StringBuilder();
-            string header = ReceiptHeader();
-            string body = ReceiptBody(shoppingCart);
-            string bottom = ReceiptBottom(shoppingCart);
+            var header = ReceiptHeader().ToString();
+            var body = ReceiptBody().ToString();
+            var bottom = ReceiptBottom().ToString();
             receipt.AppendLine(header);
             receipt.AppendLine(body);
-            receipt.AppendLine();
             receipt.AppendLine(bottom);
             return receipt.ToString();
         }

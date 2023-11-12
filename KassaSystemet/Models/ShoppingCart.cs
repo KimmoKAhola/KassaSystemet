@@ -13,10 +13,11 @@ namespace KassaSystemet.Models
     {
         public ShoppingCart()
         {
-            DateTime timeOfPurchase = DateTime.Now;
+            TimeOfPurchase = DateTime.Now;
             Purchases = new();
         }
         public List<Purchase> Purchases { get; set; }
+        public DateTime TimeOfPurchase { get; private set; }
 
         public void AddProductToCart(IUserInputHandler userInputHandler)
         {
@@ -49,17 +50,14 @@ namespace KassaSystemet.Models
             if (Purchases.Count == 0)
                 Console.WriteLine("Your shopping cart is empty. No purchase has been made", Console.ForegroundColor = ConsoleColor.Red);
 
-            foreach (var item in Purchases)
-            {
-
-            }
-
             Console.Clear();
-            string receipt = Receipt.CreateReceipt(this);
+            var receipt = ModelFactory.CreateReceipt(this);
+            string result = receipt.CreateReceipt();
             Purchases.Clear();
             Console.WriteLine("Your purchase has been made and a receipt has been created.", Console.ForegroundColor = ConsoleColor.Green);
-            Console.WriteLine(receipt);
-            return receipt;
+            Console.ResetColor();
+            Console.WriteLine(result);
+            return result;
         }
 
         public decimal CalculateSum(int productId)

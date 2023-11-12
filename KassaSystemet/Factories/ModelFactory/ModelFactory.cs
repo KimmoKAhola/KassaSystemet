@@ -29,5 +29,10 @@ namespace KassaSystemet.Factories.ModelFactory
         {
             return new ShoppingCart();
         }
+
+        public static Receipt CreateReceipt(ShoppingCart shoppingCart)
+        {
+            return new Receipt(shoppingCart);
+        }
     }
 }
