@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KassaSystemet
+namespace KassaSystemet.File_IO
 {
     public class FileManager : IFileManager
     {
@@ -22,6 +22,7 @@ namespace KassaSystemet
         public void SaveDiscountCatalogueToFile() => _fileManagerStrategy.SaveDiscountCatalogueToFile();
         public Dictionary<int, Product> LoadProductListFromFile() => _fileManagerStrategy.LoadProductListFromFile();
         public void LoadDiscountListFromFile() => _fileManagerStrategy.LoadDiscountListFromFile();
+        public string LoadPersonalMenuFromFile() => _fileManagerStrategy.LoadPersonalMenuFromFile();
         public string LoadInfoMenuFromFile() => _fileManagerStrategy.LoadInfoMenuFromFile();
     }
 }

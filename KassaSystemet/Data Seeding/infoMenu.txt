@@ -1,17 +1,6 @@
-Art modified from https://www.asciiart.eu/computers/computers
-           __________                                 
-         .'----------`.                              
-         | .--------. |                             
-         | |C# CASH | |       __________              
-         | |REGISTER| |      /__________\             
-.--------| `--------' |------|    --=-- |-------------.
-|        `----,-.-----'      |o ======  |             | 
-|       ______|_|_______     |__________|             | 
-|      /  %%%%%%%%%%%%  \    Created by Kimmo Ahola   | 
-|     /  %%%%%%%%%%%%%%  \   The Whisky-Infused Coder | 
-|     ^^^^^^^^^^^^^^^^^^^^   Student at KYH, year 2023| 
-+-----------------------------------------------------+
-  When the code gets poor, it's just the whisky's influence talking!
-  This cash register system brought to you by Kimmo Ahola, the .NET whisky coder.
-
-Press any key to continue.... 
+Some fun info about this app:
+7594 lines of code has been deleted during the development.
+No code was written between 27 sep - 5 nov. After that almost the whole app was rewritten in a week.
+Total time for developing this app ~100 hours. Out of those 100 hours, around 95 were spent on refactoring.
+Most of the concepts introduced in this course has been used, not because they make sense but for practice (patterns, autofac).
+All files saved in other formats than txt are not used by the app (other than when saving) and are only implemented to utilize the strategy pattern.                           

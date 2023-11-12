@@ -108,9 +108,9 @@ namespace KassaSystemet.File_IO
                 receiptWriter.Write(paymentInfo);
             }
         }
-        public string LoadInfoMenuFromFile()
+        public string LoadPersonalMenuFromFile()
         {
-            var filePath = FileManagerOperations.CreateInfoMenuFilePath();
+            var filePath = FileManagerOperations.CreatePersonalMenuFilePath();
             var result = File.ReadAllText(filePath);
             return result;
         }
@@ -121,6 +121,13 @@ namespace KassaSystemet.File_IO
             {
                 productListWriter.Write(productString);
             }
+        }
+
+        public string LoadInfoMenuFromFile()
+        {
+            var filePath = FileManagerOperations.CreateInfoMenuFilePath();
+            var result = File.ReadAllText(filePath);
+            return result;
         }
     }
 }

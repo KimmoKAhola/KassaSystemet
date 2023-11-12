@@ -20,7 +20,6 @@ namespace KassaSystemet.File_IO
 
             return string.Join("\n", csvLines);
         }
-
         public void SaveProductCatalogueToFile()
         {
             string productString = FormatProductCatalogueToFile();
@@ -42,15 +41,12 @@ namespace KassaSystemet.File_IO
                 }
             }
         }
-
         public void SaveReceiptToFile(string paymentInfo)
         {
             throw new NotImplementedException();
         }
-
         public string GetReceiptFolderPath() => $"{_receiptsFolderPath}";
         public string GetProductListFolderPath() => $"{_productListFolderPath}/Product_LIST_ADMIN";
-
         public string GetDiscountListFolderPath() => $"{_discountListFolderPath}/Discount_LIST_ADMIN";
     }
 }

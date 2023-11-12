@@ -14,9 +14,10 @@ namespace KassaSystemet.Menus.MenuPageHandlers
 {
     public enum StartMenuEnum
     {
-        First = 1,
-        Second,
-        Third,
+        CustomerMenu = 1,
+        AdminMenu,
+        InfoMenu,
+        PersonalMenu,
         Exit
     }
     public class AppHandler : IMenu
@@ -29,9 +30,10 @@ namespace KassaSystemet.Menus.MenuPageHandlers
         private IMenu _menu;
         private Dictionary<StartMenuEnum, string> _startMenu = new Dictionary<StartMenuEnum, string>()
         {
-            {StartMenuEnum.First, "Customer Menu." },
-            {StartMenuEnum.Second, "Admin Menu." },
-            {StartMenuEnum.Third, "Info Menu." },
+            {StartMenuEnum.CustomerMenu, "Customer Menu." },
+            {StartMenuEnum.AdminMenu, "Admin Menu." },
+            {StartMenuEnum.InfoMenu, "Info Menu." },
+            {StartMenuEnum.PersonalMenu, "Personal Menu." },
             {StartMenuEnum.Exit, "Save & Exit." },
         };
 
@@ -59,16 +61,20 @@ namespace KassaSystemet.Menus.MenuPageHandlers
         {
             switch (menuHandlerEnum)
             {
-                case StartMenuEnum.First:
+                case StartMenuEnum.CustomerMenu:
                     _menu = _menuFactory.CreateMenu(MenuFactoryEnum.CustomerMenu);
                     _menu.InitializeMenu();
                     break;
-                case StartMenuEnum.Second:
+                case StartMenuEnum.AdminMenu:
                     _menu = _menuFactory.CreateMenu(MenuFactoryEnum.AdminMenu);
                     _menu.InitializeMenu();
                     break;
-                case StartMenuEnum.Third:
+                case StartMenuEnum.InfoMenu:
                     _menu = _menuFactory.CreateMenu(MenuFactoryEnum.InfoMenu);
+                    _menu.InitializeMenu();
+                    break;
+                case StartMenuEnum.PersonalMenu:
+                    _menu = _menuFactory.CreateMenu(MenuFactoryEnum.PersonalMenu);
                     _menu.InitializeMenu();
                     break;
                 case StartMenuEnum.Exit:
@@ -82,7 +88,6 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     break;
             }
         }
-
         private void PrintErrorMessage(string message) => Console.WriteLine(message);
     }
 }
