@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace KassaSystemet.Menus.MenuPages
 {
-    public class PersonalMenu : IMenu
+    public class CreditMenu : IMenu
     {
         private IFileManager _fileManager;
-        public PersonalMenu(IFileManager fileManager)
+        public CreditMenu(IFileManager fileManager)
         {
             _fileManager = fileManager;
         }
