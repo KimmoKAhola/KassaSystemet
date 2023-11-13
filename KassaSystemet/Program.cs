@@ -8,6 +8,7 @@ using KassaSystemet.Menus.MenuPageHandlers;
 using KassaSystemet.File_IO;
 using KassaSystemet.Utilities;
 using KassaSystemet.Models;
+using KassaSystemet.Container;
 
 namespace KassaSystemet
 {
@@ -15,20 +16,20 @@ namespace KassaSystemet
     {
         static void Main(string[] args)
         {
-            var builder = new ContainerBuilder();
+            var builder = ContainerConfig.Configure();
 
-            builder.RegisterType<DefaultFileManager>().As<IFileManager>();
-            builder.RegisterType<UserInputHandler>().As<IUserInputHandler>();
-            builder.RegisterType<MenuFactory>().AsSelf();
-            builder.RegisterType<AppHandler>().AsSelf();
-            builder.RegisterType<App>().AsSelf();
+            //builder.RegisterType<DefaultFileManager>().As<IFileManager>();
+            //builder.RegisterType<UserInputHandler>().As<IUserInputHandler>();
+            //builder.RegisterType<MenuFactory>().AsSelf();
+            //builder.RegisterType<AppHandler>().AsSelf();
+            //builder.RegisterType<App>().AsSelf();
             //builder.RegisterType<ProductCatalogue>().AsSelf();
 
-            var container = builder.Build();
+            //var container = builder.Build();
 
-            using (var scope = container.BeginLifetimeScope())
+            using (var scope = builder.BeginLifetimeScope())
             {
-                var app = scope.Resolve<App>();
+                var app = scope.Resolve<IApplication>();
                 app.StartApp();
             }
         }

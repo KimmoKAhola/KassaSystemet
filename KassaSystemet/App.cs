@@ -13,26 +13,28 @@ using KassaSystemet.Models;
 
 namespace KassaSystemet
 {
-    public class App
+    public class App : IApplication
     {
 
-        private MenuFactory _menuFactory;
+        //private MenuFactory _menuFactory;
         private IFileManager _fileManager;
-
-        public App(MenuFactory menuFactory, IFileManager fileManager)
+        private AppHandler _appHandler;
+        public App(IFileManager fileManager, AppHandler appHandler)
         {
-            _menuFactory = menuFactory;
+            //_menuFactory = menuFactory;
             _fileManager = fileManager;
+            _appHandler = appHandler;
         }
 
         public void StartApp()
         {
             FileManagerOperations.CreateFolders();
-            var test = ProductCatalogue.Instance.Products;
+            //var test = ProductCatalogue.Instance.Products;
             _fileManager.LoadProductListFromFile();
             _fileManager.LoadDiscountListFromFile();
-            AppHandler startMenuOptions = new AppHandler(_menuFactory);
-            startMenuOptions.InitializeMenu();
+            //AppHandler startMenuOptions = new AppHandler(_menuFactory);
+            //startMenuOptions.InitializeMenu();
+            _appHandler.InitializeMenu();
         }
     }
 }

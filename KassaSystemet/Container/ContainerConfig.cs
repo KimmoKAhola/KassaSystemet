@@ -4,6 +4,7 @@ using KassaSystemet.File_IO;
 using KassaSystemet.Interfaces;
 using KassaSystemet.Menus.MenuPageHandlers;
 using KassaSystemet.Menus.MenuPages;
+using KassaSystemet.Models;
 using KassaSystemet.Utilities;
 using System;
 using System.Collections.Generic;
