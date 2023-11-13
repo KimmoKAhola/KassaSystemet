@@ -65,7 +65,7 @@ namespace KassaSystemet.Menus.MenuPages
             do
             {
                 DisplayMenu();
-                userInput = _userInputHandler.GetAdminMenuEnum();
+                userInput = _userInputHandler.GetMenuEnum<AdminMenuEnum>();
                 bool isChanged = adminMenuHandler.HandleAdminMenuOption(userInput);
                 if (isChanged)
                 {
@@ -102,7 +102,7 @@ namespace KassaSystemet.Menus.MenuPages
         }
         private static void GetSaveFormat(ISave temp, IUserInputHandler userInputHandler)
         {
-            SaveFormatEnum userInput = userInputHandler.GetSaveFormatEnum();
+            SaveFormatEnum userInput = userInputHandler.GetMenuEnum<SaveFormatEnum>();
 
             switch (userInput)
             {

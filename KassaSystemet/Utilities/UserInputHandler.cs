@@ -117,78 +117,19 @@ namespace KassaSystemet.Utilities
                     PrintErrorMessage("Invalid price type. Please enter 'per kg' or 'per unit'.");
             }
         }
-        public static StartMenuEnum GetStartMenuEnum()
+        public TEnum GetMenuEnum<TEnum>() where TEnum : struct
         {
             while (true)
             {
                 Console.Write("Enter your command: ");
                 string userInput = Console.ReadLine();
-                if (IsValidEnumInput(userInput, out StartMenuEnum result))
+                if (IsValidEnumInput(userInput, out TEnum result))
                     return result;
                 else
                     PrintErrorMessage("Enter a valid input");
             }
         }
-        public AdminMenuEnum GetAdminMenuEnum()
-        {
-            while (true)
-            {
-                Console.Write("Enter your command: ");
-                string userInput = Console.ReadLine();
-                if (IsValidEnumInput(userInput, out AdminMenuEnum result))
-                    return result;
-                else
-                    PrintErrorMessage("Enter a valid input");
-            }
-        }
-        public CustomerMenuEnum GetCustomerMenuEnum()
-        {
-            while (true)
-            {
-                Console.Write("Enter your command: ");
-                string userInput = Console.ReadLine();
-                if (IsValidEnumInput(userInput, out CustomerMenuEnum result))
-                    return result;
-                else
-                    PrintErrorMessage("Enter a valid input");
-            }
-        }
-
-        public SaveFormatEnum GetSaveFormatEnum()
-        {
-            while (true)
-            {
-                Console.Write("Enter your command: ");
-                string userInput = Console.ReadLine();
-                if (IsValidEnumInput(userInput, out SaveFormatEnum result))
-                    return result;
-                else
-                    PrintErrorMessage("Enter a valid input");
-            }
-        }
-        private static bool IsValidEnumInput(string userInput, out StartMenuEnum result)
-        {
-            while (true)
-            {
-                return Enum.TryParse(userInput, out result);
-            }
-        }
-        private static bool IsValidEnumInput(string userInput, out AdminMenuEnum result)
-        {
-            while (true)
-            {
-                return Enum.TryParse(userInput, out result);
-            }
-        }
-        private static bool IsValidEnumInput(string userInput, out CustomerMenuEnum result)
-        {
-            while (true)
-            {
-                return Enum.TryParse(userInput, out result);
-            }
-        }
-
-        private static bool IsValidEnumInput(string userInput, out SaveFormatEnum result)
+        public bool IsValidEnumInput<TEnum>(string userInput, out TEnum result) where TEnum : struct
         {
             while (true)
             {

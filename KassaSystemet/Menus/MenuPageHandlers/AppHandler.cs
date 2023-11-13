@@ -22,12 +22,15 @@ namespace KassaSystemet.Menus.MenuPageHandlers
     }
     public class AppHandler : IMenu
     {
-        public AppHandler(MenuFactory menuFactory)
+        public AppHandler(MenuFactory menuFactory, IUserInputHandler userInputHandler)
         {
             _menuFactory = menuFactory;
+            _userInputHandler = userInputHandler;
         }
         MenuFactory _menuFactory;
         IMenu _menu;
+        IUserInputHandler _userInputHandler;
+
         private Dictionary<StartMenuEnum, string> _startMenu = new Dictionary<StartMenuEnum, string>()
         {
             {StartMenuEnum.CustomerMenu, "Customer Menu." },
@@ -53,7 +56,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             do
             {
                 DisplayMenu();
-                userInput = UserInputHandler.GetStartMenuEnum();
+                userInput = _userInputHandler.GetMenuEnum<StartMenuEnum>();
                 MenuHandler(userInput);
             } while (userInput != StartMenuEnum.Exit);
         }

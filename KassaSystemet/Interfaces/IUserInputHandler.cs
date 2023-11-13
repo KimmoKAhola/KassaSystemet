@@ -13,10 +13,7 @@ namespace KassaSystemet.Interfaces
         int ProductIdInput();
         (string, string, decimal) DiscountInput();
         (string, decimal, string) NewProduct();
-
-        AdminMenuEnum GetAdminMenuEnum();
-        CustomerMenuEnum GetCustomerMenuEnum();
-        //StartMenuEnum GetStartMenuEnum();
-        SaveFormatEnum GetSaveFormatEnum();
+        public TEnum GetMenuEnum<TEnum>() where TEnum : struct;
+        public bool IsValidEnumInput<TEnum>(string userInput, out TEnum result) where TEnum : struct;
     }
 }
