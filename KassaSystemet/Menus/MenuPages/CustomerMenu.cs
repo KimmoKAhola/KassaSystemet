@@ -43,7 +43,7 @@ namespace KassaSystemet.Menus.MenuPages
             do
             {
                 DisplayMenu();
-                userInput = _userInputHandler.GetCustomerMenuEnum();
+                userInput = _userInputHandler.GetMenuEnum<CustomerMenuEnum>();
                 _customerMenuHandler.HandleCustomerMenuOption(userInput);
             } while (userInput != CustomerMenuEnum.Exit);
         }

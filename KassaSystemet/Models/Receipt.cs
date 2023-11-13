@@ -27,7 +27,9 @@ namespace KassaSystemet.Models
         {
             int receiptID = FileManagerOperations.GetReceiptID();
 
-            return $@"Receipt ID: {receiptID} - Time of purchase: {_shoppingCart.TimeOfPurchase}{"Product",-20}{"Amount",10}{"Price",20}{"Sum",20}";
+            return
+                $@"Receipt ID: {receiptID} - Time of purchase: {_shoppingCart.TimeOfPurchase}
+{"Product",-20}{"Amount",10}{"Price",20}{"Sum",20}";
         }
         private StringBuilder ReceiptBody()
         {
@@ -43,7 +45,7 @@ namespace KassaSystemet.Models
                 if (ProductCatalogue.Instance.Products[item.ProductID].HasActiveDiscount())
                 {
                     var percentage = ShoppingCart.GetDiscountPercentage(item.ProductID);
-                    receiptBody.Append($"\t\t{percentage:P2} discount.");
+                    receiptBody.Append($"\t---  {percentage:P2} discount.");
                 }
             }
             return receiptBody;
