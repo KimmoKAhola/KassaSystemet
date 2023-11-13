@@ -19,18 +19,30 @@ namespace KassaSystemet.Container
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
-
-            builder.RegisterType<DefaultFileManager>().As<IFileManager>();
-            builder.RegisterType<UserInputHandler>().As<IUserInputHandler>();
-            builder.RegisterType<MenuFactory>().AsSelf();
-            builder.RegisterType<AppHandler>().SingleInstance();
+            RegisterMenus(builder);
+            RegisterHandlers(builder);
+            RegisterMenuHandlers(builder);
             builder.RegisterType<App>().As<IApplication>();
-            builder.RegisterType<AdminMenu>().SingleInstance();
-            builder.RegisterType<AdminMenuHandler>().As<IMenuHandler<AdminMenuEnum>>();
-            builder.RegisterType<CustomerMenu>().SingleInstance();
-            builder.RegisterType<CustomerMenuHandler>().As<IMenuHandler<CustomerMenuEnum>>();
 
             return builder.Build();
+        }
+
+        private static void RegisterHandlers(ContainerBuilder builder)
+        {
+            builder.RegisterType<DefaultFileManager>().As<IFileManager>();
+            builder.RegisterType<UserInputHandler>().As<IUserInputHandler>();
+        }
+        private static void RegisterMenuHandlers(ContainerBuilder builder)
+        {
+            builder.RegisterType<AdminMenuHandler>().As<IMenuHandler<AdminMenuEnum>>();
+            builder.RegisterType<CustomerMenuHandler>().As<IMenuHandler<CustomerMenuEnum>>();
+            builder.RegisterType<AppHandler>().SingleInstance();
+        }
+        private static void RegisterMenus(ContainerBuilder builder)
+        {
+            builder.RegisterType<MenuFactory>().AsSelf();
+            builder.RegisterType<AdminMenu>().SingleInstance();
+            builder.RegisterType<CustomerMenu>().SingleInstance();
         }
     }
 }

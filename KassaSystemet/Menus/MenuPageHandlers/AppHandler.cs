@@ -26,8 +26,8 @@ namespace KassaSystemet.Menus.MenuPageHandlers
         {
             _menuFactory = menuFactory;
         }
-        private MenuFactory _menuFactory;
-        private IMenu _menu;
+        MenuFactory _menuFactory;
+        IMenu _menu;
         private Dictionary<StartMenuEnum, string> _startMenu = new Dictionary<StartMenuEnum, string>()
         {
             {StartMenuEnum.CustomerMenu, "Customer Menu." },

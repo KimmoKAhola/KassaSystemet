@@ -56,7 +56,7 @@ namespace KassaSystemet.Models
             return result;
         }
 
-        public decimal CalculateSum(int productId)
+        public static decimal CalculateSum(int productId)
         {
             var sum = ProductCatalogue.Instance.Products[productId].UnitPrice;
 
@@ -66,6 +66,7 @@ namespace KassaSystemet.Models
             return sum;
         }
 
+        public static decimal GetDiscountPercentage(int productId) => ProductCatalogue.Instance.Products[productId].Discounts.Max(discount => discount.DiscountPercentage);
         public decimal CalculateTotalSum() => Purchases.Sum(product => CalculateSum(product.ProductID));
 
         private void PrintMessage(string message) => Console.WriteLine(message);

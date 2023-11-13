@@ -18,15 +18,6 @@ namespace KassaSystemet
         {
             var builder = ContainerConfig.Configure();
 
-            //builder.RegisterType<DefaultFileManager>().As<IFileManager>();
-            //builder.RegisterType<UserInputHandler>().As<IUserInputHandler>();
-            //builder.RegisterType<MenuFactory>().AsSelf();
-            //builder.RegisterType<AppHandler>().AsSelf();
-            //builder.RegisterType<App>().AsSelf();
-            //builder.RegisterType<ProductCatalogue>().AsSelf();
-
-            //var container = builder.Build();
-
             using (var scope = builder.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IApplication>();

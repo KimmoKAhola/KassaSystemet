@@ -16,12 +16,10 @@ namespace KassaSystemet
     public class App : IApplication
     {
 
-        //private MenuFactory _menuFactory;
-        private IFileManager _fileManager;
-        private AppHandler _appHandler;
+        IFileManager _fileManager;
+        AppHandler _appHandler;
         public App(IFileManager fileManager, AppHandler appHandler)
         {
-            //_menuFactory = menuFactory;
             _fileManager = fileManager;
             _appHandler = appHandler;
         }
@@ -29,11 +27,8 @@ namespace KassaSystemet
         public void StartApp()
         {
             FileManagerOperations.CreateFolders();
-            //var test = ProductCatalogue.Instance.Products;
             _fileManager.LoadProductListFromFile();
             _fileManager.LoadDiscountListFromFile();
-            //AppHandler startMenuOptions = new AppHandler(_menuFactory);
-            //startMenuOptions.InitializeMenu();
             _appHandler.InitializeMenu();
         }
     }
