@@ -9,13 +9,11 @@ namespace KassaSystemet.Models
 {
     public class ProductCatalogue
     {
-        ILoad _fileManager = new DefaultFileManager();
         private ProductCatalogue()
         {
-            Products = _fileManager.LoadProductListFromFile();
         }
         private static ProductCatalogue instance;
-        public Dictionary<int, Product> Products { get; }
+        public Dictionary<int, Product> Products { get; set; }
         public List<Discount> Discounts { get; }
         public static ProductCatalogue Instance => instance ??= new ProductCatalogue();
         private static string[] _wares = File.ReadAllText(FileManagerOperations.CreateSeededProductsFilePath()).Split('\n');

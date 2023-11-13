@@ -23,7 +23,7 @@ namespace KassaSystemet.Menus.MenuPages
         {
             _fileManagerStrategy = fileManagerStrategy;
             _userInputHandler = userInputHandler;
-            _customerMenuHandler ??= new CustomerMenuHandler();
+            _customerMenuHandler ??= new CustomerMenuHandler(_fileManagerStrategy, _userInputHandler);
         }
         private static CustomerMenuHandler _customerMenuHandler;
         private IFileManager _fileManagerStrategy;
@@ -44,7 +44,7 @@ namespace KassaSystemet.Menus.MenuPages
             {
                 DisplayMenu();
                 userInput = _userInputHandler.GetCustomerMenuEnum();
-                _customerMenuHandler.HandleCustomerMenuOption(userInput, _fileManagerStrategy, _userInputHandler);
+                _customerMenuHandler.HandleCustomerMenuOption(userInput);
             } while (userInput != CustomerMenuEnum.Exit);
         }
         public void DisplayMenu()

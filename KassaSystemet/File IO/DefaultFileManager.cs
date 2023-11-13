@@ -53,16 +53,15 @@ namespace KassaSystemet.File_IO
         }
         public Dictionary<int, Product> LoadProductListFromFile()
         {
-            Dictionary<int, Product> products = new Dictionary<int, Product>();
             if (File.Exists(FileManagerOperations.CreateProductListFilePathText()))
             {
                 var productListInfo = File.ReadAllLines(FileManagerOperations.CreateProductListFilePathText());
                 return AddProductsToProductCatalogue(productListInfo);
             }
             else
-                products = ProductCatalogue.SeedProducts();
+                ProductCatalogue.Instance.Products = ProductCatalogue.SeedProducts();
 
-            return products;
+            return ProductCatalogue.Instance.Products;
         }
         private static Dictionary<int, Product> AddProductsToProductCatalogue(string[] productListInfo)
         {

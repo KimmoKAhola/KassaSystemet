@@ -28,7 +28,7 @@ namespace KassaSystemet
         {
             FileManagerOperations.CreateFolders();
             _fileManager.LoadDiscountListFromFile();
-
+            _fileManager.LoadProductListFromFile();
             AppHandler startMenuOptions = new AppHandler(_menuFactory);
             startMenuOptions.InitializeMenu();
         }
