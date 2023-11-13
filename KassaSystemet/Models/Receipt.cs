@@ -19,16 +19,15 @@ namespace KassaSystemet.Models
         private const int AmountPadding = 10;
         private const int PricePadding = 20;
         private const int SumPadding = 20;
-
+        //Kika på discounts added. Felmeddelandet stämmer ej. Dyker upp även om det blir fel inmatning.
+        //discount to json does not work
         private ShoppingCart _shoppingCart;
 
-        private StringBuilder ReceiptHeader()
+        private string ReceiptHeader()
         {
-            StringBuilder receiptHeader = new StringBuilder();
             int receiptID = FileManagerOperations.GetReceiptID();
-            receiptHeader.AppendLine($"{"Receipt ID:"} {receiptID} - Time of purchase: {_shoppingCart.TimeOfPurchase}");
-            receiptHeader.AppendLine($"{"Product",ProductPadding}{"Amount",AmountPadding}{"Price",PricePadding}{"Sum",SumPadding}");
-            return receiptHeader;
+
+            return $@"Receipt ID: {receiptID} - Time of purchase: {_shoppingCart.TimeOfPurchase}{"Product",-20}{"Amount",10}{"Price",20}{"Sum",20}";
         }
         private StringBuilder ReceiptBody()
         {
@@ -38,26 +37,29 @@ namespace KassaSystemet.Models
                 var productName = ProductCatalogue.Instance.Products[item.ProductID].ProductName;
                 var amount = item.Amount;
                 var price = ProductCatalogue.Instance.Products[item.ProductID].UnitPrice;
-                var sum = _shoppingCart.CalculateSum(item.ProductID);
+                var sum = ShoppingCart.CalculateSum(item.ProductID);
 
-                receiptBody.AppendLine($"{productName,ProductPadding}{amount,AmountPadding}{price,PricePadding:C2}{sum,SumPadding:C2}");
+                receiptBody.Append($"{productName,ProductPadding}{amount,AmountPadding}{price,PricePadding:C2}{sum,SumPadding:C2}");
+                if (ProductCatalogue.Instance.Products[item.ProductID].HasActiveDiscount())
+                {
+                    var percentage = ShoppingCart.GetDiscountPercentage(item.ProductID);
+                    receiptBody.Append($"\t\t{percentage:P2} discount.");
+                }
             }
             return receiptBody;
         }
 
-        private StringBuilder ReceiptBottom()
+        private string ReceiptBottom()
         {
-            StringBuilder receiptBottom = new StringBuilder();
-            receiptBottom.AppendLine($"Total sum of purchase: {_shoppingCart.CalculateTotalSum():C2}");
-            return receiptBottom;
+            return $@"Total sum of purchase: {_shoppingCart.CalculateTotalSum():C2}";
         }
 
         public string CreateReceipt()
         {
             StringBuilder receipt = new StringBuilder();
-            var header = ReceiptHeader().ToString();
+            var header = ReceiptHeader();
             var body = ReceiptBody().ToString();
-            var bottom = ReceiptBottom().ToString();
+            var bottom = ReceiptBottom();
             receipt.AppendLine(header);
             receipt.AppendLine(body);
             receipt.AppendLine(bottom);

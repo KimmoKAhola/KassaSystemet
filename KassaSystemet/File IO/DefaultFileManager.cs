@@ -65,15 +65,15 @@ namespace KassaSystemet.File_IO
         }
         private static Dictionary<int, Product> AddProductsToProductCatalogue(string[] productListInfo)
         {
-            Dictionary<int, Product> products = new Dictionary<int, Product>();
+            //Dictionary<int, Product> products = new Dictionary<int, Product>();
             foreach (var item in productListInfo)
             {
                 string[] columns = item.Split('!');
 
                 var product = ModelFactory.CreateProduct(columns[1], Convert.ToDecimal(columns[2]), columns[3]);
-                products.Add(Convert.ToInt32(columns[0]), product);
+                ProductCatalogue.Instance.Products.Add(Convert.ToInt32(columns[0]), product);
             }
-            return products;
+            return ProductCatalogue.Instance.Products;
         }
         public void LoadDiscountListFromFile()
         {

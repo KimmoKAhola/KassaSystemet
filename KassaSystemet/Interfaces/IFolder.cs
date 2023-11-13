@@ -11,5 +11,8 @@ namespace KassaSystemet.Interfaces
         string GetReceiptFolderPath();
         string GetProductListFolderPath();
         string GetDiscountListFolderPath();
+        string CreateReceiptFilePath();
+        string CreateReceiptIDFilePath();
+        string CreateDiscountListFilePath();
     }
 }

@@ -11,10 +11,12 @@ namespace KassaSystemet.Models
     {
         private ProductCatalogue()
         {
+            Products = new();
+            Discounts = new();
         }
         private static ProductCatalogue instance;
         public Dictionary<int, Product> Products { get; set; }
-        public List<Discount> Discounts { get; }
+        public List<Discount> Discounts { get; set; }
         public static ProductCatalogue Instance => instance ??= new ProductCatalogue();
         private static string[] _wares = File.ReadAllText(FileManagerOperations.CreateSeededProductsFilePath()).Split('\n');
 

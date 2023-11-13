@@ -9,28 +9,27 @@ using KassaSystemet.Factories.MenuFactory;
 using KassaSystemet.Menus.MenuPages;
 using KassaSystemet.Utilities;
 using KassaSystemet.Menus.MenuPageHandlers;
+using KassaSystemet.Models;
 
 namespace KassaSystemet
 {
-    public class App
+    public class App : IApplication
     {
 
-        private MenuFactory _menuFactory;
-        private IFileManager _fileManager;
-
-        public App(MenuFactory menuFactory, IFileManager fileManager)
+        IFileManager _fileManager;
+        AppHandler _appHandler;
+        public App(IFileManager fileManager, AppHandler appHandler)
         {
-            _menuFactory = menuFactory;
             _fileManager = fileManager;
+            _appHandler = appHandler;
         }
 
         public void StartApp()
         {
             FileManagerOperations.CreateFolders();
-            _fileManager.LoadDiscountListFromFile();
             _fileManager.LoadProductListFromFile();
-            AppHandler startMenuOptions = new AppHandler(_menuFactory);
-            startMenuOptions.InitializeMenu();
+            _fileManager.LoadDiscountListFromFile();
+            _appHandler.InitializeMenu();
         }
     }
 }

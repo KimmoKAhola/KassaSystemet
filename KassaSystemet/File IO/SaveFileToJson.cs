@@ -14,6 +14,7 @@ namespace KassaSystemet.File_IO
         private Dictionary<int, Product> _productCatalogue = ProductCatalogue.Instance.Products;
         private static string _receiptsFolderPath = $"../../../Files/Receipts";
         private static string _productListFolderPath = $"../../../Files/ProductLists";
+        private static string _discountListFolderPath = $"../../../Files/DiscountLists";
         public static string GetDiscountListFilePath() => $"{_productListFolderPath}/DISCOUNT_LIST_ADMIN";
         public string GetProductListFolderPath() => $"{_productListFolderPath}/Product_LIST_ADMIN";
         public string GetReceiptFolderPath() => $"{_receiptsFolderPath}";
@@ -41,5 +42,9 @@ namespace KassaSystemet.File_IO
         {
             throw new NotImplementedException();
         }
+
+        public string CreateReceiptFilePath() => Path.Combine(_receiptsFolderPath, $"RECEIPT_{DateTime.Now.ToString("yyyyMMdd")}");
+        public string CreateReceiptIDFilePath() => Path.Combine(_receiptsFolderPath, $"RECEIPT_ID");
+        public string CreateDiscountListFilePath() => Path.Combine(_discountListFolderPath, $"DISCOUNT_LIST_ADMIN");
     }
 }
