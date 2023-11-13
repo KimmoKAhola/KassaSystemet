@@ -14,13 +14,17 @@ namespace KassaSystemet.Menus.MenuPageHandlers
     public class CustomerMenuHandler : IMenuHandler<CustomerMenuEnum>
     {
         private ShoppingCart _shoppingCart;
-        public CustomerMenuHandler()
+        private IUserInputHandler _userInputHandler;
+        IFileManager _fileManager;
+        public CustomerMenuHandler(IFileManager fileManager, IUserInputHandler userInputHandler)
         {
+            _userInputHandler = userInputHandler;
+            _fileManager = fileManager;
             if (_shoppingCart == null || _shoppingCart.Purchases.Count == 0)
                 _shoppingCart = new ShoppingCart();
         }
 
-        public void HandleCustomerMenuOption(CustomerMenuEnum userInput, IFileManager fileManagerStrategy, IUserInputHandler userInputHandler)
+        public void HandleCustomerMenuOption(CustomerMenuEnum userInput)
         {
             switch (userInput)
             {
@@ -28,7 +32,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     _shoppingCart.DisplayPurchases();
                     break;
                 case CustomerMenuEnum.Second:
-                    _shoppingCart.AddProductToCart(userInputHandler);
+                    _shoppingCart.AddProductToCart(_userInputHandler);
                     break;
                 case CustomerMenuEnum.Third:
                     ProductCatalogue.Instance.DisplayProducts();
@@ -37,7 +41,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     if (_shoppingCart.Purchases.Count > 0)
                     {
                         string receipt = _shoppingCart.Pay();
-                        fileManagerStrategy.SaveReceiptToFile(receipt);
+                        _fileManager.SaveReceiptToFile(receipt);
                     }
                     else
                         Console.WriteLine("Your shopping cart is empty.");
@@ -58,7 +62,8 @@ namespace KassaSystemet.Menus.MenuPageHandlers
 
         public void HandleMenuOption(CustomerMenuEnum menuOption)
         {
-            if (
+            if (menuOption is CustomerMenuEnum customerMenuEnum)
+                HandleCustomerMenuOption(customerMenuEnum);
         }
     }
 }
