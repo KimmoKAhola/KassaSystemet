@@ -21,9 +21,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
         public void HandleMenuOption(AdminMenuEnum menuOption)
         {
             if (menuOption is AdminMenuEnum adminMenuEnum)
-            {
                 HandleAdminMenuOption(adminMenuEnum);
-            }
         }
         public bool HandleAdminMenuOption(AdminMenuEnum adminMenuHandlerEnum)
         {
