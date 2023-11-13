@@ -17,7 +17,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
         CustomerMenu = 1,
         AdminMenu,
         InfoMenu,
-        PersonalMenu,
+        CreditMenu,
         Exit
     }
     public class AppHandler : IMenu
@@ -36,7 +36,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             {StartMenuEnum.CustomerMenu, "Customer Menu." },
             {StartMenuEnum.AdminMenu, "Admin Menu." },
             {StartMenuEnum.InfoMenu, "Info Menu." },
-            {StartMenuEnum.PersonalMenu, "Personal Menu." },
+            {StartMenuEnum.CreditMenu, "Credits Menu." },
             {StartMenuEnum.Exit, "Save & Exit." },
         };
 
@@ -76,8 +76,8 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     _menu = _menuFactory.CreateMenu(MenuFactoryEnum.InfoMenu);
                     _menu.InitializeMenu();
                     break;
-                case StartMenuEnum.PersonalMenu:
-                    _menu = _menuFactory.CreateMenu(MenuFactoryEnum.PersonalMenu);
+                case StartMenuEnum.CreditMenu:
+                    _menu = _menuFactory.CreateMenu(MenuFactoryEnum.CreditMenu);
                     _menu.InitializeMenu();
                     break;
                 case StartMenuEnum.Exit:

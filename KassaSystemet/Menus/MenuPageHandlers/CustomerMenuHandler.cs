@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using KassaSystemet.Models;
 using KassaSystemet.Factories.ModelFactory;
 using KassaSystemet.Menus.MenuPages;
+using KassaSystemet.File_IO;
 
 namespace KassaSystemet.Menus.MenuPageHandlers
 {
@@ -42,6 +43,10 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     {
                         string receipt = _shoppingCart.Pay();
                         _fileManager.SaveReceiptToFile(receipt);
+                        if (_fileManager is ISave)
+                        {
+                            GetSaveFormat(_fileManager, _userInputHandler, receipt);
+                        }
                     }
                     else
                         Console.WriteLine("Your shopping cart is empty.");
@@ -64,6 +69,23 @@ namespace KassaSystemet.Menus.MenuPageHandlers
         {
             if (menuOption is CustomerMenuEnum customerMenuEnum)
                 HandleCustomerMenuOption(customerMenuEnum);
+        }
+        private static void GetSaveFormat(ISave temp, IUserInputHandler userInputHandler, string receipt)
+        {
+            SaveFormatEnum userInput = userInputHandler.GetMenuEnum<SaveFormatEnum>();
+
+            switch (userInput)
+            {
+                case SaveFormatEnum.CSV:
+                    temp = new SaveFileToCSV();
+                    break;
+                case SaveFormatEnum.JSON:
+                    temp = new SaveFileToJson();
+                    break;
+            }
+            temp.SaveReceiptToFile(receipt);
+
+            Thread.Sleep(2000);
         }
     }
 }
