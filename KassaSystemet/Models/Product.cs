@@ -12,7 +12,7 @@ namespace KassaSystemet.Models
             if (productName.Length > 20)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine($"Your product name was too long and has been shortened to {ProductName}");
+                Console.WriteLine($"Your product name was too long and has been shortened to {ProductName}"); //error when changing name in admin menu
             }
             UnitPrice = unitPrice;
             PriceType = priceType.ToLower();

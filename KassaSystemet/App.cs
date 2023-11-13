@@ -9,6 +9,7 @@ using KassaSystemet.Factories.MenuFactory;
 using KassaSystemet.Menus.MenuPages;
 using KassaSystemet.Utilities;
 using KassaSystemet.Menus.MenuPageHandlers;
+using KassaSystemet.Models;
 
 namespace KassaSystemet
 {
@@ -27,8 +28,9 @@ namespace KassaSystemet
         public void StartApp()
         {
             FileManagerOperations.CreateFolders();
-            _fileManager.LoadDiscountListFromFile();
+            var test = ProductCatalogue.Instance.Products;
             _fileManager.LoadProductListFromFile();
+            _fileManager.LoadDiscountListFromFile();
             AppHandler startMenuOptions = new AppHandler(_menuFactory);
             startMenuOptions.InitializeMenu();
         }

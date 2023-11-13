@@ -19,7 +19,10 @@ namespace KassaSystemet.Models
         private const int AmountPadding = 10;
         private const int PricePadding = 20;
         private const int SumPadding = 20;
-
+        //Add so that the discount is visible on the receipt.
+        //Kika på discounts added. Felmeddelandet stämmer ej. Dyker upp även om det blir fel inmatning.
+        //Kraschar om man lägger till rabatter och sen startar.
+        //discount to json does not work
         private ShoppingCart _shoppingCart;
 
         private StringBuilder ReceiptHeader()

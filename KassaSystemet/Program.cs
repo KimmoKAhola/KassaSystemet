@@ -7,6 +7,7 @@ using KassaSystemet.Interfaces;
 using KassaSystemet.Menus.MenuPageHandlers;
 using KassaSystemet.File_IO;
 using KassaSystemet.Utilities;
+using KassaSystemet.Models;
 
 namespace KassaSystemet
 {
@@ -21,6 +22,7 @@ namespace KassaSystemet
             builder.RegisterType<MenuFactory>().AsSelf();
             builder.RegisterType<AppHandler>().AsSelf();
             builder.RegisterType<App>().AsSelf();
+            //builder.RegisterType<ProductCatalogue>().AsSelf();
 
             var container = builder.Build();
 
