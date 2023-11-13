@@ -10,40 +10,52 @@ using KassaSystemet.Menus.MenuPages;
 
 namespace KassaSystemet.Menus.MenuPageHandlers
 {
-    public class AdminMenuHandler
+    public class AdminMenuHandler : IMenuHandler<AdminMenuEnum>
     {
+        public AdminMenuHandler(IUserInputHandler userInputHandler)
+        {
+            _userInputHandler = userInputHandler;
+        }
+        private IUserInputHandler _userInputHandler;
         private ProductCatalogue productCatalogue = ProductCatalogue.Instance;
-        public bool HandleAdminMenuOption(AdminMenuEnum adminMenuHandlerEnum, IUserInputHandler userInputHandler)
+        public void HandleMenuOption(AdminMenuEnum menuOption)
+        {
+            if (menuOption is AdminMenuEnum adminMenuEnum)
+            {
+                HandleAdminMenuOption(adminMenuEnum);
+            }
+        }
+        public bool HandleAdminMenuOption(AdminMenuEnum adminMenuHandlerEnum)
         {
             bool _isChanged = false;
             switch (adminMenuHandlerEnum)
             {
                 case AdminMenuEnum.First:
-                    AddNewProduct(ref _isChanged, userInputHandler);
+                    AddNewProduct(ref _isChanged, _userInputHandler);
                     break;
                 case AdminMenuEnum.Second:
                     DisplayAvailableProducts();
                     break;
                 case AdminMenuEnum.Third:
-                    ChangeProductPrice(ref _isChanged, userInputHandler);
+                    ChangeProductPrice(ref _isChanged, _userInputHandler);
                     break;
                 case AdminMenuEnum.Fourth:
-                    ChangeProductName(ref _isChanged, userInputHandler);
+                    ChangeProductName(ref _isChanged, _userInputHandler);
                     break;
                 case AdminMenuEnum.Fifth:
-                    AddProductDiscount(ref _isChanged, userInputHandler);
+                    AddProductDiscount(ref _isChanged, _userInputHandler);
                     break;
                 case AdminMenuEnum.Sixth:
-                    DisplayProductDiscount(userInputHandler);
+                    DisplayProductDiscount(_userInputHandler);
                     break;
                 case AdminMenuEnum.Seventh:
                     DisplayAllDiscounts();
                     break;
                 case AdminMenuEnum.Eighth:
-                    RemoveProductDiscount(ref _isChanged, userInputHandler);
+                    RemoveProductDiscount(ref _isChanged, _userInputHandler);
                     break;
                 case AdminMenuEnum.Ninth:
-                    RemoveProduct(ref _isChanged, userInputHandler);
+                    RemoveProduct(ref _isChanged, _userInputHandler);
                     break;
                 case AdminMenuEnum.Exit:
                     Console.WriteLine("Return to the main menu.");
@@ -142,5 +154,6 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             else
                 Console.WriteLine($"The product id {productId} does not exist.", Console.ForegroundColor = ConsoleColor.Red);
         }
+
     }
 }

@@ -11,7 +11,7 @@ using KassaSystemet.Menus.MenuPages;
 
 namespace KassaSystemet.Menus.MenuPageHandlers
 {
-    public class CustomerMenuHandler
+    public class CustomerMenuHandler : IMenuHandler<CustomerMenuEnum>
     {
         private ShoppingCart _shoppingCart;
         public CustomerMenuHandler()
@@ -54,6 +54,11 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             Console.ResetColor();
             Console.Write("Press any key to continue: ");
             Console.ReadKey();
+        }
+
+        public void HandleMenuOption(CustomerMenuEnum menuOption)
+        {
+            if (
         }
     }
 }
