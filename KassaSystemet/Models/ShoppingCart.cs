@@ -43,7 +43,7 @@ namespace KassaSystemet.Models
                 PrintSuccessMessage("Your cart contains the following items: ");
                 foreach (var item in Purchases)
                 {
-                    string productInfo = $"{ProductCatalogue.Instance.Products[item.ProductID].ProductName}, Antal: {item.Amount}";
+                    string productInfo = $"{ProductCatalogue.Instance.Products[item.ProductID].ProductName}, Amount: {item.Amount}, Price: {ProductCatalogue.Instance.Products[item.ProductID].UnitPrice:C2}";
                     PrintMessage(productInfo);
                 }
             }

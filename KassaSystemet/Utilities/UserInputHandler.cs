@@ -91,6 +91,8 @@ namespace KassaSystemet.Utilities
             {
                 PromptUser("Enter a product name, at least 2 character long, without any numbers or special characters: ");
                 productName = Console.ReadLine();
+                productName = productName.TrimStart();
+                productName = productName.TrimEnd();
             }
             return productName;
         }

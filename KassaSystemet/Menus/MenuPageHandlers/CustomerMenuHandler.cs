@@ -54,6 +54,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     break;
                 case CustomerMenuEnum.Exit:
                     PrintSuccessMessage("Returning to the main menu.");
+                    _shoppingCart.Purchases.Clear();
                     break;
                 default:
                     PrintErrorMessage("Invalid input.");
