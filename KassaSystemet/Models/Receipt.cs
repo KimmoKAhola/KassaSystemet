@@ -67,7 +67,8 @@ namespace KassaSystemet.Models
             var body = ReceiptBody().ToString();
             receipt.AppendLine(header);
             receipt.Append(body);
-            receipt.Append(dashedLine);
+            receipt.Append(dashedLine + "\n");
+            //receipt.Append();
             return receipt.ToString();
         }
     }
