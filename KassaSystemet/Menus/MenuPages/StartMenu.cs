@@ -12,11 +12,10 @@ using KassaSystemet.Models;
 
 namespace KassaSystemet.Menus.MenuPages
 {
-    public class StartMenu : IMenu //IApplication
+    public class StartMenu : IMenu
     {
 
         IFileManager _fileManager;
-        //AppHandler _appHandler;
         IMenuHandler<StartMenuEnum> _appHandler;
         IUserInputHandler _userInputHandler;
         public StartMenu(IFileManager fileManager, IMenuHandler<StartMenuEnum> appHandler, IUserInputHandler userInputHandler)
@@ -26,12 +25,6 @@ namespace KassaSystemet.Menus.MenuPages
             _userInputHandler = userInputHandler;
         }
 
-        //public void DisplayMenu()
-        //{
-        //    FileManagerOperations.CreateFolders();
-        //    _fileManager.LoadProductListFromFile();
-        //    _fileManager.LoadDiscountListFromFile();
-        //}
         private Dictionary<StartMenuEnum, string> _startMenu = new Dictionary<StartMenuEnum, string>()
         {
             {StartMenuEnum.CustomerMenu, "Customer Menu." },
@@ -62,15 +55,6 @@ namespace KassaSystemet.Menus.MenuPages
                 userInput = _userInputHandler.GetMenuEnum<StartMenuEnum>();
                 _appHandler.HandleMenuOption(userInput);
             } while (true);
-            //throw new NotImplementedException();
-        }
-
-        public void StartApp()
-        {
-            //FileManagerOperations.CreateFolders();
-            //_fileManager.LoadProductListFromFile();
-            //_fileManager.LoadDiscountListFromFile();
-            //InitializeMenu();
         }
     }
 }
