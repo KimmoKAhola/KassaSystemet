@@ -34,38 +34,40 @@ namespace KassaSystemet.Models
         private StringBuilder ReceiptBody()
         {
             StringBuilder receiptBody = new StringBuilder();
+            var totalSum = 0m;
             foreach (var item in _shoppingCart.Purchases)
             {
                 var productName = ProductCatalogue.Instance.Products[item.ProductID].ProductName;
                 var amount = item.Amount;
                 var price = ProductCatalogue.Instance.Products[item.ProductID].UnitPrice;
-                var sum = _shoppingCart.CalculateSum(item.ProductID);
+                var sum = price * amount;
+                if (ProductCatalogue.Instance.Products[item.ProductID].HasActiveDiscount())
+                    sum *= (1 - ShoppingCart.GetDiscountPercentage(item.ProductID));
+                totalSum += sum;
 
-                receiptBody.AppendLine($"{productName,_productPadding}{amount,_amountPadding}{price,_pricePadding:C2}{sum,_sumPadding:C2}");
+                receiptBody.Append($"{productName,_productPadding}{amount,_amountPadding}{price,_pricePadding:C2}{sum,_sumPadding:C2}");
                 if (ProductCatalogue.Instance.Products[item.ProductID].HasActiveDiscount())
                 {
                     var percentage = ShoppingCart.GetDiscountPercentage(item.ProductID);
-                    receiptBody.AppendLine($"\t---  {percentage:P2} discount.");
+
+                    receiptBody.Append($"\t---  {percentage:P2} discount.");
                 }
+                receiptBody.AppendLine();
             }
+            receiptBody.AppendLine($"\nTotal sum of purchase: {totalSum:C2}");
             return receiptBody;
         }
 
-        private string ReceiptBottom()
-        {
-            return $@"Total sum of purchase: {_shoppingCart.CalculateTotalSum():C2}";
-        }
+
 
         public string CreateReceipt()
         {
             StringBuilder receipt = new StringBuilder();
             var header = ReceiptHeader();
             var body = ReceiptBody().ToString();
-            var bottom = ReceiptBottom();
             receipt.AppendLine(header);
-            receipt.AppendLine(body);
-            receipt.AppendLine(bottom);
-            receipt.AppendLine(dashedLine);
+            receipt.Append(body);
+            receipt.Append(dashedLine);
             return receipt.ToString();
         }
     }
