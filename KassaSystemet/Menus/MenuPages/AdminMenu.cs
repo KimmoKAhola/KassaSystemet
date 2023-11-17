@@ -102,7 +102,7 @@ namespace KassaSystemet.Menus.MenuPages
         {
             Console.Clear();
             Console.ResetColor();
-            PrintSuccessMessage("Your product list has been updated and will be saved. Please choose a file format.\nChoose an option below.");
+            PrintSuccessMessage("Your product and discount lists have been saved to text files. Please choose another file format below (strategy pattern demo).");
             foreach (var item in _saveMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
@@ -126,7 +126,7 @@ namespace KassaSystemet.Menus.MenuPages
             }
             temp.SaveProductCatalogueToFile();
             temp.SaveDiscountCatalogueToFile();
-            PrintSuccessMessage("Product list has been save to the chosen format. Returning to the previous menu...");
+            PrintSuccessMessage("Product and discount lists have been saved to the chosen format. Returning to the previous menu...");
             LoadingAnimation();
         }
         private static void PrintSuccessMessage(string message)

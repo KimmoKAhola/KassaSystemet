@@ -104,7 +104,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             {
                 string name = userInputHandler.GetValidProductName();
                 productCatalogue.Products[productId].ProductName = name;
-                PrintSuccessMessage($"Name has been changed to {name}");
+                PrintSuccessMessage($"Name has been changed to {productCatalogue.Products[productId].ProductName}");
                 isChanged = true;
             }
             else

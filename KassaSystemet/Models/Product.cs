@@ -52,7 +52,11 @@ namespace KassaSystemet.Models
             .Select(pair => (pair.Key, pair.Value));
         public decimal GetBestDiscount() => Discounts.Max(discount => discount.DiscountPercentage);
         public void AddDiscountToProduct(Discount d) => _discount.Add(d);
-        public void Display() => Discounts.ForEach(x => Console.WriteLine(x.ToString()));
+        public void Display()
+        {
+            int counter = 1;
+            Discounts.ForEach(x => Console.WriteLine($"{x}. Discount number: {counter++}"));
+        }
         public bool HasActiveDiscount() => Discounts.Any(discount => _currentDate >= discount.StartDate && _currentDate <= discount.EndDate);
         public override string ToString() => $"Name: {ProductName}, Price: {UnitPrice:C2} {PriceType}";
         public void RemoveDiscount(out bool result)

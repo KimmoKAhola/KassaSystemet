@@ -42,11 +42,12 @@ namespace KassaSystemet.Models
             else
             {
                 PrintSuccessMessage("Your cart contains the following items: ");
+                string info = $"{"Product",-20}{"Amount",10}{"Price per kg/per unit",29}\n";
                 foreach (var item in Purchases)
                 {
-                    string productInfo = $"{ProductCatalogue.Instance.Products[item.ProductID].ProductName}, Amount: {item.Amount}, Price: {ProductCatalogue.Instance.Products[item.ProductID].UnitPrice:C2}";
-                    PrintMessage(productInfo);
+                    info += $"{ProductCatalogue.Instance.Products[item.ProductID].ProductName,-20}{item.Amount,10}{ProductCatalogue.Instance.Products[item.ProductID].UnitPrice,20:C2}\n";
                 }
+                PrintMessage(info);
             }
         }
 
@@ -65,7 +66,6 @@ namespace KassaSystemet.Models
         {
             var price = ProductCatalogue.Instance.Products[productId].UnitPrice;
             var sum = 0m;
-            //var amount = Purchases.
             foreach (var item in Purchases)
             {
                 sum += item.Amount * price;

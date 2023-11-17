@@ -106,7 +106,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
         }
         private void DisplaySaveMenu()
         {
-            PrintSuccessMessage("Your receipt has been saved to a text file. Please choose another file format.\nChoose an option below.");
+            PrintSuccessMessage("Your receipt has been saved to a text file. Please choose another file format below (strategy pattern demo).");
             foreach (var item in AdminMenu._saveMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
