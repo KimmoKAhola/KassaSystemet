@@ -92,7 +92,7 @@ namespace KassaSystemet.Menus.MenuPages
         public void DisplayMenu()
         {
             Console.Clear();
-            PrintMessage("**Admin menu**\nChoose an option below.");
+            PrintMessage("Welcome to the Admin menu.\nChoose an option below.");
             foreach (var item in _adminMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");

@@ -42,7 +42,7 @@ namespace KassaSystemet.Models
             else
             {
                 PrintSuccessMessage("Your cart contains the following items: ");
-                string info = $"{"Product",-20}{"Amount",10}{"Price per kg/per unit",29}\n";
+                string info = $"{"Product",-20}{"Amount",10}{"Price per kg/unit",29}\n";
                 foreach (var item in Purchases)
                 {
                     info += $"{ProductCatalogue.Instance.Products[item.ProductID].ProductName,-20}{item.Amount,10}{ProductCatalogue.Instance.Products[item.ProductID].UnitPrice,20:C2}\n";
