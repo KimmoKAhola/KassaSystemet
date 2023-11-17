@@ -67,17 +67,25 @@ namespace KassaSystemet.Menus.MenuPages
             {
                 DisplayMenu();
                 userInput = _userInputHandler.GetMenuEnum<AdminMenuEnum>();
-                bool isChanged = _adminMenuHandler.HandleAdminMenuOption(userInput);
-                if (isChanged)
+                try
                 {
-                    if (_fileManagerStrategy is ISave)
+                    bool isChanged = _adminMenuHandler.HandleAdminMenuOption(userInput);
+                    if (isChanged)
                     {
-                        var temp = _fileManagerStrategy as ISave;
-                        DisplaySaveMenu();
-                        GetSaveFormat(temp, _userInputHandler);
+                        if (_fileManagerStrategy is ISave)
+                        {
+                            var temp = _fileManagerStrategy as ISave;
+                            DisplaySaveMenu();
+                            GetSaveFormat(temp, _userInputHandler);
+                        }
+                        _fileManagerStrategy.SaveProductCatalogueToFile();
+                        _fileManagerStrategy.SaveDiscountCatalogueToFile();
                     }
-                    _fileManagerStrategy.SaveProductCatalogueToFile();
-                    _fileManagerStrategy.SaveDiscountCatalogueToFile();
+                }
+                catch (Exception ex)
+                {
+                    PrintErrorMessage($"{ex.Message} (Why did you do that?)\nPress any key to continue.");
+                    Console.ReadKey();
                 }
             } while (userInput != AdminMenuEnum.Exit);
         }
@@ -128,6 +136,12 @@ namespace KassaSystemet.Menus.MenuPages
             Console.ResetColor();
         }
         private static void PrintMessage(string message) => Console.WriteLine(message);
+        private static void PrintErrorMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
         private static void LoadingAnimation()
         {
             for (int i = 0; i < 15; i++)

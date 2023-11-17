@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -60,10 +61,15 @@ namespace KassaSystemet.Models
             return result;
         }
 
-        public static decimal CalculateSum(int productId)
+        public decimal CalculateSum(int productId)
         {
-            var sum = ProductCatalogue.Instance.Products[productId].UnitPrice;
-
+            var price = ProductCatalogue.Instance.Products[productId].UnitPrice;
+            var sum = 0m;
+            //var amount = Purchases.
+            foreach (var item in Purchases)
+            {
+                sum += item.Amount * price;
+            }
             if (ProductCatalogue.Instance.Products[productId].HasActiveDiscount())
                 sum *= 1 - ProductCatalogue.Instance.Products[productId].Discounts.Max(discount => discount.DiscountPercentage);
 

@@ -33,7 +33,14 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     _shoppingCart.DisplayPurchases();
                     break;
                 case CustomerMenuEnum.Second:
-                    _shoppingCart.AddProductToCart(_userInputHandler);
+                    try
+                    {
+                        _shoppingCart.AddProductToCart(_userInputHandler);
+                    }
+                    catch (Exception ex)
+                    {
+                        PrintErrorMessage($"{ex.Message} (why did you do that?)");
+                    }
                     break;
                 case CustomerMenuEnum.Third:
                     ProductCatalogue.Instance.DisplayProducts();
