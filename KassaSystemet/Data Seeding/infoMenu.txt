@@ -2,12 +2,12 @@ Clarifications on some of the design choices:
 The info menu and the credits menu have been created to test the application's modularity.
 Almost everything has been made non-static (even though it is not necessary) to increase modularity.
 Sometimes autofac and/or singletons have been used to reduce the number of instances for this reason.
-Other file formats than txt files might not be correctly formatted (they are not used by the app).
+Other file formats than txt files might not be correctly formatted when viewed (they are not used by the app).
 I have tried to include the whole course material in a way that makes sense.
 Some changes have been made to keep the design consistent, for example using numbers in the customer menu instead of "PAY" command.
 
 Some fun info about this app:
-8438 lines of code has been deleted during the development (not counting receipts/files!!!)
+According to github ~8500 lines of code have been deleted during the development.
 No code was written between 27 sep - 5 nov. After that almost the whole app was rewritten in a week.
 Total time for developing this app ~100 hours. Out of those 100 hours, around 95 were spent on refactoring.
 One bottle of whisky has been consumed during the duration of this course.
