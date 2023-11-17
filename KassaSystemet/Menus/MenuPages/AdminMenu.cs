@@ -27,7 +27,8 @@ namespace KassaSystemet.Menus.MenuPages
     public enum SaveFormatEnum
     {
         CSV = 1,
-        JSON
+        JSON,
+        BINARY
     }
     public class AdminMenu : IMenu
     {
@@ -53,10 +54,11 @@ namespace KassaSystemet.Menus.MenuPages
             {AdminMenuEnum.Ninth, "Remove a product from the system." },
             {AdminMenuEnum.Exit, "Return to the main menu." },
         };
-        private Dictionary<SaveFormatEnum, string> _saveMenu = new Dictionary<SaveFormatEnum, string>()
+        public static Dictionary<SaveFormatEnum, string> _saveMenu = new Dictionary<SaveFormatEnum, string>()
         {
             {SaveFormatEnum.CSV, "CSV format" },
             {SaveFormatEnum.JSON, "JSON format" },
+            {SaveFormatEnum.BINARY, "Binary format" }
         };
         public void InitializeMenu()
         {
@@ -92,8 +94,7 @@ namespace KassaSystemet.Menus.MenuPages
         {
             Console.Clear();
             Console.ResetColor();
-            Console.WriteLine("Your product list has been updated and will be saved. Please choose a file format.");
-            Console.WriteLine("Choose an option below.");
+            PrintSuccessMessage("Your product list has been updated and will be saved. Please choose a file format.\nChoose an option below.");
             foreach (var item in _saveMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
@@ -111,12 +112,24 @@ namespace KassaSystemet.Menus.MenuPages
                 case SaveFormatEnum.JSON:
                     temp = new SaveFileToJson();
                     break;
+                case SaveFormatEnum.BINARY:
+                    temp = new SaveFileToBinary();
+                    break;
             }
             temp.SaveProductCatalogueToFile();
             temp.SaveDiscountCatalogueToFile();
-            PrintSuccessMessage("Product list has been save to the chosen format.");
-            Thread.Sleep(2000);
+            PrintSuccessMessage("Product list has been save to the chosen format. Returning to the previous menu...");
+            LoadingAnimation();
         }
         private static void PrintSuccessMessage(string message) => Console.WriteLine(message);
+        private static void LoadingAnimation()
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                Console.Write("-");
+                Thread.Sleep(200);
+            }
+            Console.WriteLine();
+        }
     }
 }

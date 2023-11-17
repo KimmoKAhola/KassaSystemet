@@ -45,6 +45,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                         _fileManager.SaveReceiptToFile(receipt);
                         if (_fileManager is ISave)
                         {
+                            DisplaySaveMenu();
                             GetSaveFormat(_fileManager, _userInputHandler, receipt);
                         }
                     }
@@ -82,10 +83,32 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                 case SaveFormatEnum.JSON:
                     temp = new SaveFileToJson();
                     break;
+                case SaveFormatEnum.BINARY:
+                    temp = new SaveFileToBinary();
+                    break;
             }
             temp.SaveReceiptToFile(receipt);
+            PrintSuccessMessage("Receipt has been save to the chosen format. Returning to the previous menu...");
+            LoadingAnimation();
+        }
+        private void DisplaySaveMenu()
+        {
+            PrintSuccessMessage("Your receipt has been saved to a text file. Please choose another file format.\nChoose an option below.");
+            foreach (var item in AdminMenu._saveMenu)
+            {
+                Console.WriteLine($"{(int)item.Key}. {item.Value}");
+            }
+        }
 
-            Thread.Sleep(2000);
+        private static void PrintSuccessMessage(string message) => Console.WriteLine(message);
+        private static void LoadingAnimation()
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                Console.Write("-");
+                Thread.Sleep(200);
+            }
+            Console.WriteLine();
         }
     }
 }

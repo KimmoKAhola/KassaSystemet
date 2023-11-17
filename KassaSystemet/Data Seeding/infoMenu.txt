@@ -3,4 +3,5 @@ Some fun info about this app:
 No code was written between 27 sep - 5 nov. After that almost the whole app was rewritten in a week.
 Total time for developing this app ~100 hours. Out of those 100 hours, around 95 were spent on refactoring.
 Most of the concepts introduced in this course has been used, not because they make sense but for practice (patterns, autofac).
-All files saved in other formats than txt are not used by the app (other than when saving) and are only implemented to utilize the strategy pattern.                           
+All files saved in other formats than txt are not used by the app (other than when saving) and are only implemented to utilize the strategy pattern. 
+Formatting might not be correct on the saved files.                           

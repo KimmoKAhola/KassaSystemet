@@ -112,8 +112,9 @@ namespace KassaSystemet.Menus.MenuPageHandlers
 
             if (productCatalogue.Products.ContainsKey(productId))
             {
-                productCatalogue.AddNewDiscount(productId, userInputHandler);
-                isChanged = true;
+                productCatalogue.AddNewDiscount(productId, userInputHandler, out bool result);
+                if (result)
+                    isChanged = true;
             }
             else
                 Console.WriteLine($"The product id {productId} does not exist.", Console.ForegroundColor = ConsoleColor.Red);
