@@ -15,6 +15,7 @@ namespace KassaSystemet.Models
         }
         private List<Discount> _discount;
         private string _productName;
+        private decimal _unitPrice;
         private int maxProductNameLength = 20;
         public string ProductName
         {
@@ -30,7 +31,20 @@ namespace KassaSystemet.Models
                     _productName = value;
             }
         }
-        public decimal UnitPrice { get; set; }
+        public decimal UnitPrice
+        {
+            get => _unitPrice;
+            set
+            {
+                if (value > 1E8m)
+                {
+                    _unitPrice = 1E8m;
+                    PrintSpecialMessage($"Your price has exceeded the maximum value and has been set to {1E8m:C2}");
+                }
+                else
+                    _unitPrice = value;
+            }
+        }
         public string PriceType { get; }
         public List<Discount> Discounts => _discount;
         public static IEnumerable<(int Key, Product Value)> GetDiscountForSingleProduct(Dictionary<int, Product> products)
@@ -38,10 +52,14 @@ namespace KassaSystemet.Models
             .Select(pair => (pair.Key, pair.Value));
         public decimal GetBestDiscount() => Discounts.Max(discount => discount.DiscountPercentage);
         public void AddDiscountToProduct(Discount d) => _discount.Add(d);
-        public void Display() => Discounts.ForEach(x => Console.WriteLine(x.ToString()));
+        public void Display()
+        {
+            int counter = 1;
+            Discounts.ForEach(x => Console.WriteLine($"{x}. Discount number: {counter++}"));
+        }
         public bool HasActiveDiscount() => Discounts.Any(discount => _currentDate >= discount.StartDate && _currentDate <= discount.EndDate);
         public override string ToString() => $"Name: {ProductName}, Price: {UnitPrice:C2} {PriceType}";
-        public void RemoveDiscount()
+        public void RemoveDiscount(out bool result)
         {
             int numberOfDiscounts = Discounts.Count;
             PrintSuccessMessage("You have the following discounts: ");
@@ -53,9 +71,14 @@ namespace KassaSystemet.Models
                 Discounts.RemoveAt(choice - 1);
                 PrintSuccessMessage("The remaining discounts are:");
                 Display();
+                result = true;
             }
             else
+            {
                 PrintErrorMessage("Invalid input.");
+                result = false;
+            }
+
         }
         private static void PrintErrorMessage(string message)
         {

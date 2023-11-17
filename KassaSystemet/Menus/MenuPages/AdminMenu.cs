@@ -67,24 +67,32 @@ namespace KassaSystemet.Menus.MenuPages
             {
                 DisplayMenu();
                 userInput = _userInputHandler.GetMenuEnum<AdminMenuEnum>();
-                bool isChanged = _adminMenuHandler.HandleAdminMenuOption(userInput);
-                if (isChanged)
+                try
                 {
-                    if (_fileManagerStrategy is ISave)
+                    bool isChanged = _adminMenuHandler.HandleAdminMenuOption(userInput);
+                    if (isChanged)
                     {
-                        var temp = _fileManagerStrategy as ISave;
-                        DisplaySaveMenu();
-                        GetSaveFormat(temp, _userInputHandler);
+                        if (_fileManagerStrategy is ISave)
+                        {
+                            var temp = _fileManagerStrategy as ISave;
+                            DisplaySaveMenu();
+                            GetSaveFormat(temp, _userInputHandler);
+                        }
+                        _fileManagerStrategy.SaveProductCatalogueToFile();
+                        _fileManagerStrategy.SaveDiscountCatalogueToFile();
                     }
-                    _fileManagerStrategy.SaveProductCatalogueToFile();
-                    _fileManagerStrategy.SaveDiscountCatalogueToFile();
+                }
+                catch (Exception ex)
+                {
+                    PrintErrorMessage($"{ex.Message} (Why did you do that?)\nPress any key to continue.");
+                    Console.ReadKey();
                 }
             } while (userInput != AdminMenuEnum.Exit);
         }
         public void DisplayMenu()
         {
             Console.Clear();
-            PrintMessage("**Admin menu**\nChoose an option below.");
+            PrintMessage("Welcome to the Admin menu.\nChoose an option below.");
             foreach (var item in _adminMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
@@ -94,7 +102,7 @@ namespace KassaSystemet.Menus.MenuPages
         {
             Console.Clear();
             Console.ResetColor();
-            PrintSuccessMessage("Your product list has been updated and will be saved. Please choose a file format.\nChoose an option below.");
+            PrintSuccessMessage("Your product and discount lists have been saved to text files. Please choose another file format below (strategy pattern demo).");
             foreach (var item in _saveMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
@@ -118,7 +126,7 @@ namespace KassaSystemet.Menus.MenuPages
             }
             temp.SaveProductCatalogueToFile();
             temp.SaveDiscountCatalogueToFile();
-            PrintSuccessMessage("Product list has been save to the chosen format. Returning to the previous menu...");
+            PrintSuccessMessage("Product and discount lists have been saved to the chosen format. Returning to the previous menu...");
             LoadingAnimation();
         }
         private static void PrintSuccessMessage(string message)
@@ -128,6 +136,12 @@ namespace KassaSystemet.Menus.MenuPages
             Console.ResetColor();
         }
         private static void PrintMessage(string message) => Console.WriteLine(message);
+        private static void PrintErrorMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
         private static void LoadingAnimation()
         {
             for (int i = 0; i < 15; i++)

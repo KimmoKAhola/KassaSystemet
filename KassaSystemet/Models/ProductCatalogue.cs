@@ -75,7 +75,7 @@ namespace KassaSystemet.Models
             }
             else
             {
-                PrintErrorMessage("The discount's start date can not be after later than the end date. Your discount has not been added.");
+                PrintErrorMessage("The discount's start date can not be later than the end date. Your discount has not been added.");
                 result = false;
             }
         }

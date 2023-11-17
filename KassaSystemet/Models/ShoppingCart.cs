@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -41,11 +42,12 @@ namespace KassaSystemet.Models
             else
             {
                 PrintSuccessMessage("Your cart contains the following items: ");
+                string info = $"{"Product",-20}{"Amount",10}{"Price per kg/unit",29}\n";
                 foreach (var item in Purchases)
                 {
-                    string productInfo = $"{ProductCatalogue.Instance.Products[item.ProductID].ProductName}, Antal: {item.Amount}";
-                    PrintMessage(productInfo);
+                    info += $"{ProductCatalogue.Instance.Products[item.ProductID].ProductName,-20}{item.Amount,10}{ProductCatalogue.Instance.Products[item.ProductID].UnitPrice,20:C2}\n";
                 }
+                PrintMessage(info);
             }
         }
 
@@ -60,10 +62,14 @@ namespace KassaSystemet.Models
             return result;
         }
 
-        public static decimal CalculateSum(int productId)
+        public decimal CalculateSum(int productId)
         {
-            var sum = ProductCatalogue.Instance.Products[productId].UnitPrice;
-
+            var price = ProductCatalogue.Instance.Products[productId].UnitPrice;
+            var sum = 0m;
+            foreach (var item in Purchases)
+            {
+                sum += item.Amount * price;
+            }
             if (ProductCatalogue.Instance.Products[productId].HasActiveDiscount())
                 sum *= 1 - ProductCatalogue.Instance.Products[productId].Discounts.Max(discount => discount.DiscountPercentage);
 

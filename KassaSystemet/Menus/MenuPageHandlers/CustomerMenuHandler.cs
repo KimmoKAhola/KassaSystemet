@@ -33,7 +33,14 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     _shoppingCart.DisplayPurchases();
                     break;
                 case CustomerMenuEnum.Second:
-                    _shoppingCart.AddProductToCart(_userInputHandler);
+                    try
+                    {
+                        _shoppingCart.AddProductToCart(_userInputHandler);
+                    }
+                    catch (Exception ex)
+                    {
+                        PrintErrorMessage($"{ex.Message} (why did you do that?)");
+                    }
                     break;
                 case CustomerMenuEnum.Third:
                     ProductCatalogue.Instance.DisplayProducts();
@@ -42,11 +49,18 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     if (_shoppingCart.Purchases.Count > 0)
                     {
                         string receipt = _shoppingCart.Pay();
-                        _fileManager.SaveReceiptToFile(receipt);
-                        if (_fileManager is ISave)
+                        try
                         {
-                            DisplaySaveMenu();
-                            GetSaveFormat(_fileManager, _userInputHandler, receipt);
+                            _fileManager.SaveReceiptToFile(receipt);
+                            if (_fileManager is ISave)
+                            {
+                                DisplaySaveMenu();
+                                GetSaveFormat(_fileManager, _userInputHandler, receipt);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            PrintErrorMessage(ex.Message);
                         }
                     }
                     else
@@ -54,6 +68,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     break;
                 case CustomerMenuEnum.Exit:
                     PrintSuccessMessage("Returning to the main menu.");
+                    _shoppingCart.Purchases.Clear();
                     break;
                 default:
                     PrintErrorMessage("Invalid input.");
@@ -91,7 +106,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
         }
         private void DisplaySaveMenu()
         {
-            PrintSuccessMessage("Your receipt has been saved to a text file. Please choose another file format.\nChoose an option below.");
+            PrintSuccessMessage("Your receipt has been saved to a text file. Please choose another file format below (strategy pattern demo).");
             foreach (var item in AdminMenu._saveMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");

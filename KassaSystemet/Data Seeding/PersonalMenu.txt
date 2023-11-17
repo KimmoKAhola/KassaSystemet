@@ -13,5 +13,6 @@ Art modified from https://www.asciiart.eu/computers/computers
 +-----------------------------------------------------+
   When the code gets poor, it's just the whisky's influence talking!
   This cash register system brought to you by Kimmo Ahola, the .NET whisky coder.
+  Date: 2023-11-17, Uppsala
 
 Press any key to continue.... 

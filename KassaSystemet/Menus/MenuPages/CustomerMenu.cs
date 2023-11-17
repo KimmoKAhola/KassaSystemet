@@ -50,7 +50,7 @@ namespace KassaSystemet.Menus.MenuPages
         public void DisplayMenu()
         {
             Console.Clear();
-            PrintMessage("****Welcome to the customer menu****\nChoose an option below.");
+            PrintMessage("Welcome to the customer menu.\nChoose an option below.");
             foreach (var item in _customerMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");

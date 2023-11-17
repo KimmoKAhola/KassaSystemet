@@ -55,11 +55,11 @@ namespace KassaSystemet.Utilities
         {
             while (true)
             {
-                PromptUser("Enter a start date, end date and percentage (yyyy-MM-dd) (yyyy-MM-dd) (percentage) separated by a space: " +
+                PromptUser("Enter a start date, end date and percentage (yyyy-MM-dd) (yyyy-MM-dd) (percentage 0-100) separated by a space: " +
                     "\nExample: 2023-09-10 2023-09-15 75: ");
                 string[] userInput = Console.ReadLine().Split(' ');
 
-                if (IsValidInput(userInput, out DateOnly startDate, out DateOnly endDate, out decimal discountPercentage))
+                if (IsValidInput(userInput, out DateOnly startDate, out DateOnly endDate, out decimal discountPercentage) && discountPercentage > 0 && discountPercentage < 100)
                     return (startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), discountPercentage);
                 else
                     PrintErrorMessage("Please enter the input as in the given example.");
@@ -91,16 +91,18 @@ namespace KassaSystemet.Utilities
             {
                 PromptUser("Enter a product name, at least 2 character long, without any numbers or special characters: ");
                 productName = Console.ReadLine();
+                productName = productName.TrimStart();
+                productName = productName.TrimEnd();
             }
             return productName;
         }
         public decimal GetValidProductPrice()
         {
             decimal price;
-            PromptUser($"Enter a price above {0:C2}: ");
+            PromptUser($"Enter a price above {0:C2} and below {1E8 + 1:C2}: ");
             while (!decimal.TryParse(Console.ReadLine(), out price) || price <= 0)
             {
-                PrintErrorMessage($"Enter a price above {0:C2}: ");
+                PrintErrorMessage($"Enter a price above {0:C2} and below {1E8 + 1:C2}: ");
             }
             return price;
         }

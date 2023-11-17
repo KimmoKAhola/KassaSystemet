@@ -91,6 +91,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             {
                 decimal price = userInputHandler.GetValidProductPrice();
                 productCatalogue.Products[productId].UnitPrice = price;
+                PrintSuccessMessage($"Price has been changed to {price:C2}");
                 isChanged = true;
             }
             else
@@ -103,6 +104,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             {
                 string name = userInputHandler.GetValidProductName();
                 productCatalogue.Products[productId].ProductName = name;
+                PrintSuccessMessage($"Name has been changed to {productCatalogue.Products[productId].ProductName}");
                 isChanged = true;
             }
             else
@@ -135,8 +137,9 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             int productId = userInputHandler.ProductIdInput();
             if (productCatalogue.ContainsDiscount(productId))
             {
-                productCatalogue.Products[productId].RemoveDiscount();
-                isChanged = true;
+                productCatalogue.Products[productId].RemoveDiscount(out bool result);
+                if (result)
+                    isChanged = true;
             }
             else
                 PrintErrorMessage($"The product id {productId} does not have a discount available.");

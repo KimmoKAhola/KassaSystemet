@@ -15,11 +15,12 @@ namespace KassaSystemet.Models
             _shoppingCart = shoppingCart;
         }
 
-        private const int ProductPadding = -20;
-        private const int AmountPadding = 10;
-        private const int PricePadding = 20;
-        private const int SumPadding = 20;
-        private string dashedLine = new string('-', 70);
+        private const int _productPadding = -20;
+        private const int _amountPadding = 10;
+        private const int _pricePadding = 20;
+        private const int _sumPadding = 25;
+        private const int _total = -_productPadding + _amountPadding + _pricePadding + _sumPadding;
+        private string dashedLine = new string('-', _total);
         private ShoppingCart _shoppingCart;
 
         private string ReceiptHeader()
@@ -28,7 +29,7 @@ namespace KassaSystemet.Models
 
             return
                 $@"Receipt ID: {receiptID} - Time of purchase: {_shoppingCart.TimeOfPurchase}
-{"Product",-20}{"Amount",10}{"Price",20}{"Sum",20}";
+{"Product",_productPadding}{"Amount",_amountPadding}{"Price",_pricePadding}{"Sum",_sumPadding}";
         }
         private StringBuilder ReceiptBody()
         {
@@ -38,9 +39,9 @@ namespace KassaSystemet.Models
                 var productName = ProductCatalogue.Instance.Products[item.ProductID].ProductName;
                 var amount = item.Amount;
                 var price = ProductCatalogue.Instance.Products[item.ProductID].UnitPrice;
-                var sum = ShoppingCart.CalculateSum(item.ProductID);
+                var sum = _shoppingCart.CalculateSum(item.ProductID);
 
-                receiptBody.AppendLine($"{productName,ProductPadding}{amount,AmountPadding}{price,PricePadding:C2}{sum,SumPadding:C2}");
+                receiptBody.AppendLine($"{productName,_productPadding}{amount,_amountPadding}{price,_pricePadding:C2}{sum,_sumPadding:C2}");
                 if (ProductCatalogue.Instance.Products[item.ProductID].HasActiveDiscount())
                 {
                     var percentage = ShoppingCart.GetDiscountPercentage(item.ProductID);
