@@ -23,7 +23,7 @@ namespace KassaSystemet.File_IO
         public void SaveProductCatalogueToFile()
         {
             string productString = FormatProductCatalogueToFile();
-            using (StreamWriter productListWriter = new($"{CreateProductListFilePath()}.csv", append: false))
+            using (StreamWriter productListWriter = new($"{CreateProductListFilePath()}", append: false))
             {
                 productListWriter.Write(productString);
             }
