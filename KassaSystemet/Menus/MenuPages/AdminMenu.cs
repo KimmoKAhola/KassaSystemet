@@ -35,9 +35,9 @@ namespace KassaSystemet.Menus.MenuPages
         {
             _fileManagerStrategy = strategy;
             _userInputHandler = userInputHandler;
-            adminMenuHandler ??= new AdminMenuHandler(userInputHandler);
+            _adminMenuHandler ??= new AdminMenuHandler(userInputHandler);
         }
-        private static AdminMenuHandler adminMenuHandler;
+        private static AdminMenuHandler _adminMenuHandler;
         private IFileManager _fileManagerStrategy;
         private IUserInputHandler _userInputHandler;
         private Dictionary<AdminMenuEnum, string> _adminMenu = new Dictionary<AdminMenuEnum, string>()
@@ -65,7 +65,7 @@ namespace KassaSystemet.Menus.MenuPages
             {
                 DisplayMenu();
                 userInput = _userInputHandler.GetMenuEnum<AdminMenuEnum>();
-                bool isChanged = adminMenuHandler.HandleAdminMenuOption(userInput);
+                bool isChanged = _adminMenuHandler.HandleAdminMenuOption(userInput);
                 if (isChanged)
                 {
                     if (_fileManagerStrategy is ISave)

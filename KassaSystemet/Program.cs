@@ -16,6 +16,16 @@ namespace KassaSystemet
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            //IUserInputHandler userInputHandler = new UserInputHandler();
+            //IFileManager fileManager = new DefaultFileManager();
+            //MenuFactory menuFactory = new(fileManager, userInputHandler);
+            //AppHandler appHandler = new(menuFactory, userInputHandler);
+
+            //var app = new App(fileManager, appHandler);
+            //app.StartApp();
+
+
             var builder = ContainerConfig.Configure();
             using (var scope = builder.BeginLifetimeScope())
             {
