@@ -109,8 +109,14 @@ namespace KassaSystemet.File_IO
         public string LoadPersonalMenuFromFile()
         {
             var filePath = FileManagerOperations.CreatePersonalMenuFilePath();
-            var result = File.ReadAllText(filePath);
-            return result;
+            try
+            {
+                return File.ReadAllText(filePath);
+            }
+            catch (Exception ex)
+            {
+                return $"{ex.Message}";
+            }
         }
         public void SaveProductCatalogueToFile()
         {
@@ -124,8 +130,14 @@ namespace KassaSystemet.File_IO
         public string LoadInfoMenuFromFile()
         {
             var filePath = FileManagerOperations.CreateInfoMenuFilePath();
-            var result = File.ReadAllText(filePath);
-            return result;
+            try
+            {
+                return File.ReadAllText(filePath);
+            }
+            catch (Exception ex)
+            {
+                return $"{ex.Message}";
+            }
         }
     }
 }

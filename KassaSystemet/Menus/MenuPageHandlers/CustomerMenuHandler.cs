@@ -49,11 +49,18 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     if (_shoppingCart.Purchases.Count > 0)
                     {
                         string receipt = _shoppingCart.Pay();
-                        _fileManager.SaveReceiptToFile(receipt);
-                        if (_fileManager is ISave)
+                        try
                         {
-                            DisplaySaveMenu();
-                            GetSaveFormat(_fileManager, _userInputHandler, receipt);
+                            _fileManager.SaveReceiptToFile(receipt);
+                            if (_fileManager is ISave)
+                            {
+                                DisplaySaveMenu();
+                                GetSaveFormat(_fileManager, _userInputHandler, receipt);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            PrintErrorMessage(ex.Message);
                         }
                     }
                     else

@@ -45,9 +45,16 @@ namespace KassaSystemet.Menus.MenuPages
         }
         public void InitializeMenu()
         {
-            FileManagerOperations.CreateFolders();
-            _fileManager.LoadProductListFromFile();
-            _fileManager.LoadDiscountListFromFile();
+            try
+            {
+                FileManagerOperations.CreateFolders();
+                _fileManager.LoadProductListFromFile();
+                _fileManager.LoadDiscountListFromFile();
+            }
+            catch (Exception ex)
+            {
+                PrintMessage(ex.Message);
+            }
             StartMenuEnum userInput;
             do
             {
