@@ -50,18 +50,16 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                         }
                     }
                     else
-                        Console.WriteLine("Your shopping cart is empty.");
+                        PrintErrorMessage("Your shopping cart is empty.");
                     break;
                 case CustomerMenuEnum.Exit:
-                    Console.WriteLine("Returning to the main menu.");
+                    PrintSuccessMessage("Returning to the main menu.");
                     break;
                 default:
-                    Console.WriteLine("Invalid input.", Console.ForegroundColor = ConsoleColor.Red);
+                    PrintErrorMessage("Invalid input.");
                     Thread.Sleep(1000);
-                    Console.ResetColor();
                     break;
             }
-            Console.ResetColor();
             Console.Write("Press any key to continue: ");
             Console.ReadKey();
         }
@@ -99,8 +97,18 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
             }
         }
-
-        private static void PrintSuccessMessage(string message) => Console.WriteLine(message);
+        private static void PrintErrorMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+        private static void PrintSuccessMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
         private static void LoadingAnimation()
         {
             for (int i = 0; i < 15; i++)

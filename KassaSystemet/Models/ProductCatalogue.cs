@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using KassaSystemet.File_IO;
 using KassaSystemet.Factories.ModelFactory;
+using KassaSystemet.Data_Seeding;
 
 namespace KassaSystemet.Models
 {
@@ -18,12 +19,22 @@ namespace KassaSystemet.Models
         public Dictionary<int, Product> Products { get; set; }
         public List<Discount> Discounts { get; set; }
         public static ProductCatalogue Instance => instance ??= new ProductCatalogue();
-        private static string[] _wares = File.ReadAllText(FileManagerOperations.CreateSeededProductsFilePath()).Split('\n');
+        private static string[] GetWares()
+        {
+            string[] wares;
+            if (File.Exists(FileManagerOperations.CreateSeededProductsFilePath()))
+            {
+                wares = File.ReadAllText(FileManagerOperations.CreateSeededProductsFilePath()).Split('\n');
+            }
+            else
+                wares = SeededProducts._seededProducts;
+            return wares;
+        }
 
         public static Dictionary<int, Product> SeedProducts()
         {
             Dictionary<int, Product> productDatabase = new();
-            string[] products = _wares;
+            string[] products = GetWares();
             foreach (var item in products)
             {
                 var temp = item.Split('!');
@@ -46,7 +57,7 @@ namespace KassaSystemet.Models
             var priceType = info.Item3;
             var product = ModelFactory.CreateProduct(productName, price, $"{priceType}");
             Products.Add(productId, product);
-            Console.WriteLine($"Added the product {product.ProductName} with ID [{productId}] to the system.", Console.ForegroundColor = ConsoleColor.Green);
+            PrintSuccessMessage($"Added the product {product.ProductName} with ID [{productId}] to the system.");
         }
         public void AddNewDiscount(int productId, IUserInputHandler userInputHandler, out bool result)
         {
@@ -59,12 +70,12 @@ namespace KassaSystemet.Models
             {
                 var discount = ModelFactory.CreateDiscount(startDate, endDate, discountPercentage);
                 Products[productId].AddDiscountToProduct(discount);
-                Console.WriteLine($"Your discount {startDate}-{endDate} {discountPercentage} % has been added.", Console.ForegroundColor = ConsoleColor.Green);
+                PrintSuccessMessage($"Your discount {startDate}-{endDate} {discountPercentage} % has been added.");
                 result = true;
             }
             else
             {
-                Console.WriteLine("The discount's start date can not be after later than the end date. Your discount has not been added.", Console.ForegroundColor = ConsoleColor.Red);
+                PrintErrorMessage("The discount's start date can not be after later than the end date. Your discount has not been added.");
                 result = false;
             }
         }
@@ -77,22 +88,39 @@ namespace KassaSystemet.Models
                 if (item.Value.Discounts.Count > 0 && item.Value.HasActiveDiscount())
                 {
                     decimal bestDiscount = item.Value.GetBestDiscount();
-                    Console.WriteLine($"Product ID: {item.Key}, {item.Value} - {bestDiscount * 100m} % discount!");
+                    PrintMessage($"Product ID: {item.Key}, {item.Value} - {bestDiscount:C2} % discount!");
                 }
                 else
-                    Console.WriteLine($"Product ID: {item.Key}, {item.Value}");
+                    PrintMessage($"Product ID: {item.Key}, {item.Value}");
             }
         }
         public IEnumerable<Product> GetAllDiscounts() => Products.Values.Where(p => p.Discounts.Count > 0);
         public static void DisplayAllDiscounts()
         {
             var discountedProducts = Instance.GetAllDiscounts();
-
-            discountedProducts.ToList().ForEach(product =>
+            if (discountedProducts.ToList().Count > 0)
             {
-                Console.WriteLine($"The product: {product.ProductName} has the following discounts: ");
-                product.Discounts.ForEach(discount => Console.WriteLine(discount.ToString()));
-            });
+                discountedProducts.ToList().ForEach(product =>
+                {
+                    PrintMessage($"The product: {product.ProductName} has the following discounts: ");
+                    product.Discounts.ForEach(discount => PrintMessage(discount.ToString()));
+                });
+            }
+            else
+                PrintErrorMessage("No discounts available in the system.");
         }
+        private static void PrintSuccessMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+        private static void PrintErrorMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+        private static void PrintMessage(string message) => Console.WriteLine(message);
     }
 }

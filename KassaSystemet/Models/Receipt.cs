@@ -20,8 +20,6 @@ namespace KassaSystemet.Models
         private const int PricePadding = 20;
         private const int SumPadding = 20;
         private string dashedLine = new string('-', 70);
-        //Kika på discounts added. Felmeddelandet stämmer ej. Dyker upp även om det blir fel inmatning.
-        //discount to json does not work
         private ShoppingCart _shoppingCart;
 
         private string ReceiptHeader()
@@ -42,7 +40,7 @@ namespace KassaSystemet.Models
                 var price = ProductCatalogue.Instance.Products[item.ProductID].UnitPrice;
                 var sum = ShoppingCart.CalculateSum(item.ProductID);
 
-                receiptBody.Append($"{productName,ProductPadding}{amount,AmountPadding}{price,PricePadding:C2}{sum,SumPadding:C2}");
+                receiptBody.AppendLine($"{productName,ProductPadding}{amount,AmountPadding}{price,PricePadding:C2}{sum,SumPadding:C2}");
                 if (ProductCatalogue.Instance.Products[item.ProductID].HasActiveDiscount())
                 {
                     var percentage = ShoppingCart.GetDiscountPercentage(item.ProductID);

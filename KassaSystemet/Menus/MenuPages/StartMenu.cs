@@ -37,7 +37,7 @@ namespace KassaSystemet.Menus.MenuPages
         public void DisplayMenu()
         {
             Console.Clear();
-            Console.WriteLine("Choose an option below.");
+            PrintMessage("Choose an option below.");
             foreach (var item in _startMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
@@ -56,5 +56,6 @@ namespace KassaSystemet.Menus.MenuPages
                 _appHandler.HandleMenuOption(userInput);
             } while (true);
         }
+        private static void PrintMessage(string message) => Console.WriteLine(message);
     }
 }

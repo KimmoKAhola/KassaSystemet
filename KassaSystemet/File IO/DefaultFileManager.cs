@@ -65,7 +65,6 @@ namespace KassaSystemet.File_IO
         }
         private static Dictionary<int, Product> AddProductsToProductCatalogue(string[] productListInfo)
         {
-            //Dictionary<int, Product> products = new Dictionary<int, Product>();
             foreach (var item in productListInfo)
             {
                 string[] columns = item.Split('!');

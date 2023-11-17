@@ -32,7 +32,7 @@ namespace KassaSystemet.File_IO
         {
             var csvLines = ProductCatalogue.Instance.GetAllDiscounts().ToList();
 
-            using (StreamWriter discountListWriter = new($"{CreateDiscountListFolderPath()}.csv", append: false))
+            using (StreamWriter discountListWriter = new($"{CreateDiscountListFolderPath()}", append: false))
             {
                 foreach (var product in csvLines)
                 {
@@ -43,7 +43,10 @@ namespace KassaSystemet.File_IO
         }
         public void SaveReceiptToFile(string paymentInfo)
         {
-            throw new NotImplementedException();
+            using (StreamWriter receiptListWriter = new($"{CreateReceiptFilePath()}", append: false))
+            {
+                receiptListWriter.Write(paymentInfo);
+            }
         }
         public string CreateReceiptFolderPath() => $"{_receiptsFolderPath}";
         public string CreateProductListFolderPath() => $"{_productListFolderPath}/Product_LIST_ADMIN";

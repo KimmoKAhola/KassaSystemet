@@ -10,7 +10,5 @@ namespace KassaSystemet.Interfaces
     {
         public decimal UnitPrice { get; set; }
         public string PriceType { get; }
-        void ChangeProductName();
-        void ChangeProductPrice();
     }
 }
