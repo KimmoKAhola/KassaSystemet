@@ -7,6 +7,7 @@ using KassaSystemet.Factories.ModelFactory;
 using KassaSystemet.Interfaces;
 using KassaSystemet.Models;
 using KassaSystemet.Menus.MenuPages;
+using System.Threading.Channels;
 
 namespace KassaSystemet.Menus.MenuPageHandlers
 {
@@ -56,14 +57,13 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     RemoveProduct(ref _isChanged, _userInputHandler);
                     break;
                 case AdminMenuEnum.Exit:
-                    Console.WriteLine("Return to the main menu.");
+                    PrintSuccessMessage("Returning to the main menu.");
                     break;
                 default:
-                    Console.WriteLine("Invalid input.", Console.ForegroundColor = ConsoleColor.Red);
+                    PrintErrorMessage("Invalid input.");
                     Thread.Sleep(1000);
                     break;
             }
-            Console.ResetColor();
             Console.Write("Press any key to continue: ");
             Console.ReadKey();
             return _isChanged;
@@ -77,11 +77,11 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                 isChanged = true;
             }
             else
-                Console.WriteLine($"The product id {productId} already exists.", Console.ForegroundColor = ConsoleColor.Red);
+                PrintErrorMessage($"The product id {productId} already exists.");
         }
         private void DisplayAvailableProducts()
         {
-            Console.WriteLine("These are the available products in the system: ");
+            PrintSuccessMessage("These are the available products in the system: ");
             productCatalogue.DisplayProducts();
         }
         private void ChangeProductPrice(ref bool isChanged, IUserInputHandler userInputHandler)
@@ -89,22 +89,24 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             int productId = userInputHandler.ProductIdInput();
             if (productCatalogue.Products.ContainsKey(productId))
             {
-                productCatalogue.Products[productId].ChangeProductPrice();
+                decimal price = userInputHandler.GetValidProductPrice();
+                productCatalogue.Products[productId].UnitPrice = price;
                 isChanged = true;
             }
             else
-                Console.WriteLine($"The product id {productId} does not exist.", Console.ForegroundColor = ConsoleColor.Red);
+                PrintErrorMessage($"The product id {productId} does not exist.");
         }
         private void ChangeProductName(ref bool isChanged, IUserInputHandler userInputHandler)
         {
             int productId = userInputHandler.ProductIdInput();
             if (productCatalogue.Products.ContainsKey(productId))
             {
-                productCatalogue.Products[productId].ChangeProductName();
+                string name = userInputHandler.GetValidProductName();
+                productCatalogue.Products[productId].ProductName = name;
                 isChanged = true;
             }
             else
-                Console.WriteLine($"The product id {productId} does not exist.", Console.ForegroundColor = ConsoleColor.Red);
+                PrintErrorMessage($"The product id {productId} does not exist.");
         }
         private void AddProductDiscount(ref bool isChanged, IUserInputHandler userInputHandler)
         {
@@ -117,7 +119,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     isChanged = true;
             }
             else
-                Console.WriteLine($"The product id {productId} does not exist.", Console.ForegroundColor = ConsoleColor.Red);
+                PrintErrorMessage($"The product id {productId} does not exist.");
         }
         private void DisplayProductDiscount(IUserInputHandler userInputHandler)
         {
@@ -125,9 +127,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             if (productCatalogue.ContainsDiscount(productId))
                 productCatalogue.Products[productId].Display();
             else
-            {
-                Console.WriteLine($"The product id {productId} does not have a discount available.", Console.ForegroundColor = ConsoleColor.Red);
-            }
+                PrintErrorMessage($"The product id {productId} does not have a discount available.");
         }
         private static void DisplayAllDiscounts() => ProductCatalogue.DisplayAllDiscounts();
         private void RemoveProductDiscount(ref bool isChanged, IUserInputHandler userInputHandler)
@@ -139,7 +139,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                 isChanged = true;
             }
             else
-                Console.WriteLine($"The product id {productId} does not have a discount available.", Console.ForegroundColor = ConsoleColor.Red);
+                PrintErrorMessage($"The product id {productId} does not have a discount available.");
         }
         private void RemoveProduct(ref bool isChanged, IUserInputHandler userInputHandler)
         {
@@ -147,12 +147,23 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             if (productCatalogue.Products.ContainsKey(productId))
             {
                 productCatalogue.RemoveProduct(productId);
-                Console.WriteLine($"Removed the product with id {productId} from the system.", Console.ForegroundColor = ConsoleColor.Green);
+                PrintSuccessMessage($"Removed the product with id {productId} from the system.");
                 isChanged = true;
             }
             else
-                Console.WriteLine($"The product id {productId} does not exist.", Console.ForegroundColor = ConsoleColor.Red);
+                PrintErrorMessage($"The product id {productId} does not exist.");
         }
-
+        private static void PrintErrorMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+        private static void PrintSuccessMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
     }
 }

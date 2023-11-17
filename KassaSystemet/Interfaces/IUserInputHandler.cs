@@ -15,5 +15,7 @@ namespace KassaSystemet.Interfaces
         (string, decimal, string) NewProduct();
         public TEnum GetMenuEnum<TEnum>() where TEnum : struct;
         public bool IsValidEnumInput<TEnum>(string userInput, out TEnum result) where TEnum : struct;
+        public string GetValidProductName();
+        public decimal GetValidProductPrice();
     }
 }

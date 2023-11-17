@@ -18,13 +18,13 @@ namespace KassaSystemet.Utilities
         {
             while (true)
             {
-                Console.Write("Enter product id and a product amount larger than 0: ");
+                PromptUser("Enter product id and a product amount larger than 0: ");
                 string[] userInput = Console.ReadLine().Split(' ');
 
                 if (IsValidInput(userInput, out int id, out decimal amount))
                     return (id, amount);
                 else
-                    PrintErrorMessage("Enter product id and a product amount larger than 0: ");
+                    PrintErrorMessage("Invalid input!");
             }
         }
         private static bool IsValidInput(string[] userInput, out int productId, out decimal productAmount)
@@ -38,13 +38,13 @@ namespace KassaSystemet.Utilities
         {
             while (true)
             {
-                Console.Write("Enter a 3-digit product id: ");
+                PromptUser("Enter a 3-digit product id: ");
                 string userInput = Console.ReadLine();
 
                 if (IsValidInput(userInput))
                     return Convert.ToInt32(userInput);
                 else
-                    PrintErrorMessage("Enter a 3-digit product id: ");
+                    PrintErrorMessage("Invalid input!");
             }
         }
         private static bool IsValidInput(string userInput)
@@ -55,7 +55,7 @@ namespace KassaSystemet.Utilities
         {
             while (true)
             {
-                Console.Write("Enter a start date, end date and percentage (yyyy-MM-dd) (yyyy-MM-dd) (percentage) separated by a space: " +
+                PromptUser("Enter a start date, end date and percentage (yyyy-MM-dd) (yyyy-MM-dd) (percentage) separated by a space: " +
                     "\nExample: 2023-09-10 2023-09-15 75: ");
                 string[] userInput = Console.ReadLine().Split(' ');
 
@@ -84,23 +84,23 @@ namespace KassaSystemet.Utilities
 
             return (productName, price, priceType);
         }
-        private static string GetValidProductName()
+        public string GetValidProductName()
         {
             string productName = "";
-            while (productName.Length <= 1)
+            while (productName.Length < 2 || !productName.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
             {
-                Console.Write("Enter a product name, at least 2 character long: ");
+                PromptUser("Enter a product name, at least 2 character long, without any numbers or special characters: ");
                 productName = Console.ReadLine();
             }
             return productName;
         }
-        private static decimal GetValidProductPrice()
+        public decimal GetValidProductPrice()
         {
             decimal price;
-            Console.Write($"Enter a price above {0:C2}: ");
+            PromptUser($"Enter a price above {0:C2}: ");
             while (!decimal.TryParse(Console.ReadLine(), out price) || price <= 0)
             {
-                PrintErrorMessage("Enter a price above {0:C2}: ");
+                PrintErrorMessage($"Enter a price above {0:C2}: ");
             }
             return price;
         }
@@ -108,7 +108,7 @@ namespace KassaSystemet.Utilities
         {
             while (true)
             {
-                Console.Write("Enter a product price type (per kg/per unit): ");
+                PromptUser("Enter a product price type (per kg/per unit): ");
                 string userInput = Console.ReadLine().ToLower();
 
                 if (userInput == "per kg" || userInput == "per unit")
@@ -121,7 +121,7 @@ namespace KassaSystemet.Utilities
         {
             while (true)
             {
-                Console.Write("Enter your command: ");
+                PromptUser("Enter your command: ");
                 string userInput = Console.ReadLine();
                 if (IsValidEnumInput(userInput, out TEnum result))
                     return result;
@@ -142,5 +142,6 @@ namespace KassaSystemet.Utilities
             Console.WriteLine(message);
             Console.ResetColor();
         }
+        private static void PromptUser(string message) => Console.Write(message);
     }
 }

@@ -25,7 +25,7 @@ namespace KassaSystemet
             ////var app = new App(fileManager, appHandler);
             ////app.StartApp();
 
-
+            //Console.WriteLine(0.5 % 1);
 
 
             var builder = ContainerConfig.Configure();

@@ -12,6 +12,5 @@ namespace KassaSystemet.Interfaces
         void SaveDiscountCatalogueToFile();
         void SaveReceiptToFile(string paymentInfo);
         void SaveProductCatalogueToFile();
-        //void SaveDiscountCatalogueToFile();
     }
 }

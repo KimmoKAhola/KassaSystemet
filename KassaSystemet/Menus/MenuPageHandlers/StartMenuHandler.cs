@@ -56,10 +56,14 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                     Console.ForegroundColor = ConsoleColor.Red;
                     PrintErrorMessage("Invalid input.");
                     Thread.Sleep(1000);
-                    Console.ResetColor();
                     break;
             }
         }
-        private void PrintErrorMessage(string message) => Console.WriteLine(message);
+        private static void PrintErrorMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
     }
 }

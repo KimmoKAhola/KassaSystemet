@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace KassaSystemet.Models
@@ -25,7 +26,10 @@ namespace KassaSystemet.Models
             if (amount > 100)
                 PrintErrorMessage($"You can not purchase more than {100} of a product!");
             else if (ProductCatalogue.Instance.Products.ContainsKey(id))
+            {
                 Purchases.Add(ModelFactory.CreatePurchase(id, amount));
+                Console.ResetColor();
+            }
             else
                 PrintErrorMessage($"No product with id {id} exist in the system.");
         }
@@ -36,11 +40,11 @@ namespace KassaSystemet.Models
                 PrintErrorMessage("Your shopping cart is empty.");
             else
             {
-                Console.WriteLine("Your cart contains the following items: ");
+                PrintSuccessMessage("Your cart contains the following items: ");
                 foreach (var item in Purchases)
                 {
-                    string productInfo = $"{ProductCatalogue.Instance.Products[item.ProductID]}, Antal: {item.Amount}";
-                    Console.WriteLine(productInfo);
+                    string productInfo = $"{ProductCatalogue.Instance.Products[item.ProductID].ProductName}, Antal: {item.Amount}";
+                    PrintMessage(productInfo);
                 }
             }
         }
@@ -51,7 +55,7 @@ namespace KassaSystemet.Models
             var receipt = ModelFactory.CreateReceipt(this);
             string result = receipt.CreateReceipt();
             Purchases.Clear();
-            PrintMessage("Your purchase has been made and a receipt has been created.");
+            PrintSuccessMessage("Your purchase has been made and a receipt has been created.");
             PrintMessage(result);
             return result;
         }
@@ -69,7 +73,18 @@ namespace KassaSystemet.Models
         public static decimal GetDiscountPercentage(int productId) => ProductCatalogue.Instance.Products[productId].Discounts.Max(discount => discount.DiscountPercentage);
         public decimal CalculateTotalSum() => Purchases.Sum(product => CalculateSum(product.ProductID));
 
-        private void PrintMessage(string message) => Console.WriteLine(message);
-        private void PrintErrorMessage(string message) => Console.WriteLine(message);
+        private static void PrintSuccessMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+        private static void PrintErrorMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+        private static void PrintMessage(string message) => Console.WriteLine(message);
     }
 }

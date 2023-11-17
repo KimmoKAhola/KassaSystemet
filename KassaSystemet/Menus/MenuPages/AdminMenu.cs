@@ -84,13 +84,13 @@ namespace KassaSystemet.Menus.MenuPages
         public void DisplayMenu()
         {
             Console.Clear();
-            Console.WriteLine("**Admin menu**\nChoose an option below.");
+            PrintMessage("**Admin menu**\nChoose an option below.");
             foreach (var item in _adminMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
             }
         }
-        private void DisplaySaveMenu()
+        private static void DisplaySaveMenu()
         {
             Console.Clear();
             Console.ResetColor();
@@ -121,13 +121,19 @@ namespace KassaSystemet.Menus.MenuPages
             PrintSuccessMessage("Product list has been save to the chosen format. Returning to the previous menu...");
             LoadingAnimation();
         }
-        private static void PrintSuccessMessage(string message) => Console.WriteLine(message);
+        private static void PrintSuccessMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+        private static void PrintMessage(string message) => Console.WriteLine(message);
         private static void LoadingAnimation()
         {
             for (int i = 0; i < 15; i++)
             {
                 Console.Write("-");
-                Thread.Sleep(200);
+                Thread.Sleep(150);
             }
             Console.WriteLine();
         }
