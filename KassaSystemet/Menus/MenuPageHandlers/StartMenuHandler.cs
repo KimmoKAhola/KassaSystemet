@@ -20,49 +20,18 @@ namespace KassaSystemet.Menus.MenuPageHandlers
         CreditMenu,
         Exit
     }
-    public class AppHandler : IMenu
+    public class StartMenuHandler : IMenuHandler<StartMenuEnum>
     {
-        public AppHandler(MenuFactory menuFactory, IUserInputHandler userInputHandler)
+        public StartMenuHandler(MenuFactory menuFactory)
         {
             _menuFactory = menuFactory;
-            _userInputHandler = userInputHandler;
         }
         MenuFactory _menuFactory;
         IMenu _menu;
-        IUserInputHandler _userInputHandler;
 
-        private Dictionary<StartMenuEnum, string> _startMenu = new Dictionary<StartMenuEnum, string>()
+        public void HandleMenuOption(StartMenuEnum menuOption)
         {
-            {StartMenuEnum.CustomerMenu, "Customer Menu." },
-            {StartMenuEnum.AdminMenu, "Admin Menu." },
-            {StartMenuEnum.InfoMenu, "Info Menu." },
-            {StartMenuEnum.CreditMenu, "Credits Menu." },
-            {StartMenuEnum.Exit, "Save & Exit." },
-        };
-
-        public void DisplayMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("Choose an option below.");
-            foreach (var item in _startMenu)
-            {
-                Console.WriteLine($"{(int)item.Key}. {item.Value}");
-            }
-        }
-
-        public void InitializeMenu()
-        {
-            StartMenuEnum userInput;
-            do
-            {
-                DisplayMenu();
-                userInput = _userInputHandler.GetMenuEnum<StartMenuEnum>();
-                MenuHandler(userInput);
-            } while (userInput != StartMenuEnum.Exit);
-        }
-        public void MenuHandler(StartMenuEnum menuHandlerEnum)
-        {
-            switch (menuHandlerEnum)
+            switch (menuOption)
             {
                 case StartMenuEnum.CustomerMenu:
                     _menu = _menuFactory.CreateMenu(MenuFactoryEnum.CustomerMenu);

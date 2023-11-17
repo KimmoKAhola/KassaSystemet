@@ -8,11 +8,12 @@ namespace KassaSystemet.Interfaces
 {
     public interface IFolder
     {
-        string GetReceiptFolderPath();
-        string GetProductListFolderPath();
-        string GetDiscountListFolderPath();
+        string CreateReceiptFolderPath();
+        string CreateProductListFolderPath();
+        string CreateDiscountListFolderPath();
         string CreateReceiptFilePath();
         string CreateReceiptIDFilePath();
         string CreateDiscountListFilePath();
+        string CreateProductListFilePath();
     }
 }

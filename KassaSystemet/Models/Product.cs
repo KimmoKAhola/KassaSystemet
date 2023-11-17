@@ -61,7 +61,7 @@ namespace KassaSystemet.Models
                 Console.WriteLine($"Your product name was too long and has been shortened to {productName.Substring(0, maxProductNameLength)}");
             }
             else
-                PrintErrorMessage("Your product name has been set to {ProductName}");
+                PrintErrorMessage($"Your product name has been set to {ProductName}");
         }
         public void AddDiscountToProduct(Discount d) => _discount.Add(d);
         public void Display() => Discounts.ForEach(x => Console.WriteLine(x.ToString()));

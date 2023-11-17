@@ -48,7 +48,7 @@ namespace KassaSystemet.Models
             Products.Add(productId, product);
             Console.WriteLine($"Added the product {product.ProductName} with ID [{productId}] to the system.", Console.ForegroundColor = ConsoleColor.Green);
         }
-        public void AddNewDiscount(int productId, IUserInputHandler userInputHandler)
+        public void AddNewDiscount(int productId, IUserInputHandler userInputHandler, out bool result)
         {
             var info = userInputHandler.DiscountInput();
             var startDate = info.Item1;
@@ -60,9 +60,13 @@ namespace KassaSystemet.Models
                 var discount = ModelFactory.CreateDiscount(startDate, endDate, discountPercentage);
                 Products[productId].AddDiscountToProduct(discount);
                 Console.WriteLine($"Your discount {startDate}-{endDate} {discountPercentage} % has been added.", Console.ForegroundColor = ConsoleColor.Green);
+                result = true;
             }
             else
+            {
                 Console.WriteLine("The discount's start date can not be after later than the end date. Your discount has not been added.", Console.ForegroundColor = ConsoleColor.Red);
+                result = false;
+            }
         }
         public void RemoveProduct(int productId) => Products.Remove(productId);
         public bool ContainsDiscount(int productId) => Products.ContainsKey(productId) && Products[productId].Discounts.Count > 0;

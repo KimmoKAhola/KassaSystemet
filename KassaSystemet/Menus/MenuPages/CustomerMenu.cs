@@ -34,7 +34,7 @@ namespace KassaSystemet.Menus.MenuPages
             {CustomerMenuEnum.Second, "Add a product to your shopping cart." },
             {CustomerMenuEnum.Third, "Display all available products in the system." },
             {CustomerMenuEnum.Pay, "Purchase all products in your shopping cart." },
-            {CustomerMenuEnum.Exit, "Exit and clear your current shopping cart." },
+            {CustomerMenuEnum.Exit, "Clear your current shopping cart and return to the main menu." },
         };
         public void InitializeMenu()
         {
@@ -50,11 +50,12 @@ namespace KassaSystemet.Menus.MenuPages
         public void DisplayMenu()
         {
             Console.Clear();
-            Console.WriteLine("****Welcome to the customer menu****\nChoose an option below.");
+            PrintMessage("****Welcome to the customer menu****\nChoose an option below.");
             foreach (var item in _customerMenu)
             {
                 Console.WriteLine($"{(int)item.Key}. {item.Value}");
             }
         }
+        private static void PrintMessage(string message) => Console.WriteLine(message);
     }
 }

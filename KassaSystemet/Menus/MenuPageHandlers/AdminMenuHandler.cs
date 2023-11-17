@@ -61,9 +61,9 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                 default:
                     Console.WriteLine("Invalid input.", Console.ForegroundColor = ConsoleColor.Red);
                     Thread.Sleep(1000);
-                    Console.ResetColor();
                     break;
             }
+            Console.ResetColor();
             Console.Write("Press any key to continue: ");
             Console.ReadKey();
             return _isChanged;
@@ -112,8 +112,9 @@ namespace KassaSystemet.Menus.MenuPageHandlers
 
             if (productCatalogue.Products.ContainsKey(productId))
             {
-                productCatalogue.AddNewDiscount(productId, userInputHandler);
-                isChanged = true;
+                productCatalogue.AddNewDiscount(productId, userInputHandler, out bool result);
+                if (result)
+                    isChanged = true;
             }
             else
                 Console.WriteLine($"The product id {productId} does not exist.", Console.ForegroundColor = ConsoleColor.Red);
