@@ -61,24 +61,7 @@ namespace KassaSystemet.Models
             PrintMessage(result);
             return result;
         }
-
-        public decimal CalculateSum(int productId)
-        {
-            var price = ProductCatalogue.Instance.Products[productId].UnitPrice;
-            var sum = 0m;
-            foreach (var item in Purchases)
-            {
-                sum += item.Amount * price;
-            }
-            if (ProductCatalogue.Instance.Products[productId].HasActiveDiscount())
-                sum *= 1 - ProductCatalogue.Instance.Products[productId].Discounts.Max(discount => discount.DiscountPercentage);
-
-            return sum;
-        }
-
         public static decimal GetDiscountPercentage(int productId) => ProductCatalogue.Instance.Products[productId].Discounts.Max(discount => discount.DiscountPercentage);
-        public decimal CalculateTotalSum() => Purchases.Sum(product => CalculateSum(product.ProductID));
-
         private static void PrintSuccessMessage(string message)
         {
             Console.ForegroundColor = ConsoleColor.Green;

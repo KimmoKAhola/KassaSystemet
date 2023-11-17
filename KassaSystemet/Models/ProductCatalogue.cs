@@ -88,7 +88,7 @@ namespace KassaSystemet.Models
                 if (item.Value.Discounts.Count > 0 && item.Value.HasActiveDiscount())
                 {
                     decimal bestDiscount = item.Value.GetBestDiscount();
-                    PrintMessage($"Product ID: {item.Key}, {item.Value} - {bestDiscount:C2} % discount!");
+                    PrintMessage($"Product ID: {item.Key}, {item.Value} - {bestDiscount:P2} discount! Applied upon purchase.");
                 }
                 else
                     PrintMessage($"Product ID: {item.Key}, {item.Value}");
