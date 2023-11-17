@@ -91,7 +91,7 @@ namespace KassaSystemet.Menus.MenuPageHandlers
             {
                 decimal price = userInputHandler.GetValidProductPrice();
                 productCatalogue.Products[productId].UnitPrice = price;
-                PrintSuccessMessage($"Price has been changed to {price:C2}");
+                PrintSuccessMessage($"Price has been changed to {productCatalogue.Products[productId].UnitPrice:C2}");
                 isChanged = true;
             }
             else
