@@ -23,7 +23,7 @@ namespace KassaSystemet.File_IO
         public void SaveProductCatalogueToFile()
         {
             string productString = FormatProductCatalogueToFile();
-            using (StreamWriter productListWriter = new($"{GetProductListFolderPath()}.csv", append: false))
+            using (StreamWriter productListWriter = new($"{CreateProductListFilePath()}.csv", append: false))
             {
                 productListWriter.Write(productString);
             }
@@ -32,7 +32,7 @@ namespace KassaSystemet.File_IO
         {
             var csvLines = ProductCatalogue.Instance.GetAllDiscounts().ToList();
 
-            using (StreamWriter discountListWriter = new($"{GetDiscountListFolderPath()}.csv", append: false))
+            using (StreamWriter discountListWriter = new($"{CreateDiscountListFolderPath()}.csv", append: false))
             {
                 foreach (var product in csvLines)
                 {
@@ -45,13 +45,14 @@ namespace KassaSystemet.File_IO
         {
             throw new NotImplementedException();
         }
-        public string GetReceiptFolderPath() => $"{_receiptsFolderPath}";
-        public string GetProductListFolderPath() => $"{_productListFolderPath}/Product_LIST_ADMIN";
-        public string GetDiscountListFolderPath() => $"{_discountListFolderPath}/Discount_LIST_ADMIN";
+        public string CreateReceiptFolderPath() => $"{_receiptsFolderPath}";
+        public string CreateProductListFolderPath() => $"{_productListFolderPath}/Product_LIST_ADMIN";
+        public string CreateDiscountListFolderPath() => $"{_discountListFolderPath}/Discount_LIST_ADMIN";
 
-        public string CreateReceiptFilePath() => Path.Combine(_receiptsFolderPath, $"RECEIPT_{DateTime.Now.ToString("yyyyMMdd")}.txt");
-        public string CreateReceiptIDFilePath() => Path.Combine(_receiptsFolderPath, $"RECEIPT_ID.txt");
-        public string CreateDiscountListFilePath() => Path.Combine(_discountListFolderPath, $"DISCOUNT_LIST_ADMIN.txt");
-        public string CreateProductListFilePathText() => Path.Combine(_productListFolderPath, $"PRODUCT_LIST_ADMIN.txt");
+        public string CreateReceiptFilePath() => Path.Combine(_receiptsFolderPath, $"RECEIPT_{DateTime.Now.ToString("yyyyMMdd")}.csv");
+        public string CreateReceiptIDFilePath() => Path.Combine(_receiptsFolderPath, $"RECEIPT_ID.csv");
+        public string CreateDiscountListFilePath() => Path.Combine(_discountListFolderPath, $"DISCOUNT_LIST_ADMIN.csv");
+
+        public string CreateProductListFilePath() => Path.Combine(_productListFolderPath, $"PRODUCT_LIST_ADMIN.csv");
     }
 }

@@ -61,9 +61,9 @@ namespace KassaSystemet.Menus.MenuPageHandlers
                 default:
                     Console.WriteLine("Invalid input.", Console.ForegroundColor = ConsoleColor.Red);
                     Thread.Sleep(1000);
-                    Console.ResetColor();
                     break;
             }
+            Console.ResetColor();
             Console.Write("Press any key to continue: ");
             Console.ReadKey();
             return _isChanged;
