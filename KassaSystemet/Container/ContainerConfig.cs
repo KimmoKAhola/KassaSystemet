@@ -22,7 +22,7 @@ namespace KassaSystemet.Container
             RegisterMenus(builder);
             RegisterHandlers(builder);
             RegisterMenuHandlers(builder);
-            builder.RegisterType<App>().As<IApplication>();
+            builder.RegisterType<StartMenu>().As<IMenu>();
 
             return builder.Build();
         }
@@ -36,7 +36,7 @@ namespace KassaSystemet.Container
         {
             builder.RegisterType<AdminMenuHandler>().As<IMenuHandler<AdminMenuEnum>>();
             builder.RegisterType<CustomerMenuHandler>().As<IMenuHandler<CustomerMenuEnum>>();
-            builder.RegisterType<AppHandler>().SingleInstance();
+            builder.RegisterType<StartMenuHandler>().As<IMenuHandler<StartMenuEnum>>();
         }
         private static void RegisterMenus(ContainerBuilder builder)
         {

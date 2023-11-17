@@ -22,8 +22,6 @@ namespace KassaSystemet.File_IO
         public string CreateProductListFolderPath() => $"{_productListFolderPath}/Product_LIST_ADMIN";
         public string CreateReceiptFolderPath() => $"{_receiptsFolderPath}/BinaryReceipt";
         public string CreateProductListFilePath() => $"{_productListFolderPath}/";
-
-
         public void SaveDiscountCatalogueToFile()
         {
             var discounts = ProductCatalogue.Instance.GetAllDiscounts().ToList();
@@ -39,7 +37,6 @@ namespace KassaSystemet.File_IO
                 }
             }
         }
-
         public void SaveProductCatalogueToFile()
         {
             var products = ProductCatalogue.Instance.Products.ToList();
@@ -56,7 +53,6 @@ namespace KassaSystemet.File_IO
                 bw.Write(productString.ToString());
             }
         }
-
         public void SaveReceiptToFile(string paymentInfo)
         {
             string filePath = CreateReceiptFolderPath();
@@ -65,6 +61,5 @@ namespace KassaSystemet.File_IO
                 bw.Write(paymentInfo);
             }
         }
-
     }
 }

@@ -31,8 +31,9 @@ namespace KassaSystemet
             var builder = ContainerConfig.Configure();
             using (var scope = builder.BeginLifetimeScope())
             {
-                var app = scope.Resolve<IApplication>();
-                app.StartApp();
+                var app = scope.Resolve<IMenu>();
+                app.InitializeMenu();
+                //app.In
             }
         }
     }
